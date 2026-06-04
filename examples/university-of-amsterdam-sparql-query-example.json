@@ -1,0 +1,55 @@
+{
+  "head": {
+    "vars": [
+      "s",
+      "p",
+      "o"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://purl.org/dc/dcmitype/Collection"
+        },
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        },
+        "o": {
+          "type": "uri",
+          "value": "http://www.europeana.eu/schemas/edm/ProvidedCHO"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://purl.org/dc/dcmitype/Image"
+        },
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        },
+        "o": {
+          "type": "uri",
+          "value": "http://www.europeana.eu/schemas/edm/ProvidedCHO"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://purl.org/dc/dcmitype/MovingImage"
+        },
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        },
+        "o": {
+          "type": "uri",
+          "value": "http://www.europeana.eu/schemas/edm/ProvidedCHO"
+        }
+      }
+    ]
+  }
+}

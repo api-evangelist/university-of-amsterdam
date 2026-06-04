@@ -45,6 +45,24 @@ apis:
         url: https://docs.triply.cc/triply-api/
       - type: Documentation
         url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+      - type: OpenAPI
+        url: openapi/university-of-amsterdam-lod-triply-api.yaml
+      - type: JSONSchema
+        url: json-schema/university-of-amsterdam-dataset-schema.json
+      - type: JSONSchema
+        url: json-schema/university-of-amsterdam-account-schema.json
+      - type: JSONStructure
+        url: json-structure/university-of-amsterdam-dataset-structure.json
+      - type: x-example
+        url: examples/university-of-amsterdam-get-dataset-example.json
+      - type: x-example
+        url: examples/university-of-amsterdam-sparql-query-example.json
+      - type: x-spectral-rules
+        url: rules/university-of-amsterdam-rules.yml
+      - type: x-vocabulary
+        url: vocabulary/university-of-amsterdam-vocabulary.yml
+      - type: x-json-ld-context
+        url: json-ld/university-of-amsterdam-context.jsonld
   - aid: university-of-amsterdam:oai-catalogue
     name: UvA Central Catalogue OAI-PMH
     description: >-

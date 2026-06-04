@@ -1,0 +1,59 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "edm": "http://www.europeana.eu/schemas/edm/",
+    "dcmitype": "http://purl.org/dc/dcmitype/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "uva": "https://lod.uba.uva.nl/vocab#",
+    "@vocab": "https://lod.uba.uva.nl/vocab#",
+
+    "University": "schema:CollegeOrUniversity",
+    "Library": "schema:Library",
+    "Dataset": "schema:Dataset",
+    "Organization": "schema:Organization",
+    "Person": "schema:Person",
+
+    "name": "schema:name",
+    "displayName": "schema:name",
+    "description": "schema:description",
+    "url": { "@id": "schema:url", "@type": "@id" },
+    "humanURL": { "@id": "schema:url", "@type": "@id" },
+    "baseURL": { "@id": "schema:contentUrl", "@type": "@id" },
+    "avatarUrl": { "@id": "schema:image", "@type": "@id" },
+    "license": { "@id": "schema:license", "@type": "@id" },
+    "accessLevel": "schema:conditionsOfAccess",
+    "createdAt": { "@id": "schema:dateCreated", "@type": "schema:DateTime" },
+    "updatedAt": { "@id": "schema:dateModified", "@type": "schema:DateTime" },
+    "owner": { "@id": "schema:publisher", "@type": "@id" },
+    "accountName": "schema:identifier",
+    "uid": "schema:identifier",
+    "id": "schema:identifier",
+    "tags": "schema:keywords",
+
+    "statements": { "@id": "uva:statementCount", "@type": "schema:Integer" },
+    "graphCount": { "@id": "uva:graphCount", "@type": "schema:Integer" },
+    "serviceCount": { "@id": "uva:serviceCount", "@type": "schema:Integer" },
+    "assetCount": { "@id": "uva:assetCount", "@type": "schema:Integer" },
+    "prefixes": "uva:prefix",
+    "prefixLabel": "rdfs:label",
+    "iri": { "@id": "uva:iri", "@type": "@id" },
+
+    "exampleResources": { "@id": "schema:exampleOfWork", "@type": "@id" }
+  },
+  "@type": "University",
+  "name": "University of Amsterdam",
+  "url": "https://www.uva.nl/en",
+  "description": "Public research university in Amsterdam, Netherlands, whose University Library publishes a Linked Open Data program on TriplyDB plus OAI-PMH metadata-harvesting channels.",
+  "schema:department": {
+    "@type": "Library",
+    "name": "Library of the University of Amsterdam (UB-UVA)",
+    "url": "https://uba.uva.nl/en/support/open-data/open-data.html",
+    "schema:provider": {
+      "@type": "Organization",
+      "accountName": "UB-UVA",
+      "url": "https://lod.uba.uva.nl/",
+      "baseURL": "https://api.lod.uba.uva.nl/datasets/UB-UVA/"
+    }
+  }
+}

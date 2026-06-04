@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-amsterdam/main/json-schema/university-of-amsterdam-account-schema.json",
+  "title": "TriplyDB Account",
+  "description": "A user or organization account on the University of Amsterdam Library TriplyDB instance. Datasets, queries, and stories are owned by accounts. Derived from the live TriplyDB OpenAPI Account schema.",
+  "type": "object",
+  "required": ["accountName", "uid", "createdAt", "description", "type"],
+  "properties": {
+    "accountName": { "type": "string", "description": "URL-safe account slug (e.g. UB-UVA)." },
+    "uid": { "type": "string", "description": "Immutable internal account identifier." },
+    "name": { "type": "string", "description": "Human-readable display name." },
+    "description": { "type": "string", "description": "Markdown account description." },
+    "avatarUrl": { "type": "string", "format": "uri" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "type": { "type": "string", "enum": ["user", "org"], "description": "Account discriminator." },
+    "accountType": { "type": "string", "enum": ["user", "group"] },
+    "email": { "type": "string", "format": "email" },
+    "datasetCount": { "type": "integer" },
+    "queryCount": { "type": "integer" },
+    "storyCount": { "type": "integer" },
+    "pinnedItems": { "type": "array", "items": { "type": "object" } }
+  }
+}

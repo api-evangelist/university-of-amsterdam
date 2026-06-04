@@ -1,0 +1,78 @@
+---
+vocabulary:
+  name: University of Amsterdam Library Linked Open Data Vocabulary
+  description: >-
+    Controlled terms for the University of Amsterdam Library (UB-UVA) Linked Open
+    Data API, served on the TriplyDB platform at api.lod.uba.uva.nl, plus the
+    library's OAI-PMH metadata-harvesting channels. Definitions are drawn from the
+    live TriplyDB OpenAPI 3.0.3 description and the UvA open-data documentation.
+  version: "1.0.0"
+  terms:
+    - term: Dataset
+      definition: >-
+        A named collection of RDF statements (triples) owned by an account on the
+        TriplyDB instance; e.g. the UB-UVA Catalogue, Books, or Beeldbank datasets.
+      tags: [core, linked-data, rdf]
+    - term: Account
+      definition: >-
+        A user or organization on TriplyDB that owns datasets, queries, and
+        stories. The UvA Library publishes under the "UB-UVA" organization account.
+      tags: [core, identity]
+    - term: Graph
+      definition: >-
+        A named graph within a dataset; the URI under which a subset of triples is
+        stored and addressed.
+      tags: [linked-data, rdf]
+    - term: Statement
+      definition: A single RDF triple (subject, predicate, object) counted toward a dataset's total size.
+      tags: [linked-data, rdf]
+    - term: Service
+      definition: >-
+        A query backend attached to a dataset, such as SPARQL, GraphQL, or
+        Elasticsearch, that must be running to answer queries.
+      tags: [query, service]
+    - term: SPARQL
+      definition: >-
+        The W3C query language and protocol for RDF; exposed per service at
+        /datasets/{account}/{dataset}/services/{serviceName}/sparql and at the
+        dataset-level /sparql endpoint.
+      tags: [query, sparql, w3c]
+    - term: GraphQL
+      definition: GraphQL query interface over linked data, exposed at /datasets/{account}/{dataset}/graphql.
+      tags: [query, graphql]
+    - term: Elasticsearch
+      definition: >-
+        Full-text search service over dataset resources, exposed via _search,
+        _msearch, _count, and elasticsearch endpoints.
+      tags: [query, search]
+    - term: Query
+      definition: A saved, parameterizable SPARQL query stored under an account and runnable via /queries/{account}/{query}/run.
+      tags: [query, saved-query]
+    - term: Asset
+      definition: A binary file (image, document, archive) attached to a dataset and versioned by TriplyDB.
+      tags: [storage, assets]
+    - term: Story
+      definition: A narrative TriplyDB artifact combining text and live query results to present a dataset.
+      tags: [presentation]
+    - term: Prefix
+      definition: An IRI namespace abbreviation (e.g. edm, rdf, rdfs) defined for a dataset to shorten resource URIs.
+      tags: [linked-data, namespace]
+    - term: AccessLevel
+      definition: Visibility of a dataset or resource; one of private, internal, or public.
+      tags: [access-control]
+    - term: OAI-PMH
+      definition: >-
+        Open Archives Initiative Protocol for Metadata Harvesting; the XML-based
+        protocol used by the UvA catalogue, archives, and Figshare repository
+        endpoints to expose metadata records for bulk harvesting.
+      tags: [metadata, harvesting, oai-pmh]
+    - term: EDM
+      definition: >-
+        Europeana Data Model; an RDF vocabulary (prefix edm) used to describe
+        cultural heritage objects within the UB-UVA datasets.
+      tags: [linked-data, metadata, cultural-heritage]
+    - term: PDDL
+      definition: >-
+        Public Domain Dedication and License v1.0, the primary open license under
+        which the UvA Library publishes its linked open datasets.
+      tags: [license, open-data]

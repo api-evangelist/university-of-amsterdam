@@ -1,0 +1,61 @@
+---
+# Spectral ruleset for the University of Amsterdam Library Linked Open Data API
+# (TriplyDB instance at api.lod.uba.uva.nl). Encodes patterns observed in the
+# live OpenAPI 3.0.3 description served at /openapi.yaml.
+formats:
+  - oas3
+rules:
+  uva-info-title-triplydb:
+    description: Info title should identify the TriplyDB API.
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: "(?i)triplydb"
+
+  uva-server-instance-host:
+    description: Servers must point at the UvA Library LOD instance host.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://api\\.lod\\.uba\\.uva\\.nl"
+
+  uva-dataset-paths-account-scoped:
+    description: Dataset operations are scoped under /datasets/{account}/{dataset}.
+    severity: info
+    given: $.paths[?(@property.match(/^\/datasets\/\{account\}/))]
+    then:
+      function: defined
+
+  uva-operations-have-operationid:
+    description: Every operation should declare an operationId for tooling/codegen.
+    severity: warn
+    given: $.paths[*][get,post,patch,put,delete,head]
+    then:
+      field: operationId
+      function: truthy
+
+  uva-operations-have-tags:
+    description: Operations should be grouped by tag (Datasets, Queries, Services, SPARQL, etc.).
+    severity: warn
+    given: $.paths[*][get,post,patch,put,delete,head]
+    then:
+      field: tags
+      function: truthy
+
+  uva-bearer-auth-defined:
+    description: A bearer (API token) security scheme should be defined for write/private access.
+    severity: warn
+    given: $.components.securitySchemes
+    then:
+      function: defined
+
+  uva-error-response-schema:
+    description: An ErrorResponse schema should exist to standardize error payloads.
+    severity: info
+    given: $.components.schemas.ErrorResponse
+    then:
+      function: defined
