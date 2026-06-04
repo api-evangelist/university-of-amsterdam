@@ -1,0 +1,54 @@
+---
+name: University of Amsterdam
+description: University of Amsterdam public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-amsterdam/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      Verified a real, public library/open-data API footprint. The UvA Library
+      Linked Open Data platform (Triply) and its open-data publication-channels
+      page resolve live (HTTP 200), as do the Figshare and archives OAI-PMH
+      endpoints. The Alma central-catalogue OAI endpoint is documented as public
+      but returned HTTP 403 to a scripted request (bot/User-Agent gating), so it
+      is cataloged with that caveat. api.uva.nl is the Anton Pannekoek Institute
+      for Astronomy website, not an API, and was excluded. No unified
+      key-issuing developer portal or public SIS/course/timetable API was found;
+      LinkedIn returns 999 (anti-bot) but is the verified official school page.
+      No endpoints were fabricated.
+    endpoints:
+      - url: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+        status: 200
+        note: UvA Library Linked Open Data REST API (Triply) - live.
+      - url: https://lod.uba.uva.nl/
+        status: 200
+        note: Linked Open Data portal / human landing - live.
+      - url: https://docs.triply.cc/triply-api/
+        status: 200
+        note: Triply API documentation - live.
+      - url: https://archives.uba.uva.nl/oai?verb=Identify
+        status: 200
+        note: Archives collection-descriptions OAI-PMH - live.
+      - url: https://api.figshare.com/v2/oai?verb=Identify
+        status: 200
+        note: Research data repository OAI-PMH (Figshare) - live.
+      - url: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request?verb=Identify
+        status: 403
+        note: Central catalogue OAI-PMH (Alma); documented public, scripted request bot-gated.
+      - url: https://uba.uva.nl/en/support/open-data/open-data.html
+        status: 200
+        note: UvA Library open-data hub / de-facto developer landing - live.
+      - url: https://www.uva.nl/en
+        status: 200
+        note: Official institutional website - live.
+      - url: https://github.com/uva
+        status: 200
+        note: Official UvA GitHub organization (~15 repos) - live.
+      - url: https://www.linkedin.com/school/university-of-amsterdam/
+        status: 999
+        note: Official LinkedIn school page; 999 is LinkedIn anti-bot, not a dead link.
+      - url: https://api.uva.nl/
+        status: 200
+        note: Astronomy institute website, not an API; excluded from catalog.
