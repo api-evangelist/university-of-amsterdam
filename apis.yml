@@ -1,4 +1,3 @@
----
 aid: university-of-amsterdam
 name: University of Amsterdam
 description: >-
@@ -18,102 +17,104 @@ access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/university-of-amsterdam/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
-  - University
-  - Open Data
-  - Linked Data
-  - Library
-  - Netherlands
-  - Europe
+- Education
+- Higher Education
+- University
+- Open Data
+- Linked Data
+- Library
+- Netherlands
+- Europe
 created: '2026-06-03'
 modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-  - aid: university-of-amsterdam:lod-triply-api
-    name: UvA Library Linked Open Data API (Triply)
-    description: >-
-      REST API over the University of Amsterdam Library's Linked Open Data
-      datasets (books, catalogue, images, letters, maps, audio, video, music,
-      archaeological objects, and more), served on the Triply platform. Backed
-      by SPARQL, GraphQL, Elasticsearch, and table-view query interfaces.
-    humanURL: https://lod.uba.uva.nl/
-    baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
-    tags: [ Open Data, Linked Data, Library, RDF, SPARQL, REST ]
-    properties:
-      - type: Documentation
-        url: https://docs.triply.cc/triply-api/
-      - type: Documentation
-        url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-      - type: OpenAPI
-        url: openapi/university-of-amsterdam-lod-triply-api.yaml
-      - type: JSONSchema
-        url: json-schema/university-of-amsterdam-dataset-schema.json
-      - type: JSONSchema
-        url: json-schema/university-of-amsterdam-account-schema.json
-      - type: JSONStructure
-        url: json-structure/university-of-amsterdam-dataset-structure.json
-      - type: x-example
-        url: examples/university-of-amsterdam-get-dataset-example.json
-      - type: x-example
-        url: examples/university-of-amsterdam-sparql-query-example.json
-      - type: x-spectral-rules
-        url: rules/university-of-amsterdam-rules.yml
-      - type: x-vocabulary
-        url: vocabulary/university-of-amsterdam-vocabulary.yml
-      - type: x-json-ld-context
-        url: json-ld/university-of-amsterdam-context.jsonld
-  - aid: university-of-amsterdam:oai-catalogue
-    name: UvA Central Catalogue OAI-PMH
-    description: >-
-      OAI-PMH metadata harvesting endpoint for the University of Amsterdam
-      central library catalogue, served via Ex Libris Alma.
-    humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-    baseURL: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request
-    tags: [ Open Data, Library, OAI-PMH, Metadata, Catalog ]
-    properties:
-      - type: Documentation
-        url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  - aid: university-of-amsterdam:oai-archives
-    name: UvA Archives Collection Descriptions OAI-PMH
-    description: >-
-      OAI-PMH endpoint exposing archival collection descriptions (EAD) from the
-      University of Amsterdam Library archives.
-    humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-    baseURL: https://archives.uba.uva.nl/oai
-    tags: [ Open Data, Library, Archives, OAI-PMH, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  - aid: university-of-amsterdam:oai-figshare-repository
-    name: UvA Research Data Repository OAI-PMH (Figshare)
-    description: >-
-      OAI-PMH harvesting endpoint for the University of Amsterdam research data
-      repository hosted on Figshare, providing dataset metadata for the UvA
-      portal.
-    humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-    baseURL: https://api.figshare.com/v2/oai
-    tags: [ Open Data, Research Data, Repository, OAI-PMH, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:lod-triply-api
+  name: UvA Library Linked Open Data API (Triply)
+  description: >-
+    REST API over the University of Amsterdam Library's Linked Open Data
+    datasets (books, catalogue, images, letters, maps, audio, video, music,
+    archaeological objects, and more), served on the Triply platform. Backed
+    by SPARQL, GraphQL, Elasticsearch, and table-view query interfaces.
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags: [Open Data, Linked Data, Library, RDF, SPARQL, REST]
+  properties:
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-lod-triply-api.yaml
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - url: graphql/university-of-amsterdam-graphql.md
+    type: GraphQL
+- aid: university-of-amsterdam:oai-catalogue
+  name: UvA Central Catalogue OAI-PMH
+  description: >-
+    OAI-PMH metadata harvesting endpoint for the University of Amsterdam
+    central library catalogue, served via Ex Libris Alma.
+  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request
+  tags: [Open Data, Library, OAI-PMH, Metadata, Catalog]
+  properties:
+  - type: Documentation
+    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:oai-archives
+  name: UvA Archives Collection Descriptions OAI-PMH
+  description: >-
+    OAI-PMH endpoint exposing archival collection descriptions (EAD) from the
+    University of Amsterdam Library archives.
+  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://archives.uba.uva.nl/oai
+  tags: [Open Data, Library, Archives, OAI-PMH, Metadata]
+  properties:
+  - type: Documentation
+    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:oai-figshare-repository
+  name: UvA Research Data Repository OAI-PMH (Figshare)
+  description: >-
+    OAI-PMH harvesting endpoint for the University of Amsterdam research data
+    repository hosted on Figshare, providing dataset metadata for the UvA
+    portal.
+  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://api.figshare.com/v2/oai
+  tags: [Open Data, Research Data, Repository, OAI-PMH, Metadata]
+  properties:
+  - type: Documentation
+    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
 common:
-  - type: Website
-    url: https://www.uva.nl/en
-  - type: DeveloperPortal
-    url: https://uba.uva.nl/en/support/open-data/open-data.html
-  - type: GitHub
-    url: https://github.com/uva
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/university-of-amsterdam/
-  - type: Plans
-    url: plans/university-of-amsterdam-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/university-of-amsterdam-rate-limits.yml
-  - type: FinOps
-    url: finops/university-of-amsterdam-finops.yml
-  - type: Review
-    url: review.yml
+- type: Website
+  url: https://www.uva.nl/en
+- type: DeveloperPortal
+  url: https://uba.uva.nl/en/support/open-data/open-data.html
+- type: GitHub
+  url: https://github.com/uva
+- type: LinkedIn
+  url: https://www.linkedin.com/school/university-of-amsterdam/
+- type: Plans
+  url: plans/university-of-amsterdam-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/university-of-amsterdam-rate-limits.yml
+- type: FinOps
+  url: finops/university-of-amsterdam-finops.yml
+- type: Review
+  url: review.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
