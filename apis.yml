@@ -99,6 +99,10 @@ apis:
   - type: Documentation
     url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
 common:
+- type: DomainSecurity
+  url: security/university-of-amsterdam-domain-security.yml
+- type: Authentication
+  url: authentication/university-of-amsterdam-authentication.yml
 - type: Website
   url: https://www.uva.nl/en
 - type: DeveloperPortal
