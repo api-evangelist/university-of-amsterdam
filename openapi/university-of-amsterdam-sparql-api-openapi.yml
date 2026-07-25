@@ -1,0 +1,271 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB Accounts SPARQL API
+  version: 26.5.104
+  description: "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n"
+  contact:
+    name: Triply
+    url: https://triply.cc
+servers:
+- url: https://api.lod.uba.uva.nl
+  description: This instance
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: SPARQL
+  description: SPARQL query endpoints
+  externalDocs:
+    description: SPARQL 1.1 Protocol
+    url: https://www.w3.org/TR/sparql11-protocol/
+paths:
+  /datasets/{account}/{dataset}/services/{serviceName}/sparql:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    get:
+      tags:
+      - SPARQL
+      summary: Execute SPARQL query on service (GET)
+      operationId: serviceSparqlGet
+      security:
+      - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      parameters:
+      - name: query
+        in: query
+        description: SPARQL query string
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+      - SPARQL
+      summary: Execute SPARQL query on service (POST)
+      operationId: serviceSparqlPost
+      security:
+      - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      requestBody:
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+      responses:
+        '200':
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /datasets/{account}/{dataset}/sparql:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    get:
+      tags:
+      - SPARQL
+      summary: Execute SPARQL query on dataset (GET)
+      operationId: datasetSparqlGet
+      security:
+      - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      parameters:
+      - name: query
+        in: query
+        description: SPARQL query string
+        schema:
+          type: string
+      - name: update
+        in: query
+        description: SPARQL update string
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+      - SPARQL
+      summary: Execute SPARQL query on dataset (POST)
+      operationId: datasetSparqlPost
+      security:
+      - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      requestBody:
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+      responses:
+        '200':
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+components:
+  parameters:
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+    dataset:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+    serviceName:
+      name: serviceName
+      in: path
+      required: true
+      description: Service name
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

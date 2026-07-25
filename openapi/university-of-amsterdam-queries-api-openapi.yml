@@ -1,0 +1,1121 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB Accounts Queries API
+  version: 26.5.104
+  description: "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n"
+  contact:
+    name: Triply
+    url: https://triply.cc
+servers:
+- url: https://api.lod.uba.uva.nl
+  description: This instance
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: Queries
+  description: Saved SPARQL queries
+paths:
+  /queries:
+    get:
+      tags:
+      - Queries
+      summary: List all saved queries
+      operationId: listAllQueries
+      security:
+      - {}
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+      - $ref: '#/components/parameters/since'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/sortDirection'
+      - name: valid
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      - name: type
+        in: query
+        schema:
+          $ref: '#/components/schemas/SparqlRequestType'
+      responses:
+        '200':
+          description: Paginated query list
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Query'
+  /queries/{account}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    get:
+      tags:
+      - Queries
+      summary: List queries for an account
+      operationId: listAccountQueries
+      description: 'Returns a paginated list of saved queries owned by the account.
+
+
+        When the `Accept` header is set to `text/vnd.yaml`, this endpoint
+
+        returns an OpenAPI document describing all accessible queries of
+
+        the account as executable API operations.
+
+        '
+      security:
+      - {}
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+      - $ref: '#/components/parameters/since'
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          enum:
+          - name
+      - $ref: '#/components/parameters/sortDirection'
+      - name: valid
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      - name: type
+        in: query
+        schema:
+          $ref: '#/components/schemas/SparqlRequestType'
+      responses:
+        '200':
+          description: Queries for the account
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Query'
+            text/vnd.yaml:
+              schema:
+                type: string
+                description: OpenAPI 3.1 document describing all queries as operations
+    post:
+      tags:
+      - Queries
+      summary: Create a saved query
+      operationId: createQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryCreate'
+      responses:
+        '201':
+          description: Query created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /queries/{account}/{query}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    get:
+      tags:
+      - Queries
+      summary: Get a saved query
+      operationId: getQuery
+      description: 'Returns the saved query metadata.
+
+
+        When the `Accept` header is set to `text/vnd.yaml`, returns an
+
+        OpenAPI document describing this query as an executable API
+
+        operation, including its variables as parameters.
+
+        '
+      security:
+      - {}
+      responses:
+        '200':
+          description: Query details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+            text/vnd.yaml:
+              schema:
+                type: string
+                description: OpenAPI 3.1 document for this query
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Queries
+      summary: Update query metadata
+      operationId: updateQueryMeta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryMetaUpdate'
+      responses:
+        '200':
+          description: Updated query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags:
+      - Queries
+      summary: Add a new version to a query
+      operationId: addQueryVersion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryVersionUpdate'
+      responses:
+        '200':
+          description: Query with new version
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+      - Queries
+      summary: Delete a saved query
+      operationId: deleteQuery
+      responses:
+        '204':
+          description: Query deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /queries/{account}/{query}/chown:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    post:
+      tags:
+      - Queries
+      summary: Transfer query ownership
+      operationId: chownQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - toAccount
+              properties:
+                toAccount:
+                  type: string
+      responses:
+        '200':
+          description: Query with new owner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /queries/{account}/{query}/run:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    head:
+      tags:
+      - Queries
+      summary: Check if query can be executed
+      operationId: headRunQuery
+      security:
+      - {}
+      responses:
+        '202':
+          description: Query is executable
+          headers:
+            ETag:
+              description: Fingerprint of query/data state
+              schema:
+                type: string
+    get:
+      tags:
+      - Queries
+      summary: Execute a saved query (latest version)
+      operationId: runQuery
+      description: 'Executes the saved query and returns results. The response format depends
+
+        on the SPARQL query type (SELECT, ASK, CONSTRUCT, DESCRIBE) and the
+
+        requested content type.
+
+
+        **Variable injection**: If the saved query defines variables, pass their
+
+        values as query parameters. For example, a query with variable `city`
+
+        is called as `?city=https://example.org/Amsterdam` (for NamedNode
+
+        variables) or `?city=Amsterdam` (for Literal variables). Variable
+
+        definitions are listed in the query''s `variables` array.
+
+
+        **Format extension**: Append a format extension to the path
+
+        (e.g., `/run.csv`, `/run.jsonld`) to select the response format.
+
+        The extension takes precedence over the `Accept` header.
+
+        '
+      security:
+      - {}
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Query results
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+      - Queries
+      summary: Execute a saved query (POST, for updates)
+      operationId: runQueryPost
+      security:
+      - {}
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}/run:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    - $ref: '#/components/parameters/versionNr'
+    get:
+      tags:
+      - Queries
+      summary: Execute a specific query version
+      operationId: runQueryVersion
+      description: 'Like `runQuery`, but executes a specific version of the saved query.
+
+        Supports the same variable injection and format extension features.
+
+        '
+      security:
+      - {}
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Query results
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}/text:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    - $ref: '#/components/parameters/versionNr'
+    get:
+      tags:
+      - Queries
+      summary: Get SPARQL query text with variables injected
+      operationId: getQueryText
+      security:
+      - {}
+      responses:
+        '200':
+          description: SPARQL query as text
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/sparql-query:
+              schema:
+                type: string
+            application/sparql-update:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/queryName'
+    - $ref: '#/components/parameters/versionNr'
+    get:
+      tags:
+      - Queries
+      summary: Get a specific query version
+      operationId: getQueryVersion
+      security:
+      - {}
+      responses:
+        '200':
+          description: Query version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Query'
+components:
+  schemas:
+    AccessLevel:
+      type: string
+      enum:
+      - public
+      - private
+      - internal
+    Dataset:
+      type: object
+      required:
+      - id
+      - name
+      - displayName
+      - description
+      - owner
+      - accessLevel
+      - createdAt
+      - updatedAt
+      - graphCount
+      - statements
+      - serviceCount
+      - assetCount
+      - tags
+      - prefixes
+      - exampleResources
+      - hasDataQualityIssues
+      - toggles
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345678
+        name:
+          type: string
+          example: knowledge-graph
+        displayName:
+          type: string
+          example: Knowledge Graph
+        description:
+          type: string
+          example: An enterprise knowledge graph linking people, projects, and publications.
+        avatarUrl:
+          type: string
+          readOnly: true
+        owner:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Account'
+        accessLevel:
+          $ref: '#/components/schemas/AccessLevel'
+        license:
+          $ref: '#/components/schemas/DatasetLicenseId'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2024-03-01 12:00:00+00:00
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        graphCount:
+          type: integer
+          readOnly: true
+          example: 3
+        statements:
+          type: integer
+          readOnly: true
+          example: 1250000
+        lastGraphsUpdateTime:
+          type: string
+          format: date-time
+          readOnly: true
+        serviceCount:
+          type: integer
+          readOnly: true
+          example: 1
+        assetCount:
+          type: integer
+          readOnly: true
+          example: 0
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+          - linked-data
+          - knowledge-graph
+        prefixes:
+          $ref: '#/components/schemas/Prefixes'
+        exampleResources:
+          type: array
+          items:
+            type: string
+        hasDataQualityIssues:
+          type: boolean
+          readOnly: true
+        autogeneratedIdType:
+          $ref: '#/components/schemas/AutoGeneratedIdType'
+        toggles:
+          $ref: '#/components/schemas/DatasetToggles'
+    DatasetToggles:
+      type: object
+      properties:
+        browserUi:
+          type: boolean
+        tableUi:
+          type: boolean
+        dataEditorUi:
+          type: boolean
+        dataModelEditorUi:
+          type: boolean
+        insightsUi:
+          type: boolean
+        sparqlIdeUi:
+          type: boolean
+        graphqlUi:
+          type: boolean
+        elasticsearchUi:
+          type: boolean
+        graphsUi:
+          type: boolean
+        servicesUi:
+          type: boolean
+        assetsUi:
+          type: boolean
+    SparqlRequestType:
+      type: string
+      enum:
+      - select
+      - construct
+      - ask
+      - describe
+      - update
+    DatasetLicenseId:
+      type: string
+      nullable: true
+      enum:
+      - CC0 1.0
+      - CC BY
+      - CC BY-ND
+      - CC BY-NC
+      - CC BY-NC-ND
+      - CC BY-NC-SA
+      - CC BY-SA v4.0
+      - ODC-By
+      - ODC-ODbL
+      - PDDL
+      - GFDL
+      - CC-BY-SA
+      - null
+    Account:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          user: '#/components/schemas/User'
+          org: '#/components/schemas/Org'
+      required:
+      - accountName
+      - uid
+      - createdAt
+      - description
+      - type
+      properties:
+        accountName:
+          type: string
+          example: acme-research
+        uid:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345678
+        name:
+          type: string
+          example: ACME Research Lab
+        description:
+          type: string
+          example: Publishing linked open data for the sciences.
+        avatarUrl:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2024-01-15 10:30:00+00:00
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/AccountType'
+        accountType:
+          type: string
+          enum:
+          - user
+          - group
+          readOnly: true
+        pinnedItems:
+          type: array
+          items:
+            type: object
+        datasetCount:
+          type: integer
+          readOnly: true
+        queryCount:
+          type: integer
+          readOnly: true
+        storyCount:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+    QueryExecutionStatus:
+      type: string
+      enum:
+      - No versions
+      - No dataset
+      - Parsing error
+      - Warning
+      - No suitable service
+      - Service error
+      - Timeout
+      - No results
+      - Success
+      - No information
+    AutoGeneratedIdType:
+      type: string
+      enum:
+      - uuid
+      - hex8
+      - hex10
+    VersionInformation:
+      type: object
+      readOnly: true
+      properties:
+        version:
+          type: integer
+          example: 1
+        accountName:
+          type: string
+        name:
+          type: string
+        avatar:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    QueryRequestConfig:
+      type: object
+      properties:
+        payload:
+          type: object
+          properties:
+            query:
+              type: string
+              example: SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10
+            update:
+              type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        ldFrame:
+          type: object
+        type:
+          $ref: '#/components/schemas/SparqlRequestType'
+        valid:
+          type: boolean
+          readOnly: true
+    ErrorResponse:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Resource not found.
+        code:
+          type: integer
+          example: 404
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponse'
+    QueryExecutionStatistics:
+      type: object
+      required:
+      - status
+      properties:
+        executedAt:
+          type: string
+          format: date-time
+        executionTimeInMs:
+          type: number
+        resultCount:
+          type: integer
+        status:
+          $ref: '#/components/schemas/QueryExecutionStatus'
+        errorMessage:
+          type: string
+    Prefixes:
+      type: object
+      additionalProperties:
+        type: string
+        format: uri
+      example:
+        rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        rdfs: http://www.w3.org/2000/01/rdf-schema#
+    AccountType:
+      type: string
+      enum:
+      - user
+      - org
+    QueryCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        accessLevel:
+          $ref: '#/components/schemas/AccessLevel'
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        serviceConfig:
+          type: object
+          properties:
+            type:
+              type: string
+            service:
+              type: string
+        requestConfig:
+          type: object
+          properties:
+            payload:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            ldFrame:
+              type: object
+        renderConfig:
+          $ref: '#/components/schemas/QueryRenderConfig'
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableConfig'
+    QueryRenderConfig:
+      type: object
+      properties:
+        output:
+          type: string
+        settings:
+          type: object
+    Query:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - owner
+      - accessLevel
+      - service
+      - serviceConfig
+      - tags
+      - link
+      - version
+      - numberOfVersions
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567f
+        name:
+          type: string
+          example: top-10-classes
+        displayName:
+          type: string
+          example: Top 10 Classes
+        description:
+          type: string
+          example: Returns the 10 most frequently used RDF classes.
+        owner:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/Account'
+        accessLevel:
+          $ref: '#/components/schemas/AccessLevel'
+        dataset:
+          $ref: '#/components/schemas/Dataset'
+        service:
+          type: string
+          readOnly: true
+        serviceConfig:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - speedy
+              - virtuoso
+              - jena
+              - blazegraph
+            service:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                type:
+                  type: string
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+          - sparql
+          - classes
+        link:
+          type: string
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+          example: 1
+        versionsInformation:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/VersionInformation'
+        numberOfVersions:
+          type: integer
+          readOnly: true
+          example: 1
+        requestConfig:
+          $ref: '#/components/schemas/QueryRequestConfig'
+        renderConfig:
+          $ref: '#/components/schemas/QueryRenderConfig'
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableConfig'
+        lastQueriedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        executionStats:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/QueryExecutionStatistics'
+    QueryVersionUpdate:
+      type: object
+      required:
+      - requestConfig
+      properties:
+        requestConfig:
+          type: object
+          properties:
+            payload:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            ldFrame:
+              type: object
+            type:
+              $ref: '#/components/schemas/SparqlRequestType'
+        renderConfig:
+          $ref: '#/components/schemas/QueryRenderConfig'
+        variables:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableConfig'
+    VariableConfig:
+      type: object
+      required:
+      - name
+      - termType
+      properties:
+        name:
+          type: string
+          example: class
+        defaultValue:
+          type: string
+          example: http://schema.org/Person
+        required:
+          type: boolean
+        allowedValues:
+          type: array
+          items:
+            type: string
+        termType:
+          type: string
+          enum:
+          - NamedNode
+          - Literal
+          example: NamedNode
+        datatype:
+          type: string
+        language:
+          type: string
+    QueryMetaUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        accessLevel:
+          $ref: '#/components/schemas/AccessLevel'
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        serviceConfig:
+          type: object
+  responses:
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    sortDirection:
+      name: sortDirection
+      in: query
+      description: Sort direction
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of results
+      schema:
+        type: integer
+        minimum: 1
+    versionNr:
+      name: versionNr
+      in: path
+      required: true
+      description: Query version number
+      schema:
+        type: integer
+        minimum: 1
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+    since:
+      name: since
+      in: query
+      description: Cursor for pagination. Should be provided using the `link` header
+      schema:
+        type: string
+    queryName:
+      name: query
+      in: path
+      required: true
+      description: Saved query name
+      schema:
+        type: string
+  headers:
+    Link:
+      description: 'RFC 8288 pagination links. Contains `rel="first"` and `rel="next"`
+
+        URIs for cursor-based pagination.
+
+        '
+      schema:
+        type: string
+        example: <https://api.triplydb.com/datasets?limit=20>; rel="first", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel="next"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

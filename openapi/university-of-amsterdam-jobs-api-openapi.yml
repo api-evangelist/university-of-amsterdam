@@ -1,0 +1,365 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB Accounts Jobs API
+  version: 26.5.104
+  description: "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n"
+  contact:
+    name: Triply
+    url: https://triply.cc
+servers:
+- url: https://api.lod.uba.uva.nl
+  description: This instance
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: Jobs
+  description: 'Data import jobs. Linked data can be uploaded in two ways:
+
+
+    **Simple upload** (< 5 MB): Send the file as `multipart/form-data` in
+
+    the `POST /datasets/{account}/{dataset}/jobs` request. The job is
+
+    created with the file attached in a single request.
+
+
+    **Large-scale upload**: For files larger than 5 MB, create a job with
+
+    a JSON body first (without a file), then upload file(s) using the
+
+    [tus resumable upload protocol](https://tus.io/protocols/resumable-upload)
+
+    against the job''s upload endpoint, then start the job. See
+
+    [TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads) for
+
+    a reference implementation.
+
+    '
+paths:
+  /datasets/{account}/{dataset}/jobs:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    post:
+      tags:
+      - Jobs
+      summary: Create an import job
+      operationId: createJob
+      description: "Creates a new data import job.\n\n**Simple upload** (files under 5 MB): send the file as\n`multipart/form-data`. The job is created and starts processing\nautomatically.\n\n```\ncurl -H 'Authorization: Bearer TOKEN' \\\n  -X POST https://api.INSTANCE/datasets/ACCOUNT/DATASET/jobs \\\n  -F file=@./myfile.trig\n```\n\n**Large-scale upload** (files over 5 MB): send a JSON body to\ncreate the job, then upload files using the\n[tus resumable upload protocol](https://tus.io/protocols/resumable-upload),\nand finally call `/jobs/{jobId}/start` to begin processing. See\n[TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads)\nfor a reference implementation.\n"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/IndexJobType'
+                baseIRI:
+                  type: string
+                  format: uri
+                defaultGraphName:
+                  type: string
+                  format: uri
+                overwriteAll:
+                  type: boolean
+                mergeGraphs:
+                  type: boolean
+                downloadUrls:
+                  type: array
+                  items:
+                    type: string
+                    format: uri
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+      - Jobs
+      summary: Cancel all error jobs
+      operationId: cancelErrorJobs
+      responses:
+        '200':
+          description: Cancelled job IDs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deletedJobIds:
+                    type: array
+                    items:
+                      type: string
+  /datasets/{account}/{dataset}/jobs/{jobId}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/jobId'
+    get:
+      tags:
+      - Jobs
+      summary: Get job details
+      operationId: getJob
+      responses:
+        '200':
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexJob'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Jobs
+      summary: Cancel a job
+      operationId: cancelJob
+      responses:
+        '204':
+          description: Job cancelled
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /datasets/{account}/{dataset}/jobs/{jobId}/start:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/jobId'
+    post:
+      tags:
+      - Jobs
+      summary: Start a job
+      operationId: startJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                overwriteAll:
+                  type: boolean
+      responses:
+        '202':
+          description: Job started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /datasets/{account}/{dataset}/jobs/{jobId}/reset:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/jobId'
+    post:
+      tags:
+      - Jobs
+      summary: Reset a job
+      operationId: resetJob
+      responses:
+        '200':
+          description: Job reset
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexJob'
+        '409':
+          description: Conflict — job cannot be reset in current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /datasets/{account}/{dataset}/jobs/{jobId}/{sourceFileId}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/jobId'
+    - name: sourceFileId
+      in: path
+      required: true
+      schema:
+        type: string
+    delete:
+      tags:
+      - Jobs
+      summary: Delete a source file from a job
+      operationId: deleteJobSourceFile
+      responses:
+        '204':
+          description: Source file deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    IndexJobStatus:
+      type: string
+      enum:
+      - created
+      - downloading
+      - pending
+      - indexing
+      - finished
+      - canceled
+      - error
+    IndexJobType:
+      type: string
+      enum:
+      - upload
+      - download
+    ErrorResponse:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Resource not found.
+        code:
+          type: integer
+          example: 404
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponse'
+    IndexJob:
+      type: object
+      required:
+      - createdAt
+      - datasetId
+      - downloadedBytes
+      - downloadingProgress
+      - files
+      - indexedGraphCount
+      - indexingProgress
+      - jobId
+      - skippedFileCount
+      - skippedFileNames
+      - status
+      - type
+      - updatedAt
+      properties:
+        baseIRI:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        datasetId:
+          type: string
+          readOnly: true
+        defaultGraphName:
+          type: string
+        downloadedBytes:
+          type: integer
+          readOnly: true
+        downloadingProgress:
+          type: number
+          readOnly: true
+          example: 1
+        downloadUrls:
+          type: array
+          items:
+            type: string
+        error:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/ErrorResponse'
+        files:
+          type: array
+          readOnly: true
+          items:
+            type: object
+            properties:
+              fileName:
+                type: string
+              fileSize:
+                type: integer
+              sourceFileId:
+                type: string
+        graphNames:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        indexedGraphCount:
+          type: integer
+          readOnly: true
+        indexingProgress:
+          type: number
+          readOnly: true
+        jobId:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567c
+        skippedFileCount:
+          type: integer
+          readOnly: true
+        skippedFileNames:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        status:
+          readOnly: true
+          allOf:
+          - $ref: '#/components/schemas/IndexJobStatus'
+        type:
+          $ref: '#/components/schemas/IndexJobType'
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+  parameters:
+    dataset:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      description: Job identifier
+      schema:
+        type: string
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

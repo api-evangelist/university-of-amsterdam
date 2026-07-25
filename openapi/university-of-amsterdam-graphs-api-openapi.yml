@@ -1,0 +1,284 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB Accounts Graphs API
+  version: 26.5.104
+  description: "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n"
+  contact:
+    name: Triply
+    url: https://triply.cc
+servers:
+- url: https://api.lod.uba.uva.nl
+  description: This instance
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: Graphs
+  description: Named graph management
+paths:
+  /datasets/{account}/{dataset}/graphs:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    get:
+      tags:
+      - Graphs
+      summary: List graphs
+      operationId: listGraphs
+      security:
+      - {}
+      parameters:
+      - $ref: '#/components/parameters/since'
+      - name: sortBy
+        in: query
+        schema:
+          type: string
+          enum:
+          - graphName
+      - $ref: '#/components/parameters/sortDirection'
+      responses:
+        '200':
+          description: Graphs list
+          headers:
+            Link:
+              $ref: '#/components/headers/Link'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Graph'
+    delete:
+      tags:
+      - Graphs
+      summary: Delete all graphs
+      operationId: deleteAllGraphs
+      responses:
+        '204':
+          description: All graphs deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /datasets/{account}/{dataset}/graphs/{graphId}:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/graphId'
+    get:
+      tags:
+      - Graphs
+      summary: Get graph details
+      operationId: getGraph
+      security:
+      - {}
+      responses:
+        '200':
+          description: Graph details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Graphs
+      summary: Rename a graph
+      operationId: updateGraph
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - graphName
+              properties:
+                graphName:
+                  type: string
+                  format: uri
+      responses:
+        '200':
+          description: Updated graph
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      tags:
+      - Graphs
+      summary: Delete a graph
+      operationId: deleteGraph
+      responses:
+        '204':
+          description: Graph deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /datasets/{account}/{dataset}/imports:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    get:
+      tags:
+      - Graphs
+      summary: Get graph import configuration
+      operationId: getImports
+      responses:
+        '200':
+          description: Import configuration
+          content:
+            application/json:
+              schema:
+                type: object
+    patch:
+      tags:
+      - Graphs
+      summary: Update graph import configuration
+      operationId: updateImports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Updated imports
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    since:
+      name: since
+      in: query
+      description: Cursor for pagination. Should be provided using the `link` header
+      schema:
+        type: string
+    sortDirection:
+      name: sortDirection
+      in: query
+      description: Sort direction
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+    graphId:
+      name: graphId
+      in: path
+      required: true
+      description: Graph identifier
+      schema:
+        type: string
+    dataset:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+  headers:
+    Link:
+      description: 'RFC 8288 pagination links. Contains `rel="first"` and `rel="next"`
+
+        URIs for cursor-based pagination.
+
+        '
+      schema:
+        type: string
+        example: <https://api.triplydb.com/datasets?limit=20>; rel="first", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel="next"
+  schemas:
+    Graph:
+      type: object
+      required:
+      - graphName
+      - id
+      - numberOfStatements
+      properties:
+        graphName:
+          type: string
+          example: https://example.org/graph/main
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345679
+        numberOfStatements:
+          type: integer
+          readOnly: true
+          example: 500000
+        importedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        uploadedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        importedFrom:
+          type: object
+          properties:
+            dataset:
+              type: string
+            graphName:
+              type: string
+            datasetName:
+              type: string
+            datasetAvatarUrl:
+              type: string
+        qualityReport:
+          type: object
+        qualityReportFor:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          example: Resource not found.
+        code:
+          type: integer
+          example: 404
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

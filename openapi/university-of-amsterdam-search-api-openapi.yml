@@ -1,0 +1,316 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB Accounts Search API
+  version: 26.5.104
+  description: "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n"
+  contact:
+    name: Triply
+    url: https://triply.cc
+servers:
+- url: https://api.lod.uba.uva.nl
+  description: This instance
+security:
+- bearerAuth: []
+- {}
+tags:
+- name: Search
+  description: Elasticsearch and simple search
+  externalDocs:
+    description: Elasticsearch Query DSL
+    url: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+paths:
+  /datasets/{account}/{dataset}/services/{serviceName}/search:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    get:
+      tags:
+      - Search
+      summary: Simple text search on Elasticsearch service
+      operationId: serviceSimpleSearch
+      security:
+      - {}
+      parameters:
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/elasticsearch:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    post:
+      tags:
+      - Search
+      summary: Execute Elasticsearch Query DSL
+      operationId: serviceElasticsearch
+      security:
+      - {}
+      externalDocs:
+        description: Elasticsearch Query DSL
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Query DSL body
+      responses:
+        '200':
+          description: Elasticsearch results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_search:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    post:
+      tags:
+      - Search
+      summary: Elasticsearch _search API
+      operationId: serviceEsSearch
+      security:
+      - {}
+      externalDocs:
+        description: Elasticsearch Search API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Search API body
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_msearch:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    post:
+      tags:
+      - Search
+      summary: Elasticsearch _msearch API
+      operationId: serviceEsMultiSearch
+      security:
+      - {}
+      externalDocs:
+        description: Elasticsearch Multi Search API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Multi Search API body (NDJSON)
+      responses:
+        '200':
+          description: Multi search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_count:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    post:
+      tags:
+      - Search
+      summary: Elasticsearch _count API
+      operationId: serviceEsCount
+      security:
+      - {}
+      externalDocs:
+        description: Elasticsearch Count API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Count API body
+      responses:
+        '200':
+          description: Document count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  _shards:
+                    type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_terms_enum:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    post:
+      tags:
+      - Search
+      summary: Elasticsearch _terms_enum API
+      operationId: serviceEsTermsEnum
+      security:
+      - {}
+      externalDocs:
+        description: Elasticsearch Terms Enum API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Terms Enum API body
+      responses:
+        '200':
+          description: Terms enumeration
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/mappings:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    - $ref: '#/components/parameters/serviceName'
+    get:
+      tags:
+      - Search
+      summary: Get Elasticsearch mappings
+      operationId: getServiceMappings
+      security:
+      - {}
+      responses:
+        '200':
+          description: Elasticsearch index mappings
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/terms:
+    parameters:
+    - $ref: '#/components/parameters/account'
+    - $ref: '#/components/parameters/dataset'
+    get:
+      tags:
+      - Search
+      summary: Autocomplete RDF terms
+      operationId: searchTerms
+      security:
+      - {}
+      parameters:
+      - name: q
+        in: query
+        description: Search prefix
+        schema:
+          type: string
+      - name: pos
+        in: query
+        description: Term position filter
+        schema:
+          type: string
+          enum:
+          - subject
+          - predicate
+          - object
+          - graph
+      - name: graph
+        in: query
+        description: Filter by graph IRI
+        schema:
+          type: string
+      - name: subject
+        in: query
+        schema:
+          type: string
+      - name: predicate
+        in: query
+        schema:
+          type: string
+      - name: object
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 20
+      - name: termType
+        in: query
+        schema:
+          type: string
+          enum:
+          - NamedNode
+          - Literal
+      - name: languageTag
+        in: query
+        schema:
+          type: string
+      - name: dataType
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Matching terms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  parameters:
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+    dataset:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+    serviceName:
+      name: serviceName
+      in: path
+      required: true
+      description: Service name
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
