@@ -12,9 +12,22 @@ description: >-
   confirmed machine-readable interfaces are library/open-data oriented and most
   institutional/SIS APIs are internal or gated.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-amsterdam.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-amsterdam/refs/heads/main/apis.yml
 tags:
 - Education
@@ -29,23 +42,75 @@ created: '2026-06-03'
 modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-- aid: university-of-amsterdam:lod-triply-api
-  name: UvA Library Linked Open Data API (Triply)
+- aid: university-of-amsterdam:oai-catalogue
+  name: UvA Central Catalogue OAI-PMH
   description: >-
-    REST API over the University of Amsterdam Library's Linked Open Data
-    datasets (books, catalogue, images, letters, maps, audio, video, music,
-    archaeological objects, and more), served on the Triply platform. Backed
-    by SPARQL, GraphQL, Elasticsearch, and table-view query interfaces.
+    OAI-PMH metadata harvesting endpoint for the University of Amsterdam central library catalogue, served
+    via Ex Libris Alma.
+  humanURL: >-
+    https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request
+  tags:
+  - Open Data
+  - Library
+  - OAI-PMH
+  - Metadata
+  - Catalog
+  properties:
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:oai-archives
+  name: UvA Archives Collection Descriptions OAI-PMH
+  description: >-
+    OAI-PMH endpoint exposing archival collection descriptions (EAD) from the University of Amsterdam
+    Library archives.
+  humanURL: >-
+    https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://archives.uba.uva.nl/oai
+  tags:
+  - Open Data
+  - Library
+  - Archives
+  - OAI-PMH
+  - Metadata
+  properties:
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:oai-figshare-repository
+  name: UvA Research Data Repository OAI-PMH (Figshare)
+  description: >-
+    OAI-PMH harvesting endpoint for the University of Amsterdam research data repository hosted on Figshare,
+    providing dataset metadata for the UvA portal.
+  humanURL: >-
+    https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  baseURL: https://api.figshare.com/v2/oai
+  tags:
+  - Open Data
+  - Research Data
+  - Repository
+  - OAI-PMH
+  - Metadata
+  properties:
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+- aid: university-of-amsterdam:university-of-amsterdam-accounts-api
+  name: University of Amsterdam Accounts API
+  description: Account and group management
   humanURL: https://lod.uba.uva.nl/
   baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
-  tags: [Open Data, Linked Data, Library, RDF, SPARQL, REST]
+  tags:
+  - Accounts
   properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-accounts-api-openapi.yml
   - type: Documentation
     url: https://docs.triply.cc/triply-api/
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  - type: OpenAPI
-    url: openapi/university-of-amsterdam-lod-triply-api.yaml
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   - type: JSONSchema
     url: json-schema/university-of-amsterdam-dataset-schema.json
   - type: JSONSchema
@@ -62,42 +127,458 @@ apis:
     url: vocabulary/university-of-amsterdam-vocabulary.yml
   - type: x-json-ld-context
     url: json-ld/university-of-amsterdam-context.jsonld
-  - url: graphql/university-of-amsterdam-graphql.md
-    type: GraphQL
-- aid: university-of-amsterdam:oai-catalogue
-  name: UvA Central Catalogue OAI-PMH
-  description: >-
-    OAI-PMH metadata harvesting endpoint for the University of Amsterdam
-    central library catalogue, served via Ex Libris Alma.
-  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  baseURL: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request
-  tags: [Open Data, Library, OAI-PMH, Metadata, Catalog]
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-assets-api
+  name: University of Amsterdam Assets API
+  description: File asset management
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Assets
   properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-assets-api-openapi.yml
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-- aid: university-of-amsterdam:oai-archives
-  name: UvA Archives Collection Descriptions OAI-PMH
-  description: >-
-    OAI-PMH endpoint exposing archival collection descriptions (EAD) from the
-    University of Amsterdam Library archives.
-  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  baseURL: https://archives.uba.uva.nl/oai
-  tags: [Open Data, Library, Archives, OAI-PMH, Metadata]
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-datasets-api
+  name: University of Amsterdam Datasets API
+  description: Dataset CRUD
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Datasets
   properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-datasets-api-openapi.yml
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-- aid: university-of-amsterdam:oai-figshare-repository
-  name: UvA Research Data Repository OAI-PMH (Figshare)
-  description: >-
-    OAI-PMH harvesting endpoint for the University of Amsterdam research data
-    repository hosted on Figshare, providing dataset metadata for the UvA
-    portal.
-  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
-  baseURL: https://api.figshare.com/v2/oai
-  tags: [Open Data, Research Data, Repository, OAI-PMH, Metadata]
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-graphql-api
+  name: University of Amsterdam GraphQL API
+  description: GraphQL endpoints
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - GraphQL
   properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-graphql-api-openapi.yml
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-graphs-api
+  name: University of Amsterdam Graphs API
+  description: Named graph management
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Graphs
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-graphs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-hooks-api
+  name: University of Amsterdam Hooks API
+  description: Webhooks
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Hooks
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-hooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-info-api
+  name: University of Amsterdam Info API
+  description: Instance information
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Info
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-info-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-jobs-api
+  name: University of Amsterdam Jobs API
+  description: >-
+    Data import jobs. Linked data can be uploaded in two ways:
+
+
+    **Simple upload** (< 5 MB): Send the file as `multipart/form-data` in
+
+    the `POST /datasets/{account}/{dataset}/jobs` request. The job is
+
+    created with the file attached in a single request.
+
+
+    **Large-scale upload**: For files larger than 5 MB, create a job with
+
+    a JSON body first (without a file), then upload file(s) using the
+
+    [tus resumable upload protocol](https://tus.io/protocols/resumable-upload)
+
+    against the job's upload endpoint, then start the job. See
+
+    [TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads) for
+
+    a reference implementation.
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-prefixes-api
+  name: University of Amsterdam Prefixes API
+  description: Global RDF prefix management
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Prefixes
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-prefixes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-queries-api
+  name: University of Amsterdam Queries API
+  description: Saved SPARQL queries
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Queries
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-queries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-search-api
+  name: University of Amsterdam Search API
+  description: Elasticsearch and simple search
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-services-api
+  name: University of Amsterdam Services API
+  description: Triple store service management
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-services-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-sparql-api
+  name: University of Amsterdam SPARQL API
+  description: SPARQL query endpoints
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - SPARQL
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-sparql-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
+- aid: university-of-amsterdam:university-of-amsterdam-stories-api
+  name: University of Amsterdam Stories API
+  description: Data stories
+  humanURL: https://lod.uba.uva.nl/
+  baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
+  tags:
+  - Stories
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-stories-api-openapi.yml
+  - type: Documentation
+    url: https://docs.triply.cc/triply-api/
+  - type: Documentation
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-dataset-schema.json
+  - type: JSONSchema
+    url: json-schema/university-of-amsterdam-account-schema.json
+  - type: JSONStructure
+    url: json-structure/university-of-amsterdam-dataset-structure.json
+  - type: x-example
+    url: examples/university-of-amsterdam-get-dataset-example.json
+  - type: x-example
+    url: examples/university-of-amsterdam-sparql-query-example.json
+  - type: x-spectral-rules
+    url: rules/university-of-amsterdam-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/university-of-amsterdam-vocabulary.yml
+  - type: x-json-ld-context
+    url: json-ld/university-of-amsterdam-context.jsonld
+  - type: GraphQL
+    url: graphql/university-of-amsterdam-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/university-of-amsterdam-agentic-access.yml
