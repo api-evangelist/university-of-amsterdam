@@ -1,0 +1,40 @@
+{
+  "provider": "university-of-amsterdam",
+  "sources": [
+    "university-of-amsterdam-accounts-api-openapi.yml",
+    "university-of-amsterdam-assets-api-openapi.yml",
+    "university-of-amsterdam-datasets-api-openapi.yml",
+    "university-of-amsterdam-graphql-api-openapi.yml",
+    "university-of-amsterdam-graphs-api-openapi.yml",
+    "university-of-amsterdam-hooks-api-openapi.yml",
+    "university-of-amsterdam-info-api-openapi.yml",
+    "university-of-amsterdam-jobs-api-openapi.yml",
+    "university-of-amsterdam-prefixes-api-openapi.yml",
+    "university-of-amsterdam-queries-api-openapi.yml",
+    "university-of-amsterdam-search-api-openapi.yml",
+    "university-of-amsterdam-services-api-openapi.yml",
+    "university-of-amsterdam-sparql-api-openapi.yml",
+    "university-of-amsterdam-stories-api-openapi.yml"
+  ],
+  "outputs": [
+    "university-of-amsterdam-accounts-api-openapi.yml",
+    "university-of-amsterdam-assets-api-openapi.yml",
+    "university-of-amsterdam-datasets-api-openapi.yml",
+    "university-of-amsterdam-graphql-api-openapi.yml",
+    "university-of-amsterdam-graphs-api-openapi.yml",
+    "university-of-amsterdam-hooks-api-openapi.yml",
+    "university-of-amsterdam-info-api-openapi.yml",
+    "university-of-amsterdam-jobs-api-openapi.yml",
+    "university-of-amsterdam-prefixes-api-openapi.yml",
+    "university-of-amsterdam-queries-api-openapi.yml",
+    "university-of-amsterdam-search-api-openapi.yml",
+    "university-of-amsterdam-services-api-openapi.yml",
+    "university-of-amsterdam-sparql-api-openapi.yml",
+    "university-of-amsterdam-stories-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

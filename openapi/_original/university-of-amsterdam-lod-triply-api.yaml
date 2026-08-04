@@ -1,0 +1,4509 @@
+openapi: 3.0.3
+info:
+  title: TriplyDB API
+  version: 26.5.104
+  description: >
+    REST API for TriplyDB — a linked data database platform.
+
+
+    ## Authentication
+
+
+    Read operations on publicly published datasets can be performed without
+
+    authentication. Write operations and read operations on private or internal
+
+    datasets require a valid API token.
+
+
+    ### Creating an API token
+
+
+    1. Log into your TriplyDB instance.
+
+    2. Click on the user menu in the top-right corner and click on "User
+    settings".
+
+    3. Go to the "API tokens" tab.
+
+    4. Click "Create token", enter a description (e.g., "my-script") and select
+       the appropriate access rights.
+    5. Click "Create" and copy the token. It is only shown once upon creation.
+
+
+    ### Using the API token
+
+
+    Include the token in the `Authorization` header of your HTTP requests:
+
+
+    ```
+
+    Authorization: Bearer YOUR_TOKEN
+
+    ```
+
+
+    ### Security considerations
+
+
+    - **Do not commit tokens to git repositories.**
+
+    - **Do not share tokens** with anyone who should not have access to your
+      TriplyDB resources.
+    - **Rotate tokens regularly**, especially if you suspect a compromise.
+
+
+    ## Pagination
+
+
+    List endpoints are paginated. The response includes a `Link` header
+
+    ([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for
+
+    navigating the result set. To paginate, follow the URLs in the `Link`
+
+    header rather than constructing URLs manually.
+
+
+    The `Link` header contains up to three relations:
+
+
+    | Relation | Meaning |
+
+    |----------|---------|
+
+    | `first`  | URL to the first page of results |
+
+    | `next`   | URL to the next page (absent when on the last page) |
+
+    | `prev`   | URL to the previous page (absent when on the first page) |
+
+
+    Example response header:
+
+
+    ```
+
+    Link: <https://api.example.com/datasets/user/ds?limit=30>; rel="first",
+          <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel="next"
+    ```
+
+
+    To iterate through all results, keep following the `rel="next"` URL until
+
+    it is no longer present. You can control the page size with the `limit`
+
+    query parameter (default: 30).
+
+
+    ## Content negotiation
+
+
+    Linked data endpoints support format negotiation in two ways:
+
+
+    1. **Accept header** — set the `Accept` request header to the desired media
+    type.
+
+    2. **URL extension** — append a format extension to the URL path (e.g.,
+    `/run.csv`).
+       When present, the extension takes precedence over the `Accept` header.
+  contact:
+    name: Triply
+    url: https://triply.cc
+security:
+  - bearerAuth: []
+  - {}
+tags:
+  - name: Datasets
+    description: Dataset CRUD
+  - name: Graphs
+    description: Named graph management
+  - name: SPARQL
+    description: SPARQL query endpoints
+    externalDocs:
+      description: SPARQL 1.1 Protocol
+      url: https://www.w3.org/TR/sparql11-protocol/
+  - name: GraphQL
+    description: GraphQL endpoints
+    externalDocs:
+      description: GraphQL Specification
+      url: https://spec.graphql.org/
+  - name: Search
+    description: Elasticsearch and simple search
+    externalDocs:
+      description: Elasticsearch Query DSL
+      url: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+  - name: Assets
+    description: File asset management
+  - name: Jobs
+    description: |
+      Data import jobs. Linked data can be uploaded in two ways:
+
+      **Simple upload** (< 5 MB): Send the file as `multipart/form-data` in
+      the `POST /datasets/{account}/{dataset}/jobs` request. The job is
+      created with the file attached in a single request.
+
+      **Large-scale upload**: For files larger than 5 MB, create a job with
+      a JSON body first (without a file), then upload file(s) using the
+      [tus resumable upload protocol](https://tus.io/protocols/resumable-upload)
+      against the job's upload endpoint, then start the job. See
+      [TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads) for
+      a reference implementation.
+  - name: Hooks
+    description: Webhooks
+  - name: Queries
+    description: Saved SPARQL queries
+  - name: Stories
+    description: Data stories
+  - name: Accounts
+    description: Account and group management
+  - name: Info
+    description: Instance information
+  - name: Prefixes
+    description: Global RDF prefix management
+  - name: Services
+    description: Triple store service management
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  headers:
+    Link:
+      description: |
+        RFC 8288 pagination links. Contains `rel="first"` and `rel="next"`
+        URIs for cursor-based pagination.
+      schema:
+        type: string
+        example: <https://api.triplydb.com/datasets?limit=20>; rel="first",
+          <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>;
+          rel="next"
+  parameters:
+    account:
+      name: account
+      in: path
+      required: true
+      description: Account name (user or group)
+      schema:
+        type: string
+    dataset:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+    serviceName:
+      name: serviceName
+      in: path
+      required: true
+      description: Service name
+      schema:
+        type: string
+    graphId:
+      name: graphId
+      in: path
+      required: true
+      description: Graph identifier
+      schema:
+        type: string
+    assetId:
+      name: assetId
+      in: path
+      required: true
+      description: Asset identifier
+      schema:
+        type: string
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      description: Job identifier
+      schema:
+        type: string
+    hookId:
+      name: hookId
+      in: path
+      required: true
+      description: Hook identifier
+      schema:
+        type: string
+    queryName:
+      name: query
+      in: path
+      required: true
+      description: Saved query name
+      schema:
+        type: string
+    versionNr:
+      name: versionNr
+      in: path
+      required: true
+      description: Query version number
+      schema:
+        type: integer
+        minimum: 1
+    prefix:
+      name: prefix
+      in: path
+      required: true
+      description: Prefix label
+      schema:
+        type: string
+    story:
+      name: story
+      in: path
+      required: true
+      description: Story name
+      schema:
+        type: string
+    member:
+      name: member
+      in: path
+      required: true
+      description: Member account name
+      schema:
+        type: string
+    since:
+      name: since
+      in: query
+      description: Cursor for pagination. Should be provided using the `link` header
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: Maximum number of results
+      schema:
+        type: integer
+        minimum: 1
+    sortDirection:
+      name: sortDirection
+      in: query
+      description: Sort direction
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+  schemas:
+    MaskedMaterializedVariable:
+      type: object
+      required:
+        - type
+        - name
+        - access
+      properties:
+        type:
+          type: string
+          enum:
+            - masked-variable
+        name:
+          type: string
+          description: The variable name, including the leading "?" (e.g. "?password").
+          example: ?apiKey
+        value:
+          type: string
+          nullable: true
+          description: The actual secret value. Present only when the viewer has the
+            manageFlowMaskedVariables permission; otherwise omitted.
+        access:
+          type: boolean
+          description: Whether the viewer has permission to see the value.
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: Resource not found.
+        code:
+          type: integer
+          example: 404
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorResponse"
+    AccessLevel:
+      type: string
+      enum:
+        - public
+        - private
+        - internal
+    DatasetLicenseId:
+      type: string
+      nullable: true
+      enum:
+        - CC0 1.0
+        - CC BY
+        - CC BY-ND
+        - CC BY-NC
+        - CC BY-NC-ND
+        - CC BY-NC-SA
+        - CC BY-SA v4.0
+        - ODC-By
+        - ODC-ODbL
+        - PDDL
+        - GFDL
+        - CC-BY-SA
+        - null
+    AutoGeneratedIdType:
+      type: string
+      enum:
+        - uuid
+        - hex8
+        - hex10
+    ServiceType:
+      type: string
+      enum:
+        - elasticSearch
+        - virtuoso
+        - jena
+    ServiceStatus:
+      type: string
+      enum:
+        - starting
+        - running
+        - stopping
+        - stopped
+        - removing
+        - updating
+        - error
+    LoadStatus:
+      type: string
+      enum:
+        - loaded
+        - loading
+        - error
+        - notLoaded
+    IndexJobStatus:
+      type: string
+      enum:
+        - created
+        - downloading
+        - pending
+        - indexing
+        - finished
+        - canceled
+        - error
+    IndexJobType:
+      type: string
+      enum:
+        - upload
+        - download
+    SparqlRequestType:
+      type: string
+      enum:
+        - select
+        - construct
+        - ask
+        - describe
+        - update
+    GroupRole:
+      type: string
+      description: Group role identifier (e.g. "owner", "member", or a custom role id)
+      example: member
+    AccountType:
+      type: string
+      enum:
+        - user
+        - org
+    JenaReasoner:
+      type: string
+      enum:
+        - OWL
+        - RDFS
+        - None
+    Capability:
+      type: string
+      enum:
+        - sparql
+        - sparqlApi
+        - elasticSearch
+    QueryExecutionStatus:
+      type: string
+      enum:
+        - No versions
+        - No dataset
+        - Parsing error
+        - Warning
+        - No suitable service
+        - Service error
+        - Timeout
+        - No results
+        - Success
+        - No information
+    StoryElementWidth:
+      type: string
+      enum:
+        - fullWidth
+        - default
+    StoryElementHeight:
+      type: string
+      enum:
+        - small
+        - medium
+        - large
+    Prefixes:
+      type: object
+      additionalProperties:
+        type: string
+        format: uri
+      example:
+        rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+        rdfs: http://www.w3.org/2000/01/rdf-schema#
+    Account:
+      type: object
+      discriminator:
+        propertyName: type
+        mapping:
+          user: "#/components/schemas/User"
+          org: "#/components/schemas/Org"
+      required:
+        - accountName
+        - uid
+        - createdAt
+        - description
+        - type
+      properties:
+        accountName:
+          type: string
+          example: acme-research
+        uid:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345678
+        name:
+          type: string
+          example: ACME Research Lab
+        description:
+          type: string
+          example: Publishing linked open data for the sciences.
+        avatarUrl:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2024-01-15T10:30:00.000Z
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        type:
+          $ref: "#/components/schemas/AccountType"
+        accountType:
+          type: string
+          enum:
+            - user
+            - group
+          readOnly: true
+        pinnedItems:
+          type: array
+          items:
+            type: object
+        datasetCount:
+          type: integer
+          readOnly: true
+        queryCount:
+          type: integer
+          readOnly: true
+        storyCount:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+    User:
+      allOf:
+        - $ref: "#/components/schemas/Account"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - user
+            orgs:
+              type: array
+              items:
+                $ref: "#/components/schemas/Org"
+            authMethod:
+              type: string
+            verified:
+              type: boolean
+            mfaEnabled:
+              type: boolean
+            legalConsent:
+              type: string
+              enum:
+                - ok
+                - expiring
+                - expired
+                - unset
+    Org:
+      allOf:
+        - $ref: "#/components/schemas/Account"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - org
+            members:
+              type: array
+              items:
+                $ref: "#/components/schemas/GroupMember"
+    GroupMember:
+      type: object
+      required:
+        - role
+        - user
+        - createdAt
+        - updatedAt
+      properties:
+        role:
+          $ref: "#/components/schemas/GroupRole"
+        user:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/User"
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+    AccountUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        accountName:
+          type: string
+        description:
+          type: string
+        pinnedItems:
+          type: array
+          items:
+            type: object
+    DatasetToggles:
+      type: object
+      properties:
+        browserUi:
+          type: boolean
+        tableUi:
+          type: boolean
+        dataEditorUi:
+          type: boolean
+        dataModelEditorUi:
+          type: boolean
+        insightsUi:
+          type: boolean
+        sparqlIdeUi:
+          type: boolean
+        graphqlUi:
+          type: boolean
+        elasticsearchUi:
+          type: boolean
+        graphsUi:
+          type: boolean
+        servicesUi:
+          type: boolean
+        assetsUi:
+          type: boolean
+    Dataset:
+      type: object
+      required:
+        - id
+        - name
+        - displayName
+        - description
+        - owner
+        - accessLevel
+        - createdAt
+        - updatedAt
+        - graphCount
+        - statements
+        - serviceCount
+        - assetCount
+        - tags
+        - prefixes
+        - exampleResources
+        - hasDataQualityIssues
+        - toggles
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345678
+        name:
+          type: string
+          example: knowledge-graph
+        displayName:
+          type: string
+          example: Knowledge Graph
+        description:
+          type: string
+          example: An enterprise knowledge graph linking people, projects, and
+            publications.
+        avatarUrl:
+          type: string
+          readOnly: true
+        owner:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/Account"
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        license:
+          $ref: "#/components/schemas/DatasetLicenseId"
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+          example: 2024-03-01T12:00:00.000Z
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        graphCount:
+          type: integer
+          readOnly: true
+          example: 3
+        statements:
+          type: integer
+          readOnly: true
+          example: 1250000
+        lastGraphsUpdateTime:
+          type: string
+          format: date-time
+          readOnly: true
+        serviceCount:
+          type: integer
+          readOnly: true
+          example: 1
+        assetCount:
+          type: integer
+          readOnly: true
+          example: 0
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - linked-data
+            - knowledge-graph
+        prefixes:
+          $ref: "#/components/schemas/Prefixes"
+        exampleResources:
+          type: array
+          items:
+            type: string
+        hasDataQualityIssues:
+          type: boolean
+          readOnly: true
+        autogeneratedIdType:
+          $ref: "#/components/schemas/AutoGeneratedIdType"
+        toggles:
+          $ref: "#/components/schemas/DatasetToggles"
+    DatasetVerbose:
+      allOf:
+        - $ref: "#/components/schemas/Dataset"
+        - type: object
+          properties:
+            services:
+              type: array
+              items:
+                $ref: "#/components/schemas/ServiceMetadata"
+            largestGraphs:
+              type: array
+              items:
+                $ref: "#/components/schemas/Graph"
+            openJobs:
+              type: array
+              items:
+                $ref: "#/components/schemas/IndexJob"
+    NewDataset:
+      type: object
+      properties:
+        name:
+          type: string
+          example: knowledge-graph
+        displayName:
+          type: string
+          example: Knowledge Graph
+        description:
+          type: string
+          example: An enterprise knowledge graph.
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        license:
+          $ref: "#/components/schemas/DatasetLicenseId"
+        autogeneratedIdType:
+          $ref: "#/components/schemas/AutoGeneratedIdType"
+    UpdateDataset:
+      type: object
+      properties:
+        displayName:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        license:
+          $ref: "#/components/schemas/DatasetLicenseId"
+        exampleResources:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        autogeneratedIdType:
+          $ref: "#/components/schemas/AutoGeneratedIdType"
+        toggles:
+          $ref: "#/components/schemas/DatasetToggles"
+    Graph:
+      type: object
+      required:
+        - graphName
+        - id
+        - numberOfStatements
+      properties:
+        graphName:
+          type: string
+          example: https://example.org/graph/main
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345679
+        numberOfStatements:
+          type: integer
+          readOnly: true
+          example: 500000
+        importedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        uploadedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        importedFrom:
+          type: object
+          properties:
+            dataset:
+              type: string
+            graphName:
+              type: string
+            datasetName:
+              type: string
+            datasetAvatarUrl:
+              type: string
+        qualityReport:
+          type: object
+        qualityReportFor:
+          type: string
+    ServiceMetadata:
+      type: object
+      required:
+        - type
+        - name
+        - id
+        - status
+        - capabilities
+        - createdAt
+      properties:
+        type:
+          $ref: "#/components/schemas/ServiceType"
+        version:
+          type: string
+          readOnly: true
+        capabilities:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/Capability"
+        name:
+          type: string
+          example: sparql
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567a
+        numberOfLoadedStatements:
+          type: integer
+          readOnly: true
+        numberOfLoadedGraphs:
+          type: integer
+          readOnly: true
+        numberOfGraphs:
+          type: integer
+          readOnly: true
+        numberOfGraphErrors:
+          type: integer
+          readOnly: true
+        error:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/ErrorResponse"
+        status:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/ServiceStatus"
+        endpoint:
+          type: string
+          readOnly: true
+        outOfSync:
+          type: boolean
+          readOnly: true
+        loadedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        config:
+          $ref: "#/components/schemas/ServiceConfig"
+    ServiceConfig:
+      type: object
+      description: >
+        Service-specific configuration. For Jena services, set `reasonerType`.
+
+        For Elasticsearch services, set `indexTemplates` and/or
+        `componentTemplates`.
+      properties:
+        reasonerType:
+          $ref: "#/components/schemas/JenaReasoner"
+        indexTemplates:
+          type: array
+          description: Elasticsearch index templates
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              index_patterns:
+                type: string
+        componentTemplates:
+          type: array
+          description: Elasticsearch component templates (mappings, settings)
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              template:
+                type: object
+                properties:
+                  mappings:
+                    type: object
+                  settings:
+                    type: object
+    CreateService:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          $ref: "#/components/schemas/ServiceType"
+        config:
+          $ref: "#/components/schemas/ServiceConfig"
+    UpdateService:
+      type: object
+      properties:
+        name:
+          type: string
+    ServiceActions:
+      type: object
+      properties:
+        start:
+          type: boolean
+        sync:
+          type: boolean
+        restart:
+          type: boolean
+    ServiceGraphInfo:
+      type: object
+      required:
+        - graphName
+        - status
+        - statements
+      properties:
+        graphName:
+          type: string
+        status:
+          $ref: "#/components/schemas/LoadStatus"
+        statements:
+          type: integer
+        error:
+          type: string
+    Asset:
+      type: object
+      required:
+        - assetName
+        - createdAt
+        - identifier
+        - versions
+        - url
+      properties:
+        assetName:
+          type: string
+          example: schema-diagram.png
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        identifier:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567b
+        versions:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/AssetVersion"
+        url:
+          type: string
+          readOnly: true
+    AssetVersion:
+      type: object
+      required:
+        - id
+        - uploadedAt
+        - url
+        - fileSize
+      properties:
+        id:
+          type: string
+          readOnly: true
+        uploadedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+        fileSize:
+          type: integer
+          readOnly: true
+          example: 204800
+        uploadedBy:
+          type: object
+          properties:
+            name:
+              type: string
+            accountName:
+              type: string
+    IndexJob:
+      type: object
+      required:
+        - createdAt
+        - datasetId
+        - downloadedBytes
+        - downloadingProgress
+        - files
+        - indexedGraphCount
+        - indexingProgress
+        - jobId
+        - skippedFileCount
+        - skippedFileNames
+        - status
+        - type
+        - updatedAt
+      properties:
+        baseIRI:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        datasetId:
+          type: string
+          readOnly: true
+        defaultGraphName:
+          type: string
+        downloadedBytes:
+          type: integer
+          readOnly: true
+        downloadingProgress:
+          type: number
+          readOnly: true
+          example: 1
+        downloadUrls:
+          type: array
+          items:
+            type: string
+        error:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/ErrorResponse"
+        files:
+          type: array
+          readOnly: true
+          items:
+            type: object
+            properties:
+              fileName:
+                type: string
+              fileSize:
+                type: integer
+              sourceFileId:
+                type: string
+        graphNames:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        indexedGraphCount:
+          type: integer
+          readOnly: true
+        indexingProgress:
+          type: number
+          readOnly: true
+        jobId:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567c
+        skippedFileCount:
+          type: integer
+          readOnly: true
+        skippedFileNames:
+          type: array
+          readOnly: true
+          items:
+            type: string
+        status:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/IndexJobStatus"
+        type:
+          $ref: "#/components/schemas/IndexJobType"
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+    Hook:
+      allOf:
+        - $ref: "#/components/schemas/HookCreate"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              readOnly: true
+              example: 64a1b2c3d4e5f6001234567d
+    HookCreate:
+      type: object
+      required:
+        - url
+        - active
+        - payloadFormat
+        - onEvents
+      properties:
+        url:
+          type: string
+          format: uri
+          example: https://example.com/webhook
+        active:
+          type: boolean
+          example: true
+        payloadFormat:
+          type: string
+          enum:
+            - JSON
+            - formEncoded
+          example: JSON
+        onEvents:
+          type: object
+          properties:
+            graphImport:
+              type: boolean
+            linkedDataUpload:
+              type: boolean
+            fileUpload:
+              type: boolean
+    WebHookTriggerRecord:
+      type: object
+      readOnly: true
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        statusCode:
+          type: integer
+          example: 200
+        responseText:
+          type: string
+        errorCode:
+          type: string
+        errorMessage:
+          type: string
+        eventName:
+          type: string
+          example: graphImport
+        payloadFormat:
+          type: string
+        payload:
+          type: object
+    Query:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - owner
+        - accessLevel
+        - service
+        - serviceConfig
+        - tags
+        - link
+        - version
+        - numberOfVersions
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f6001234567f
+        name:
+          type: string
+          example: top-10-classes
+        displayName:
+          type: string
+          example: Top 10 Classes
+        description:
+          type: string
+          example: Returns the 10 most frequently used RDF classes.
+        owner:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/Account"
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        dataset:
+          $ref: "#/components/schemas/Dataset"
+        service:
+          type: string
+          readOnly: true
+        serviceConfig:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - speedy
+                - virtuoso
+                - jena
+                - blazegraph
+            service:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                type:
+                  type: string
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - sparql
+            - classes
+        link:
+          type: string
+          readOnly: true
+        version:
+          type: integer
+          readOnly: true
+          example: 1
+        versionsInformation:
+          type: array
+          readOnly: true
+          items:
+            $ref: "#/components/schemas/VersionInformation"
+        numberOfVersions:
+          type: integer
+          readOnly: true
+          example: 1
+        requestConfig:
+          $ref: "#/components/schemas/QueryRequestConfig"
+        renderConfig:
+          $ref: "#/components/schemas/QueryRenderConfig"
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        variables:
+          type: array
+          items:
+            $ref: "#/components/schemas/VariableConfig"
+        lastQueriedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        executionStats:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/QueryExecutionStatistics"
+    QueryCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        serviceConfig:
+          type: object
+          properties:
+            type:
+              type: string
+            service:
+              type: string
+        requestConfig:
+          type: object
+          properties:
+            payload:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            ldFrame:
+              type: object
+        renderConfig:
+          $ref: "#/components/schemas/QueryRenderConfig"
+        variables:
+          type: array
+          items:
+            $ref: "#/components/schemas/VariableConfig"
+    QueryMetaUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        serviceConfig:
+          type: object
+    QueryVersionUpdate:
+      type: object
+      required:
+        - requestConfig
+      properties:
+        requestConfig:
+          type: object
+          properties:
+            payload:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            ldFrame:
+              type: object
+            type:
+              $ref: "#/components/schemas/SparqlRequestType"
+        renderConfig:
+          $ref: "#/components/schemas/QueryRenderConfig"
+        variables:
+          type: array
+          items:
+            $ref: "#/components/schemas/VariableConfig"
+    QueryRequestConfig:
+      type: object
+      properties:
+        payload:
+          type: object
+          properties:
+            query:
+              type: string
+              example: SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY
+                ?class ORDER BY DESC(?count) LIMIT 10
+            update:
+              type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        ldFrame:
+          type: object
+        type:
+          $ref: "#/components/schemas/SparqlRequestType"
+        valid:
+          type: boolean
+          readOnly: true
+    QueryRenderConfig:
+      type: object
+      properties:
+        output:
+          type: string
+        settings:
+          type: object
+    VersionInformation:
+      type: object
+      readOnly: true
+      properties:
+        version:
+          type: integer
+          example: 1
+        accountName:
+          type: string
+        name:
+          type: string
+        avatar:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    VariableConfig:
+      type: object
+      required:
+        - name
+        - termType
+      properties:
+        name:
+          type: string
+          example: class
+        defaultValue:
+          type: string
+          example: http://schema.org/Person
+        required:
+          type: boolean
+        allowedValues:
+          type: array
+          items:
+            type: string
+        termType:
+          type: string
+          enum:
+            - NamedNode
+            - Literal
+          example: NamedNode
+        datatype:
+          type: string
+        language:
+          type: string
+    QueryExecutionStatistics:
+      type: object
+      required:
+        - status
+      properties:
+        executedAt:
+          type: string
+          format: date-time
+        executionTimeInMs:
+          type: number
+        resultCount:
+          type: integer
+        status:
+          $ref: "#/components/schemas/QueryExecutionStatus"
+        errorMessage:
+          type: string
+    Story:
+      type: object
+      required:
+        - id
+        - name
+        - owner
+        - accessLevel
+        - link
+        - content
+        - createdAt
+        - updatedAt
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: 64a1b2c3d4e5f60012345680
+        name:
+          type: string
+          example: dataset-overview
+        displayName:
+          type: string
+          example: Dataset Overview
+        owner:
+          readOnly: true
+          allOf:
+            - $ref: "#/components/schemas/Account"
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        link:
+          type: string
+          readOnly: true
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/StoryElement"
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        bannerUrl:
+          type: string
+          readOnly: true
+        tags:
+          type: array
+          items:
+            type: string
+          example:
+            - data-story
+            - overview
+    StoryElement:
+      type: object
+      discriminator:
+        propertyName: type
+      required:
+        - id
+        - type
+      properties:
+        id:
+          type: string
+          readOnly: true
+        type:
+          type: string
+          enum:
+            - query
+            - paragraph
+          description: |
+            `query` — embeds a saved SPARQL query visualisation.
+            `paragraph` — free-form Markdown text block.
+        query:
+          $ref: "#/components/schemas/Query"
+        queryVersion:
+          type: integer
+        caption:
+          type: string
+        width:
+          $ref: "#/components/schemas/StoryElementWidth"
+        height:
+          $ref: "#/components/schemas/StoryElementHeight"
+        paragraph:
+          type: string
+    StoryCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/StoryElementUpdate"
+        tags:
+          type: array
+          items:
+            type: string
+    StoryUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
+        accessLevel:
+          $ref: "#/components/schemas/AccessLevel"
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/StoryElementUpdate"
+        tags:
+          type: array
+          items:
+            type: string
+    StoryElementUpdate:
+      type: object
+      required:
+        - type
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - query
+            - paragraph
+        query:
+          type: string
+        queryVersion:
+          type: integer
+        paragraph:
+          type: string
+        caption:
+          type: string
+        width:
+          $ref: "#/components/schemas/StoryElementWidth"
+        height:
+          $ref: "#/components/schemas/StoryElementHeight"
+    ClientConfig:
+      type: object
+      properties:
+        branding:
+          type: object
+          properties:
+            name:
+              type: string
+            logo:
+              type: string
+            logoBgType:
+              type: string
+              enum:
+                - circle
+                - square
+                - none
+            logoBgColor:
+              type: string
+            logoLg:
+              type: string
+            banner:
+              type: string
+            tagline:
+              type: string
+            description:
+              type: string
+            welcomeMessage:
+              type: string
+        consoleUrl:
+          type: string
+        apiUrl:
+          type: string
+        contactEmail:
+          type: string
+        prefixes:
+          $ref: "#/components/schemas/Prefixes"
+        enabledServices:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceType"
+        enabledOauth:
+          type: array
+          items:
+            type: string
+        passwordSignup:
+          type: boolean
+        version:
+          type: string
+        statements:
+          type: integer
+        buildDate:
+          type: string
+        buildId:
+          type: string
+        instanceUpdatedAt:
+          type: string
+          format: date-time
+        instanceStartedAt:
+          type: string
+          format: date-time
+        counts:
+          type: object
+          properties:
+            queries:
+              type: integer
+            datasets:
+              type: integer
+            stories:
+              type: integer
+        legal:
+          type: object
+          properties:
+            latestRequiredConsentUpdate:
+              type: string
+            privacyPolicyUrl:
+              type: string
+            generalTermsUrl:
+              type: string
+paths:
+  /info:
+    get:
+      tags:
+        - Info
+      summary: Get instance configuration
+      operationId: getInfo
+      security:
+        - {}
+      responses:
+        "200":
+          description: Instance configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientConfig"
+  /prefixes:
+    get:
+      tags:
+        - Prefixes
+      summary: List global prefixes
+      operationId: getGlobalPrefixes
+      security:
+        - {}
+      parameters:
+        - name: scope
+          in: query
+          schema:
+            type: string
+            enum:
+              - local
+              - global
+      responses:
+        "200":
+          description: Prefix mappings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prefixes"
+  /prefixes/{prefix}:
+    parameters:
+      - $ref: "#/components/parameters/prefix"
+    get:
+      tags:
+        - Prefixes
+      summary: Get a single prefix
+      operationId: getGlobalPrefix
+      security:
+        - {}
+      responses:
+        "200":
+          description: Prefix IRI
+          content:
+            application/json:
+              schema:
+                type: string
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /accounts:
+    get:
+      tags:
+        - Accounts
+      summary: List accounts
+      operationId: listAccounts
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - name: offset
+          in: query
+          schema:
+            type: integer
+        - name: q
+          in: query
+          description: Search term
+          schema:
+            type: string
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - accountNameLower
+              - createdAt
+              - updatedAt
+        - $ref: "#/components/parameters/sortDirection"
+        - name: type
+          in: query
+          schema:
+            $ref: "#/components/schemas/AccountType"
+      responses:
+        "200":
+          description: Paginated account list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+  /datasets:
+    get:
+      tags:
+        - Datasets
+      summary: List all datasets
+      operationId: listAllDatasets
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          description: Search term
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - $ref: "#/components/parameters/limit"
+        - name: sparql
+          in: query
+          description: Filter datasets with active SPARQL service
+          schema:
+            type: string
+        - name: verbose
+          in: query
+          description: Return verbose dataset information
+          schema:
+            type: string
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Paginated dataset list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dataset"
+  /datasets/{account}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+    get:
+      tags:
+        - Datasets
+      summary: List datasets for an account
+      operationId: listAccountDatasets
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - name: accessLevel
+          in: query
+          schema:
+            $ref: "#/components/schemas/AccessLevel"
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - createdAt
+              - updatedAt
+              - name
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Datasets for the account
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dataset"
+    post:
+      tags:
+        - Datasets
+      summary: Create a dataset
+      operationId: createDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewDataset"
+      responses:
+        "201":
+          description: Dataset created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Datasets
+      summary: Get dataset details
+      operationId: getDataset
+      security:
+        - {}
+      parameters:
+        - name: verbose
+          in: query
+          description: Include services, graphs, and jobs
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dataset details
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Dataset"
+                  - $ref: "#/components/schemas/DatasetVerbose"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - Datasets
+      summary: Update a dataset
+      operationId: updateDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDataset"
+      responses:
+        "200":
+          description: Updated dataset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags:
+        - Datasets
+      summary: Delete a dataset
+      operationId: deleteDataset
+      responses:
+        "204":
+          description: Dataset deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}/copy:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    post:
+      tags:
+        - Datasets
+      summary: Copy a dataset
+      operationId: copyDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toAccount
+              properties:
+                toAccount:
+                  type: string
+                name:
+                  type: string
+      responses:
+        "201":
+          description: Copied dataset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}/chown:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    post:
+      tags:
+        - Datasets
+      summary: Transfer dataset ownership
+      operationId: chownDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toAccount
+              properties:
+                toAccount:
+                  type: string
+      responses:
+        "200":
+          description: Dataset with new owner
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}/graphs:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Graphs
+      summary: List graphs
+      operationId: listGraphs
+      security:
+        - {}
+      parameters:
+        - $ref: "#/components/parameters/since"
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - graphName
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Graphs list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Graph"
+    delete:
+      tags:
+        - Graphs
+      summary: Delete all graphs
+      operationId: deleteAllGraphs
+      responses:
+        "204":
+          description: All graphs deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}/graphs/{graphId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/graphId"
+    get:
+      tags:
+        - Graphs
+      summary: Get graph details
+      operationId: getGraph
+      security:
+        - {}
+      responses:
+        "200":
+          description: Graph details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Graph"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - Graphs
+      summary: Rename a graph
+      operationId: updateGraph
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - graphName
+              properties:
+                graphName:
+                  type: string
+                  format: uri
+      responses:
+        "200":
+          description: Updated graph
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Graph"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Graphs
+      summary: Delete a graph
+      operationId: deleteGraph
+      responses:
+        "204":
+          description: Graph deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/services:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Services
+      summary: List services
+      operationId: listServices
+      security:
+        - {}
+      responses:
+        "200":
+          description: Service list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceMetadata"
+    post:
+      tags:
+        - Services
+      summary: Create a service
+      operationId: createService
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateService"
+      responses:
+        "201":
+          description: Service created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceMetadata"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /datasets/{account}/{dataset}/services/{serviceName}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    get:
+      tags:
+        - Services
+      summary: Get service details
+      operationId: getService
+      security:
+        - {}
+      responses:
+        "200":
+          description: Service metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceMetadata"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    post:
+      tags:
+        - Services
+      summary: Perform a service action (start, sync, restart)
+      operationId: serviceAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceActions"
+      responses:
+        "200":
+          description: Updated service
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceMetadata"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    patch:
+      tags:
+        - Services
+      summary: Update a service
+      operationId: updateService
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateService"
+      responses:
+        "200":
+          description: Updated service
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceMetadata"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Services
+      summary: Delete a service
+      operationId: deleteService
+      responses:
+        "204":
+          description: Service deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/services/{serviceName}/graphs:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    get:
+      tags:
+        - Services
+      summary: List service graphs
+      operationId: listServiceGraphs
+      security:
+        - {}
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Service graphs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceGraphInfo"
+  /datasets/{account}/{dataset}/services/{serviceName}/sparql:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    get:
+      tags:
+        - SPARQL
+      summary: Execute SPARQL query on service (GET)
+      operationId: serviceSparqlGet
+      security:
+        - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      parameters:
+        - name: query
+          in: query
+          description: SPARQL query string
+          schema:
+            type: string
+      responses:
+        "200":
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+        - SPARQL
+      summary: Execute SPARQL query on service (POST)
+      operationId: serviceSparqlPost
+      security:
+        - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      requestBody:
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+      responses:
+        "200":
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /datasets/{account}/{dataset}/services/{serviceName}/search:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    get:
+      tags:
+        - Search
+      summary: Simple text search on Elasticsearch service
+      operationId: serviceSimpleSearch
+      security:
+        - {}
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/elasticsearch:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    post:
+      tags:
+        - Search
+      summary: Execute Elasticsearch Query DSL
+      operationId: serviceElasticsearch
+      security:
+        - {}
+      externalDocs:
+        description: Elasticsearch Query DSL
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Query DSL body
+      responses:
+        "200":
+          description: Elasticsearch results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_search:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    post:
+      tags:
+        - Search
+      summary: Elasticsearch _search API
+      operationId: serviceEsSearch
+      security:
+        - {}
+      externalDocs:
+        description: Elasticsearch Search API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Search API body
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_msearch:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    post:
+      tags:
+        - Search
+      summary: Elasticsearch _msearch API
+      operationId: serviceEsMultiSearch
+      security:
+        - {}
+      externalDocs:
+        description: Elasticsearch Multi Search API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Multi Search API body (NDJSON)
+      responses:
+        "200":
+          description: Multi search results
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_count:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    post:
+      tags:
+        - Search
+      summary: Elasticsearch _count API
+      operationId: serviceEsCount
+      security:
+        - {}
+      externalDocs:
+        description: Elasticsearch Count API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Count API body
+      responses:
+        "200":
+          description: Document count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  _shards:
+                    type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/_terms_enum:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    post:
+      tags:
+        - Search
+      summary: Elasticsearch _terms_enum API
+      operationId: serviceEsTermsEnum
+      security:
+        - {}
+      externalDocs:
+        description: Elasticsearch Terms Enum API
+        url: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Elasticsearch Terms Enum API body
+      responses:
+        "200":
+          description: Terms enumeration
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/services/{serviceName}/mappings:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/serviceName"
+    get:
+      tags:
+        - Search
+      summary: Get Elasticsearch mappings
+      operationId: getServiceMappings
+      security:
+        - {}
+      responses:
+        "200":
+          description: Elasticsearch index mappings
+          content:
+            application/json:
+              schema:
+                type: object
+  /datasets/{account}/{dataset}/sparql:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - SPARQL
+      summary: Execute SPARQL query on dataset (GET)
+      operationId: datasetSparqlGet
+      security:
+        - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      parameters:
+        - name: query
+          in: query
+          description: SPARQL query string
+          schema:
+            type: string
+        - name: update
+          in: query
+          description: SPARQL update string
+          schema:
+            type: string
+      responses:
+        "200":
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+        - SPARQL
+      summary: Execute SPARQL query on dataset (POST)
+      operationId: datasetSparqlPost
+      security:
+        - {}
+      externalDocs:
+        description: SPARQL 1.1 Protocol
+        url: https://www.w3.org/TR/sparql11-protocol/
+      requestBody:
+        content:
+          application/sparql-query:
+            schema:
+              type: string
+          application/sparql-update:
+            schema:
+              type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                update:
+                  type: string
+      responses:
+        "200":
+          description: SPARQL query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /datasets/{account}/{dataset}/graphql:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - GraphQL
+      summary: Execute GraphQL query (GET)
+      operationId: datasetGraphqlGet
+      security:
+        - {}
+      externalDocs:
+        description: GraphQL Specification
+        url: https://spec.graphql.org/
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: GraphQL query string
+          schema:
+            type: string
+        - name: operationName
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: GraphQL response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      type: object
+    post:
+      tags:
+        - GraphQL
+      summary: Execute GraphQL query (POST)
+      operationId: datasetGraphqlPost
+      security:
+        - {}
+      externalDocs:
+        description: GraphQL Specification
+        url: https://spec.graphql.org/
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                variables:
+                  type: object
+                  nullable: true
+                operationName:
+                  type: string
+                  nullable: true
+      responses:
+        "200":
+          description: GraphQL response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      type: object
+  /datasets/{account}/{dataset}/graphql/status:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - GraphQL
+      summary: Get GraphQL schema validation status
+      operationId: datasetGraphqlStatus
+      security:
+        - {}
+      responses:
+        "200":
+          description: Schema status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    nullable: true
+                    items:
+                      type: string
+  /datasets/{account}/{dataset}/assets:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Assets
+      summary: List assets
+      operationId: listAssets
+      security:
+        - {}
+      parameters:
+        - name: fileName
+          in: query
+          description: Filter by file name
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - assetName
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Asset list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+    post:
+      tags:
+        - Assets
+      summary: Upload a new asset
+      operationId: uploadAsset
+      description: >
+        Uploads a file as a dataset asset.
+
+
+        **Simple upload** (files under 5 MB): send the file as
+
+        `multipart/form-data`.
+
+
+        **Large-scale upload** (files over 5 MB): use the
+
+        [tus resumable upload
+        protocol](https://tus.io/protocols/resumable-upload).
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Asset created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Assets
+      summary: Delete all assets
+      operationId: deleteAllAssets
+      responses:
+        "204":
+          description: All assets deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/assets/download:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Assets
+      summary: Download an asset by file name
+      operationId: downloadAssetByName
+      security:
+        - {}
+      parameters:
+        - name: fileName
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Asset file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /datasets/{account}/{dataset}/assets/{assetId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/assetId"
+    get:
+      tags:
+        - Assets
+      summary: Download an asset by ID
+      operationId: downloadAsset
+      security:
+        - {}
+      responses:
+        "200":
+          description: Asset file (supports Range requests)
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "206":
+          description: Partial content
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - Assets
+      summary: Delete an asset
+      operationId: deleteAsset
+      responses:
+        "204":
+          description: Asset deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/assets/{assetId}/{versionId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/assetId"
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Assets
+      summary: Download a specific asset version
+      operationId: downloadAssetVersion
+      security:
+        - {}
+      responses:
+        "200":
+          description: Asset file
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - Assets
+      summary: Delete an asset version
+      operationId: deleteAssetVersion
+      responses:
+        "200":
+          description: Updated asset with version removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/jobs:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    post:
+      tags:
+        - Jobs
+      summary: Create an import job
+      operationId: createJob
+      description: >
+        Creates a new data import job.
+
+
+        **Simple upload** (files under 5 MB): send the file as
+
+        `multipart/form-data`. The job is created and starts processing
+
+        automatically.
+
+
+        ```
+
+        curl -H 'Authorization: Bearer TOKEN' \
+          -X POST https://api.INSTANCE/datasets/ACCOUNT/DATASET/jobs \
+          -F file=@./myfile.trig
+        ```
+
+
+        **Large-scale upload** (files over 5 MB): send a JSON body to
+
+        create the job, then upload files using the
+
+        [tus resumable upload
+        protocol](https://tus.io/protocols/resumable-upload),
+
+        and finally call `/jobs/{jobId}/start` to begin processing. See
+
+        [TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads)
+
+        for a reference implementation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: "#/components/schemas/IndexJobType"
+                baseIRI:
+                  type: string
+                  format: uri
+                defaultGraphName:
+                  type: string
+                  format: uri
+                overwriteAll:
+                  type: boolean
+                mergeGraphs:
+                  type: boolean
+                downloadUrls:
+                  type: array
+                  items:
+                    type: string
+                    format: uri
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Job created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndexJob"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Jobs
+      summary: Cancel all error jobs
+      operationId: cancelErrorJobs
+      responses:
+        "200":
+          description: Cancelled job IDs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deletedJobIds:
+                    type: array
+                    items:
+                      type: string
+  /datasets/{account}/{dataset}/jobs/{jobId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/jobId"
+    get:
+      tags:
+        - Jobs
+      summary: Get job details
+      operationId: getJob
+      responses:
+        "200":
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndexJob"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags:
+        - Jobs
+      summary: Cancel a job
+      operationId: cancelJob
+      responses:
+        "204":
+          description: Job cancelled
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/jobs/{jobId}/start:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/jobId"
+    post:
+      tags:
+        - Jobs
+      summary: Start a job
+      operationId: startJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                overwriteAll:
+                  type: boolean
+      responses:
+        "202":
+          description: Job started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndexJob"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/jobs/{jobId}/reset:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/jobId"
+    post:
+      tags:
+        - Jobs
+      summary: Reset a job
+      operationId: resetJob
+      responses:
+        "200":
+          description: Job reset
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndexJob"
+        "409":
+          description: Conflict — job cannot be reset in current state
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /datasets/{account}/{dataset}/jobs/{jobId}/{sourceFileId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/jobId"
+      - name: sourceFileId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+        - Jobs
+      summary: Delete a source file from a job
+      operationId: deleteJobSourceFile
+      responses:
+        "204":
+          description: Source file deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/hooks:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Hooks
+      summary: List webhooks
+      operationId: listHooks
+      responses:
+        "200":
+          description: Webhook list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Hook"
+    post:
+      tags:
+        - Hooks
+      summary: Create a webhook
+      operationId: createHook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HookCreate"
+      responses:
+        "201":
+          description: Webhook created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hook"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/hooks/{hookId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/hookId"
+    get:
+      tags:
+        - Hooks
+      summary: Get webhook details
+      operationId: getHook
+      responses:
+        "200":
+          description: Webhook details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hook"
+    patch:
+      tags:
+        - Hooks
+      summary: Update a webhook
+      operationId: updateHook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HookCreate"
+      responses:
+        "200":
+          description: Updated webhook
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Hook"
+    delete:
+      tags:
+        - Hooks
+      summary: Delete a webhook
+      operationId: deleteHook
+      responses:
+        "204":
+          description: Webhook deleted
+  /datasets/{account}/{dataset}/hookrecords/{hookId}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/hookId"
+    get:
+      tags:
+        - Hooks
+      summary: Get webhook trigger records
+      operationId: getHookRecords
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - name: offset
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Webhook trigger records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WebHookTriggerRecord"
+  /datasets/{account}/{dataset}/terms:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Search
+      summary: Autocomplete RDF terms
+      operationId: searchTerms
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          description: Search prefix
+          schema:
+            type: string
+        - name: pos
+          in: query
+          description: Term position filter
+          schema:
+            type: string
+            enum:
+              - subject
+              - predicate
+              - object
+              - graph
+        - name: graph
+          in: query
+          description: Filter by graph IRI
+          schema:
+            type: string
+        - name: subject
+          in: query
+          schema:
+            type: string
+        - name: predicate
+          in: query
+          schema:
+            type: string
+        - name: object
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: termType
+          in: query
+          schema:
+            type: string
+            enum:
+              - NamedNode
+              - Literal
+        - name: languageTag
+          in: query
+          schema:
+            type: string
+        - name: dataType
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Matching terms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /datasets/{account}/{dataset}/imports:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Graphs
+      summary: Get graph import configuration
+      operationId: getImports
+      responses:
+        "200":
+          description: Import configuration
+          content:
+            application/json:
+              schema:
+                type: object
+    patch:
+      tags:
+        - Graphs
+      summary: Update graph import configuration
+      operationId: updateImports
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Updated imports
+          content:
+            application/json:
+              schema:
+                type: object
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /datasets/{account}/{dataset}/download:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Datasets
+      summary: Download dataset as RDF
+      operationId: downloadDataset
+      security:
+        - {}
+      parameters:
+        - name: graph
+          in: query
+          description: Filter to a specific graph IRI
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Gzipped RDF data
+          headers:
+            Content-Encoding:
+              schema:
+                type: string
+                enum:
+                  - gzip
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            application/n-quads:
+              schema:
+                type: string
+                format: binary
+            application/trig:
+              schema:
+                type: string
+                format: binary
+            text/turtle:
+              schema:
+                type: string
+                format: binary
+            application/n-triples:
+              schema:
+                type: string
+                format: binary
+            application/ld+json:
+              schema:
+                type: string
+                format: binary
+    head:
+      tags:
+        - Datasets
+      summary: Check dataset download headers
+      operationId: headDownloadDataset
+      security:
+        - {}
+      parameters:
+        - name: graph
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Headers only
+  /datasets/{account}/{dataset}/prefixes:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+    get:
+      tags:
+        - Prefixes
+      summary: List dataset prefixes
+      operationId: getDatasetPrefixes
+      security:
+        - {}
+      parameters:
+        - name: scope
+          in: query
+          schema:
+            type: string
+            enum:
+              - local
+              - global
+      responses:
+        "200":
+          description: Prefix mappings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prefixes"
+    patch:
+      tags:
+        - Prefixes
+      summary: Merge-update dataset prefixes
+      operationId: patchDatasetPrefixes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Prefixes"
+      responses:
+        "200":
+          description: Updated prefixes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prefixes"
+    put:
+      tags:
+        - Prefixes
+      summary: Replace dataset prefixes
+      operationId: putDatasetPrefixes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Prefixes"
+      responses:
+        "200":
+          description: Replaced prefixes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prefixes"
+    post:
+      tags:
+        - Prefixes
+      summary: Add a dataset prefix
+      operationId: addDatasetPrefix
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Prefixes"
+      responses:
+        "200":
+          description: Created prefix
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Prefixes"
+  /datasets/{account}/{dataset}/prefixes/{prefix}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/dataset"
+      - $ref: "#/components/parameters/prefix"
+    get:
+      tags:
+        - Prefixes
+      summary: Get a dataset prefix
+      operationId: getDatasetPrefix
+      security:
+        - {}
+      responses:
+        "200":
+          description: Prefix IRI
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Prefixes
+      summary: Create or update a dataset prefix
+      operationId: putDatasetPrefix
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - iri
+              properties:
+                iri:
+                  type: string
+      responses:
+        "200":
+          description: Updated prefix
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - Prefixes
+      summary: Delete a dataset prefix
+      operationId: deleteDatasetPrefix
+      responses:
+        "204":
+          description: Prefix deleted
+  /queries:
+    get:
+      tags:
+        - Queries
+      summary: List all saved queries
+      operationId: listAllQueries
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortDirection"
+        - name: valid
+          in: query
+          schema:
+            type: string
+            enum:
+              - "true"
+              - "false"
+        - name: type
+          in: query
+          schema:
+            $ref: "#/components/schemas/SparqlRequestType"
+      responses:
+        "200":
+          description: Paginated query list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Query"
+  /queries/{account}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+    get:
+      tags:
+        - Queries
+      summary: List queries for an account
+      operationId: listAccountQueries
+      description: |
+        Returns a paginated list of saved queries owned by the account.
+
+        When the `Accept` header is set to `text/vnd.yaml`, this endpoint
+        returns an OpenAPI document describing all accessible queries of
+        the account as executable API operations.
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - name
+        - $ref: "#/components/parameters/sortDirection"
+        - name: valid
+          in: query
+          schema:
+            type: string
+            enum:
+              - "true"
+              - "false"
+        - name: type
+          in: query
+          schema:
+            $ref: "#/components/schemas/SparqlRequestType"
+      responses:
+        "200":
+          description: Queries for the account
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Query"
+            text/vnd.yaml:
+              schema:
+                type: string
+                description: OpenAPI 3.1 document describing all queries as operations
+    post:
+      tags:
+        - Queries
+      summary: Create a saved query
+      operationId: createQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryCreate"
+      responses:
+        "201":
+          description: Query created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /queries/{account}/{query}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+    get:
+      tags:
+        - Queries
+      summary: Get a saved query
+      operationId: getQuery
+      description: |
+        Returns the saved query metadata.
+
+        When the `Accept` header is set to `text/vnd.yaml`, returns an
+        OpenAPI document describing this query as an executable API
+        operation, including its variables as parameters.
+      security:
+        - {}
+      responses:
+        "200":
+          description: Query details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+            text/vnd.yaml:
+              schema:
+                type: string
+                description: OpenAPI 3.1 document for this query
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - Queries
+      summary: Update query metadata
+      operationId: updateQueryMeta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryMetaUpdate"
+      responses:
+        "200":
+          description: Updated query
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    post:
+      tags:
+        - Queries
+      summary: Add a new version to a query
+      operationId: addQueryVersion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryVersionUpdate"
+      responses:
+        "200":
+          description: Query with new version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Queries
+      summary: Delete a saved query
+      operationId: deleteQuery
+      responses:
+        "204":
+          description: Query deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /queries/{account}/{query}/chown:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+    post:
+      tags:
+        - Queries
+      summary: Transfer query ownership
+      operationId: chownQuery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toAccount
+              properties:
+                toAccount:
+                  type: string
+      responses:
+        "200":
+          description: Query with new owner
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /queries/{account}/{query}/run:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+    head:
+      tags:
+        - Queries
+      summary: Check if query can be executed
+      operationId: headRunQuery
+      security:
+        - {}
+      responses:
+        "202":
+          description: Query is executable
+          headers:
+            ETag:
+              description: Fingerprint of query/data state
+              schema:
+                type: string
+    get:
+      tags:
+        - Queries
+      summary: Execute a saved query (latest version)
+      operationId: runQuery
+      description: >
+        Executes the saved query and returns results. The response format
+        depends
+
+        on the SPARQL query type (SELECT, ASK, CONSTRUCT, DESCRIBE) and the
+
+        requested content type.
+
+
+        **Variable injection**: If the saved query defines variables, pass their
+
+        values as query parameters. For example, a query with variable `city`
+
+        is called as `?city=https://example.org/Amsterdam` (for NamedNode
+
+        variables) or `?city=Amsterdam` (for Literal variables). Variable
+
+        definitions are listed in the query's `variables` array.
+
+
+        **Format extension**: Append a format extension to the path
+
+        (e.g., `/run.csv`, `/run.jsonld`) to select the response format.
+
+        The extension takes precedence over the `Accept` header.
+      security:
+        - {}
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Query results
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+    post:
+      tags:
+        - Queries
+      summary: Execute a saved query (POST, for updates)
+      operationId: runQueryPost
+      security:
+        - {}
+      responses:
+        "200":
+          description: Query results
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}/run:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+      - $ref: "#/components/parameters/versionNr"
+    get:
+      tags:
+        - Queries
+      summary: Execute a specific query version
+      operationId: runQueryVersion
+      description: |
+        Like `runQuery`, but executes a specific version of the saved query.
+        Supports the same variable injection and format extension features.
+      security:
+        - {}
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Query results
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/sparql-results+json:
+              schema:
+                type: object
+            application/sparql-results+xml:
+              schema:
+                type: string
+            text/turtle:
+              schema:
+                type: string
+            application/trig:
+              schema:
+                type: string
+            application/n-triples:
+              schema:
+                type: string
+            application/n-quads:
+              schema:
+                type: string
+            application/ld+json:
+              schema:
+                type: object
+            text/csv:
+              schema:
+                type: string
+            text/tab-separated-values:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}/text:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+      - $ref: "#/components/parameters/versionNr"
+    get:
+      tags:
+        - Queries
+      summary: Get SPARQL query text with variables injected
+      operationId: getQueryText
+      security:
+        - {}
+      responses:
+        "200":
+          description: SPARQL query as text
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/sparql-query:
+              schema:
+                type: string
+            application/sparql-update:
+              schema:
+                type: string
+  /queries/{account}/{query}/{versionNr}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/queryName"
+      - $ref: "#/components/parameters/versionNr"
+    get:
+      tags:
+        - Queries
+      summary: Get a specific query version
+      operationId: getQueryVersion
+      security:
+        - {}
+      responses:
+        "200":
+          description: Query version details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Query"
+  /stories:
+    get:
+      tags:
+        - Stories
+      summary: List all stories
+      operationId: listAllStories
+      security:
+        - {}
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/since"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Paginated story list
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Story"
+  /stories/{account}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+    get:
+      tags:
+        - Stories
+      summary: List stories for an account
+      operationId: listAccountStories
+      security:
+        - {}
+      parameters:
+        - $ref: "#/components/parameters/since"
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - name
+        - $ref: "#/components/parameters/sortDirection"
+      responses:
+        "200":
+          description: Stories for the account
+          headers:
+            Link:
+              $ref: "#/components/headers/Link"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Story"
+    post:
+      tags:
+        - Stories
+      summary: Create a story
+      operationId: createStory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryCreate"
+      responses:
+        "201":
+          description: Story created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stories/{account}/{story}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/story"
+    get:
+      tags:
+        - Stories
+      summary: Get a story
+      operationId: getStory
+      security:
+        - {}
+      responses:
+        "200":
+          description: Story details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - Stories
+      summary: Update a story
+      operationId: updateStory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoryUpdate"
+      responses:
+        "200":
+          description: Updated story
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Stories
+      summary: Delete a story
+      operationId: deleteStory
+      responses:
+        "204":
+          description: Story deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stories/{account}/{story}/copy:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/story"
+    post:
+      tags:
+        - Stories
+      summary: Copy a story
+      operationId: copyStory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toAccount
+              properties:
+                toAccount:
+                  type: string
+      responses:
+        "201":
+          description: Copied story
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stories/{account}/{story}/chown:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/story"
+    post:
+      tags:
+        - Stories
+      summary: Transfer story ownership
+      operationId: chownStory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - toAccount
+              properties:
+                toAccount:
+                  type: string
+      responses:
+        "200":
+          description: Story with new owner
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stories/{account}/{story}/banner.webp:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/story"
+    post:
+      tags:
+        - Stories
+      summary: Upload story banner image
+      operationId: uploadStoryBanner
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                banner:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Updated story
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Story"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /stories/{account}/{story}/banner:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/story"
+    get:
+      tags:
+        - Stories
+      summary: Get story banner image
+      operationId: getStoryBanner
+      security:
+        - {}
+      parameters:
+        - name: v
+          in: query
+          description: Version
+          schema:
+            type: string
+        - name: w
+          in: query
+          description: Width
+          schema:
+            type: integer
+        - name: h
+          in: query
+          description: Height
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Banner image
+          content:
+            image/webp:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+  /me:
+    get:
+      tags:
+        - Accounts
+      summary: Get current user
+      operationId: getMe
+      responses:
+        "200":
+          description: Current user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    patch:
+      tags:
+        - Accounts
+      summary: Update current user
+      operationId: updateMe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountUpdate"
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Accounts
+      summary: Delete current user
+      operationId: deleteMe
+      responses:
+        "204":
+          description: Account deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /accounts/{account}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+    get:
+      tags:
+        - Accounts
+      summary: Get an account by name
+      operationId: getAccount
+      security:
+        - {}
+      parameters:
+        - name: verbose
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      tags:
+        - Accounts
+      summary: Update an account
+      operationId: updateAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountUpdate"
+      responses:
+        "200":
+          description: Updated account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    delete:
+      tags:
+        - Accounts
+      summary: Delete an account
+      operationId: deleteAccount
+      responses:
+        "204":
+          description: Account deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /accounts/{account}/members:
+    parameters:
+      - $ref: "#/components/parameters/account"
+    get:
+      tags:
+        - Accounts
+      summary: List group members
+      operationId: listMembers
+      responses:
+        "200":
+          description: Member list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupMember"
+    post:
+      tags:
+        - Accounts
+      summary: Add a member to a group
+      operationId: addMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - accountName
+                - role
+              properties:
+                accountName:
+                  type: string
+                role:
+                  $ref: "#/components/schemas/GroupRole"
+      responses:
+        "201":
+          description: Member added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupMember"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /accounts/{account}/members/{member}:
+    parameters:
+      - $ref: "#/components/parameters/account"
+      - $ref: "#/components/parameters/member"
+    get:
+      tags:
+        - Accounts
+      summary: Get member details
+      operationId: getMember
+      responses:
+        "200":
+          description: Member details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupMember"
+    patch:
+      tags:
+        - Accounts
+      summary: Update member role
+      operationId: updateMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                role:
+                  $ref: "#/components/schemas/GroupRole"
+      responses:
+        "200":
+          description: Updated member
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupMember"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+    delete:
+      tags:
+        - Accounts
+      summary: Remove a member from a group
+      operationId: removeMember
+      responses:
+        "204":
+          description: Member removed
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+servers:
+  - url: https://api.lod.uba.uva.nl
+    description: This instance
