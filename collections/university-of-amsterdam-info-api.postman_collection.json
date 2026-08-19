@@ -1,0 +1,110 @@
+{
+  "item": [
+    {
+      "id": "fd6f0177-c8b8-4d07-94ab-1edd06122d4b",
+      "name": "Info",
+      "description": {
+        "content": "Instance information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00058846-e77b-4c9a-b8fe-95ebc7a324aa",
+          "name": "Get instance configuration",
+          "request": {
+            "name": "Get instance configuration",
+            "description": {},
+            "url": {
+              "path": [
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "c42b4db2-6278-42b6-a7b6-6d930ccb75eb",
+              "name": "Instance configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"branding\": {\n    \"name\": \"string\",\n    \"logo\": \"string\",\n    \"logoBgType\": \"square\",\n    \"logoBgColor\": \"string\",\n    \"logoLg\": \"string\",\n    \"banner\": \"string\",\n    \"tagline\": \"string\",\n    \"description\": \"string\",\n    \"welcomeMessage\": \"string\"\n  },\n  \"consoleUrl\": \"string\",\n  \"apiUrl\": \"string\",\n  \"contactEmail\": \"string\",\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"enabledServices\": [\n    \"jena\",\n    \"virtuoso\"\n  ],\n  \"enabledOauth\": [\n    \"string\",\n    \"string\"\n  ],\n  \"passwordSignup\": true,\n  \"version\": \"string\",\n  \"statements\": 5341,\n  \"buildDate\": \"string\",\n  \"buildId\": \"string\",\n  \"instanceUpdatedAt\": \"2006-06-22T15:01:51.984Z\",\n  \"instanceStartedAt\": \"2020-10-02T18:13:07.677Z\",\n  \"counts\": {\n    \"queries\": 7013,\n    \"datasets\": 2323,\n    \"stories\": 778\n  },\n  \"legal\": {\n    \"latestRequiredConsentUpdate\": \"string\",\n    \"privacyPolicyUrl\": \"string\",\n    \"generalTermsUrl\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d4ecb67f-d604-424f-bc1c-7c3cdd6927a5",
+    "name": "TriplyDB Accounts Info API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

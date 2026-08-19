@@ -1,0 +1,344 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Search API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simple text search on Elasticsearch service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/search",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Simple text search on Elasticsearch service"
+        },
+        {
+          "info": {
+            "name": "Execute Elasticsearch Query DSL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/elasticsearch",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute Elasticsearch Query DSL"
+        },
+        {
+          "info": {
+            "name": "Elasticsearch _search API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/_search",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Elasticsearch _search API"
+        },
+        {
+          "info": {
+            "name": "Elasticsearch _msearch API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/_msearch",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Elasticsearch _msearch API"
+        },
+        {
+          "info": {
+            "name": "Elasticsearch _count API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/_count",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Elasticsearch _count API"
+        },
+        {
+          "info": {
+            "name": "Elasticsearch _terms_enum API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/_terms_enum",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Elasticsearch _terms_enum API"
+        },
+        {
+          "info": {
+            "name": "Get Elasticsearch mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/services/:serviceName/mappings",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "serviceName",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ]
+          },
+          "docs": "Get Elasticsearch mappings"
+        },
+        {
+          "info": {
+            "name": "Autocomplete RDF terms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/terms",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search prefix"
+              },
+              {
+                "name": "pos",
+                "value": "",
+                "type": "query",
+                "description": "Term position filter"
+              },
+              {
+                "name": "graph",
+                "value": "",
+                "type": "query",
+                "description": "Filter by graph IRI"
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "predicate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "termType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageTag",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dataType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Autocomplete RDF terms"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts GraphQL API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute GraphQL query (GET)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/graphql",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "GraphQL query string"
+              },
+              {
+                "name": "operationName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Execute GraphQL query (GET)"
+        },
+        {
+          "info": {
+            "name": "Execute GraphQL query (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/graphql",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute GraphQL query (POST)"
+        },
+        {
+          "info": {
+            "name": "Get GraphQL schema validation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/graphql/status",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Get GraphQL schema validation status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

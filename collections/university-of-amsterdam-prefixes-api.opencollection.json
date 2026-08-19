@@ -1,0 +1,275 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Prefixes API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prefixes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List global prefixes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/prefixes",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List global prefixes"
+        },
+        {
+          "info": {
+            "name": "Get a single prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/prefixes/:prefix",
+            "params": [
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "Prefix label"
+              }
+            ]
+          },
+          "docs": "Get a single prefix"
+        },
+        {
+          "info": {
+            "name": "List dataset prefixes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List dataset prefixes"
+        },
+        {
+          "info": {
+            "name": "Add a dataset prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a dataset prefix"
+        },
+        {
+          "info": {
+            "name": "Replace dataset prefixes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace dataset prefixes"
+        },
+        {
+          "info": {
+            "name": "Merge-update dataset prefixes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge-update dataset prefixes"
+        },
+        {
+          "info": {
+            "name": "Get a dataset prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes/:prefix",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "Prefix label"
+              }
+            ]
+          },
+          "docs": "Get a dataset prefix"
+        },
+        {
+          "info": {
+            "name": "Create or update a dataset prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes/:prefix",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "Prefix label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a dataset prefix"
+        },
+        {
+          "info": {
+            "name": "Delete a dataset prefix",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/prefixes/:prefix",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "path",
+                "description": "Prefix label"
+              }
+            ]
+          },
+          "docs": "Delete a dataset prefix"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

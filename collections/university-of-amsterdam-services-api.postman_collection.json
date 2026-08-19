@@ -1,0 +1,1374 @@
+{
+  "item": [
+    {
+      "id": "a2d9d377-b296-4c7c-bd3d-589405e314da",
+      "name": "Services",
+      "description": {
+        "content": "Triple store service management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0bb00f6c-07d2-4404-b6bb-12564ea6a35b",
+          "name": "List services",
+          "request": {
+            "name": "List services",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "3fbb2a15-be5a-4697-991f-e012353f2993",
+              "name": "Service list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"type\": \"jena\",\n    \"name\": \"sparql\",\n    \"id\": \"64a1b2c3d4e5f6001234567a\",\n    \"status\": \"starting\",\n    \"capabilities\": [\n      \"sparqlApi\",\n      \"elasticSearch\"\n    ],\n    \"createdAt\": \"1992-07-25T16:22:34.393Z\",\n    \"version\": \"string\",\n    \"numberOfLoadedStatements\": 8508,\n    \"numberOfLoadedGraphs\": 1967,\n    \"numberOfGraphs\": 1356,\n    \"numberOfGraphErrors\": 7020,\n    \"error\": {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    \"endpoint\": \"string\",\n    \"outOfSync\": true,\n    \"loadedAt\": \"1979-10-02T22:11:19.966Z\",\n    \"config\": {\n      \"reasonerType\": \"RDFS\",\n      \"indexTemplates\": [\n        {\n          \"name\": \"string\",\n          \"index_patterns\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"index_patterns\": \"string\"\n        }\n      ],\n      \"componentTemplates\": [\n        {\n          \"name\": \"string\",\n          \"template\": {\n            \"mappings\": {},\n            \"settings\": {}\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"template\": {\n            \"mappings\": {},\n            \"settings\": {}\n          }\n        }\n      ]\n    }\n  },\n  {\n    \"type\": \"jena\",\n    \"name\": \"sparql\",\n    \"id\": \"64a1b2c3d4e5f6001234567a\",\n    \"status\": \"running\",\n    \"capabilities\": [\n      \"sparql\",\n      \"elasticSearch\"\n    ],\n    \"createdAt\": \"2007-06-09T18:21:57.081Z\",\n    \"version\": \"string\",\n    \"numberOfLoadedStatements\": 5247,\n    \"numberOfLoadedGraphs\": 3261,\n    \"numberOfGraphs\": 8156,\n    \"numberOfGraphErrors\": 5653,\n    \"error\": {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    \"endpoint\": \"string\",\n    \"outOfSync\": true,\n    \"loadedAt\": \"1951-09-26T08:19:00.844Z\",\n    \"config\": {\n      \"reasonerType\": \"OWL\",\n      \"indexTemplates\": [\n        {\n          \"name\": \"string\",\n          \"index_patterns\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"index_patterns\": \"string\"\n        }\n      ],\n      \"componentTemplates\": [\n        {\n          \"name\": \"string\",\n          \"template\": {\n            \"mappings\": {},\n            \"settings\": {}\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"template\": {\n            \"mappings\": {},\n            \"settings\": {}\n          }\n        }\n      ]\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bbd4a404-f7a6-4c11-a76d-74a072d4b3c2",
+          "name": "Create a service",
+          "request": {
+            "name": "Create a service",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3d84169b-3337-4513-975a-0a2ae73dc2fd",
+              "name": "Service created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"sparql\",\n  \"id\": \"64a1b2c3d4e5f6001234567a\",\n  \"status\": \"starting\",\n  \"capabilities\": [\n    \"sparqlApi\",\n    \"elasticSearch\"\n  ],\n  \"createdAt\": \"2017-09-10T22:07:46.523Z\",\n  \"version\": \"string\",\n  \"numberOfLoadedStatements\": 9166,\n  \"numberOfLoadedGraphs\": 2581,\n  \"numberOfGraphs\": 4352,\n  \"numberOfGraphErrors\": 9506,\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"endpoint\": \"string\",\n  \"outOfSync\": true,\n  \"loadedAt\": \"1990-06-30T00:29:35.201Z\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42769e04-a7eb-4780-9b77-8d111f199c44",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "559223ce-38c5-450b-b148-d73befd8da62",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "619a34cd-eab2-4c0c-a8d3-16763410fb47",
+          "name": "Get service details",
+          "request": {
+            "name": "Get service details",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services",
+                ":serviceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceName",
+                  "description": "(Required) Service name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "074498b8-ee5f-4375-aabc-e5ed0cb5f0ce",
+              "name": "Service metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"sparql\",\n  \"id\": \"64a1b2c3d4e5f6001234567a\",\n  \"status\": \"starting\",\n  \"capabilities\": [\n    \"sparqlApi\",\n    \"elasticSearch\"\n  ],\n  \"createdAt\": \"2017-09-10T22:07:46.523Z\",\n  \"version\": \"string\",\n  \"numberOfLoadedStatements\": 9166,\n  \"numberOfLoadedGraphs\": 2581,\n  \"numberOfGraphs\": 4352,\n  \"numberOfGraphErrors\": 9506,\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"endpoint\": \"string\",\n  \"outOfSync\": true,\n  \"loadedAt\": \"1990-06-30T00:29:35.201Z\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd671a7f-3975-44f0-bb1e-4831bd7d6949",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17c81426-8ada-4a50-95c4-16006a2f6b10",
+          "name": "Perform a service action (start, sync, restart)",
+          "request": {
+            "name": "Perform a service action (start, sync, restart)",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services",
+                ":serviceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceName",
+                  "description": "(Required) Service name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start\": \"<boolean>\",\n  \"sync\": \"<boolean>\",\n  \"restart\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "45c3e7ef-e234-4ccb-8566-63848a210d69",
+              "name": "Updated service",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<boolean>\",\n  \"sync\": \"<boolean>\",\n  \"restart\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"sparql\",\n  \"id\": \"64a1b2c3d4e5f6001234567a\",\n  \"status\": \"starting\",\n  \"capabilities\": [\n    \"sparqlApi\",\n    \"elasticSearch\"\n  ],\n  \"createdAt\": \"2017-09-10T22:07:46.523Z\",\n  \"version\": \"string\",\n  \"numberOfLoadedStatements\": 9166,\n  \"numberOfLoadedGraphs\": 2581,\n  \"numberOfGraphs\": 4352,\n  \"numberOfGraphErrors\": 9506,\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"endpoint\": \"string\",\n  \"outOfSync\": true,\n  \"loadedAt\": \"1990-06-30T00:29:35.201Z\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8a802e5-ee07-41a6-ae21-b9a1414c1e99",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start\": \"<boolean>\",\n  \"sync\": \"<boolean>\",\n  \"restart\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ffb8cb8d-d13d-44ad-94a9-5c81a6f337a2",
+          "name": "Update a service",
+          "request": {
+            "name": "Update a service",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services",
+                ":serviceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceName",
+                  "description": "(Required) Service name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f7b65bc-168e-4751-8d04-2ceebb222103",
+              "name": "Updated service",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"<string>\",\n  \"name\": \"sparql\",\n  \"id\": \"64a1b2c3d4e5f6001234567a\",\n  \"status\": \"starting\",\n  \"capabilities\": [\n    \"sparqlApi\",\n    \"elasticSearch\"\n  ],\n  \"createdAt\": \"2017-09-10T22:07:46.523Z\",\n  \"version\": \"string\",\n  \"numberOfLoadedStatements\": 9166,\n  \"numberOfLoadedGraphs\": 2581,\n  \"numberOfGraphs\": 4352,\n  \"numberOfGraphErrors\": 9506,\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"endpoint\": \"string\",\n  \"outOfSync\": true,\n  \"loadedAt\": \"1990-06-30T00:29:35.201Z\",\n  \"config\": {\n    \"reasonerType\": \"<string>\",\n    \"indexTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"index_patterns\": \"<string>\"\n      }\n    ],\n    \"componentTemplates\": [\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"template\": {\n          \"mappings\": \"<object>\",\n          \"settings\": \"<object>\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b48d2d1b-abfa-43ba-802e-e7b7eed38453",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49cd86fd-f2f3-4e4e-8d67-3e6221881587",
+          "name": "Delete a service",
+          "request": {
+            "name": "Delete a service",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services",
+                ":serviceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceName",
+                  "description": "(Required) Service name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38525b9e-e101-4e29-9315-33312c9b345e",
+              "name": "Service deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5b1d5822-8224-43a1-b1a0-7643adfcc4a8",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62d7527d-45e3-4756-8653-1cf181092895",
+          "name": "List service graphs",
+          "request": {
+            "name": "List service graphs",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "services",
+                ":serviceName",
+                "graphs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "serviceName",
+                  "description": "(Required) Service name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "04c1c4f3-24ed-4d43-bc39-f2156e2e130d",
+              "name": "Service graphs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "services",
+                    ":serviceName",
+                    "graphs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "serviceName",
+                      "description": "(Required) Service name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"graphName\": \"string\",\n    \"status\": \"notLoaded\",\n    \"statements\": 4217,\n    \"error\": \"string\"\n  },\n  {\n    \"graphName\": \"string\",\n    \"status\": \"loading\",\n    \"statements\": 9361,\n    \"error\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d49c26b9-01da-486c-9248-91ca356cca17",
+    "name": "TriplyDB Accounts Services API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

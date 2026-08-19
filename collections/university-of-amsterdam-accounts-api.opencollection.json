@@ -1,0 +1,294 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search term"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List accounts"
+        },
+        {
+          "info": {
+            "name": "Get current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/me"
+          },
+          "docs": "Get current user"
+        },
+        {
+          "info": {
+            "name": "Update current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/me",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update current user"
+        },
+        {
+          "info": {
+            "name": "Delete current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/me"
+          },
+          "docs": "Delete current user"
+        },
+        {
+          "info": {
+            "name": "Get an account by name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "verbose",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get an account by name"
+        },
+        {
+          "info": {
+            "name": "Update an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an account"
+        },
+        {
+          "info": {
+            "name": "Delete an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ]
+          },
+          "docs": "Delete an account"
+        },
+        {
+          "info": {
+            "name": "List group members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account/members",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ]
+          },
+          "docs": "List group members"
+        },
+        {
+          "info": {
+            "name": "Add a member to a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account/members",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a member to a group"
+        },
+        {
+          "info": {
+            "name": "Get member details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account/members/:member",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "member",
+                "value": "",
+                "type": "path",
+                "description": "Member account name"
+              }
+            ]
+          },
+          "docs": "Get member details"
+        },
+        {
+          "info": {
+            "name": "Update member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account/members/:member",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "member",
+                "value": "",
+                "type": "path",
+                "description": "Member account name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update member role"
+        },
+        {
+          "info": {
+            "name": "Remove a member from a group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/accounts/:account/members/:member",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "member",
+                "value": "",
+                "type": "path",
+                "description": "Member account name"
+              }
+            ]
+          },
+          "docs": "Remove a member from a group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

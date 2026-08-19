@@ -1,0 +1,296 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Assets API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by file name"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Should be provided using the `link` header"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              }
+            ]
+          },
+          "docs": "List assets"
+        },
+        {
+          "info": {
+            "name": "Upload a new asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads a file as a dataset asset.\n\n**Simple upload** (files under 5 MB): send the file as\n`multipart/form-data`.\n\n**Large-scale upload** (files over 5 MB): use the\n[tus resumable upload protocol](https://tus.io/protocols/resumable-upload).\n"
+        },
+        {
+          "info": {
+            "name": "Delete all assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Delete all assets"
+        },
+        {
+          "info": {
+            "name": "Download an asset by file name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets/download",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Download an asset by file name"
+        },
+        {
+          "info": {
+            "name": "Download an asset by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets/:assetId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Asset identifier"
+              }
+            ]
+          },
+          "docs": "Download an asset by ID"
+        },
+        {
+          "info": {
+            "name": "Delete an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets/:assetId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Asset identifier"
+              }
+            ]
+          },
+          "docs": "Delete an asset"
+        },
+        {
+          "info": {
+            "name": "Download a specific asset version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets/:assetId/:versionId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Asset identifier"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a specific asset version"
+        },
+        {
+          "info": {
+            "name": "Delete an asset version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/assets/:assetId/:versionId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "assetId",
+                "value": "",
+                "type": "path",
+                "description": "Asset identifier"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an asset version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

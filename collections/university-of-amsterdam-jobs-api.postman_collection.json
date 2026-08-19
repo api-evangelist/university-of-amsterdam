@@ -1,0 +1,1398 @@
+{
+  "item": [
+    {
+      "id": "ec1fd09b-9680-473c-aa67-c0e1a623f985",
+      "name": "Jobs",
+      "description": {
+        "content": "Data import jobs. Linked data can be uploaded in two ways:\n\n**Simple upload** (< 5 MB): Send the file as `multipart/form-data` in\nthe `POST /datasets/{account}/{dataset}/jobs` request. The job is\ncreated with the file attached in a single request.\n\n**Large-scale upload**: For files larger than 5 MB, create a job with\na JSON body first (without a file), then upload file(s) using the\n[tus resumable upload protocol](https://tus.io/protocols/resumable-upload)\nagainst the job's upload endpoint, then start the job. See\n[TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads) for\na reference implementation.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "696f8a1b-b320-4faa-b329-e119fbbb3b37",
+          "name": "Create an import job",
+          "request": {
+            "name": "Create an import job",
+            "description": {
+              "content": "Creates a new data import job.\n\n**Simple upload** (files under 5 MB): send the file as\n`multipart/form-data`. The job is created and starts processing\nautomatically.\n\n```\ncurl -H 'Authorization: Bearer TOKEN' \\\n  -X POST https://api.INSTANCE/datasets/ACCOUNT/DATASET/jobs \\\n  -F file=@./myfile.trig\n```\n\n**Large-scale upload** (files over 5 MB): send a JSON body to\ncreate the job, then upload files using the\n[tus resumable upload protocol](https://tus.io/protocols/resumable-upload),\nand finally call `/jobs/{jobId}/start` to begin processing. See\n[TriplyDB Uploads](https://github.com/TriplyDB/TriplyDBUploads)\nfor a reference implementation.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b5ea28d5-7c0f-42cd-aa2c-bd65c7685694",
+              "name": "Job created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"2019-06-20T08:51:52.786Z\",\n  \"datasetId\": \"string\",\n  \"downloadedBytes\": 9798,\n  \"downloadingProgress\": 1,\n  \"files\": [\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 5879,\n      \"sourceFileId\": \"string\"\n    },\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 7785,\n      \"sourceFileId\": \"string\"\n    }\n  ],\n  \"indexedGraphCount\": 8207,\n  \"indexingProgress\": 2819.8803773422596,\n  \"jobId\": \"64a1b2c3d4e5f6001234567c\",\n  \"skippedFileCount\": 4791,\n  \"skippedFileNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"created\",\n  \"type\": \"upload\",\n  \"updatedAt\": \"2025-11-21T07:26:09.343Z\",\n  \"baseIRI\": \"string\",\n  \"defaultGraphName\": \"string\",\n  \"downloadUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"graphNames\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10da3a09-036e-48a2-89cc-46393cab346a",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c1dd595-4fc3-41ad-b9e8-4168dc5fcbeb",
+          "name": "Cancel all error jobs",
+          "request": {
+            "name": "Cancel all error jobs",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff8a6d42-19c3-4ec0-818f-a7fbde28f002",
+              "name": "Cancelled job IDs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deletedJobIds\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "322882ee-2133-4df2-a2a5-31fc5b183ef7",
+          "name": "Get job details",
+          "request": {
+            "name": "Get job details",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9813492-7828-4231-bdc6-0dc67ccf2428",
+              "name": "Job details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1999-08-19T20:48:32.369Z\",\n  \"datasetId\": \"string\",\n  \"downloadedBytes\": 3266,\n  \"downloadingProgress\": 1,\n  \"files\": [\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 598,\n      \"sourceFileId\": \"string\"\n    },\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 4420,\n      \"sourceFileId\": \"string\"\n    }\n  ],\n  \"indexedGraphCount\": 1615,\n  \"indexingProgress\": 9223.838401437799,\n  \"jobId\": \"64a1b2c3d4e5f6001234567c\",\n  \"skippedFileCount\": 848,\n  \"skippedFileNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"error\",\n  \"type\": \"download\",\n  \"updatedAt\": \"2004-05-25T09:31:48.110Z\",\n  \"baseIRI\": \"string\",\n  \"defaultGraphName\": \"string\",\n  \"downloadUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"graphNames\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4f5ce67-33cb-429f-9050-5f227294088f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a19c8f97-f6c9-435b-a94e-dd1a21b41183",
+          "name": "Cancel a job",
+          "request": {
+            "name": "Cancel a job",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52659a38-d569-4ee7-9e3e-760fc253885d",
+              "name": "Job cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "576f1152-8867-4e1d-8454-5db83467dc8f",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8dd8cb37-ed7a-43cc-ba8a-2a2e54488fca",
+          "name": "Start a job",
+          "request": {
+            "name": "Start a job",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs",
+                ":jobId",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"overwriteAll\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aaf5ee27-4297-432b-82ee-2bc66623a216",
+              "name": "Job started",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overwriteAll\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1999-08-19T20:48:32.369Z\",\n  \"datasetId\": \"string\",\n  \"downloadedBytes\": 3266,\n  \"downloadingProgress\": 1,\n  \"files\": [\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 598,\n      \"sourceFileId\": \"string\"\n    },\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 4420,\n      \"sourceFileId\": \"string\"\n    }\n  ],\n  \"indexedGraphCount\": 1615,\n  \"indexingProgress\": 9223.838401437799,\n  \"jobId\": \"64a1b2c3d4e5f6001234567c\",\n  \"skippedFileCount\": 848,\n  \"skippedFileNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"error\",\n  \"type\": \"download\",\n  \"updatedAt\": \"2004-05-25T09:31:48.110Z\",\n  \"baseIRI\": \"string\",\n  \"defaultGraphName\": \"string\",\n  \"downloadUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"graphNames\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e42c5a5f-e682-40a0-8bbc-c256fa8738bd",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overwriteAll\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ba56f12-17cc-40e0-b622-55b248db0020",
+          "name": "Reset a job",
+          "request": {
+            "name": "Reset a job",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs",
+                ":jobId",
+                "reset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c49aa72c-5e3f-42e5-ae45-c4b22f85c5b9",
+              "name": "Job reset",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"1999-08-19T20:48:32.369Z\",\n  \"datasetId\": \"string\",\n  \"downloadedBytes\": 3266,\n  \"downloadingProgress\": 1,\n  \"files\": [\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 598,\n      \"sourceFileId\": \"string\"\n    },\n    {\n      \"fileName\": \"string\",\n      \"fileSize\": 4420,\n      \"sourceFileId\": \"string\"\n    }\n  ],\n  \"indexedGraphCount\": 1615,\n  \"indexingProgress\": 9223.838401437799,\n  \"jobId\": \"64a1b2c3d4e5f6001234567c\",\n  \"skippedFileCount\": 848,\n  \"skippedFileNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"error\",\n  \"type\": \"download\",\n  \"updatedAt\": \"2004-05-25T09:31:48.110Z\",\n  \"baseIRI\": \"string\",\n  \"defaultGraphName\": \"string\",\n  \"downloadUrls\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": {\n    \"message\": \"Resource not found.\",\n    \"code\": 404,\n    \"errors\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n      }\n    ]\n  },\n  \"graphNames\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ba59d8f-6cdd-4c84-9e8a-c41445c613cd",
+              "name": "Conflict — job cannot be reset in current state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52127332-0415-4d23-b48e-836488a5f671",
+          "name": "Delete a source file from a job",
+          "request": {
+            "name": "Delete a source file from a job",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "jobs",
+                ":jobId",
+                ":sourceFileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceFileId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dac0982b-6723-4aa6-863c-967198147259",
+              "name": "Source file deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    ":sourceFileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceFileId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8972f01-2bb4-47f5-a92c-47192c806b5d",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "jobs",
+                    ":jobId",
+                    ":sourceFileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceFileId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "afa076ed-966e-42a2-b1f3-a139bfcdb4ff",
+    "name": "TriplyDB Accounts Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

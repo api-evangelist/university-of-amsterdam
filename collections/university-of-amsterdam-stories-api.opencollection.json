@@ -1,0 +1,334 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Stories API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all stories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/stories",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Should be provided using the `link` header"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              }
+            ]
+          },
+          "docs": "List all stories"
+        },
+        {
+          "info": {
+            "name": "List stories for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/stories/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Should be provided using the `link` header"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              }
+            ]
+          },
+          "docs": "List stories for an account"
+        },
+        {
+          "info": {
+            "name": "Create a story",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/stories/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a story"
+        },
+        {
+          "info": {
+            "name": "Get a story",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ]
+          },
+          "docs": "Get a story"
+        },
+        {
+          "info": {
+            "name": "Update a story",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a story"
+        },
+        {
+          "info": {
+            "name": "Delete a story",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ]
+          },
+          "docs": "Delete a story"
+        },
+        {
+          "info": {
+            "name": "Copy a story",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story/copy",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Copy a story"
+        },
+        {
+          "info": {
+            "name": "Transfer story ownership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story/chown",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer story ownership"
+        },
+        {
+          "info": {
+            "name": "Upload story banner image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story/banner.webp",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "banner",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload story banner image"
+        },
+        {
+          "info": {
+            "name": "Get story banner image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/stories/:account/:story/banner",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "story",
+                "value": "",
+                "type": "path",
+                "description": "Story name"
+              },
+              {
+                "name": "v",
+                "value": "",
+                "type": "query",
+                "description": "Version"
+              },
+              {
+                "name": "w",
+                "value": "",
+                "type": "query",
+                "description": "Width"
+              },
+              {
+                "name": "h",
+                "value": "",
+                "type": "query",
+                "description": "Height"
+              }
+            ]
+          },
+          "docs": "Get story banner image"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1886 @@
+{
+  "item": [
+    {
+      "id": "de39fbba-e6fc-475f-955b-3326e76b72b6",
+      "name": "Accounts",
+      "description": {
+        "content": "Account and group management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e6ebbcd6-76e1-4fc5-83a6-948647a50f6b",
+          "name": "List accounts",
+          "request": {
+            "name": "List accounts",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search term"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1fb95dfd-5903-45f7-95dd-44d3b2426e55",
+              "name": "Paginated account list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"<string>\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1990-12-15T06:29:21.635Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 6260,\n    \"queryCount\": 4707,\n    \"storyCount\": 4382,\n    \"email\": \"BJ6tk9@gOtHUZlPeisB.joli\"\n  },\n  {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"<string>\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1949-06-06T07:59:46.045Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 8487,\n    \"queryCount\": 7738,\n    \"storyCount\": 8867,\n    \"email\": \"Pda7@OjN.sx\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21847933-f304-4d73-8ac1-e5f3c4fa6053",
+          "name": "Get current user",
+          "request": {
+            "name": "Get current user",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d06ef4b4-a2a7-4165-bd70-5610226066b5",
+              "name": "Current user details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountName\": \"acme-research\",\n  \"uid\": \"64a1b2c3d4e5f60012345678\",\n  \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n  \"description\": \"Publishing linked open data for the sciences.\",\n  \"type\": \"<string>\",\n  \"name\": \"ACME Research Lab\",\n  \"avatarUrl\": \"string\",\n  \"updatedAt\": \"2008-08-11T02:46:26.700Z\",\n  \"accountType\": \"user\",\n  \"datasetCount\": 8214,\n  \"queryCount\": 5238,\n  \"storyCount\": 5396,\n  \"email\": \"2IF50gu21t-l@GdKjHRRlDnPGnNtiQ.zwi\",\n  \"orgs\": [\n    {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"2021-05-31T08:59:33.283Z\",\n      \"accountType\": \"user\",\n      \"datasetCount\": 1183,\n      \"queryCount\": 3323,\n      \"storyCount\": 8918,\n      \"email\": \"qWzeuCUYXrGI@HYAUSQqXwGEYcPrWHePuhSJXGNV.ooun\",\n      \"members\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"2026-06-14T18:49:26.571Z\",\n          \"updatedAt\": \"2022-03-28T03:06:53.722Z\"\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"1988-12-14T16:30:48.938Z\",\n          \"updatedAt\": \"2021-02-01T03:12:06.391Z\"\n        }\n      ]\n    },\n    {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1988-11-22T15:30:50.505Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 3862,\n      \"queryCount\": 1066,\n      \"storyCount\": 320,\n      \"email\": \"KNk@TJ.ccd\",\n      \"members\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"2018-10-24T23:12:47.868Z\",\n          \"updatedAt\": \"1971-11-04T02:40:42.951Z\"\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"1998-12-01T23:10:32.578Z\",\n          \"updatedAt\": \"1971-06-01T09:12:52.940Z\"\n        }\n      ]\n    }\n  ],\n  \"authMethod\": \"string\",\n  \"verified\": false,\n  \"mfaEnabled\": true,\n  \"legalConsent\": \"expired\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec490c6f-353c-4429-99ec-75a76ed617fc",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11c385b4-49bf-465b-88a9-07fe0daf1b79",
+          "name": "Update current user",
+          "request": {
+            "name": "Update current user",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6930ae96-44c5-470d-accc-e8e19e8e145b",
+              "name": "Updated user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountName\": \"acme-research\",\n  \"uid\": \"64a1b2c3d4e5f60012345678\",\n  \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n  \"description\": \"Publishing linked open data for the sciences.\",\n  \"type\": \"<string>\",\n  \"name\": \"ACME Research Lab\",\n  \"avatarUrl\": \"string\",\n  \"updatedAt\": \"1960-02-02T17:39:08.546Z\",\n  \"accountType\": \"group\",\n  \"datasetCount\": 9505,\n  \"queryCount\": 144,\n  \"storyCount\": 1181,\n  \"email\": \"IeRfJDVLefM8O7@LwnBrVGFXoyJnVzvVpbtBmWUzjj.ql\",\n  \"orgs\": [\n    {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1994-01-28T17:59:58.533Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 1239,\n      \"queryCount\": 9750,\n      \"storyCount\": 356,\n      \"email\": \"wrqBpYVXWNa1bJ@STFGEftb.sn\",\n      \"members\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"1967-06-24T02:33:13.150Z\",\n          \"updatedAt\": \"2011-04-26T01:47:03.135Z\"\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"1960-02-17T03:26:50.584Z\",\n          \"updatedAt\": \"2023-06-09T17:50:38.309Z\"\n        }\n      ]\n    },\n    {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"2022-04-22T01:40:19.457Z\",\n      \"accountType\": \"user\",\n      \"datasetCount\": 9428,\n      \"queryCount\": 786,\n      \"storyCount\": 7508,\n      \"email\": \"u4R6y@jwUXBuThAbtDyunoNfAaoDbOWJKozk.mhkx\",\n      \"members\": [\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"2023-12-31T08:03:10.759Z\",\n          \"updatedAt\": \"1982-08-13T15:21:02.150Z\"\n        },\n        {\n          \"role\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"user\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdAt\": \"1968-09-07T01:55:56.387Z\",\n          \"updatedAt\": \"1997-07-24T12:20:07.998Z\"\n        }\n      ]\n    }\n  ],\n  \"authMethod\": \"string\",\n  \"verified\": false,\n  \"mfaEnabled\": true,\n  \"legalConsent\": \"ok\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799757cf-5b83-4325-9eb9-8e0dca5a2a3f",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ca90a36-ee5e-4c3d-8897-e9b12221d0cf",
+          "name": "Delete current user",
+          "request": {
+            "name": "Delete current user",
+            "description": {},
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94742727-7da0-4074-a79e-16f8a3de6c8a",
+              "name": "Account deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "54e5910f-9544-48a7-aa25-65598013af71",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe04a0b8-22a2-4414-ab60-bb519d6a10cd",
+          "name": "Get an account by name",
+          "request": {
+            "name": "Get an account by name",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "331d65ac-09cf-4578-9a15-cee64a0b0ada",
+              "name": "Account details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountName\": \"acme-research\",\n  \"uid\": \"64a1b2c3d4e5f60012345678\",\n  \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n  \"description\": \"Publishing linked open data for the sciences.\",\n  \"type\": \"<string>\",\n  \"name\": \"ACME Research Lab\",\n  \"avatarUrl\": \"string\",\n  \"updatedAt\": \"2022-08-06T14:42:46.354Z\",\n  \"accountType\": \"group\",\n  \"datasetCount\": 6854,\n  \"queryCount\": 8914,\n  \"storyCount\": 2626,\n  \"email\": \"ucfDiC8WRaLzmXl@DbRYfdqhbFZRqaRXFuWqruQYcEZI.mrs\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6d0ff30-f588-434c-a9d8-a6e2ee8bbada",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99d4b23a-8fc5-47c2-985c-85f9fa4204a6",
+          "name": "Update an account",
+          "request": {
+            "name": "Update an account",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4eea22d-4982-44c6-9775-c7fb442248f8",
+              "name": "Updated account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountName\": \"acme-research\",\n  \"uid\": \"64a1b2c3d4e5f60012345678\",\n  \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n  \"description\": \"Publishing linked open data for the sciences.\",\n  \"type\": \"<string>\",\n  \"name\": \"ACME Research Lab\",\n  \"avatarUrl\": \"string\",\n  \"updatedAt\": \"2022-08-06T14:42:46.354Z\",\n  \"accountType\": \"group\",\n  \"datasetCount\": 6854,\n  \"queryCount\": 8914,\n  \"storyCount\": 2626,\n  \"email\": \"ucfDiC8WRaLzmXl@DbRYfdqhbFZRqaRXFuWqruQYcEZI.mrs\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e60e0ef1-8986-4988-9814-582db26d6641",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "308f7677-cbce-45b0-bfc2-5895fb1075ad",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<email>\",\n  \"accountName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"pinnedItems\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9bcf65dc-b9f3-4eb7-864f-24a3d6db0a9a",
+          "name": "Delete an account",
+          "request": {
+            "name": "Delete an account",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f652eaf8-2ce5-40f6-a774-cbfe8c9da78b",
+              "name": "Account deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f1d71de0-3eb0-4656-b2a0-543a3954add2",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50eb6cdc-5bb8-4f44-813c-09e7593909b0",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff3399eb-12a5-4312-94ef-291ebf653775",
+          "name": "List group members",
+          "request": {
+            "name": "List group members",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c72c4dd6-1792-4644-a457-8558b5914714",
+              "name": "Member list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"role\": \"member\",\n    \"user\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1980-05-30T15:17:46.527Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 7671,\n      \"queryCount\": 7133,\n      \"storyCount\": 6728,\n      \"email\": \"cjJqvIssTSCfFc@iOtVKbbXKxLrFxkjCpsfNNdyyorh.sdaf\",\n      \"orgs\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"authMethod\": \"string\",\n      \"verified\": true,\n      \"mfaEnabled\": false,\n      \"legalConsent\": \"expired\"\n    },\n    \"createdAt\": \"1968-03-18T22:04:07.178Z\",\n    \"updatedAt\": \"1958-05-05T02:47:47.106Z\"\n  },\n  {\n    \"role\": \"member\",\n    \"user\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"<string>\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1971-01-07T22:35:10.844Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 6232,\n      \"queryCount\": 8270,\n      \"storyCount\": 7722,\n      \"email\": \"4BH2tnJg@jqLzNRZWbGpVKLnAOUEvCZlVkelwUG.plv\",\n      \"orgs\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"authMethod\": \"string\",\n      \"verified\": false,\n      \"mfaEnabled\": true,\n      \"legalConsent\": \"ok\"\n    },\n    \"createdAt\": \"1951-05-09T23:17:27.567Z\",\n    \"updatedAt\": \"2026-02-16T13:58:44.151Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b978662-9a5f-43c7-aee9-e4756cfa9054",
+          "name": "Add a member to a group",
+          "request": {
+            "name": "Add a member to a group",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountName\": \"<string>\",\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "806155ef-f57a-483a-8120-5be2d96ed7e0",
+              "name": "Member added",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"<string>\",\n  \"role\": \"member\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"role\": \"member\",\n  \"user\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"<string>\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1969-01-13T10:47:45.829Z\",\n    \"accountType\": \"group\",\n    \"datasetCount\": 3630,\n    \"queryCount\": 3884,\n    \"storyCount\": 4186,\n    \"email\": \"SrPt9DRXLDaA@eBfbmyhsBzQXjEOEYdVeYrwImddM.yzh\",\n    \"orgs\": [\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"authMethod\": \"string\",\n    \"verified\": false,\n    \"mfaEnabled\": true,\n    \"legalConsent\": \"ok\"\n  },\n  \"createdAt\": \"1985-12-27T23:40:36.886Z\",\n  \"updatedAt\": \"1987-07-12T10:56:04.374Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35d461d6-06dd-407c-b17f-53d520918208",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"<string>\",\n  \"role\": \"member\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "630d8e78-6dd5-483b-84a2-e4e060d74d7d",
+          "name": "Get member details",
+          "request": {
+            "name": "Get member details",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account",
+                "members",
+                ":member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member",
+                  "description": "(Required) Member account name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a47ad031-438f-4026-b287-a359f7f30b0f",
+              "name": "Member details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members",
+                    ":member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member",
+                      "description": "(Required) Member account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"role\": \"member\",\n  \"user\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"<string>\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1969-01-13T10:47:45.829Z\",\n    \"accountType\": \"group\",\n    \"datasetCount\": 3630,\n    \"queryCount\": 3884,\n    \"storyCount\": 4186,\n    \"email\": \"SrPt9DRXLDaA@eBfbmyhsBzQXjEOEYdVeYrwImddM.yzh\",\n    \"orgs\": [\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"authMethod\": \"string\",\n    \"verified\": false,\n    \"mfaEnabled\": true,\n    \"legalConsent\": \"ok\"\n  },\n  \"createdAt\": \"1985-12-27T23:40:36.886Z\",\n  \"updatedAt\": \"1987-07-12T10:56:04.374Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0160f518-f4b6-4c32-b0e6-e48e0596e853",
+          "name": "Update member role",
+          "request": {
+            "name": "Update member role",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account",
+                "members",
+                ":member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member",
+                  "description": "(Required) Member account name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c73bc9f2-e841-43a9-9871-bd154082ed9e",
+              "name": "Updated member",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members",
+                    ":member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member",
+                      "description": "(Required) Member account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"member\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"role\": \"member\",\n  \"user\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"<string>\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1969-01-13T10:47:45.829Z\",\n    \"accountType\": \"group\",\n    \"datasetCount\": 3630,\n    \"queryCount\": 3884,\n    \"storyCount\": 4186,\n    \"email\": \"SrPt9DRXLDaA@eBfbmyhsBzQXjEOEYdVeYrwImddM.yzh\",\n    \"orgs\": [\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"accountName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"uid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"createdAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"description\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"type\": \"org\",\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"avatarUrl\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"updatedAt\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"accountType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"pinnedItems\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"datasetCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"queryCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"storyCount\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"members\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"authMethod\": \"string\",\n    \"verified\": false,\n    \"mfaEnabled\": true,\n    \"legalConsent\": \"ok\"\n  },\n  \"createdAt\": \"1985-12-27T23:40:36.886Z\",\n  \"updatedAt\": \"1987-07-12T10:56:04.374Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "108930f9-9ad5-4f9c-930b-7062fc90bfe4",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members",
+                    ":member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member",
+                      "description": "(Required) Member account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"member\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38a72857-8cb2-40c5-bc31-a370cd95008a",
+          "name": "Remove a member from a group",
+          "request": {
+            "name": "Remove a member from a group",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":account",
+                "members",
+                ":member"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member",
+                  "description": "(Required) Member account name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb001527-94f7-4a2d-9217-7d8244281023",
+              "name": "Member removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members",
+                    ":member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member",
+                      "description": "(Required) Member account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2601e57b-3ad2-4294-848b-de3d388fadaf",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":account",
+                    "members",
+                    ":member"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member",
+                      "description": "(Required) Member account name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d30cff29-0337-4fc3-90cc-c402aa472b95",
+    "name": "TriplyDB Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

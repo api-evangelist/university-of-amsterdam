@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Jobs API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an import job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new data import job.\n\n**Simple upload** (files under 5 MB): send the file as\n`multipart/form-data`. The job is created and starts processing\nautomatically.\n\n```\ncurl -H 'Authorization: Bearer TOKEN' \\\n  -X POST https://api.INSTANCE/datasets/ACCOUNT/DATASET/jobs \\\n  -F file=@./myfile.trig\n```\n\n**Large-scale upload** (files over 5 MB): send a JSON body to\ncreate the job, then upload files using the\n[tus resumable upload protocol](https://tus.io/protocols/resumable-upload),\nand finally ca"
+        },
+        {
+          "info": {
+            "name": "Cancel all error jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Cancel all error jobs"
+        },
+        {
+          "info": {
+            "name": "Get job details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs/:jobId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job identifier"
+              }
+            ]
+          },
+          "docs": "Get job details"
+        },
+        {
+          "info": {
+            "name": "Cancel a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs/:jobId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job identifier"
+              }
+            ]
+          },
+          "docs": "Cancel a job"
+        },
+        {
+          "info": {
+            "name": "Start a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs/:jobId/start",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a job"
+        },
+        {
+          "info": {
+            "name": "Reset a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs/:jobId/reset",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job identifier"
+              }
+            ]
+          },
+          "docs": "Reset a job"
+        },
+        {
+          "info": {
+            "name": "Delete a source file from a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/datasets/:account/:dataset/jobs/:jobId/:sourceFileId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job identifier"
+              },
+              {
+                "name": "sourceFileId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a source file from a job"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

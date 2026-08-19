@@ -1,0 +1,2211 @@
+{
+  "item": [
+    {
+      "id": "09c62f24-2c9f-4f7a-9060-59ba8a0a3328",
+      "name": "Queries",
+      "description": {
+        "content": "Saved SPARQL queries",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c1521c5-2e53-48cf-8e7a-2558a2e2329f",
+          "name": "List all saved queries",
+          "request": {
+            "name": "List all saved queries",
+            "description": {},
+            "url": {
+              "path": [
+                "queries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. Should be provided using the `link` header"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "valid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "d7ac777c-8b62-4aa0-b689-8f415f47cade",
+              "name": "Paginated query list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "valid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"64a1b2c3d4e5f6001234567f\",\n    \"name\": \"top-10-classes\",\n    \"description\": \"Returns the 10 most frequently used RDF classes.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"user\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1956-10-19T11:51:41.610Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 1966,\n      \"queryCount\": 4774,\n      \"storyCount\": 721,\n      \"email\": \"qw37P7fNw@jyjdmiBBvtDMLdWcxymsRGH.nbzu\"\n    },\n    \"accessLevel\": \"private\",\n    \"service\": \"string\",\n    \"serviceConfig\": {\n      \"type\": \"virtuoso\",\n      \"service\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"tags\": [\n      \"sparql\",\n      \"classes\"\n    ],\n    \"link\": \"string\",\n    \"version\": 1,\n    \"numberOfVersions\": 1,\n    \"createdAt\": \"1984-01-09T20:17:09.430Z\",\n    \"updatedAt\": \"2007-11-19T03:19:25.242Z\",\n    \"displayName\": \"Top 10 Classes\",\n    \"dataset\": {\n      \"id\": \"64a1b2c3d4e5f60012345678\",\n      \"name\": \"knowledge-graph\",\n      \"displayName\": \"Knowledge Graph\",\n      \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n      \"owner\": {\n        \"accountName\": \"acme-research\",\n        \"uid\": \"64a1b2c3d4e5f60012345678\",\n        \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n        \"description\": \"Publishing linked open data for the sciences.\",\n        \"type\": \"user\",\n        \"name\": \"ACME Research Lab\",\n        \"avatarUrl\": \"string\",\n        \"updatedAt\": \"1970-08-17T04:23:53.146Z\",\n        \"accountType\": \"group\",\n        \"datasetCount\": 2928,\n        \"queryCount\": 8447,\n        \"storyCount\": 2514,\n        \"email\": \"7kX5B@CLujE.nqn\"\n      },\n      \"accessLevel\": \"public\",\n      \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n      \"updatedAt\": \"1952-12-03T01:38:58.157Z\",\n      \"graphCount\": 3,\n      \"statements\": 1250000,\n      \"serviceCount\": 1,\n      \"assetCount\": 0,\n      \"tags\": [\n        \"linked-data\",\n        \"knowledge-graph\"\n      ],\n      \"prefixes\": {\n        \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n        \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n      },\n      \"exampleResources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"hasDataQualityIssues\": false,\n      \"toggles\": {\n        \"browserUi\": true,\n        \"tableUi\": true,\n        \"dataEditorUi\": false,\n        \"dataModelEditorUi\": true,\n        \"insightsUi\": true,\n        \"sparqlIdeUi\": true,\n        \"graphqlUi\": true,\n        \"elasticsearchUi\": true,\n        \"graphsUi\": false,\n        \"servicesUi\": true,\n        \"assetsUi\": true\n      },\n      \"avatarUrl\": \"string\",\n      \"license\": null,\n      \"lastGraphsUpdateTime\": \"2000-01-26T13:29:59.760Z\",\n      \"autogeneratedIdType\": \"hex8\"\n    },\n    \"versionsInformation\": [\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"2013-03-17T20:26:55.313Z\"\n      },\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"2017-12-20T10:50:27.700Z\"\n      }\n    ],\n    \"requestConfig\": {\n      \"payload\": {\n        \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n        \"update\": \"string\"\n      },\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ldFrame\": {},\n      \"type\": \"<string>\",\n      \"valid\": true\n    },\n    \"renderConfig\": {\n      \"output\": \"string\",\n      \"settings\": {}\n    },\n    \"variables\": [\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      },\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": false,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      }\n    ],\n    \"lastQueriedAt\": \"1994-09-06T19:46:31.598Z\",\n    \"executionStats\": {\n      \"status\": \"No suitable service\",\n      \"executedAt\": \"1964-01-02T15:51:02.185Z\",\n      \"executionTimeInMs\": 2095.352767936286,\n      \"resultCount\": 5046,\n      \"errorMessage\": \"string\"\n    }\n  },\n  {\n    \"id\": \"64a1b2c3d4e5f6001234567f\",\n    \"name\": \"top-10-classes\",\n    \"description\": \"Returns the 10 most frequently used RDF classes.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"user\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1979-05-04T22:01:12.649Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 5372,\n      \"queryCount\": 7115,\n      \"storyCount\": 2411,\n      \"email\": \"PgZVel2ivrlYyU@U.ubh\"\n    },\n    \"accessLevel\": \"internal\",\n    \"service\": \"string\",\n    \"serviceConfig\": {\n      \"type\": \"jena\",\n      \"service\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"tags\": [\n      \"sparql\",\n      \"classes\"\n    ],\n    \"link\": \"string\",\n    \"version\": 1,\n    \"numberOfVersions\": 1,\n    \"createdAt\": \"2003-05-28T04:55:35.343Z\",\n    \"updatedAt\": \"1963-08-11T18:44:34.064Z\",\n    \"displayName\": \"Top 10 Classes\",\n    \"dataset\": {\n      \"id\": \"64a1b2c3d4e5f60012345678\",\n      \"name\": \"knowledge-graph\",\n      \"displayName\": \"Knowledge Graph\",\n      \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n      \"owner\": {\n        \"accountName\": \"acme-research\",\n        \"uid\": \"64a1b2c3d4e5f60012345678\",\n        \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n        \"description\": \"Publishing linked open data for the sciences.\",\n        \"type\": \"org\",\n        \"name\": \"ACME Research Lab\",\n        \"avatarUrl\": \"string\",\n        \"updatedAt\": \"1982-09-28T05:34:09.078Z\",\n        \"accountType\": \"user\",\n        \"datasetCount\": 613,\n        \"queryCount\": 4330,\n        \"storyCount\": 3667,\n        \"email\": \"CrOCjJ@QlqECscakoesIk.ja\"\n      },\n      \"accessLevel\": \"private\",\n      \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n      \"updatedAt\": \"1987-01-28T15:27:20.707Z\",\n      \"graphCount\": 3,\n      \"statements\": 1250000,\n      \"serviceCount\": 1,\n      \"assetCount\": 0,\n      \"tags\": [\n        \"linked-data\",\n        \"knowledge-graph\"\n      ],\n      \"prefixes\": {\n        \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n        \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n      },\n      \"exampleResources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"hasDataQualityIssues\": true,\n      \"toggles\": {\n        \"browserUi\": true,\n        \"tableUi\": true,\n        \"dataEditorUi\": false,\n        \"dataModelEditorUi\": true,\n        \"insightsUi\": true,\n        \"sparqlIdeUi\": true,\n        \"graphqlUi\": false,\n        \"elasticsearchUi\": true,\n        \"graphsUi\": true,\n        \"servicesUi\": true,\n        \"assetsUi\": true\n      },\n      \"avatarUrl\": \"string\",\n      \"license\": \"CC BY-ND\",\n      \"lastGraphsUpdateTime\": \"1995-08-20T05:10:24.364Z\",\n      \"autogeneratedIdType\": \"hex10\"\n    },\n    \"versionsInformation\": [\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"1994-08-28T02:30:07.606Z\"\n      },\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"1994-09-02T11:17:36.442Z\"\n      }\n    ],\n    \"requestConfig\": {\n      \"payload\": {\n        \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n        \"update\": \"string\"\n      },\n      \"headers\": {\n        \"key_0\": \"string\"\n      },\n      \"ldFrame\": {},\n      \"type\": \"<string>\",\n      \"valid\": false\n    },\n    \"renderConfig\": {\n      \"output\": \"string\",\n      \"settings\": {}\n    },\n    \"variables\": [\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      },\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      }\n    ],\n    \"lastQueriedAt\": \"1996-11-07T06:09:31.210Z\",\n    \"executionStats\": {\n      \"status\": \"Service error\",\n      \"executedAt\": \"1974-09-16T22:03:03.494Z\",\n      \"executionTimeInMs\": 2732.952104868629,\n      \"resultCount\": 8671,\n      \"errorMessage\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08560760-fe32-4592-9d7a-9cc9a37cc3a7",
+          "name": "List queries for an account",
+          "request": {
+            "name": "List queries for an account",
+            "description": {
+              "content": "Returns a paginated list of saved queries owned by the account.\n\nWhen the `Accept` header is set to `text/vnd.yaml`, this endpoint\nreturns an OpenAPI document describing all accessible queries of\nthe account as executable API operations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "queries",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. Should be provided using the `link` header"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                },
+                {
+                  "disabled": false,
+                  "key": "valid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "d270c542-73b7-4196-b0b7-32acbd6f1343",
+              "name": "Queries for the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "valid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"64a1b2c3d4e5f6001234567f\",\n    \"name\": \"top-10-classes\",\n    \"description\": \"Returns the 10 most frequently used RDF classes.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"2014-04-11T08:14:47.397Z\",\n      \"accountType\": \"user\",\n      \"datasetCount\": 3033,\n      \"queryCount\": 8375,\n      \"storyCount\": 7729,\n      \"email\": \"zGo7jj6@zAUnicdemwFtqaGrLMGauFkZaulAHl.potj\"\n    },\n    \"accessLevel\": \"private\",\n    \"service\": \"string\",\n    \"serviceConfig\": {\n      \"type\": \"blazegraph\",\n      \"service\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"tags\": [\n      \"sparql\",\n      \"classes\"\n    ],\n    \"link\": \"string\",\n    \"version\": 1,\n    \"numberOfVersions\": 1,\n    \"createdAt\": \"1949-02-05T15:03:09.757Z\",\n    \"updatedAt\": \"1947-01-07T12:42:52.886Z\",\n    \"displayName\": \"Top 10 Classes\",\n    \"dataset\": {\n      \"id\": \"64a1b2c3d4e5f60012345678\",\n      \"name\": \"knowledge-graph\",\n      \"displayName\": \"Knowledge Graph\",\n      \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n      \"owner\": {\n        \"accountName\": \"acme-research\",\n        \"uid\": \"64a1b2c3d4e5f60012345678\",\n        \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n        \"description\": \"Publishing linked open data for the sciences.\",\n        \"type\": \"org\",\n        \"name\": \"ACME Research Lab\",\n        \"avatarUrl\": \"string\",\n        \"updatedAt\": \"1975-04-05T19:21:18.318Z\",\n        \"accountType\": \"group\",\n        \"datasetCount\": 9624,\n        \"queryCount\": 4086,\n        \"storyCount\": 1047,\n        \"email\": \"U1TY@ZRTEadCbzkYcAgySzGf.kqua\"\n      },\n      \"accessLevel\": \"public\",\n      \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n      \"updatedAt\": \"1987-02-05T19:16:26.803Z\",\n      \"graphCount\": 3,\n      \"statements\": 1250000,\n      \"serviceCount\": 1,\n      \"assetCount\": 0,\n      \"tags\": [\n        \"linked-data\",\n        \"knowledge-graph\"\n      ],\n      \"prefixes\": {\n        \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n        \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n      },\n      \"exampleResources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"hasDataQualityIssues\": true,\n      \"toggles\": {\n        \"browserUi\": false,\n        \"tableUi\": true,\n        \"dataEditorUi\": true,\n        \"dataModelEditorUi\": true,\n        \"insightsUi\": true,\n        \"sparqlIdeUi\": false,\n        \"graphqlUi\": false,\n        \"elasticsearchUi\": false,\n        \"graphsUi\": false,\n        \"servicesUi\": true,\n        \"assetsUi\": true\n      },\n      \"avatarUrl\": \"string\",\n      \"license\": null,\n      \"lastGraphsUpdateTime\": \"1990-05-29T22:52:23.695Z\",\n      \"autogeneratedIdType\": \"hex10\"\n    },\n    \"versionsInformation\": [\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"2008-09-17T23:14:50.410Z\"\n      },\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"1975-07-24T03:03:53.025Z\"\n      }\n    ],\n    \"requestConfig\": {\n      \"payload\": {\n        \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n        \"update\": \"string\"\n      },\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ldFrame\": {},\n      \"type\": \"<string>\",\n      \"valid\": true\n    },\n    \"renderConfig\": {\n      \"output\": \"string\",\n      \"settings\": {}\n    },\n    \"variables\": [\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": false,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      },\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      }\n    ],\n    \"lastQueriedAt\": \"1949-02-08T03:52:16.766Z\",\n    \"executionStats\": {\n      \"status\": \"No information\",\n      \"executedAt\": \"1956-07-13T09:54:02.831Z\",\n      \"executionTimeInMs\": 6643.266479844022,\n      \"resultCount\": 3022,\n      \"errorMessage\": \"string\"\n    }\n  },\n  {\n    \"id\": \"64a1b2c3d4e5f6001234567f\",\n    \"name\": \"top-10-classes\",\n    \"description\": \"Returns the 10 most frequently used RDF classes.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"2006-05-20T13:19:00.348Z\",\n      \"accountType\": \"user\",\n      \"datasetCount\": 8022,\n      \"queryCount\": 7310,\n      \"storyCount\": 7316,\n      \"email\": \"Pywd9ZvuMF@bFlyXWgxms.ceq\"\n    },\n    \"accessLevel\": \"internal\",\n    \"service\": \"string\",\n    \"serviceConfig\": {\n      \"type\": \"jena\",\n      \"service\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"type\": \"string\"\n      }\n    },\n    \"tags\": [\n      \"sparql\",\n      \"classes\"\n    ],\n    \"link\": \"string\",\n    \"version\": 1,\n    \"numberOfVersions\": 1,\n    \"createdAt\": \"1962-05-26T19:45:40.974Z\",\n    \"updatedAt\": \"1979-05-09T01:20:02.729Z\",\n    \"displayName\": \"Top 10 Classes\",\n    \"dataset\": {\n      \"id\": \"64a1b2c3d4e5f60012345678\",\n      \"name\": \"knowledge-graph\",\n      \"displayName\": \"Knowledge Graph\",\n      \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n      \"owner\": {\n        \"accountName\": \"acme-research\",\n        \"uid\": \"64a1b2c3d4e5f60012345678\",\n        \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n        \"description\": \"Publishing linked open data for the sciences.\",\n        \"type\": \"org\",\n        \"name\": \"ACME Research Lab\",\n        \"avatarUrl\": \"string\",\n        \"updatedAt\": \"1951-02-09T15:33:28.278Z\",\n        \"accountType\": \"group\",\n        \"datasetCount\": 8362,\n        \"queryCount\": 3591,\n        \"storyCount\": 5118,\n        \"email\": \"8ovbt@SCbJciH.blv\"\n      },\n      \"accessLevel\": \"public\",\n      \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n      \"updatedAt\": \"1973-07-14T23:00:51.281Z\",\n      \"graphCount\": 3,\n      \"statements\": 1250000,\n      \"serviceCount\": 1,\n      \"assetCount\": 0,\n      \"tags\": [\n        \"linked-data\",\n        \"knowledge-graph\"\n      ],\n      \"prefixes\": {\n        \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n        \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n      },\n      \"exampleResources\": [\n        \"string\",\n        \"string\"\n      ],\n      \"hasDataQualityIssues\": false,\n      \"toggles\": {\n        \"browserUi\": true,\n        \"tableUi\": true,\n        \"dataEditorUi\": true,\n        \"dataModelEditorUi\": false,\n        \"insightsUi\": true,\n        \"sparqlIdeUi\": true,\n        \"graphqlUi\": false,\n        \"elasticsearchUi\": false,\n        \"graphsUi\": true,\n        \"servicesUi\": true,\n        \"assetsUi\": false\n      },\n      \"avatarUrl\": \"string\",\n      \"license\": \"ODC-ODbL\",\n      \"lastGraphsUpdateTime\": \"2008-05-26T07:03:04.337Z\",\n      \"autogeneratedIdType\": \"hex10\"\n    },\n    \"versionsInformation\": [\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"1985-02-01T09:53:24.557Z\"\n      },\n      {\n        \"version\": 1,\n        \"accountName\": \"string\",\n        \"name\": \"string\",\n        \"avatar\": \"string\",\n        \"createdAt\": \"1953-05-06T23:31:55.065Z\"\n      }\n    ],\n    \"requestConfig\": {\n      \"payload\": {\n        \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n        \"update\": \"string\"\n      },\n      \"headers\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ldFrame\": {},\n      \"type\": \"<string>\",\n      \"valid\": false\n    },\n    \"renderConfig\": {\n      \"output\": \"string\",\n      \"settings\": {}\n    },\n    \"variables\": [\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      },\n      {\n        \"name\": \"class\",\n        \"termType\": \"NamedNode\",\n        \"defaultValue\": \"http://schema.org/Person\",\n        \"required\": true,\n        \"allowedValues\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datatype\": \"string\",\n        \"language\": \"string\"\n      }\n    ],\n    \"lastQueriedAt\": \"2023-03-27T00:28:40.818Z\",\n    \"executionStats\": {\n      \"status\": \"Success\",\n      \"executedAt\": \"1951-11-07T12:22:03.272Z\",\n      \"executionTimeInMs\": 9101.085495252326,\n      \"resultCount\": 2552,\n      \"errorMessage\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "188afec1-8e90-43ca-a768-123fa2d76d36",
+          "name": "Create a saved query",
+          "request": {
+            "name": "Create a saved query",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": {\n    \"type\": \"<string>\",\n    \"service\": \"<string>\"\n  },\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"<string>\",\n      \"termType\": \"<string>\",\n      \"defaultValue\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"termType\": \"<string>\",\n      \"defaultValue\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49e0cecb-91bb-4038-88bc-78aa9f0894ad",
+              "name": "Query created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": {\n    \"type\": \"<string>\",\n    \"service\": \"<string>\"\n  },\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7f14613-182b-4620-bcc3-f0c10403ea0f",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": {\n    \"type\": \"<string>\",\n    \"service\": \"<string>\"\n  },\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d912b3e-cee7-4857-b172-1a0b51647817",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": {\n    \"type\": \"<string>\",\n    \"service\": \"<string>\"\n  },\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "36427f9a-bb52-477e-875d-4f81860ec6c5",
+          "name": "Get a saved query",
+          "request": {
+            "name": "Get a saved query",
+            "description": {
+              "content": "Returns the saved query metadata.\n\nWhen the `Accept` header is set to `text/vnd.yaml`, returns an\nOpenAPI document describing this query as an executable API\noperation, including its variables as parameters.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "3dd6d0d9-d2ce-45fb-ae8e-24e3783ecacd",
+              "name": "Query details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4ca007c-2073-42b3-84fe-642d60f8ad30",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cc1a8c5-bd5a-465d-b027-a3a96cd5ea73",
+          "name": "Update query metadata",
+          "request": {
+            "name": "Update query metadata",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fad60a0b-5b33-42e9-a351-9246845f5004",
+              "name": "Updated query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "226bf2aa-ca83-4fd8-8016-bdef87840d1c",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"serviceConfig\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb59e8ac-9f19-4935-8072-90e9b37b7216",
+          "name": "Add a new version to a query",
+          "request": {
+            "name": "Add a new version to a query",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\",\n    \"type\": \"<string>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"<string>\",\n      \"termType\": \"<string>\",\n      \"defaultValue\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"termType\": \"<string>\",\n      \"defaultValue\": \"<string>\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6b7d3b68-a7e8-415c-9f5a-1fbda1af0d91",
+              "name": "Query with new version",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\",\n    \"type\": \"<string>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b7a7794-72f7-47bd-832a-cdc60d1e5542",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"<string>\",\n      \"update\": \"<string>\"\n    },\n    \"headers\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"ldFrame\": \"<object>\",\n    \"type\": \"<string>\"\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3d3f855-3abe-4c00-b6c8-f36faa4e306e",
+          "name": "Delete a saved query",
+          "request": {
+            "name": "Delete a saved query",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "501033e6-e6ad-444d-a2ba-1349ad2cb52e",
+              "name": "Query deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "498bf48e-a5ea-438c-a79d-e0b53bb2832c",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10e7d4a3-d003-4db2-bd3c-7c91830db6db",
+          "name": "Transfer query ownership",
+          "request": {
+            "name": "Transfer query ownership",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                "chown"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ef80758-b029-4018-9ab4-aea393c8e3b3",
+              "name": "Query with new owner",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    "chown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6344afb7-7f98-4bca-8e90-ab9b9f167026",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    "chown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03eecc50-4733-48cc-a86e-39df5df99f71",
+          "name": "Check if query can be executed",
+          "request": {
+            "name": "Check if query can be executed",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "method": "HEAD",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "074f9108-0221-4897-9c50-d98568de5229",
+              "name": "Query is executable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Fingerprint of query/data state",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99716cd7-d647-4eed-bcb6-61bd86b96571",
+          "name": "Execute a saved query (latest version)",
+          "request": {
+            "name": "Execute a saved query (latest version)",
+            "description": {
+              "content": "Executes the saved query and returns results. The response format depends\non the SPARQL query type (SELECT, ASK, CONSTRUCT, DESCRIBE) and the\nrequested content type.\n\n**Variable injection**: If the saved query defines variables, pass their\nvalues as query parameters. For example, a query with variable `city`\nis called as `?city=https://example.org/Amsterdam` (for NamedNode\nvariables) or `?city=Amsterdam` (for Literal variables). Variable\ndefinitions are listed in the query's `variables` array.\n\n**Format extension**: Append a format extension to the path\n(e.g., `/run.csv`, `/run.jsonld`) to select the response format.\nThe extension takes precedence over the `Accept` header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "c5dd1b50-b695-4de2-8876-ea8cd1c61ca9",
+              "name": "Query results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f391c13-696d-4e73-9cb4-0b325df58785",
+          "name": "Execute a saved query (POST, for updates)",
+          "request": {
+            "name": "Execute a saved query (POST, for updates)",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "884b84e9-92cd-4116-91cf-f322e3eb1a21",
+              "name": "Query results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7a5ae99-8ae9-4f91-bc89-e3d965599755",
+          "name": "Execute a specific query version",
+          "request": {
+            "name": "Execute a specific query version",
+            "description": {
+              "content": "Like `runQuery`, but executes a specific version of the saved query.\nSupports the same variable injection and format extension features.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                ":versionNr",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "versionNr",
+                  "description": "(Required) Query version number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/sparql-results+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "077d9a07-8744-4ead-a905-8fca75d5cc9c",
+              "name": "Query results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    ":versionNr",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "versionNr",
+                      "description": "(Required) Query version number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/sparql-results+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/sparql-results+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b039dbb1-c3f8-439a-b66c-13dc950e0f9b",
+          "name": "Get SPARQL query text with variables injected",
+          "request": {
+            "name": "Get SPARQL query text with variables injected",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                ":versionNr",
+                "text"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "versionNr",
+                  "description": "(Required) Query version number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "e9a95f28-4a68-416a-b278-d6d3475f96a4",
+              "name": "SPARQL query as text",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    ":versionNr",
+                    "text"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "versionNr",
+                      "description": "(Required) Query version number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3cad157-c9b4-4d02-835e-e6bcdf0644f5",
+          "name": "Get a specific query version",
+          "request": {
+            "name": "Get a specific query version",
+            "description": {},
+            "url": {
+              "path": [
+                "queries",
+                ":account",
+                ":query",
+                ":versionNr"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "query",
+                  "description": "(Required) Saved query name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "versionNr",
+                  "description": "(Required) Query version number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "664ba90e-077d-41bd-8d3b-b576692aa303",
+              "name": "Query version details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "queries",
+                    ":account",
+                    ":query",
+                    ":versionNr"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "query",
+                      "description": "(Required) Saved query name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "versionNr",
+                      "description": "(Required) Query version number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f6001234567f\",\n  \"name\": \"top-10-classes\",\n  \"description\": \"Returns the 10 most frequently used RDF classes.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"2021-09-09T13:32:12.026Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 4732,\n    \"queryCount\": 5082,\n    \"storyCount\": 1189,\n    \"email\": \"AMuV@mGgQwnwshuBBAxSBfvNbLsmTh.uk\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"service\": \"string\",\n  \"serviceConfig\": {\n    \"type\": \"blazegraph\",\n    \"service\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  },\n  \"tags\": [\n    \"sparql\",\n    \"classes\"\n  ],\n  \"link\": \"string\",\n  \"version\": 1,\n  \"numberOfVersions\": 1,\n  \"createdAt\": \"1969-08-03T19:24:27.702Z\",\n  \"updatedAt\": \"1988-08-08T21:59:28.702Z\",\n  \"displayName\": \"Top 10 Classes\",\n  \"dataset\": {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-11-03T02:57:20.373Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 71,\n      \"queryCount\": 8020,\n      \"storyCount\": 2226,\n      \"email\": \"qwj@hQVEINIvlFVoWg.sm\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1974-11-30T20:20:44.803Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": true,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC0 1.0\",\n    \"lastGraphsUpdateTime\": \"1975-07-28T19:32:55.208Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  \"versionsInformation\": [\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1967-03-13T12:04:25.164Z\"\n    },\n    {\n      \"version\": 1,\n      \"accountName\": \"string\",\n      \"name\": \"string\",\n      \"avatar\": \"string\",\n      \"createdAt\": \"1992-02-10T12:51:36.566Z\"\n    }\n  ],\n  \"requestConfig\": {\n    \"payload\": {\n      \"query\": \"SELECT ?class (COUNT(?s) AS ?count) WHERE { ?s a ?class } GROUP BY ?class ORDER BY DESC(?count) LIMIT 10\",\n      \"update\": \"string\"\n    },\n    \"headers\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"ldFrame\": {},\n    \"type\": \"<string>\",\n    \"valid\": true\n  },\n  \"renderConfig\": {\n    \"output\": \"<string>\",\n    \"settings\": \"<object>\"\n  },\n  \"variables\": [\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    },\n    {\n      \"name\": \"class\",\n      \"termType\": \"NamedNode\",\n      \"defaultValue\": \"http://schema.org/Person\",\n      \"required\": \"<boolean>\",\n      \"allowedValues\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"language\": \"<string>\"\n    }\n  ],\n  \"lastQueriedAt\": \"1948-06-07T18:58:18.712Z\",\n  \"executionStats\": {\n    \"status\": \"Service error\",\n    \"executedAt\": \"1962-10-16T20:58:13.535Z\",\n    \"executionTimeInMs\": 3727.8110259892605,\n    \"resultCount\": 8723,\n    \"errorMessage\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "805f1681-219c-438b-8c47-56203942e098",
+    "name": "TriplyDB Accounts Queries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2050 @@
+{
+  "item": [
+    {
+      "id": "55385bcc-9a6e-432d-abfd-fbc88d62b2fe",
+      "name": "Datasets",
+      "description": {
+        "content": "Dataset CRUD",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d53db62d-303d-4b78-9ce5-cc8318424e20",
+          "name": "List all datasets",
+          "request": {
+            "name": "List all datasets",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search term"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. Should be provided using the `link` header"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sparql",
+                  "value": "<string>",
+                  "description": "Filter datasets with active SPARQL service"
+                },
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "<string>",
+                  "description": "Return verbose dataset information"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "5b879b66-9055-4acb-8778-3f578cf81de4",
+              "name": "Paginated dataset list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sparql",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verbose",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"user\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1963-05-12T04:53:09.900Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 2107,\n      \"queryCount\": 3580,\n      \"storyCount\": 6554,\n      \"email\": \"MpMeCrU@oMJYzUbfOYXTBsjhfdeLReWwbnqgj.bgm\"\n    },\n    \"accessLevel\": \"private\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1952-12-11T19:45:51.153Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": false,\n    \"toggles\": {\n      \"browserUi\": true,\n      \"tableUi\": true,\n      \"dataEditorUi\": true,\n      \"dataModelEditorUi\": false,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": true,\n      \"graphqlUi\": true,\n      \"elasticsearchUi\": false,\n      \"graphsUi\": false,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"ODC-ODbL\",\n    \"lastGraphsUpdateTime\": \"2003-10-28T11:27:22.567Z\",\n    \"autogeneratedIdType\": \"hex8\"\n  },\n  {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"user\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1970-12-31T13:28:53.784Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 825,\n      \"queryCount\": 3130,\n      \"storyCount\": 5449,\n      \"email\": \"0A6FDSAdqaNB4k3@yLruwebjqByjXrNUVfP.yws\"\n    },\n    \"accessLevel\": \"public\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"2014-01-20T11:01:01.533Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": true,\n      \"tableUi\": true,\n      \"dataEditorUi\": false,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": true,\n      \"sparqlIdeUi\": true,\n      \"graphqlUi\": false,\n      \"elasticsearchUi\": false,\n      \"graphsUi\": true,\n      \"servicesUi\": false,\n      \"assetsUi\": false\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"PDDL\",\n    \"lastGraphsUpdateTime\": \"1969-06-13T11:32:05.509Z\",\n    \"autogeneratedIdType\": \"hex8\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "efa0ab0b-a4fe-4e39-9787-c7cb505649ae",
+          "name": "List datasets for an account",
+          "request": {
+            "name": "List datasets for an account",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<string>",
+                  "description": "Cursor for pagination. Should be provided using the `link` header"
+                },
+                {
+                  "disabled": false,
+                  "key": "accessLevel",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "<string>",
+                  "description": "Sort direction"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "c971ed4a-c0aa-4010-a7ba-152f00cdd14d",
+              "name": "Datasets for the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "since",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "accessLevel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "RFC 8288 pagination links. Contains `rel=\"first\"` and `rel=\"next\"`\nURIs for cursor-based pagination.\n",
+                  "key": "Link",
+                  "value": "<https://api.triplydb.com/datasets?limit=20>; rel=\"first\", <https://api.triplydb.com/datasets?since=64a1b2c3d4e5f60012345678&limit=20>; rel=\"next\""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"user\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1976-01-18T10:20:41.346Z\",\n      \"accountType\": \"group\",\n      \"datasetCount\": 6946,\n      \"queryCount\": 3019,\n      \"storyCount\": 1373,\n      \"email\": \"2dZL80sa@HnlxOC.klni\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1976-03-02T11:46:21.123Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": false,\n    \"toggles\": {\n      \"browserUi\": true,\n      \"tableUi\": true,\n      \"dataEditorUi\": true,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": true,\n      \"sparqlIdeUi\": false,\n      \"graphqlUi\": false,\n      \"elasticsearchUi\": false,\n      \"graphsUi\": true,\n      \"servicesUi\": false,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC BY\",\n    \"lastGraphsUpdateTime\": \"1993-06-29T19:12:54.990Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  },\n  {\n    \"id\": \"64a1b2c3d4e5f60012345678\",\n    \"name\": \"knowledge-graph\",\n    \"displayName\": \"Knowledge Graph\",\n    \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n    \"owner\": {\n      \"accountName\": \"acme-research\",\n      \"uid\": \"64a1b2c3d4e5f60012345678\",\n      \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n      \"description\": \"Publishing linked open data for the sciences.\",\n      \"type\": \"org\",\n      \"name\": \"ACME Research Lab\",\n      \"avatarUrl\": \"string\",\n      \"updatedAt\": \"1966-03-26T07:56:57.886Z\",\n      \"accountType\": \"user\",\n      \"datasetCount\": 6844,\n      \"queryCount\": 3235,\n      \"storyCount\": 9472,\n      \"email\": \"Qvjv9S1u2Kyyz@PRsXlJmkYnZHseHMutNOUdUYmI.oj\"\n    },\n    \"accessLevel\": \"<string>\",\n    \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n    \"updatedAt\": \"1990-01-31T18:01:09.211Z\",\n    \"graphCount\": 3,\n    \"statements\": 1250000,\n    \"serviceCount\": 1,\n    \"assetCount\": 0,\n    \"tags\": [\n      \"linked-data\",\n      \"knowledge-graph\"\n    ],\n    \"prefixes\": {\n      \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n      \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n    },\n    \"exampleResources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"hasDataQualityIssues\": true,\n    \"toggles\": {\n      \"browserUi\": false,\n      \"tableUi\": false,\n      \"dataEditorUi\": true,\n      \"dataModelEditorUi\": true,\n      \"insightsUi\": false,\n      \"sparqlIdeUi\": true,\n      \"graphqlUi\": false,\n      \"elasticsearchUi\": false,\n      \"graphsUi\": true,\n      \"servicesUi\": true,\n      \"assetsUi\": true\n    },\n    \"avatarUrl\": \"string\",\n    \"license\": \"CC-BY-SA\",\n    \"lastGraphsUpdateTime\": \"2019-07-29T07:17:27.303Z\",\n    \"autogeneratedIdType\": \"uuid\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74472a15-679f-41d5-b75d-27ab7a3e4978",
+          "name": "Create a dataset",
+          "request": {
+            "name": "Create a dataset",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d55a289-beea-4f84-a1f4-bdfc39455799",
+              "name": "Dataset created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph.\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f60012345678\",\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"user\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1983-08-08T18:19:03.312Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 7913,\n    \"queryCount\": 4212,\n    \"storyCount\": 8142,\n    \"email\": \"4DPO8vRN@dyqXctYRjeXfDvwuEpyUtmiLwx.fj\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n  \"updatedAt\": \"2009-07-29T18:45:43.627Z\",\n  \"graphCount\": 3,\n  \"statements\": 1250000,\n  \"serviceCount\": 1,\n  \"assetCount\": 0,\n  \"tags\": [\n    \"linked-data\",\n    \"knowledge-graph\"\n  ],\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"exampleResources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hasDataQualityIssues\": true,\n  \"toggles\": {\n    \"browserUi\": true,\n    \"tableUi\": true,\n    \"dataEditorUi\": false,\n    \"dataModelEditorUi\": false,\n    \"insightsUi\": false,\n    \"sparqlIdeUi\": false,\n    \"graphqlUi\": true,\n    \"elasticsearchUi\": true,\n    \"graphsUi\": false,\n    \"servicesUi\": true,\n    \"assetsUi\": false\n  },\n  \"avatarUrl\": \"string\",\n  \"license\": \"<string>\",\n  \"lastGraphsUpdateTime\": \"1964-04-28T04:12:34.448Z\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed0bab44-5c07-4fdc-9665-0b1a33de3e17",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph.\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f36744c-f908-4054-862a-a58ebb6b478a",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph.\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fcf9b85-4b64-4259-8e0f-3ac970f511a2",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph.\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7dd5633d-732d-4bf7-9cd3-3c70e698a8ab",
+          "name": "Get dataset details",
+          "request": {
+            "name": "Get dataset details",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "verbose",
+                  "value": "<string>",
+                  "description": "Include services, graphs, and jobs"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "ea714ebc-21ec-445f-a59f-1d843658ce55",
+              "name": "Dataset details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f60012345678\",\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"user\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1983-08-08T18:19:03.312Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 7913,\n    \"queryCount\": 4212,\n    \"storyCount\": 8142,\n    \"email\": \"4DPO8vRN@dyqXctYRjeXfDvwuEpyUtmiLwx.fj\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n  \"updatedAt\": \"2009-07-29T18:45:43.627Z\",\n  \"graphCount\": 3,\n  \"statements\": 1250000,\n  \"serviceCount\": 1,\n  \"assetCount\": 0,\n  \"tags\": [\n    \"linked-data\",\n    \"knowledge-graph\"\n  ],\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"exampleResources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hasDataQualityIssues\": true,\n  \"toggles\": {\n    \"browserUi\": true,\n    \"tableUi\": true,\n    \"dataEditorUi\": false,\n    \"dataModelEditorUi\": false,\n    \"insightsUi\": false,\n    \"sparqlIdeUi\": false,\n    \"graphqlUi\": true,\n    \"elasticsearchUi\": true,\n    \"graphsUi\": false,\n    \"servicesUi\": true,\n    \"assetsUi\": false\n  },\n  \"avatarUrl\": \"string\",\n  \"license\": \"<string>\",\n  \"lastGraphsUpdateTime\": \"1964-04-28T04:12:34.448Z\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82008c66-6873-4cf6-9247-c049d61db727",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "verbose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31de4137-2963-49a2-b485-aefd0541a247",
+          "name": "Update a dataset",
+          "request": {
+            "name": "Update a dataset",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"exampleResources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autogeneratedIdType\": \"<string>\",\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f9e7bc9a-aa1b-4a88-bcb2-ddf8140d09f3",
+              "name": "Updated dataset",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"exampleResources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autogeneratedIdType\": \"<string>\",\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f60012345678\",\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1978-08-11T13:27:32.279Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 893,\n    \"queryCount\": 2526,\n    \"storyCount\": 788,\n    \"email\": \"4LsJ4MShSkPVg@IQ.rvu\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n  \"updatedAt\": \"1975-03-06T07:36:04.900Z\",\n  \"graphCount\": 3,\n  \"statements\": 1250000,\n  \"serviceCount\": 1,\n  \"assetCount\": 0,\n  \"tags\": [\n    \"linked-data\",\n    \"knowledge-graph\"\n  ],\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"exampleResources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hasDataQualityIssues\": true,\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  },\n  \"avatarUrl\": \"string\",\n  \"license\": \"<string>\",\n  \"lastGraphsUpdateTime\": \"1999-07-27T16:52:36.197Z\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2133fa19-c88e-4f1d-852f-8aebbe115b94",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"exampleResources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autogeneratedIdType\": \"<string>\",\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a898241-f298-498b-9abc-41225905a136",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"accessLevel\": \"<string>\",\n  \"license\": \"<string>\",\n  \"exampleResources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autogeneratedIdType\": \"<string>\",\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39144c72-343b-46d4-af19-4ffc5eb1b5c6",
+          "name": "Delete a dataset",
+          "request": {
+            "name": "Delete a dataset",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c9b3e49-ee23-4f82-9d99-eff560d05fb8",
+              "name": "Dataset deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "33b32d57-51b2-46cb-a861-e64e8d5e72a9",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29a681fe-84b4-4380-a4de-30fd77acc0fa",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3267a784-71b4-4fb5-b487-be2338d05376",
+          "name": "Copy a dataset",
+          "request": {
+            "name": "Copy a dataset",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "copy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toAccount\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "02e26c48-7e0e-48f5-a4f4-7342bec583b0",
+              "name": "Copied dataset",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f60012345678\",\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1978-08-11T13:27:32.279Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 893,\n    \"queryCount\": 2526,\n    \"storyCount\": 788,\n    \"email\": \"4LsJ4MShSkPVg@IQ.rvu\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n  \"updatedAt\": \"1975-03-06T07:36:04.900Z\",\n  \"graphCount\": 3,\n  \"statements\": 1250000,\n  \"serviceCount\": 1,\n  \"assetCount\": 0,\n  \"tags\": [\n    \"linked-data\",\n    \"knowledge-graph\"\n  ],\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"exampleResources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hasDataQualityIssues\": true,\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  },\n  \"avatarUrl\": \"string\",\n  \"license\": \"<string>\",\n  \"lastGraphsUpdateTime\": \"1999-07-27T16:52:36.197Z\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52c603bb-f161-4a17-83eb-40790bec3342",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0d0b27f-ef36-445b-ae7f-e1a907f43f54",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "copy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5eb49480-c498-4f1c-ade0-e79e537cc535",
+          "name": "Transfer dataset ownership",
+          "request": {
+            "name": "Transfer dataset ownership",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "chown"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e3ee8ac0-02fb-403a-90fb-660330620a9d",
+              "name": "Dataset with new owner",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "chown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"64a1b2c3d4e5f60012345678\",\n  \"name\": \"knowledge-graph\",\n  \"displayName\": \"Knowledge Graph\",\n  \"description\": \"An enterprise knowledge graph linking people, projects, and publications.\",\n  \"owner\": {\n    \"accountName\": \"acme-research\",\n    \"uid\": \"64a1b2c3d4e5f60012345678\",\n    \"createdAt\": \"2024-01-15 10:30:00+00:00\",\n    \"description\": \"Publishing linked open data for the sciences.\",\n    \"type\": \"org\",\n    \"name\": \"ACME Research Lab\",\n    \"avatarUrl\": \"string\",\n    \"updatedAt\": \"1978-08-11T13:27:32.279Z\",\n    \"accountType\": \"user\",\n    \"datasetCount\": 893,\n    \"queryCount\": 2526,\n    \"storyCount\": 788,\n    \"email\": \"4LsJ4MShSkPVg@IQ.rvu\"\n  },\n  \"accessLevel\": \"<string>\",\n  \"createdAt\": \"2024-03-01 12:00:00+00:00\",\n  \"updatedAt\": \"1975-03-06T07:36:04.900Z\",\n  \"graphCount\": 3,\n  \"statements\": 1250000,\n  \"serviceCount\": 1,\n  \"assetCount\": 0,\n  \"tags\": [\n    \"linked-data\",\n    \"knowledge-graph\"\n  ],\n  \"prefixes\": {\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\"\n  },\n  \"exampleResources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"hasDataQualityIssues\": true,\n  \"toggles\": {\n    \"browserUi\": \"<boolean>\",\n    \"tableUi\": \"<boolean>\",\n    \"dataEditorUi\": \"<boolean>\",\n    \"dataModelEditorUi\": \"<boolean>\",\n    \"insightsUi\": \"<boolean>\",\n    \"sparqlIdeUi\": \"<boolean>\",\n    \"graphqlUi\": \"<boolean>\",\n    \"elasticsearchUi\": \"<boolean>\",\n    \"graphsUi\": \"<boolean>\",\n    \"servicesUi\": \"<boolean>\",\n    \"assetsUi\": \"<boolean>\"\n  },\n  \"avatarUrl\": \"string\",\n  \"license\": \"<string>\",\n  \"lastGraphsUpdateTime\": \"1999-07-27T16:52:36.197Z\",\n  \"autogeneratedIdType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4dc41a2-03f0-4866-9460-1f1885b77327",
+              "name": "Authentication required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "chown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "079b3d5f-8d0b-43c8-bb96-076248ebffd8",
+              "name": "Insufficient permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "chown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"toAccount\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Resource not found.\",\n  \"code\": 404,\n  \"errors\": [\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    },\n    {\n      \"message\": \"Resource not found.\",\n      \"code\": 404,\n      \"errors\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/ErrorResponse detected>\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6805d3f-652c-4eb3-b552-50c72fd36944",
+          "name": "Download dataset as RDF",
+          "request": {
+            "name": "Download dataset as RDF",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "graph",
+                  "value": "<string>",
+                  "description": "Filter to a specific graph IRI"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/n-quads"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "46547548-5c8b-4796-a2c5-abca9a81ec51",
+              "name": "Gzipped RDF data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "graph",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/n-quads"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Content-Encoding",
+                  "value": "gzip",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "Content-Disposition",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/ld+json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a188cf4-3c99-478d-9589-11820c96165d",
+          "name": "Check dataset download headers",
+          "request": {
+            "name": "Check dataset download headers",
+            "description": {},
+            "url": {
+              "path": [
+                "datasets",
+                ":account",
+                ":dataset",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "graph",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Account name (user or group)"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "dataset",
+                  "description": "(Required) Dataset name"
+                }
+              ]
+            },
+            "method": "HEAD",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "7ba97509-2329-40e9-9ddb-5b95cd7a9ec4",
+              "name": "Headers only",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "datasets",
+                    ":account",
+                    ":dataset",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "graph",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Account name (user or group)"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "dataset",
+                      "description": "(Required) Dataset name"
+                    }
+                  ]
+                },
+                "method": "HEAD",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lod.uba.uva.nl",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2c6b768c-32be-48f0-bb9c-af05d942daa5",
+    "name": "TriplyDB Accounts Datasets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for TriplyDB — a linked data database platform.\n\n## Authentication\n\nRead operations on publicly published datasets can be performed without\nauthentication. Write operations and read operations on private or internal\ndatasets require a valid API token.\n\n### Creating an API token\n\n1. Log into your TriplyDB instance.\n2. Click on the user menu in the top-right corner and click on \"User settings\".\n3. Go to the \"API tokens\" tab.\n4. Click \"Create token\", enter a description (e.g., \"my-script\") and select\n   the appropriate access rights.\n5. Click \"Create\" and copy the token. It is only shown once upon creation.\n\n### Using the API token\n\nInclude the token in the `Authorization` header of your HTTP requests:\n\n```\nAuthorization: Bearer YOUR_TOKEN\n```\n\n### Security considerations\n\n- **Do not commit tokens to git repositories.**\n- **Do not share tokens** with anyone who should not have access to your\n  TriplyDB resources.\n- **Rotate tokens regularly**, especially if you suspect a compromise.\n\n## Pagination\n\nList endpoints are paginated. The response includes a `Link` header\n([RFC 8288](https://www.rfc-editor.org/rfc/rfc8288)) with URLs for\nnavigating the result set. To paginate, follow the URLs in the `Link`\nheader rather than constructing URLs manually.\n\nThe `Link` header contains up to three relations:\n\n| Relation | Meaning |\n|----------|---------|\n| `first`  | URL to the first page of results |\n| `next`   | URL to the next page (absent when on the last page) |\n| `prev`   | URL to the previous page (absent when on the first page) |\n\nExample response header:\n\n```\nLink: <https://api.example.com/datasets/user/ds?limit=30>; rel=\"first\",\n      <https://api.example.com/datasets/user/ds?since=6435a&limit=30>; rel=\"next\"\n```\n\nTo iterate through all results, keep following the `rel=\"next\"` URL until\nit is no longer present. You can control the page size with the `limit`\nquery parameter (default: 30).\n\n## Content negotiation\n\nLinked data endpoints support format negotiation in two ways:\n\n1. **Accept header** — set the `Accept` request header to the desired media type.\n2. **URL extension** — append a format extension to the URL path (e.g., `/run.csv`).\n   When present, the extension takes precedence over the `Accept` header.\n\n\nContact Support:\n Name: Triply",
+      "type": "text/plain"
+    }
+  }
+}

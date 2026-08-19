@@ -1,0 +1,469 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TriplyDB Accounts Queries API",
+    "version": "26.5.104"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all saved queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Should be provided using the `link` header"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              },
+              {
+                "name": "valid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all saved queries"
+        },
+        {
+          "info": {
+            "name": "List queries for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination. Should be provided using the `link` header"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction"
+              },
+              {
+                "name": "valid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of saved queries owned by the account.\n\nWhen the `Accept` header is set to `text/vnd.yaml`, this endpoint\nreturns an OpenAPI document describing all accessible queries of\nthe account as executable API operations.\n"
+        },
+        {
+          "info": {
+            "name": "Create a saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/queries/:account",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a saved query"
+        },
+        {
+          "info": {
+            "name": "Get a saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ]
+          },
+          "docs": "Returns the saved query metadata.\n\nWhen the `Accept` header is set to `text/vnd.yaml`, returns an\nOpenAPI document describing this query as an executable API\noperation, including its variables as parameters.\n"
+        },
+        {
+          "info": {
+            "name": "Add a new version to a query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new version to a query"
+        },
+        {
+          "info": {
+            "name": "Update query metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update query metadata"
+        },
+        {
+          "info": {
+            "name": "Delete a saved query",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ]
+          },
+          "docs": "Delete a saved query"
+        },
+        {
+          "info": {
+            "name": "Transfer query ownership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/chown",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer query ownership"
+        },
+        {
+          "info": {
+            "name": "Execute a saved query (latest version)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/run",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Executes the saved query and returns results. The response format depends\non the SPARQL query type (SELECT, ASK, CONSTRUCT, DESCRIBE) and the\nrequested content type.\n\n**Variable injection**: If the saved query defines variables, pass their\nvalues as query parameters. For example, a query with variable `city`\nis called as `?city=https://example.org/Amsterdam` (for NamedNode\nvariables) or `?city=Amsterdam` (for Literal variables). Variable\ndefinitions are listed in the query's `variables` array.\n\n"
+        },
+        {
+          "info": {
+            "name": "Execute a saved query (POST, for updates)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/run",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ]
+          },
+          "docs": "Execute a saved query (POST, for updates)"
+        },
+        {
+          "info": {
+            "name": "Check if query can be executed",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/run",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              }
+            ]
+          },
+          "docs": "Check if query can be executed"
+        },
+        {
+          "info": {
+            "name": "Execute a specific query version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/:versionNr/run",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              },
+              {
+                "name": "versionNr",
+                "value": "",
+                "type": "path",
+                "description": "Query version number"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Like `runQuery`, but executes a specific version of the saved query.\nSupports the same variable injection and format extension features.\n"
+        },
+        {
+          "info": {
+            "name": "Get SPARQL query text with variables injected",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/:versionNr/text",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              },
+              {
+                "name": "versionNr",
+                "value": "",
+                "type": "path",
+                "description": "Query version number"
+              }
+            ]
+          },
+          "docs": "Get SPARQL query text with variables injected"
+        },
+        {
+          "info": {
+            "name": "Get a specific query version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lod.uba.uva.nl/queries/:account/:query/:versionNr",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Account name (user or group)"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "path",
+                "description": "Saved query name"
+              },
+              {
+                "name": "versionNr",
+                "value": "",
+                "type": "path",
+                "description": "Query version number"
+              }
+            ]
+          },
+          "docs": "Get a specific query version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
