@@ -56,50 +56,14 @@ specificationVersion: '0.23'
 x-type: university
 x-category: Public Research University
 apis:
-- aid: university-of-amsterdam:llm-gateway
-  name: UvA/HvA AI Gateway
-  description: >-
-    The shared AI gateway the University of Amsterdam and the Amsterdam University of Applied
-    Sciences run for their students, staff and developers. It fronts GPT, Claude and open-weight
-    models behind one institution-issued key on an OpenAI-compatible surface, and it serves a
-    complete OpenAPI 3.1 description at /openapi.json — 530 paths, 723 operations. The software is
-    LiteLLM, but the deployment sits on the institution's own Azure estate under uva.nl, the key
-    issuance is the institution's, and the setup guides are published by the institution's own
-    GitHub organisation. This is the one contract in this profile that describes something the
-    University of Amsterdam actually operates.
-  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
-  baseURL: https://llmproxy.uva.nl
-  tags:
-  - Artificial Intelligence
-  - LLM
-  - Gateway
-  - AI Tooling
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-amsterdam-llm-gateway-openapi.json
-  - type: x-openapi-original
-    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
-  - type: Documentation
-    url: https://github.com/uva/UvA-HvA-Agentic-Tools
-  - type: Authentication
-    url: authentication/university-of-amsterdam-authentication.yml
-  - type: x-errors
-    url: errors/university-of-amsterdam-errors.yml
-  x-operator: institution
-  x-status:
-    probed: '2026-08-19'
-    openapi: 200
-    health: 200
-    unauthenticated_call: 401
 - aid: university-of-amsterdam:identity-federation
   name: UvA Identity Provider (SAML 2.0 / SURFconext)
   description: >-
-    The university's own SAML 2.0 identity provider, entity ID
-    http://login.uva.nl/adfs/services/trust. Signed federation metadata is served from the
-    institution's own host and the entity is registered in SURFconext, the Dutch national identity
-    federation, which participates in eduGAIN. Identity federation is one of the few machine-readable
-    surfaces a university operates by definition rather than by procurement, and it is almost never
-    catalogued.
+    The university's own SAML 2.0 identity provider, entity ID http://login.uva.nl/adfs/services/trust.
+    Signed federation metadata is served from the institution's own host and the entity is registered
+    in SURFconext, the Dutch national identity federation, which participates in eduGAIN. Identity federation
+    is one of the few machine-readable surfaces a university operates by definition rather than by procurement,
+    and it is almost never catalogued.
   humanURL: https://metadata.surfconext.nl/
   baseURL: https://login.uva.nl/federationmetadata/2007-06/federationmetadata.xml
   tags:
@@ -123,12 +87,12 @@ apis:
 - aid: university-of-amsterdam:datanose
   name: DataNose API
   description: >-
-    DataNose is the course, registration, timetable and thesis-administration system used by the
-    University of Amsterdam's Faculty of Science. Its API host resolves into UVANET1, the
-    university's own RIPE allocation, and its Swagger UI answers 200 — but the Swashbuckle
-    discovery document it points at, /swagger/docs/v1, returns 500, so the machine-readable
-    description of a genuinely institution-run course surface is currently broken. Recorded because
-    it is real and institution-operated, and because the broken descriptor is the finding.
+    DataNose is the course, registration, timetable and thesis-administration system used by the University
+    of Amsterdam's Faculty of Science. Its API host resolves into UVANET1, the university's own RIPE allocation,
+    and its Swagger UI answers 200 — but the Swashbuckle discovery document it points at, /swagger/docs/v1,
+    returns 500, so the machine-readable description of a genuinely institution-run course surface is
+    currently broken. Recorded because it is real and institution-operated, and because the broken descriptor
+    is the finding.
   humanURL: https://datanose.nl/
   baseURL: https://api.datanose.nl
   tags:
@@ -151,14 +115,14 @@ apis:
 - aid: university-of-amsterdam:lod-triply
   name: UvA Library Linked Open Data (TriplyDB tenancy)
   description: >-
-    The University of Amsterdam Library publishes its digitised collections — books, letters, maps,
-    images, audio, video, sheet music, archaeological objects and the Beeldbank image repository —
-    as linked open data under PDDL/ODC-BY, reachable over REST, SPARQL and GraphQL. The data, the
-    UB-UVA account and the licensing are the library's. The platform is not: api.lod.uba.uva.nl
-    CNAMEs to uba.cname.triply.cc and the OpenAPI served there is titled "TriplyDB API" with
-    info.contact pointing at triply.cc. A single vendor contract, split by tag, previously appeared
-    in this profile as fourteen separate University of Amsterdam APIs. It is recorded here as one
-    tenant relationship, and the contract is left to score against Triply.
+    The University of Amsterdam Library publishes its digitised collections — books, letters, maps, images,
+    audio, video, sheet music, archaeological objects and the Beeldbank image repository — as linked open
+    data under PDDL/ODC-BY, reachable over REST, SPARQL and GraphQL. The data, the UB-UVA account and
+    the licensing are the library's. The platform is not: api.lod.uba.uva.nl CNAMEs to uba.cname.triply.cc
+    and the OpenAPI served there is titled "TriplyDB API" with info.contact pointing at triply.cc. A single
+    vendor contract, split by tag, previously appeared in this profile as fourteen separate University
+    of Amsterdam APIs. It is recorded here as one tenant relationship, and the contract is left to score
+    against Triply.
   humanURL: https://lod.uba.uva.nl/
   baseURL: https://api.lod.uba.uva.nl/datasets/UB-UVA/
   tags:
@@ -171,7 +135,8 @@ apis:
   - type: Documentation
     url: https://docs.triply.cc/triply-api/
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   - type: x-licence
     url: https://uba.uva.nl/en/support/open-data/licences/licences.html
   - type: x-example
@@ -185,7 +150,8 @@ apis:
   x-operator: tenant
   x-operator-evidence:
     dns: api.lod.uba.uva.nl CNAME uba.cname.triply.cc
-    contract: 'info.title "TriplyDB API"; info.contact.name "Triply"; info.contact.url https://triply.cc'
+    contract: >-
+      info.title "TriplyDB API"; info.contact.name "Triply"; info.contact.url https://triply.cc
     vendor_repo: all/triply
   x-status:
     probed: '2026-08-19'
@@ -194,11 +160,11 @@ apis:
 - aid: university-of-amsterdam:oai-pure-dare
   name: UvA-DARE OAI-PMH and Pure Web Service (Elsevier Pure tenancy)
   description: >-
-    UvA-DARE, the university's digital academic repository, and the research information system
-    behind it run on Elsevier Pure: pure.uva.nl CNAMEs to uva.elsevierpure.com. The OAI-PMH provider
-    answers Identify with repositoryName "UvA-DARE" and adminEmail pure@uva.nl over the OpenAIRE
-    CERIF profile 1.2, and the Pure Web Service REST API publishes its own documentation on the
-    tenant host. Institution's publications, institution's administrators, vendor's interface.
+    UvA-DARE, the university's digital academic repository, and the research information system behind
+    it run on Elsevier Pure: pure.uva.nl CNAMEs to uva.elsevierpure.com. The OAI-PMH provider answers
+    Identify with repositoryName "UvA-DARE" and adminEmail pure@uva.nl over the OpenAIRE CERIF profile
+    1.2, and the Pure Web Service REST API publishes its own documentation on the tenant host. Institution's
+    publications, institution's administrators, vendor's interface.
   humanURL: https://dare.uva.nl/
   baseURL: https://pure.uva.nl/ws/oai
   tags:
@@ -217,7 +183,7 @@ apis:
   x-operator: tenant
   x-operator-evidence:
     dns: pure.uva.nl CNAME uva.elsevierpure.com
-    identify: 'repositoryName "UvA-DARE", adminEmail pure@uva.nl'
+    identify: repositoryName "UvA-DARE", adminEmail pure@uva.nl
   x-status:
     probed: '2026-08-19'
     oai_identify: 200
@@ -225,12 +191,12 @@ apis:
 - aid: university-of-amsterdam:oai-archives
   name: UvA Archives Collection Descriptions OAI-PMH (ArchivesSpace tenancy)
   description: >-
-    OAI-PMH provider exposing EAD collection descriptions and inventories from the University of
-    Amsterdam Library archives and the Allard Pierson heritage collections, under PDDL. The host is
-    a UvA subdomain but CNAMEs to as-prod-amsterdam.lyrtech.org and the Identify response names
-    "ArchivesSpace OAI Provider" with an adminEmail at lyrasistechnology.org, so the software and
-    the hosting are LYRASIS's.
-  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    OAI-PMH provider exposing EAD collection descriptions and inventories from the University of Amsterdam
+    Library archives and the Allard Pierson heritage collections, under PDDL. The host is a UvA subdomain
+    but CNAMEs to as-prod-amsterdam.lyrtech.org and the Identify response names "ArchivesSpace OAI Provider"
+    with an adminEmail at lyrasistechnology.org, so the software and the hosting are LYRASIS's.
+  humanURL: >-
+    https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   baseURL: https://archives.uba.uva.nl/oai
   tags:
   - Open Data
@@ -242,24 +208,27 @@ apis:
   - type: x-oai-identify
     url: https://archives.uba.uva.nl/oai?verb=Identify
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   x-operator: tenant
   x-operator-evidence:
     dns: archives.uba.uva.nl CNAME as-prod-amsterdam.lyrtech.org
-    identify: 'repositoryName "ArchivesSpace OAI Provider"; adminEmail no-reply@uvaerfgoed.lyrasistechnology.org'
+    identify: >-
+      repositoryName "ArchivesSpace OAI Provider"; adminEmail no-reply@uvaerfgoed.lyrasistechnology.org
   x-status:
     probed: '2026-08-19'
     oai_identify: 200
 - aid: university-of-amsterdam:oai-catalogue
   name: UvA Central Catalogue OAI-PMH (Ex Libris Alma tenancy)
   description: >-
-    The harvesting endpoint the university library documents for its central catalogue — roughly
-    2.5 million bibliographic records in MARC-XML and unqualified Dublin Core. It runs on the
-    library's Ex Libris Alma tenancy and, as of 2026-08-19, returns HTTP 403 with Alma error code 21
-    ("Unauthorized access to the OAI services") to both scripted and browser user agents. The host
-    is live; the documented public service is not. Bulk dumps of the same records remain downloadable
-    from the library's own server, so the data is still open even though the interface is closed.
-  humanURL: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    The harvesting endpoint the university library documents for its central catalogue — roughly 2.5 million
+    bibliographic records in MARC-XML and unqualified Dublin Core. It runs on the library's Ex Libris
+    Alma tenancy and, as of 2026-08-19, returns HTTP 403 with Alma error code 21 ("Unauthorized access
+    to the OAI services") to both scripted and browser user agents. The host is live; the documented public
+    service is not. Bulk dumps of the same records remain downloadable from the library's own server,
+    so the data is still open even though the interface is closed.
+  humanURL: >-
+    https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   baseURL: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request
   tags:
   - Library
@@ -269,22 +238,22 @@ apis:
   - Open Data
   properties:
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   x-operator: tenant
   x-status:
     probed: '2026-08-19'
     oai_identify: 403
-    detail: 'Alma error_code 21 — unauthorized access to the OAI services'
+    detail: Alma error_code 21 — unauthorized access to the OAI services
 - aid: university-of-amsterdam:research-data-figshare
   name: UvA/HvA Research Data Repository (Figshare tenancy)
   description: >-
-    The shared research data repository of the University of Amsterdam and the Amsterdam University
-    of Applied Sciences, running on Figshare at uvaauas.figshare.com. DOIs are minted under the
-    institution's own DataCite prefix 10.21942 — 3,238 DOIs registered, publisher recorded at
-    DataCite as "University of Amsterdam / Amsterdam University of Applied Sciences". The previous
-    profile of this institution recorded the generic api.figshare.com host as a UvA API; nineteen
-    other institutions in this catalog claim the same host. It is Figshare's contract, and it is
-    recorded here as a tenancy instead.
+    The shared research data repository of the University of Amsterdam and the Amsterdam University of
+    Applied Sciences, running on Figshare at uvaauas.figshare.com. DOIs are minted under the institution's
+    own DataCite prefix 10.21942 — 3,238 DOIs registered, publisher recorded at DataCite as "University
+    of Amsterdam / Amsterdam University of Applied Sciences". The previous profile of this institution
+    recorded the generic api.figshare.com host as a UvA API; nineteen other institutions in this catalog
+    claim the same host. It is Figshare's contract, and it is recorded here as a tenancy instead.
   humanURL: https://uvaauas.figshare.com/
   baseURL: https://uvaauas.figshare.com/
   tags:
@@ -295,26 +264,27 @@ apis:
   - Open Data
   properties:
   - type: Documentation
-    url: https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+    url: >-
+      https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
   - type: Conformance
     url: conformance/university-of-amsterdam-conformance.yml
   x-operator: tenant
   x-operator-evidence:
-    datacite_prefix: '10.21942 (DataCite client delft.uva)'
+    datacite_prefix: 10.21942 (DataCite client delft.uva)
     vendor_repo: all/figshare
     oai_set: portal_201 on api.figshare.com (vendor host, not recorded as a UvA surface)
   x-status:
     probed: '2026-08-19'
     portal: 202
-    detail: 'bot challenge, not a failure — host is live'
+    detail: bot challenge, not a failure — host is live
 - aid: university-of-amsterdam:timetable
   name: UvA Timetable API (MyTimetable tenancy)
   description: >-
-    The university timetable at rooster.uva.nl exposes a JSON API under /api/ that answers 401 with
-    a structured error to unauthenticated callers, so the surface is real and gated behind
-    institutional sign-in. The host CNAMEs to uva.hosting.eveoh.nl — it is Eveoh's MyTimetable
-    product, not UvA engineering. Recorded because a timetable API is one of the classes a
-    university genuinely has, and because it is the only one here.
+    The university timetable at rooster.uva.nl exposes a JSON API under /api/ that answers 401 with a
+    structured error to unauthenticated callers, so the surface is real and gated behind institutional
+    sign-in. The host CNAMEs to uva.hosting.eveoh.nl — it is Eveoh's MyTimetable product, not UvA engineering.
+    Recorded because a timetable API is one of the classes a university genuinely has, and because it
+    is the only one here.
   humanURL: https://rooster.uva.nl/schedule
   baseURL: https://rooster.uva.nl/api
   tags:
@@ -332,6 +302,2120 @@ apis:
     probed: '2026-08-19'
     api_root: 401
     schedule: 200
+- aid: university-of-amsterdam:university-of-amsterdam-a2a-api
+  name: University of Amsterdam A2a API
+  description: The a2a API from University of Amsterdam — 5 operation(s) for a2a.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - a2a
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-a2a-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-a2a-registration-api
+  name: University of Amsterdam A2a Registration API
+  description: >-
+    The a2a_registration API from University of Amsterdam — 1 operation(s) for a2a_registration.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - a2a_registration
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-a2a-registration-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-access-group-management-api
+  name: University of Amsterdam access group management API
+  description: >-
+    The access group management API from University of Amsterdam — 4 operation(s) for access group management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - access group management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-access-group-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-adaptive-router-api
+  name: University of Amsterdam Adaptive Router API
+  description: >-
+    The adaptive_router API from University of Amsterdam — 1 operation(s) for adaptive_router.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - adaptive_router
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-adaptive-router-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-agent-management-api
+  name: University of Amsterdam Agent Management API
+  description: >-
+    The Agent Management API from University of Amsterdam — 1 operation(s) for agent management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Agent Management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-agent-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-agents-api
+  name: University of Amsterdam Agents API
+  description: The Agents API from University of Amsterdam — 1 operation(s) for agents.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-agents-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-anthropic-pass-through-api
+  name: University of Amsterdam Anthropic Pass-through API
+  description: >-
+    The Anthropic Pass-through API from University of Amsterdam — 1 operation(s) for anthropic pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Anthropic Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-anthropic-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-anthropic-skills-api
+  name: University of Amsterdam Anthropic Skills API
+  description: >-
+    The anthropic_skills API from University of Amsterdam — 2 operation(s) for anthropic_skills.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - anthropic_skills
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-anthropic-skills-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-apply-guardrail-api
+  name: University of Amsterdam Apply Guardrail API
+  description: >-
+    The Apply Guardrail API from University of Amsterdam — 1 operation(s) for apply guardrail.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Apply Guardrail
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-apply-guardrail-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-assemblyai-eu-pass-through-api
+  name: University of Amsterdam AssemblyAI EU Pass-through API
+  description: >-
+    The AssemblyAI EU Pass-through API from University of Amsterdam — 1 operation(s) for assemblyai eu
+    pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - AssemblyAI EU Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-assemblyai-eu-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-assemblyai-pass-through-api
+  name: University of Amsterdam AssemblyAI Pass-through API
+  description: >-
+    The AssemblyAI Pass-through API from University of Amsterdam — 1 operation(s) for assemblyai pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - AssemblyAI Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-assemblyai-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-assistants-api
+  name: University of Amsterdam Assistants API
+  description: The assistants API from University of Amsterdam — 12 operation(s) for assistants.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - assistants
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-assistants-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-audio-api
+  name: University of Amsterdam Audio API
+  description: The audio API from University of Amsterdam — 4 operation(s) for audio.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - audio
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-audio-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-audit-logging-api
+  name: University of Amsterdam Audit Logging API
+  description: The Audit Logging API from University of Amsterdam — 2 operation(s) for audit logging.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Audit Logging
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-audit-logging-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-azure-ai-pass-through-api
+  name: University of Amsterdam Azure AI Pass-through API
+  description: >-
+    The Azure AI Pass-through API from University of Amsterdam — 1 operation(s) for azure ai pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Azure AI Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-azure-ai-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-azure-pass-through-api
+  name: University of Amsterdam Azure Pass-through API
+  description: >-
+    The Azure Pass-through API from University of Amsterdam — 1 operation(s) for azure pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Azure Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-azure-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-batch-api
+  name: University of Amsterdam Batch API
+  description: The batch API from University of Amsterdam — 9 operation(s) for batch.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - batch
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-batch-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-bedrock-pass-through-api
+  name: University of Amsterdam Bedrock Pass-through API
+  description: >-
+    The Bedrock Pass-through API from University of Amsterdam — 1 operation(s) for bedrock pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Bedrock Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-bedrock-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-beta-a2a-agents-api
+  name: University of Amsterdam [beta] A2A Agents API
+  description: >-
+    The [beta] A2A Agents API from University of Amsterdam — 4 operation(s) for [beta] a2a agents.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] A2A Agents'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-a2a-agents-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-beta-agents-api
+  name: University of Amsterdam [beta] Agents API
+  description: The [beta] Agents API from University of Amsterdam — 2 operation(s) for [beta] agents.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] Agents'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-agents-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-beta-anthropic-event-logging-api
+  name: University of Amsterdam [beta] Anthropic Event Logging API
+  description: >-
+    The [beta] Anthropic Event Logging API from University of Amsterdam — 1 operation(s) for [beta] anthropic
+    event logging.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] Anthropic Event Logging'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-anthropic-event-logging-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: >-
+    university-of-amsterdam:university-of-amsterdam-beta-anthropic-messages-token-counting-api
+  name: University of Amsterdam [beta] Anthropic Messages Token Counting API
+  description: >-
+    The [beta] Anthropic Messages Token Counting API from University of Amsterdam — 1 operation(s) for
+    [beta] anthropic messages token counting.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] Anthropic Messages Token Counting'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-anthropic-messages-token-counting-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-beta-anthropic-v1-messages-api
+  name: University of Amsterdam [beta] Anthropic `/v1/messages` API
+  description: >-
+    The [beta] Anthropic `/v1/messages` API from University of Amsterdam — 1 operation(s) for [beta] anthropic
+    `/v1/messages`.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] Anthropic `/v1/messages`'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-anthropic-v1-messages-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-beta-mcp-api
+  name: University of Amsterdam [beta] MCP API
+  description: The [beta] MCP API from University of Amsterdam — 1 operation(s) for [beta] mcp.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - '[beta] MCP'
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-beta-mcp-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-budget-management-api
+  name: University of Amsterdam budget management API
+  description: >-
+    The budget management API from University of Amsterdam — 6 operation(s) for budget management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - budget management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-budget-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-budget-spend-tracking-api
+  name: University of Amsterdam Budget & Spend Tracking API
+  description: >-
+    The Budget & Spend Tracking API from University of Amsterdam — 12 operation(s) for budget & spend
+    tracking.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Budget & Spend Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-budget-spend-tracking-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-cache-settings-api
+  name: University of Amsterdam Cache Settings API
+  description: The Cache Settings API from University of Amsterdam — 2 operation(s) for cache settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Cache Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-cache-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-caching-api
+  name: University of Amsterdam Caching API
+  description: The caching API from University of Amsterdam — 4 operation(s) for caching.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - caching
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-caching-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-chat-completions-api
+  name: University of Amsterdam Chat/completions API
+  description: >-
+    The chat/completions API from University of Amsterdam — 4 operation(s) for chat/completions.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - chat/completions
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-chat-completions-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-claude-code-marketplace-api
+  name: University of Amsterdam Claude Code Marketplace API
+  description: >-
+    The Claude Code Marketplace API from University of Amsterdam — 6 operation(s) for claude code marketplace.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Claude Code Marketplace
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-claude-code-marketplace-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-cohere-pass-through-api
+  name: University of Amsterdam Cohere Pass-through API
+  description: >-
+    The Cohere Pass-through API from University of Amsterdam — 1 operation(s) for cohere pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Cohere Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-cohere-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-completions-api
+  name: University of Amsterdam Completions API
+  description: The completions API from University of Amsterdam — 4 operation(s) for completions.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - completions
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-completions-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-compliance-api
+  name: University of Amsterdam Compliance API
+  description: The compliance API from University of Amsterdam — 2 operation(s) for compliance.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - compliance
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-compliance-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-config-api
+  name: University of Amsterdam Config API
+  description: The Config API from University of Amsterdam — 3 operation(s) for config.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Config
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-config-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-containers-api
+  name: University of Amsterdam Containers API
+  description: The containers API from University of Amsterdam — 10 operation(s) for containers.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - containers
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-containers-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-coordination-redis-settings-api
+  name: University of Amsterdam Coordination Redis Settings API
+  description: >-
+    The Coordination Redis Settings API from University of Amsterdam — 2 operation(s) for coordination
+    redis settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Coordination Redis Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-coordination-redis-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-cost-tracking-api
+  name: University of Amsterdam Cost Tracking API
+  description: The Cost Tracking API from University of Amsterdam — 3 operation(s) for cost tracking.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Cost Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-cost-tracking-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-credential-management-api
+  name: University of Amsterdam credential management API
+  description: >-
+    The credential management API from University of Amsterdam — 6 operation(s) for credential management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - credential management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-credential-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-cursor-pass-through-api
+  name: University of Amsterdam Cursor Pass-through API
+  description: >-
+    The Cursor Pass-through API from University of Amsterdam — 1 operation(s) for cursor pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Cursor Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-cursor-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-customer-management-api
+  name: University of Amsterdam Customer Management API
+  description: >-
+    The Customer Management API from University of Amsterdam — 8 operation(s) for customer management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Customer Management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-customer-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-debug-api
+  name: University of Amsterdam Debug API
+  description: The Debug API from University of Amsterdam — 1 operation(s) for debug.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-debug-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-email-management-api
+  name: University of Amsterdam email management API
+  description: >-
+    The email management API from University of Amsterdam — 2 operation(s) for email management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - email management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-email-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-embeddings-api
+  name: University of Amsterdam Embeddings API
+  description: The embeddings API from University of Amsterdam — 4 operation(s) for embeddings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - embeddings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-embeddings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-evals-api
+  name: University of Amsterdam Evals API
+  description: The evals API from University of Amsterdam — 5 operation(s) for evals.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - evals
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-evals-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-experimental-api
+  name: University of Amsterdam Experimental API
+  description: The experimental API from University of Amsterdam — 1 operation(s) for experimental.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - experimental
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-experimental-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-fallback-management-api
+  name: University of Amsterdam Fallback Management API
+  description: >-
+    The Fallback Management API from University of Amsterdam — 2 operation(s) for fallback management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Fallback Management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-fallback-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-files-api
+  name: University of Amsterdam Files API
+  description: The files API from University of Amsterdam — 9 operation(s) for files.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - files
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-files-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-fine-tuning-api
+  name: University of Amsterdam Fine Tuning API
+  description: The fine-tuning API from University of Amsterdam — 6 operation(s) for fine-tuning.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - fine-tuning
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-fine-tuning-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-gemini-agents-api
+  name: University of Amsterdam Gemini Agents API
+  description: The gemini_agents API from University of Amsterdam — 1 operation(s) for gemini_agents.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - gemini_agents
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-gemini-agents-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-google-ai-studio-pass-through-api
+  name: University of Amsterdam Google AI Studio Pass-through API
+  description: >-
+    The Google AI Studio Pass-through API from University of Amsterdam — 1 operation(s) for google ai
+    studio pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Google AI Studio Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-google-ai-studio-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-google-genai-endpoints-api
+  name: University of Amsterdam google genai endpoints API
+  description: >-
+    The google genai endpoints API from University of Amsterdam — 12 operation(s) for google genai endpoints.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - google genai endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-google-genai-endpoints-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-guardrails-api
+  name: University of Amsterdam Guardrails API
+  description: The Guardrails API from University of Amsterdam — 20 operation(s) for guardrails.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Guardrails
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-guardrails-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-health-api
+  name: University of Amsterdam Health API
+  description: The health API from University of Amsterdam — 16 operation(s) for health.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-health-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-images-api
+  name: University of Amsterdam Images API
+  description: The images API from University of Amsterdam — 6 operation(s) for images.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - images
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-images-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-interactions-api
+  name: University of Amsterdam Interactions API
+  description: The interactions API from University of Amsterdam — 6 operation(s) for interactions.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - interactions
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-interactions-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-internal-user-management-api
+  name: University of Amsterdam Internal User management API
+  description: >-
+    The Internal User management API from University of Amsterdam — 10 operation(s) for internal user
+    management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Internal User management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-internal-user-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-jwt-mappings-api
+  name: University of Amsterdam JWT Mappings API
+  description: The jwt_mappings API from University of Amsterdam — 5 operation(s) for jwt_mappings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - jwt_mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-jwt-mappings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-key-management-api
+  name: University of Amsterdam key management API
+  description: >-
+    The key management API from University of Amsterdam — 15 operation(s) for key management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - key management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-key-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-langfuse-passthrough-api
+  name: University of Amsterdam Langfuse Passthrough API
+  description: >-
+    The langfuse_passthrough API from University of Amsterdam — 1 operation(s) for langfuse_passthrough.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - langfuse_passthrough
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-langfuse-passthrough-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-litellm-api-api
+  name: University of Amsterdam LiteLLM API
+  description: The LiteLLM API API from University of Amsterdam — 1 operation(s) for litellm api.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - LiteLLM API
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-litellm-api-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-litellm-api
+  name: University of Amsterdam Litellm API
+  description: The Litellm API from University of Amsterdam — 1 operation(s) for litellm.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Litellm
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-litellm-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-llm-utils-api
+  name: University of Amsterdam llm utils API
+  description: The llm utils API from University of Amsterdam — 3 operation(s) for llm utils.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - llm utils
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-llm-utils-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-logging-callbacks-api
+  name: University of Amsterdam Logging Callbacks API
+  description: >-
+    The Logging Callbacks API from University of Amsterdam — 2 operation(s) for logging callbacks.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Logging Callbacks
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-logging-callbacks-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-mcp-api
+  name: University of Amsterdam MCP API
+  description: The Mcp API from University of Amsterdam — 28 operation(s) for mcp.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Mcp
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-mcp-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-memory-management-api
+  name: University of Amsterdam memory management API
+  description: >-
+    The memory management API from University of Amsterdam — 2 operation(s) for memory management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - memory management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-memory-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-milvus-pass-through-api
+  name: University of Amsterdam Milvus Pass-through API
+  description: >-
+    The Milvus Pass-through API from University of Amsterdam — 1 operation(s) for milvus pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Milvus Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-milvus-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-mistral-pass-through-api
+  name: University of Amsterdam Mistral Pass-through API
+  description: >-
+    The Mistral Pass-through API from University of Amsterdam — 1 operation(s) for mistral pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Mistral Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-mistral-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-model-management-api
+  name: University of Amsterdam model management API
+  description: >-
+    The model management API from University of Amsterdam — 24 operation(s) for model management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - model management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-model-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-moderations-api
+  name: University of Amsterdam Moderations API
+  description: The moderations API from University of Amsterdam — 2 operation(s) for moderations.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - moderations
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-moderations-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-ocr-api
+  name: University of Amsterdam Ocr API
+  description: The ocr API from University of Amsterdam — 2 operation(s) for ocr.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - ocr
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-ocr-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-openai-pass-through-api
+  name: University of Amsterdam OpenAI Pass-through API
+  description: >-
+    The OpenAI Pass-through API from University of Amsterdam — 2 operation(s) for openai pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - OpenAI Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-openai-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-organization-management-api
+  name: University of Amsterdam organization management API
+  description: >-
+    The organization management API from University of Amsterdam — 9 operation(s) for organization management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - organization management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-organization-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-pass-through-api
+  name: University of Amsterdam Pass Through API
+  description: The pass-through API from University of Amsterdam — 17 operation(s) for pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-plugins-api
+  name: University of Amsterdam Plugins API
+  description: The plugins API from University of Amsterdam — 2 operation(s) for plugins.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - plugins
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-plugins-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-policies-api
+  name: University of Amsterdam Policies API
+  description: The Policies API from University of Amsterdam — 23 operation(s) for policies.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-policies-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-policy-resolve-api
+  name: University of Amsterdam Policy Resolve API
+  description: The policy_resolve API from University of Amsterdam — 2 operation(s) for policy_resolve.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - policy_resolve
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-policy-resolve-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-project-management-api
+  name: University of Amsterdam project management API
+  description: >-
+    The project management API from University of Amsterdam — 5 operation(s) for project management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - project management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-project-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-prompt-management-api
+  name: University of Amsterdam Prompt Management API
+  description: >-
+    The Prompt Management API from University of Amsterdam — 6 operation(s) for prompt management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Prompt Management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-prompt-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-prompts-api
+  name: University of Amsterdam Prompts API
+  description: The prompts API from University of Amsterdam — 1 operation(s) for prompts.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - prompts
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-prompts-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-provider-api
+  name: University of Amsterdam Provider API
+  description: The Provider API from University of Amsterdam — 1 operation(s) for provider.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Provider
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-provider-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-providers-api
+  name: University of Amsterdam Providers API
+  description: The providers API from University of Amsterdam — 2 operation(s) for providers.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - providers
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-providers-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-public-api
+  name: University of Amsterdam Public API
+  description: The public API from University of Amsterdam — 11 operation(s) for public.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - public
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-public-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-rag-api
+  name: University of Amsterdam Rag API
+  description: The rag API from University of Amsterdam — 4 operation(s) for rag.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - rag
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-rag-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-realtime-api
+  name: University of Amsterdam Realtime API
+  description: The realtime API from University of Amsterdam — 6 operation(s) for realtime.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - realtime
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-realtime-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-rerank-api
+  name: University of Amsterdam Rerank API
+  description: The rerank API from University of Amsterdam — 3 operation(s) for rerank.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - rerank
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-rerank-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-responses-api
+  name: University of Amsterdam Responses API
+  description: The responses API from University of Amsterdam — 16 operation(s) for responses.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - responses
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-responses-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-robots-txt-api
+  name: University of Amsterdam Robots.txt API
+  description: The Robots.txt API from University of Amsterdam — 1 operation(s) for robots.txt.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Robots.txt
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-robots-txt-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-router-settings-api
+  name: University of Amsterdam Router Settings API
+  description: >-
+    The Router Settings API from University of Amsterdam — 2 operation(s) for router settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Router Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-router-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-routes-api
+  name: University of Amsterdam Routes API
+  description: The Routes API from University of Amsterdam — 1 operation(s) for routes.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Routes
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-routes-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-rust-control-plane-api
+  name: University of Amsterdam rust control plane API
+  description: >-
+    The rust control plane API from University of Amsterdam — 1 operation(s) for rust control plane.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - rust control plane
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-rust-control-plane-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-scim-api
+  name: University of Amsterdam SCIM API
+  description: The scim API from University of Amsterdam — 10 operation(s) for scim.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - scim
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-scim-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-search-api
+  name: University of Amsterdam Search API
+  description: The search API from University of Amsterdam — 6 operation(s) for search.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-search-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-search-tools-api
+  name: University of Amsterdam Search Tools API
+  description: The search_tools API from University of Amsterdam — 5 operation(s) for search_tools.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - search_tools
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-search-tools-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-settings-api
+  name: University of Amsterdam Settings API
+  description: The Settings API from University of Amsterdam — 2 operation(s) for settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-sso-settings-api
+  name: University of Amsterdam SSO Settings API
+  description: The SSO Settings API from University of Amsterdam — 6 operation(s) for sso settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - SSO Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-sso-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-tag-management-api
+  name: University of Amsterdam tag management API
+  description: >-
+    The tag management API from University of Amsterdam — 12 operation(s) for tag management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - tag management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-tag-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-team-api
+  name: University of Amsterdam Team API
+  description: The Team API from University of Amsterdam — 1 operation(s) for team.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Team
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-team-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-team-management-api
+  name: University of Amsterdam team management API
+  description: >-
+    The team management API from University of Amsterdam — 22 operation(s) for team management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - team management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-team-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-tool-management-api
+  name: University of Amsterdam tool management API
+  description: >-
+    The tool management API from University of Amsterdam — 8 operation(s) for tool management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - tool management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-tool-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-toolset-api
+  name: University of Amsterdam Toolset API
+  description: The Toolset API from University of Amsterdam — 1 operation(s) for toolset.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Toolset
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-toolset-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-ui-settings-api
+  name: University of Amsterdam UI Settings API
+  description: The UI Settings API from University of Amsterdam — 2 operation(s) for ui settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - UI Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-ui-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-ui-theme-settings-api
+  name: University of Amsterdam UI Theme Settings API
+  description: >-
+    The UI Theme Settings API from University of Amsterdam — 3 operation(s) for ui theme settings.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - UI Theme Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-ui-theme-settings-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-usage-ai-api
+  name: University of Amsterdam Usage AI API
+  description: The usage_ai API from University of Amsterdam — 1 operation(s) for usage_ai.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - usage_ai
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-usage-ai-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-user-agent-analytics-api
+  name: University of Amsterdam user agent analytics API
+  description: >-
+    The user agent analytics API from University of Amsterdam — 6 operation(s) for user agent analytics.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - user agent analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-user-agent-analytics-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-utils-api
+  name: University of Amsterdam Utils API
+  description: The utils API from University of Amsterdam — 1 operation(s) for utils.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - utils
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-utils-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-vector-store-management-api
+  name: University of Amsterdam vector store management API
+  description: >-
+    The vector store management API from University of Amsterdam — 6 operation(s) for vector store management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - vector store management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-vector-store-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-vector-stores-api
+  name: University of Amsterdam Vector Stores API
+  description: The vector_stores API from University of Amsterdam — 13 operation(s) for vector_stores.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - vector_stores
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-vector-stores-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-vertex-ai-pass-through-api
+  name: University of Amsterdam Vertex AI Pass-through API
+  description: >-
+    The Vertex AI Pass-through API from University of Amsterdam — 2 operation(s) for vertex ai pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Vertex AI Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-vertex-ai-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-videos-api
+  name: University of Amsterdam Videos API
+  description: The videos API from University of Amsterdam — 16 operation(s) for videos.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - videos
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-videos-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-vllm-pass-through-api
+  name: University of Amsterdam VLLM Pass-through API
+  description: >-
+    The VLLM Pass-through API from University of Amsterdam — 1 operation(s) for vllm pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - VLLM Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-vllm-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-watsonx-pass-through-api
+  name: University of Amsterdam Watsonx Pass-through API
+  description: >-
+    The Watsonx Pass-through API from University of Amsterdam — 1 operation(s) for watsonx pass-through.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - Watsonx Pass-through
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-watsonx-pass-through-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-websocket-api
+  name: University of Amsterdam Web Socket API
+  description: The WebSocket API from University of Amsterdam — 6 operation(s) for websocket.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - WebSocket
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-websocket-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-well-known-api
+  name: University of Amsterdam .well Known API
+  description: The .well Known API from University of Amsterdam — 1 operation(s) for .well known.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - .well Known
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-well-known-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-workflow-management-api
+  name: University of Amsterdam workflow management API
+  description: >-
+    The workflow management API from University of Amsterdam — 4 operation(s) for workflow management.
+  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
+  baseURL: https://llmproxy.uva.nl
+  tags:
+  - workflow management
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-workflow-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
 common:
 - type: Website
   url: https://www.uva.nl/en
