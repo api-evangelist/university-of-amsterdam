@@ -16,6 +16,18 @@ description: 'The University of Amsterdam (Universiteit van Amsterdam, UvA) is a
   and now returns 403 to the public, and the timetable API is Eveoh MyTimetable behind SSO. The data
   in those systems is the university''s; the interfaces are not.'
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: request
@@ -2417,6 +2429,9 @@ apis:
   - type: x-errors
     url: errors/university-of-amsterdam-errors.yml
 common:
+- type: CapabilityMap
+  url: capabilities/university-of-amsterdam-capability-edges.yml
+  name: University of Amsterdam Business Capability Map
 - type: Website
   url: https://www.uva.nl/en
 - type: OpenData
