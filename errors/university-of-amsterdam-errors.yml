@@ -1,0 +1,41 @@
+generated: '2026-08-19'
+method: derived
+source: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+x-operator: institution
+note: >-
+  Error semantics of the one institution-operated contract in this profile, the
+  UvA/HvA shared AI gateway at llmproxy.uva.nl. Derived from the served OpenAPI
+  plus live unauthenticated probes on 2026-08-19. The gateway runs LiteLLM, so
+  the error envelope is OpenAI-compatible.
+envelope:
+  shape: '{"error": {"message": string, "type": string, "param": string|null, "code": string}}'
+  media_type: application/json
+  observed:
+  - url: https://llmproxy.uva.nl/v1/models
+    status: 401
+    body: '{"error":{"message":"Authentication Error, No api key passed in.","type":"auth_error","param":"None","code":"401"}}'
+  - url: https://llmproxy.uva.nl/docs
+    status: 404
+    body: '{"detail":"Not Found"}'
+    note: FastAPI default envelope, not the OpenAI-compatible one — the deployment returns two different error shapes depending on which layer answers.
+declared_in_contract:
+- code: '422'
+  schema: HTTPValidationError
+  count: 576
+  detail: 'Validation error; body is {"detail":[{"loc":[...],"msg":string,"type":string}]}'
+- code: '404'
+  count: 2
+- code: '500'
+  count: 2
+- code: '401'
+  count: 1
+gaps:
+- >-
+  Only one operation in 723 declares a 401 response even though the whole
+  surface is key-gated, so the authentication failure an integrator will hit
+  first is undocumented in the contract.
+- >-
+  No 429 response is declared anywhere in the document, and no rate-limit
+  headers are described, despite the gateway being a shared institutional quota
+  point.
+- No RFC 9457 problem+json representation is offered.

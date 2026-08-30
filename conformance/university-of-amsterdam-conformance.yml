@@ -1,0 +1,126 @@
+generated: '2026-08-19'
+method: probed
+source: live probes of University of Amsterdam surfaces, 2026-08-19
+regime: education
+regime_standards_probed:
+- scim
+- lti
+- oneroster
+- ed-fi
+- caliper
+- qti
+- oai-pmh
+- shibboleth
+- saml
+- orcid
+- datacite
+- crossref
+note: >-
+  Reward-only. Only standards with a fetched, status-coded artifact are recorded
+  as hits. Each hit carries the operator of the surface that satisfies it,
+  because for a university the institution and the platform serving the standard
+  are usually not the same party.
+hits:
+- standard: saml
+  status: conformant
+  x-operator: institution
+  detail: >-
+    The University of Amsterdam runs its own SAML 2.0 identity provider and
+    publishes signed federation metadata. The entity is registered in SURFconext,
+    the Dutch national identity federation, which is an eduGAIN participant, so
+    the entry is machine-readable from both the institution's host and the
+    federation's aggregate.
+  entity_id: http://login.uva.nl/adfs/services/trust
+  evidence:
+  - url: https://login.uva.nl/federationmetadata/2007-06/federationmetadata.xml
+    status: 200
+    content_type: application/samlmetadata+xml
+    bytes: 70967
+    location: root EntityDescriptor, entityID attribute
+  - url: https://metadata.surfconext.nl/idps-metadata.xml
+    status: 200
+    location: 'EntityDescriptor entityID="http://login.uva.nl/adfs/services/trust"'
+- standard: oai-pmh
+  status: conformant
+  x-operator: tenant
+  detail: >-
+    Three OAI-PMH providers publish University of Amsterdam metadata and are
+    listed on the university library's own open-data page. All three run on
+    vendor platforms the institution is a tenant of, so the protocol conformance
+    is real and the institution's data is real, but the implementation is the
+    platform's. A fourth documented endpoint, the Alma central catalogue, no
+    longer serves the public verb.
+  evidence:
+  - url: https://pure.uva.nl/ws/oai?verb=Identify
+    status: 200
+    location: 'Identify/repositoryName = "UvA-DARE", adminEmail = pure@uva.nl, OpenAIRE CERIF profile 1.2'
+    operator: tenant (Elsevier Pure; pure.uva.nl CNAME uva.elsevierpure.com)
+  - url: https://archives.uba.uva.nl/oai?verb=Identify
+    status: 200
+    location: 'Identify/repositoryName = "ArchivesSpace OAI Provider", repositoryIdentifier = amsterdam'
+    operator: tenant (LYRASIS-hosted ArchivesSpace; archives.uba.uva.nl CNAME as-prod-amsterdam.lyrtech.org)
+  - url: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request?verb=Identify
+    status: 403
+    location: 'error_code 21, "Unauthorized access to the OAI services"'
+    operator: tenant (Ex Libris Alma)
+    note: >-
+      Documented as a public harvesting base URL by the university library but
+      returns 403 to both scripted and browser user agents. Live host, gated
+      service — recorded as a defect in the library's own published channel, not
+      as a conformance hit.
+- standard: datacite
+  status: conformant
+  x-operator: institution
+  detail: >-
+    DOI prefix 10.21942 is registered with DataCite and used for University of
+    Amsterdam / Amsterdam University of Applied Sciences research data. Minting
+    is done through the institution's Figshare tenant.
+  evidence:
+  - url: https://api.datacite.org/prefixes/10.21942
+    status: 200
+    location: relationships.clients.data[0].id = "delft.uva"
+  - url: https://api.datacite.org/dois?prefix=10.21942&page[size]=1
+    status: 200
+    location: 'meta.total = 3238; attributes.publisher = "University of Amsterdam / Amsterdam University of Applied Sciences"'
+partial:
+- standard: lti
+  status: implemented-in-code-not-in-contract
+  x-operator: institution
+  detail: >-
+    The institution's own GitHub organisation publishes LTI 1.3 code it wrote and
+    maintains: a consumer middleware library and an LTI app that provisions
+    Teams for courses in an LMS. This is genuine institutional LTI engineering,
+    but it is source code, not a served contract, so it does not satisfy a
+    conformance check that reads from the API description.
+  evidence:
+  - url: https://github.com/uva/LTI-consumer
+    status: 200
+    location: 'repo description "LTI 1.3 consumer middleware"; README documents ClientId, AuthenticateUrl, JwksUrl options'
+  - url: https://github.com/uva/UvA.TeamsLTI
+    status: 200
+    location: 'repo description "LTI app to create Teams for courses in an LMS"'
+not_found:
+- standard: shibboleth
+  reason: >-
+    The institution federates through SURFconext but its own identity provider is
+    AD FS, not Shibboleth. Recorded as SAML rather than claimed as Shibboleth.
+- standard: scim
+  reason: No SCIM endpoint or schema found on any institution-operated host.
+- standard: oneroster
+  reason: No OneRoster surface found; the Dutch sector does not use it.
+- standard: ed-fi
+  reason: No Ed-Fi surface found; Ed-Fi is a US K-12 standard.
+- standard: caliper
+  reason: No Caliper analytics endpoint found on any institution-operated host.
+- standard: qti
+  reason: No QTI item bank or export surface found on a public host.
+- standard: crossref
+  reason: >-
+    No Crossref member record found for the University of Amsterdam; research
+    output DOIs run through DataCite. Amsterdam University Press is a separate
+    Crossref member and is not the university.
+- standard: orcid
+  reason: >-
+    No ORCID integration exposed on a machine-readable institution-operated
+    surface. Author identifiers appear inside the Pure tenant's records rather
+    than on a contract the institution serves.
