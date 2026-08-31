@@ -323,6 +323,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - A2A
+  tags_raw:
   - a2a
   properties:
   - type: OpenAPI
@@ -341,7 +343,8 @@ apis:
     The a2a_registration API from University of Amsterdam — 1 operation(s) for a2a_registration.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - a2a_registration
   properties:
   - type: OpenAPI
@@ -379,7 +382,8 @@ apis:
     The adaptive_router API from University of Amsterdam — 1 operation(s) for adaptive_router.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - adaptive_router
   properties:
   - type: OpenAPI
@@ -454,7 +458,8 @@ apis:
     The anthropic_skills API from University of Amsterdam — 2 operation(s) for anthropic_skills.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - anthropic_skills
   properties:
   - type: OpenAPI
@@ -531,6 +536,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Assistants
+  tags_raw:
   - assistants
   properties:
   - type: OpenAPI
@@ -549,6 +556,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Audio
+  tags_raw:
   - audio
   properties:
   - type: OpenAPI
@@ -623,6 +632,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Batch
+  tags_raw:
   - batch
   properties:
   - type: OpenAPI
@@ -833,6 +844,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Caching
+  tags_raw:
   - caching
   properties:
   - type: OpenAPI
@@ -852,6 +865,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Chat Completions
+  tags_raw:
   - chat/completions
   properties:
   - type: OpenAPI
@@ -908,6 +923,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Completions
+  tags_raw:
   - completions
   properties:
   - type: OpenAPI
@@ -926,6 +943,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Compliance
+  tags_raw:
   - compliance
   properties:
   - type: OpenAPI
@@ -962,6 +981,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Containers
+  tags_raw:
   - containers
   properties:
   - type: OpenAPI
@@ -1019,6 +1040,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Credential Management
+  tags_raw:
   - credential management
   properties:
   - type: OpenAPI
@@ -1094,6 +1117,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Email Management
+  tags_raw:
   - email management
   properties:
   - type: OpenAPI
@@ -1112,6 +1137,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Embeddings
+  tags_raw:
   - embeddings
   properties:
   - type: OpenAPI
@@ -1130,6 +1157,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Evals
+  tags_raw:
   - evals
   properties:
   - type: OpenAPI
@@ -1148,6 +1177,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Experimental
+  tags_raw:
   - experimental
   properties:
   - type: OpenAPI
@@ -1185,6 +1216,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - File
+  tags_raw:
   - files
   properties:
   - type: OpenAPI
@@ -1203,6 +1236,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Fine-Tuning
+  tags_raw:
   - fine-tuning
   properties:
   - type: OpenAPI
@@ -1220,7 +1255,8 @@ apis:
   description: The gemini_agents API from University of Amsterdam — 1 operation(s) for gemini_agents.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - gemini_agents
   properties:
   - type: OpenAPI
@@ -1296,6 +1332,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Health
+  tags_raw:
   - health
   properties:
   - type: OpenAPI
@@ -1314,6 +1352,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Image
+  tags_raw:
   - images
   properties:
   - type: OpenAPI
@@ -1332,6 +1372,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Interactions
+  tags_raw:
   - interactions
   properties:
   - type: OpenAPI
@@ -1369,7 +1411,8 @@ apis:
   description: The jwt_mappings API from University of Amsterdam — 5 operation(s) for jwt_mappings.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - jwt_mappings
   properties:
   - type: OpenAPI
@@ -1389,6 +1432,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Key Management
+  tags_raw:
   - key management
   properties:
   - type: OpenAPI
@@ -1407,7 +1452,8 @@ apis:
     The langfuse_passthrough API from University of Amsterdam — 1 operation(s) for langfuse_passthrough.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - langfuse_passthrough
   properties:
   - type: OpenAPI
@@ -1499,6 +1545,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - MCP
+  tags_raw:
   - Mcp
   properties:
   - type: OpenAPI
@@ -1575,6 +1623,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Model Management
+  tags_raw:
   - model management
   properties:
   - type: OpenAPI
@@ -1593,6 +1643,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Moderations
+  tags_raw:
   - moderations
   properties:
   - type: OpenAPI
@@ -1611,6 +1663,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - OCR
+  tags_raw:
   - ocr
   properties:
   - type: OpenAPI
@@ -1649,6 +1703,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Organization Management
+  tags_raw:
   - organization management
   properties:
   - type: OpenAPI
@@ -1667,6 +1723,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Passthrough
+  tags_raw:
   - pass-through
   properties:
   - type: OpenAPI
@@ -1685,6 +1743,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Plugins
+  tags_raw:
   - plugins
   properties:
   - type: OpenAPI
@@ -1720,7 +1780,8 @@ apis:
   description: The policy_resolve API from University of Amsterdam — 2 operation(s) for policy_resolve.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - policy_resolve
   properties:
   - type: OpenAPI
@@ -1740,6 +1801,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Project Management
+  tags_raw:
   - project management
   properties:
   - type: OpenAPI
@@ -1777,6 +1840,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Prompts
+  tags_raw:
   - prompts
   properties:
   - type: OpenAPI
@@ -1813,6 +1878,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Providers
+  tags_raw:
   - providers
   properties:
   - type: OpenAPI
@@ -1831,6 +1898,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Public
+  tags_raw:
   - public
   properties:
   - type: OpenAPI
@@ -1849,6 +1918,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - RAG
+  tags_raw:
   - rag
   properties:
   - type: OpenAPI
@@ -1867,6 +1938,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Real-Time
+  tags_raw:
   - realtime
   properties:
   - type: OpenAPI
@@ -1885,6 +1958,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Rerank
+  tags_raw:
   - rerank
   properties:
   - type: OpenAPI
@@ -1903,6 +1978,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Responses
+  tags_raw:
   - responses
   properties:
   - type: OpenAPI
@@ -1995,6 +2072,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - SCIM
+  tags_raw:
   - scim
   properties:
   - type: OpenAPI
@@ -2013,6 +2092,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Search
+  tags_raw:
   - search
   properties:
   - type: OpenAPI
@@ -2030,7 +2111,8 @@ apis:
   description: The search_tools API from University of Amsterdam — 5 operation(s) for search_tools.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - search_tools
   properties:
   - type: OpenAPI
@@ -2086,6 +2168,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Tag Management
+  tags_raw:
   - tag management
   properties:
   - type: OpenAPI
@@ -2123,6 +2207,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Team Management
+  tags_raw:
   - team management
   properties:
   - type: OpenAPI
@@ -2142,6 +2228,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Tool Management
+  tags_raw:
   - tool management
   properties:
   - type: OpenAPI
@@ -2214,7 +2302,8 @@ apis:
   description: The usage_ai API from University of Amsterdam — 1 operation(s) for usage_ai.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - usage_ai
   properties:
   - type: OpenAPI
@@ -2252,6 +2341,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Utils
+  tags_raw:
   - utils
   properties:
   - type: OpenAPI
@@ -2289,6 +2380,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Vector Stores
+  tags_raw:
   - vector_stores
   properties:
   - type: OpenAPI
@@ -2326,6 +2419,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Videos
+  tags_raw:
   - videos
   properties:
   - type: OpenAPI
@@ -2419,6 +2514,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Workflow Management
+  tags_raw:
   - workflow management
   properties:
   - type: OpenAPI
