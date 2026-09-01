@@ -787,7 +787,8 @@ apis:
     The budget management API from University of Amsterdam — 6 operation(s) for budget management.
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
-  tags:
+  tags: []
+  tags_raw:
   - budget management
   properties:
   - type: OpenAPI
