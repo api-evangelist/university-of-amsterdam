@@ -1718,26 +1718,6 @@ apis:
     url: authentication/university-of-amsterdam-authentication.yml
   - type: x-errors
     url: errors/university-of-amsterdam-errors.yml
-- aid: university-of-amsterdam:university-of-amsterdam-pass-through-api
-  name: University of Amsterdam Pass Through API
-  description: The pass-through API from University of Amsterdam — 17 operation(s) for pass-through.
-  humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
-  baseURL: https://llmproxy.uva.nl
-  tags:
-  - Passthrough
-  tags_raw:
-  - pass-through
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-amsterdam-pass-through-api-openapi.yml
-  - type: x-openapi-original
-    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
-  - type: Documentation
-    url: https://github.com/uva/UvA-HvA-Agentic-Tools
-  - type: Authentication
-    url: authentication/university-of-amsterdam-authentication.yml
-  - type: x-errors
-    url: errors/university-of-amsterdam-errors.yml
 - aid: university-of-amsterdam:university-of-amsterdam-plugins-api
   name: University of Amsterdam Plugins API
   description: The plugins API from University of Amsterdam — 2 operation(s) for plugins.
@@ -2521,6 +2501,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/university-of-amsterdam-workflow-management-api-openapi.yml
+  - type: x-openapi-original
+    url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+  - type: Documentation
+    url: https://github.com/uva/UvA-HvA-Agentic-Tools
+  - type: Authentication
+    url: authentication/university-of-amsterdam-authentication.yml
+  - type: x-errors
+    url: errors/university-of-amsterdam-errors.yml
+- aid: university-of-amsterdam:university-of-amsterdam-passthrough-api
+  name: University of Amsterdam Passthrough API
+  description: The Passthrough API from University of Amsterdam — 17 operation(s) for passthrough.
+  humanURL: https://metadata.surfconext.nl/
+  baseURL: https://login.uva.nl/federationmetadata/2007-06/federationmetadata.xml
+  tags:
+  - Passthrough
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-amsterdam-passthrough-api-openapi.yml
   - type: x-openapi-original
     url: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
   - type: Documentation
