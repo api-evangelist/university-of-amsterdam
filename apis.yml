@@ -186,6 +186,12 @@ apis:
   - Research Repository
   - OAI-PMH
   - Publications
+  - CRI
+  - OpenAIRE
+  tags_raw:
+  - Research Repository
+  - OAI-PMH
+  - Publications
   - CRIS
   - OpenAIRE
   properties:
@@ -536,7 +542,7 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
-  - Assistants
+  - Assistant
   tags_raw:
   - assistants
   properties:
@@ -1841,6 +1847,8 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
+  - Providers
+  tags_raw:
   - Provider
   properties:
   - type: OpenAPI
@@ -2400,7 +2408,7 @@ apis:
   humanURL: https://github.com/uva/UvA-HvA-Agentic-Tools
   baseURL: https://llmproxy.uva.nl
   tags:
-  - Videos
+  - Video
   tags_raw:
   - videos
   properties:
