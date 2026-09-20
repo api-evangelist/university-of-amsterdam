@@ -1,0 +1,140 @@
+slug: university-of-amsterdam
+provider: University of Amsterdam
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Education
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 12
+edges:
+- tag: fine-tuning
+  spec_file: university-of-amsterdam-fine-tuning-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.8
+  evidence: POST /fine_tuning/jobs  ✨ (Enterprise) Create Fine-Tuning Job; schema LiteLLMFineTuningJobCreate,
+    Hyperparameters
+  reason: Creating, listing and cancelling model fine-tuning jobs with hyperparameters is squarely AI/ML
+    model lifecycle management (MLOps) under Artificial Intelligence Management.
+- tag: Guardrails
+  spec_file: university-of-amsterdam-guardrails-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.78
+  evidence: '"Create Guardrail", "Approve Guardrail Submission"; schemas "PiiEntityType", "BedrockChecksPromptAttackCategoryItem",
+    "ContentFilterCategoryConfig"'
+  reason: Operations manage the lifecycle and approval of LLM guardrails (PII detection, content filtering,
+    prompt-attack checks) — responsible-AI control over model usage, which sits under Artificial Intelligence
+    Management rather than any generic compliance capability.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: scim
+  spec_file: university-of-amsterdam-scim-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: GET /scim/v2/Users, "Create Group", "Team Member Add"-style SCIM provisioning with schemas
+    SCIMUser, SCIMGroup, SCIMMember, SCIMServiceProviderConfig
+  reason: 'SCIM 2.0 user and group provisioning endpoints on the LiteLLM proxy: this is identity lifecycle/federated
+    user-and-group provisioning, i.e. Identity & Access Management, not any education-specific student
+    record capability.'
+- tag: SSO Settings
+  spec_file: university-of-amsterdam-sso-settings-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: '''Get Sso Settings'', ''Update Sso Settings'', schemas ''SSOConfig'', ''RoleMappings'', ''LitellmUserRoles'',
+    ''DefaultTeamSSOParams'''
+  reason: Operations configure single sign-on, default user provisioning defaults and role/team mappings,
+    which is identity federation and access administration under Identity & Access Management.
+- tag: Prompt Management
+  spec_file: university-of-amsterdam-prompt-management-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.72
+  evidence: '"Create Prompt", "Get Prompt Versions", "Test Prompt"; schemas "PromptSpec", "PromptTemplateBase"'
+  reason: Versioned lifecycle and testing of LLM prompt templates — an AI/ML asset lifecycle (prompt ops)
+    capability within Artificial Intelligence Management.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: Apply Guardrail
+  spec_file: university-of-amsterdam-apply-guardrail-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: 'POST /apply_guardrail Apply Guardrail; schemas: ApplyGuardrailRequest, PiiEntityType'
+  reason: Applies content guardrails including PII entity detection to LLM traffic — responsible-AI controls,
+    which fall under Artificial Intelligence Management.
+- tag: access group management
+  spec_file: university-of-amsterdam-access-group-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v1/access_group  Create Access Group; schemas AccessGroupCreateRequest, AccessGroupUpdateRequest
+  reason: Full CRUD over access groups that govern which principals may reach which proxy resources —
+    access-control administration, i.e. Identity & Access Management. Some ambiguity as it is also plausibly
+    tenant configuration, hence 0.7.
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: compliance
+  spec_file: university-of-amsterdam-compliance-api-openapi.yml
+  capability_id: BC-130
+  capability_id_l1: BC-130
+  capability_name: Compliance Management
+  confidence: 0.7
+  evidence: 'POST /compliance/eu-ai-act  Check Eu Ai Act Compliance; POST /compliance/gdpr  Check Gdpr
+    Compliance; schemas: ComplianceCheckResult'
+  reason: Operations explicitly evaluate adherence to named regulations (EU AI Act, GDPR) and return compliance
+    check results — that is Compliance Management. Left at L1 because the surface straddles regulatory
+    compliance (AI Act) and privacy/data protection (GDPR).
+  recovered_from: sweep-20260828T235257Z-edges.json
+- tag: evals
+  spec_file: university-of-amsterdam-evals-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: POST /v1/evals  create_eval_v1_evals_post  Create Eval; POST /v1/evals/{eval_id}/runs  Create
+    Run; schema PerTestingCriteriaResult
+  reason: Creation and execution of model evaluation definitions and runs with per-criteria results —
+    model evaluation is part of the AI/ML model lifecycle (MLOps) under Artificial Intelligence Management.
+- tag: jwt_mappings
+  spec_file: university-of-amsterdam-jwt-mappings-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'POST /jwt/key/mapping/new  Create Jwt Key Mapping; schemas: CreateJWTKeyMappingRequest'
+  reason: Maps JWT identity claims to proxy API keys — identity federation/access credential mapping,
+    i.e. Identity & Access Management plumbing. Moderate confidence as it is narrow technical auth config.
+- tag: key management
+  spec_file: university-of-amsterdam-key-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'POST /key/generate  Generate Key Fn; POST /key/regenerate; schemas: UserAPIKeyAuth, LiteLLM_VerificationToken'
+  reason: Issuance, rotation and revocation of API keys/service-account credentials — credential and access
+    management. Could also be read as developer credential management, but this is an internal proxy,
+    so IAM is the honest fit.
+- tag: model management
+  spec_file: university-of-amsterdam-model-management-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: 'GET /model/info  Model Info V1; PATCH /model/{model_id}/update  Patch Model; schemas: ModelGroupInfoProxy,
+    updateDeployment'
+  reason: Registration, listing, updating and deployment of LLM models and model groups on a proxy — AI/ML
+    model lifecycle administration, closest to Artificial Intelligence Management. Some ambiguity as it
+    is a gateway config surface.
