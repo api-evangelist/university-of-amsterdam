@@ -1,0 +1,22 @@
+generated: '2026-08-19'
+method: probed
+x-operator: tenant
+note: >-
+  These two payloads were captured from the University of Amsterdam Library's
+  Linked Open Data platform at api.lod.uba.uva.nl. The host is a UvA subdomain
+  but it CNAMEs to uba.cname.triply.cc, so the platform and its API contract
+  belong to Triply; the DATA in these payloads is the university library's own
+  (the UB-UVA account and its Catalogue dataset). They are kept as evidence of a
+  real tenant relationship, and are not evidence that the institution engineered
+  the interface that served them.
+files:
+- file: university-of-amsterdam-get-dataset-example.json
+  source: https://api.lod.uba.uva.nl/datasets/UB-UVA/Catalogue
+  method: probed
+  x-operator: tenant
+  describes: UB-UVA "Catalogue" dataset record as returned by the TriplyDB dataset endpoint
+- file: university-of-amsterdam-sparql-query-example.json
+  source: https://api.lod.uba.uva.nl/datasets/UB-UVA/services/*/sparql
+  method: probed
+  x-operator: tenant
+  describes: SPARQL 1.1 JSON results from the UB-UVA linked-data service

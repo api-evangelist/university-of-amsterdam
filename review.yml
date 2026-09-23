@@ -3,8 +3,65 @@ name: University of Amsterdam
 description: University of Amsterdam public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/university-of-amsterdam/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
+  - date: '2026-08-19'
+    rating: 3
+    summary: >-
+      Re-profiled under the university pipeline, which settles WHO OPERATES a
+      surface before saving anything. The June 2026 profile credited the
+      University of Amsterdam with fourteen separate "University of Amsterdam
+      APIs" that were one TriplyDB contract split by tag — info.title "TriplyDB
+      API", info.contact Triply, and api.lod.uba.uva.nl CNAMEd to
+      uba.cname.triply.cc — plus the generic api.figshare.com host that nineteen
+      other institutions in this catalog also claim. Those, and every schema,
+      ruleset, collection and agentic-access file derived from them, have been
+      removed; the underlying relationships are kept as tenancies. In their place
+      the pipeline found three surfaces the institution genuinely operates, none
+      of which had been catalogued: the UvA/HvA shared AI gateway at
+      llmproxy.uva.nl, which serves a full OpenAPI 3.1 document and issues
+      institutional keys; the SAML 2.0 identity provider at login.uva.nl,
+      registered in SURFconext and eduGAIN; and the DataNose course API on the
+      university's own UVANET1 network. Net effect on the artifact count is
+      negative and the score should fall. That is the correction working: the
+      contract quality this repo was scoring belonged to Triply.
+    endpoints:
+      - url: https://llmproxy.uva.nl/openapi.json
+        status: 200
+        note: OpenAPI 3.1, 530 paths / 723 operations — the one institution-operated contract.
+      - url: https://llmproxy.uva.nl/v1/models
+        status: 401
+        note: Key-gated; institution issues keys on request, no self-serve signup.
+      - url: https://login.uva.nl/federationmetadata/2007-06/federationmetadata.xml
+        status: 200
+        note: Signed SAML 2.0 IdP metadata, entityID http://login.uva.nl/adfs/services/trust.
+      - url: https://metadata.surfconext.nl/idps-metadata.xml
+        status: 200
+        note: SURFconext aggregate carrying the UvA entity — eduGAIN reachable.
+      - url: https://api.datanose.nl/swagger/ui/index
+        status: 200
+        note: Swagger UI live on 145.18.11.157 (UVANET1, Universiteit van Amsterdam).
+      - url: https://api.datanose.nl/swagger/docs/v1
+        status: 500
+        note: The discovery document the UI points at is broken — real surface, broken descriptor.
+      - url: https://pure.uva.nl/ws/oai?verb=Identify
+        status: 200
+        note: UvA-DARE OAI-PMH on the Elsevier Pure tenancy (pure.uva.nl CNAME uva.elsevierpure.com).
+      - url: https://archives.uba.uva.nl/oai?verb=Identify
+        status: 200
+        note: ArchivesSpace OAI Provider, LYRASIS-hosted (CNAME as-prod-amsterdam.lyrtech.org).
+      - url: https://uva.alma.exlibrisgroup.com/view/oai/31UKB_UAM1_INST/request?verb=Identify
+        status: 403
+        note: Documented public harvesting URL now returns Alma error 21 to browser and script alike.
+      - url: https://api.datacite.org/prefixes/10.21942
+        status: 200
+        note: DataCite prefix registered to the institution; 3,238 DOIs, Figshare-minted.
+      - url: https://www.uva.nl/.well-known/security.txt
+        status: 200
+        note: PGP-signed RFC 9116 across 382 canonical hosts, but Expires 2026-07-21 — stale.
+      - url: https://api.uva.nl/
+        status: 200
+        note: Not an API — Anton Pannekoek Institute for Astronomy website. Excluded again.
   - date: '2026-06-03'
     rating: 3
     summary: >-

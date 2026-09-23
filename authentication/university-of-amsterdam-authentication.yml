@@ -1,13 +1,57 @@
-generated: '2026-07-11'
+generated: '2026-08-19'
 method: derived
-source: openapi/university-of-amsterdam-lod-triply-api.yaml
+source: openapi/_original/university-of-amsterdam-llm-gateway-openapi.json
+x-operator: institution
+note: >-
+  Derived from the OpenAPI document served by the University of Amsterdam /
+  Amsterdam University of Applied Sciences shared AI gateway at
+  https://llmproxy.uva.nl/openapi.json. The gateway runs LiteLLM on the
+  institution's own Azure estate under uva.nl; the authentication model below is
+  what that deployment actually advertises, probed 2026-08-19.
 summary:
   types:
-  - http
+  - apiKey
 schemes:
-- name: bearerAuth
-  type: http
-  scheme: bearer
-  bearerFormat: JWT
+- name: APIKeyHeader
+  type: apiKey
+  in: header
+  parameter: x-litellm-api-key
+  description: >-
+    Institution-issued API key. Also accepted as an OpenAI-style
+    `Authorization: Bearer <key>` header, which is how the institution's own
+    setup guides in github.com/uva/UvA-HvA-Agentic-Tools instruct staff and
+    students to configure clients.
   sources:
-  - openapi/university-of-amsterdam-lod-triply-api.yaml
+  - https://llmproxy.uva.nl/openapi.json
+  evidence:
+  - url: https://llmproxy.uva.nl/v1/models
+    status: 401
+    body: '{"error":{"message":"Authentication Error, No api key passed in.","type":"auth_error","code":"401"}}'
+    observed: '2026-08-19'
+key_issuance:
+  self_serve: false
+  method: request from faculty IT / proxy administrators
+  audience: University of Amsterdam and Amsterdam University of Applied Sciences students, staff and developers
+  source: https://github.com/uva/UvA-HvA-Agentic-Tools
+  x-operator: institution
+other_surfaces:
+- surface: UvA Library Linked Open Data (TriplyDB)
+  x-operator: tenant
+  scheme: HTTP bearer token issued by the TriplyDB platform
+  note: >-
+    Read access to publicly published datasets requires no authentication. The
+    token model belongs to Triply, not to the institution; recorded here as a
+    relationship, not as the institution's own scheme.
+  source: https://docs.triply.cc/triply-api/
+- surface: UvA timetable (MyTimetable / Eveoh)
+  x-operator: tenant
+  scheme: session/OAuth behind institutional SSO
+  evidence:
+  - url: https://rooster.uva.nl/api/schedule
+    status: 401
+    observed: '2026-08-19'
+- surface: Institutional identity provider
+  x-operator: institution
+  scheme: SAML 2.0 (AD FS) via SURFconext, federated into eduGAIN
+  entity_id: http://login.uva.nl/adfs/services/trust
+  metadata: https://login.uva.nl/federationmetadata/2007-06/federationmetadata.xml

@@ -1,4 +1,16 @@
 ---
+# Provenance (roadmap#64): an unmarked artifact is credited to the institution
+# as if they published it. This one is ours, and it is tenant-derived.
+generated: '2026-08-19'
+method: derived
+source: https://docs.triply.cc/triply-api/ + https://uba.uva.nl/en/support/open-data/data-sets-and-publication-channels/data-sets-and-publication-channels.html
+x-operator: tenant
+x-operator-note: >-
+  The dataset/account/graph terms below are the TriplyDB platform's data model,
+  reached through the UvA Library's tenant instance at api.lod.uba.uva.nl
+  (CNAME uba.cname.triply.cc). The collection terms are the library's own. The
+  University of Amsterdam did not author this vocabulary and neither did Triply
+  — API Evangelist did, from both sources.
 vocabulary:
   name: University of Amsterdam Library Linked Open Data Vocabulary
   description: >-
