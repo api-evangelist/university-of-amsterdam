@@ -727,76 +727,18 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    DistinctTagsResponse:
+    TagSummaryResponse:
       properties:
         results:
           items:
-            $ref: '#/components/schemas/DistinctTagResponse'
+            $ref: '#/components/schemas/TagSummaryMetrics'
           type: array
           title: Results
       type: object
       required:
       - results
-      title: DistinctTagsResponse
-      description: Response for all distinct user agent tags
-    TagInfoRequest:
-      properties:
-        names:
-          items:
-            type: string
-          type: array
-          title: Names
-      type: object
-      required:
-      - names
-      title: TagInfoRequest
-    KeyMetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          $ref: '#/components/schemas/KeyMetadata'
-      type: object
-      required:
-      - metrics
-      title: KeyMetricWithMetadata
-      description: Base class for metrics with additional metadata
-    MetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        api_key_breakdown:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Key Breakdown
-      type: object
-      required:
-      - metrics
-      title: MetricWithMetadata
-    TagDeleteRequest:
-      properties:
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - name
-      title: TagDeleteRequest
-    DistinctTagResponse:
-      properties:
-        tag:
-          type: string
-          title: Tag
-      type: object
-      required:
-      - tag
-      title: DistinctTagResponse
-      description: Response for distinct user agent tags
+      title: TagSummaryResponse
+      description: Response for tag summary analytics
     TagNewRequest:
       properties:
         name:
@@ -866,275 +808,15 @@ components:
       required:
       - name
       title: TagNewRequest
-    HTTPValidationError:
+    TagDeleteRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    TagSummaryMetrics:
-      properties:
-        tag:
+        name:
           type: string
-          title: Tag
-        unique_users:
-          type: integer
-          title: Unique Users
-        total_requests:
-          type: integer
-          title: Total Requests
-        successful_requests:
-          type: integer
-          title: Successful Requests
-        failed_requests:
-          type: integer
-          title: Failed Requests
-        total_tokens:
-          type: integer
-          title: Total Tokens
-        total_spend:
-          type: number
-          title: Total Spend
+          title: Name
       type: object
       required:
-      - tag
-      - unique_users
-      - total_requests
-      - successful_requests
-      - failed_requests
-      - total_tokens
-      - total_spend
-      title: TagSummaryMetrics
-      description: Summary metrics for a tag
-    TagActiveUsersResponse:
-      properties:
-        tag:
-          type: string
-          title: Tag
-        active_users:
-          type: integer
-          title: Active Users
-        date:
-          type: string
-          title: Date
-        period_start:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period Start
-        period_end:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period End
-      type: object
-      required:
-      - tag
-      - active_users
-      - date
-      title: TagActiveUsersResponse
-      description: Response for tag active users metrics
-    TagSummaryResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagSummaryMetrics'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: TagSummaryResponse
-      description: Response for tag summary analytics
-    KeyMetadata:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: KeyMetadata
-      description: Metadata for a key
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SpendAnalyticsPaginatedResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/DailySpendData'
-          type: array
-          title: Results
-        metadata:
-          $ref: '#/components/schemas/DailySpendMetadata'
-      type: object
-      required:
-      - results
-      title: SpendAnalyticsPaginatedResponse
-    PerUserAnalyticsResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/PerUserMetrics'
-          type: array
-          title: Results
-        total_count:
-          type: integer
-          title: Total Count
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-        total_pages:
-          type: integer
-          title: Total Pages
-      type: object
-      required:
-      - results
-      - total_count
-      - page
-      - page_size
-      - total_pages
-      title: PerUserAnalyticsResponse
-      description: Response for per-user analytics
-    PerUserMetrics:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        user_agent:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Agent
-        successful_requests:
-          type: integer
-          title: Successful Requests
-          default: 0
-        failed_requests:
-          type: integer
-          title: Failed Requests
-          default: 0
-        total_requests:
-          type: integer
-          title: Total Requests
-          default: 0
-        total_tokens:
-          type: integer
-          title: Total Tokens
-          default: 0
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-      type: object
-      required:
-      - user_id
-      title: PerUserMetrics
-      description: Metrics for individual user
-    SpendMetrics:
-      properties:
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        prompt_tokens:
-          type: integer
-          title: Prompt Tokens
-          default: 0
-        completion_tokens:
-          type: integer
-          title: Completion Tokens
-          default: 0
-        cache_read_input_tokens:
-          type: integer
-          title: Cache Read Input Tokens
-          default: 0
-        cache_creation_input_tokens:
-          type: integer
-          title: Cache Creation Input Tokens
-          default: 0
-        compression_saved_tokens:
-          type: integer
-          title: Compression Saved Tokens
-          default: 0
-        compression_savings_spend:
-          type: number
-          title: Compression Savings Spend
-          default: 0.0
-        prompt_caching_savings_spend:
-          type: number
-          title: Prompt Caching Savings Spend
-          default: 0.0
-        total_tokens:
-          type: integer
-          title: Total Tokens
-          default: 0
-        successful_requests:
-          type: integer
-          title: Successful Requests
-          default: 0
-        failed_requests:
-          type: integer
-          title: Failed Requests
-          default: 0
-        api_requests:
-          type: integer
-          title: Api Requests
-          default: 0
-      type: object
-      title: SpendMetrics
-    ActiveUsersAnalyticsResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagActiveUsersResponse'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: ActiveUsersAnalyticsResponse
-      description: Response for active users analytics
+      - name
+      title: TagDeleteRequest
     TagUpdateRequest:
       properties:
         name:
@@ -1204,21 +886,212 @@ components:
       required:
       - name
       title: TagUpdateRequest
-    DailySpendData:
+    TagInfoRequest:
       properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        breakdown:
-          $ref: '#/components/schemas/BreakdownMetrics'
+        names:
+          items:
+            type: string
+          type: array
+          title: Names
       type: object
       required:
+      - names
+      title: TagInfoRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PerUserAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/PerUserMetrics'
+          type: array
+          title: Results
+        total_count:
+          type: integer
+          title: Total Count
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+        total_pages:
+          type: integer
+          title: Total Pages
+      type: object
+      required:
+      - results
+      - total_count
+      - page
+      - page_size
+      - total_pages
+      title: PerUserAnalyticsResponse
+      description: Response for per-user analytics
+    DistinctTagResponse:
+      properties:
+        tag:
+          type: string
+          title: Tag
+      type: object
+      required:
+      - tag
+      title: DistinctTagResponse
+      description: Response for distinct user agent tags
+    TagActiveUsersResponse:
+      properties:
+        tag:
+          type: string
+          title: Tag
+        active_users:
+          type: integer
+          title: Active Users
+        date:
+          type: string
+          title: Date
+        period_start:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period Start
+        period_end:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period End
+      type: object
+      required:
+      - tag
+      - active_users
       - date
+      title: TagActiveUsersResponse
+      description: Response for tag active users metrics
+    KeyMetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          $ref: '#/components/schemas/KeyMetadata'
+      type: object
+      required:
       - metrics
-      title: DailySpendData
+      title: KeyMetricWithMetadata
+      description: Base class for metrics with additional metadata
+    KeyMetadata:
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: KeyMetadata
+      description: Metadata for a key
+    ActiveUsersAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/TagActiveUsersResponse'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: ActiveUsersAnalyticsResponse
+      description: Response for active users analytics
+    SpendAnalyticsPaginatedResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/DailySpendData'
+          type: array
+          title: Results
+        metadata:
+          $ref: '#/components/schemas/DailySpendMetadata'
+      type: object
+      required:
+      - results
+      title: SpendAnalyticsPaginatedResponse
+    SpendMetrics:
+      properties:
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        prompt_tokens:
+          type: integer
+          title: Prompt Tokens
+          default: 0
+        completion_tokens:
+          type: integer
+          title: Completion Tokens
+          default: 0
+        cache_read_input_tokens:
+          type: integer
+          title: Cache Read Input Tokens
+          default: 0
+        cache_creation_input_tokens:
+          type: integer
+          title: Cache Creation Input Tokens
+          default: 0
+        compression_saved_tokens:
+          type: integer
+          title: Compression Saved Tokens
+          default: 0
+        compression_savings_spend:
+          type: number
+          title: Compression Savings Spend
+          default: 0.0
+        prompt_caching_savings_spend:
+          type: number
+          title: Prompt Caching Savings Spend
+          default: 0.0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+        successful_requests:
+          type: integer
+          title: Successful Requests
+          default: 0
+        failed_requests:
+          type: integer
+          title: Failed Requests
+          default: 0
+        api_requests:
+          type: integer
+          title: Api Requests
+          default: 0
+      type: object
+      title: SpendMetrics
     BreakdownMetrics:
       properties:
         mcp_servers:
@@ -1259,6 +1132,99 @@ components:
       type: object
       title: BreakdownMetrics
       description: Breakdown of spend by different dimensions
+    PerUserMetrics:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        user_agent:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Agent
+        successful_requests:
+          type: integer
+          title: Successful Requests
+          default: 0
+        failed_requests:
+          type: integer
+          title: Failed Requests
+          default: 0
+        total_requests:
+          type: integer
+          title: Total Requests
+          default: 0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+      type: object
+      required:
+      - user_id
+      title: PerUserMetrics
+      description: Metrics for individual user
+    DistinctTagsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/DistinctTagResponse'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: DistinctTagsResponse
+      description: Response for all distinct user agent tags
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DailySpendData:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        breakdown:
+          $ref: '#/components/schemas/BreakdownMetrics'
+      type: object
+      required:
+      - date
+      - metrics
+      title: DailySpendData
+    MetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        api_key_breakdown:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Key Breakdown
+      type: object
+      required:
+      - metrics
+      title: MetricWithMetadata
     DailySpendMetadata:
       properties:
         total_spend:
@@ -1323,6 +1289,40 @@ components:
           default: false
       type: object
       title: DailySpendMetadata
+    TagSummaryMetrics:
+      properties:
+        tag:
+          type: string
+          title: Tag
+        unique_users:
+          type: integer
+          title: Unique Users
+        total_requests:
+          type: integer
+          title: Total Requests
+        successful_requests:
+          type: integer
+          title: Successful Requests
+        failed_requests:
+          type: integer
+          title: Failed Requests
+        total_tokens:
+          type: integer
+          title: Total Tokens
+        total_spend:
+          type: number
+          title: Total Spend
+      type: object
+      required:
+      - tag
+      - unique_users
+      - total_requests
+      - successful_requests
+      - failed_requests
+      - total_tokens
+      - total_spend
+      title: TagSummaryMetrics
+      description: Summary metrics for a tag
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -878,6 +878,33 @@ paths:
       - Vector Stores
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    IndexCreateRequest:
+      properties:
+        index_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Index Info
+        index_name:
+          title: Index Name
+          type: string
+        litellm_params:
+          $ref: '#/components/schemas/IndexCreateLiteLLMParams'
+      required:
+      - index_name
+      - litellm_params
+      title: IndexCreateRequest
+      type: object
     IndexCreateLiteLLMParams:
       properties:
         vector_store_index:
@@ -891,15 +918,6 @@ components:
       - vector_store_name
       title: IndexCreateLiteLLMParams
       type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -926,24 +944,6 @@ components:
       - msg
       - type
       title: ValidationError
-    IndexCreateRequest:
-      properties:
-        index_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Index Info
-        index_name:
-          title: Index Name
-          type: string
-        litellm_params:
-          $ref: '#/components/schemas/IndexCreateLiteLLMParams'
-      required:
-      - index_name
-      - litellm_params
-      title: IndexCreateRequest
-      type: object
   securitySchemes:
     APIKeyHeader:
       type: apiKey

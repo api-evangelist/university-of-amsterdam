@@ -113,19 +113,6 @@ paths:
       - Provider
 components:
   schemas:
-    ProviderBudgetResponse:
-      properties:
-        providers:
-          additionalProperties:
-            $ref: '#/components/schemas/ProviderBudgetResponseObject'
-          type: object
-          title: Providers
-          default: {}
-      type: object
-      title: ProviderBudgetResponse
-      description: 'Complete provider budget configuration and status.
-
-        Maps provider names to their budget configs.'
     ProviderBudgetResponseObject:
       properties:
         budget_limit:
@@ -155,6 +142,19 @@ components:
       - time_period
       title: ProviderBudgetResponseObject
       description: Configuration for a single provider's budget settings
+    ProviderBudgetResponse:
+      properties:
+        providers:
+          additionalProperties:
+            $ref: '#/components/schemas/ProviderBudgetResponseObject'
+          type: object
+          title: Providers
+          default: {}
+      type: object
+      title: ProviderBudgetResponse
+      description: 'Complete provider budget configuration and status.
+
+        Maps provider names to their budget configs.'
   securitySchemes:
     APIKeyHeader:
       type: apiKey

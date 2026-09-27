@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: LiteLLM Web Socket API
+  title: LiteLLM WebSocket API
   description: 'Enterprise Edition
 
 

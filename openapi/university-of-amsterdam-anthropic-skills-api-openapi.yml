@@ -319,41 +319,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ListSkillsResponse:
-      description: Response from listing skills
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Skill'
-          title: Data
-          type: array
-        has_more:
-          default: false
-          title: Has More
-          type: boolean
-        next_page:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next Page
-      required:
-      - data
-      title: ListSkillsResponse
-      type: object
-    DeleteSkillResponse:
-      description: Response from deleting a skill
-      properties:
-        id:
-          title: Id
-          type: string
-        type:
-          default: skill_deleted
-          title: Type
-          type: string
-      required:
-      - id
-      title: DeleteSkillResponse
-      type: object
     Skill:
       description: Represents a skill from the Anthropic Skills API
       properties:
@@ -389,6 +354,41 @@ components:
       - source
       - updated_at
       title: Skill
+      type: object
+    DeleteSkillResponse:
+      description: Response from deleting a skill
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          default: skill_deleted
+          title: Type
+          type: string
+      required:
+      - id
+      title: DeleteSkillResponse
+      type: object
+    ListSkillsResponse:
+      description: Response from listing skills
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Skill'
+          title: Data
+          type: array
+        has_more:
+          default: false
+          title: Has More
+          type: boolean
+        next_page:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Page
+      required:
+      - data
+      title: ListSkillsResponse
       type: object
     ValidationError:
       properties:

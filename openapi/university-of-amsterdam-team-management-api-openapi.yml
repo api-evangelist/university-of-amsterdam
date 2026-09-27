@@ -1369,6 +1369,460 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    LiteLLM_OrganizationMembershipTable:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        user_role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Role
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        user:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: User
+        litellm_budget_table:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
+          - type: 'null'
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+      type: object
+      required:
+      - user_id
+      - organization_id
+      - created_at
+      - updated_at
+      title: LiteLLM_OrganizationMembershipTable
+      description: Tracks which organizations a user belongs to and their spend within it.
+    LiteLLM_DeletedTeamTable:
+      properties:
+        team_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Alias
+        team_id:
+          type: string
+          title: Team Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        admins:
+          items: {}
+          type: array
+          title: Admins
+          default: []
+        members:
+          items: {}
+          type: array
+          title: Members
+          default: []
+        members_with_roles:
+          items:
+            $ref: '#/components/schemas/Member'
+          type: array
+          title: Members With Roles
+          default: []
+        team_member_permissions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Team Member Permissions
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        soft_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Soft Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_limits:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BudgetLimitEntry'
+            type: array
+          - type: 'null'
+          title: Budget Limits
+        models:
+          items: {}
+          type: array
+          title: Models
+          default: []
+        blocked:
+          type: boolean
+          title: Blocked
+          default: false
+        router_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Router Settings
+        access_group_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Group Ids
+        default_team_member_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Default Team Member Models
+        spend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Spend
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        model_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Model Id
+        model_spend:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Spend
+          default: {}
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+          default: {}
+        policies:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Policies
+        allow_team_guardrail_config:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allow Team Guardrail Config
+          default: false
+        litellm_model_table:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ModelTable'
+          - type: 'null'
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
+          - type: 'null'
+        object_permission_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Object Permission Id
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        deleted_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Deleted At
+        deleted_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted By
+        deleted_by_api_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted By Api Key
+        litellm_changed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Litellm Changed By
+      type: object
+      required:
+      - team_id
+      title: LiteLLM_DeletedTeamTable
+      description: Audit record for deleted teams; mirrors the team plus deletion metadata.
+    TeamMemberDeleteRequest:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        team_id:
+          type: string
+          title: Team Id
+      type: object
+      required:
+      - team_id
+      title: TeamMemberDeleteRequest
+    LiteLLM_UserTable:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        user_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        sso_user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sso User Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        object_permission_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Object Permission Id
+        teams:
+          items:
+            type: string
+          type: array
+          title: Teams
+          default: []
+        user_role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Role
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        models:
+          items: {}
+          type: array
+          title: Models
+          default: []
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        allowed_cache_controls:
+          items:
+            type: string
+          type: array
+          title: Allowed Cache Controls
+          default: []
+        policies:
+          items:
+            type: string
+          type: array
+          title: Policies
+          default: []
+        model_spend:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Spend
+          default: {}
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+          default: {}
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        organization_memberships:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/LiteLLM_OrganizationMembershipTable'
+            type: array
+          - type: 'null'
+          title: Organization Memberships
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
+          - type: 'null'
+      type: object
+      required:
+      - user_id
+      title: LiteLLM_UserTable
+    LiteLLM_ModelTable:
+      properties:
+        id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Id
+        model_aliases:
+          anyOf:
+          - type: string
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Aliases
+        created_by:
+          type: string
+          title: Created By
+        updated_by:
+          type: string
+          title: Updated By
+        team:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_TeamTable'
+          - type: 'null'
+      type: object
+      required:
+      - created_by
+      - updated_by
+      title: LiteLLM_ModelTable
     KeyManagementRoutes:
       type: string
       enum:
@@ -1393,82 +1847,43 @@ components:
       - /spend/logs/v2
       title: KeyManagementRoutes
       description: Enum for key management routes
-    TeamModelDeleteRequest:
+    TeamMemberAddResult:
       properties:
-        team_id:
-          type: string
-          title: Team Id
-        models:
-          items:
-            type: string
-          type: array
-          title: Models
-      type: object
-      required:
-      - team_id
-      - models
-      title: TeamModelDeleteRequest
-      description: Request to delete models from a team
-    LiteLLM_BudgetTable:
-      properties:
-        budget_id:
+        user_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Budget Id
-        soft_budget:
+          title: User Id
+        user_email:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Soft Budget
-        max_budget:
+          title: User Email
+        success:
+          type: boolean
+          title: Success
+        error:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Max Budget
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        model_max_budget:
+          title: Error
+        updated_user:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
-          title: Model Max Budget
-        budget_duration:
+          title: Updated User
+        updated_team_membership:
           anyOf:
-          - type: string
+          - additionalProperties: true
+            type: object
           - type: 'null'
-          title: Budget Duration
-        allowed_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Models
+          title: Updated Team Membership
       type: object
-      title: LiteLLM_BudgetTable
-      description: 'Represents user-controllable params for a LiteLLM_BudgetTable record.
-
-
-        Budget-write paths use `model_fields.keys()` on this class as an allowlist
-
-        for user input. Keep server-managed fields (e.g. `budget_reset_at`) on
-
-        `LiteLLM_BudgetTableFull` so they aren''t user-settable.'
+      required:
+      - success
+      title: TeamMemberAddResult
+      description: Result of a single team member add operation
     TeamListItem:
       properties:
         team_alias:
@@ -1681,333 +2096,6 @@ components:
       - team_id
       title: TeamListItem
       description: A team item in the paginated list response, enriched with computed fields.
-    KeyMetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          $ref: '#/components/schemas/KeyMetadata'
-      type: object
-      required:
-      - metrics
-      title: KeyMetricWithMetadata
-      description: Base class for metrics with additional metadata
-    BulkUpdateTeamMemberPermissionsResponse:
-      properties:
-        message:
-          type: string
-          title: Message
-        teams_updated:
-          type: integer
-          title: Teams Updated
-        permissions_appended:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Permissions Appended
-      type: object
-      required:
-      - message
-      - teams_updated
-      title: BulkUpdateTeamMemberPermissionsResponse
-      description: Response for bulk team member permissions update.
-    BulkTeamMemberAddResponse:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-        results:
-          items:
-            $ref: '#/components/schemas/TeamMemberAddResult'
-          type: array
-          title: Results
-        total_requested:
-          type: integer
-          title: Total Requested
-        successful_additions:
-          type: integer
-          title: Successful Additions
-        failed_additions:
-          type: integer
-          title: Failed Additions
-        updated_team:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Updated Team
-      type: object
-      required:
-      - team_id
-      - results
-      - total_requested
-      - successful_additions
-      - failed_additions
-      title: BulkTeamMemberAddResponse
-      description: Response for bulk team member add operations
-    LiteLLM_UserTable:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        user_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        sso_user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sso User Id
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-        object_permission_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Object Permission Id
-        teams:
-          items:
-            type: string
-          type: array
-          title: Teams
-          default: []
-        user_role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Role
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        models:
-          items: {}
-          type: array
-          title: Models
-          default: []
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        allowed_cache_controls:
-          items:
-            type: string
-          type: array
-          title: Allowed Cache Controls
-          default: []
-        policies:
-          items:
-            type: string
-          type: array
-          title: Policies
-          default: []
-        model_spend:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Spend
-          default: {}
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
-          default: {}
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        organization_memberships:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/LiteLLM_OrganizationMembershipTable'
-            type: array
-          - type: 'null'
-          title: Organization Memberships
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
-          - type: 'null'
-      type: object
-      required:
-      - user_id
-      title: LiteLLM_UserTable
-    MetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        api_key_breakdown:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Key Breakdown
-      type: object
-      required:
-      - metrics
-      title: MetricWithMetadata
-    TeamMemberAddResult:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        success:
-          type: boolean
-          title: Success
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-        updated_user:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Updated User
-        updated_team_membership:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Updated Team Membership
-      type: object
-      required:
-      - success
-      title: TeamMemberAddResult
-      description: Result of a single team member add operation
-    DeleteTeamRequest:
-      properties:
-        team_ids:
-          items:
-            type: string
-          type: array
-          title: Team Ids
-      type: object
-      required:
-      - team_ids
-      title: DeleteTeamRequest
-    BulkUpdateTeamMemberPermissionsRequest:
-      properties:
-        permissions:
-          items:
-            $ref: '#/components/schemas/KeyManagementRoutes'
-          type: array
-          title: Permissions
-        team_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Team Ids
-        apply_to_all_teams:
-          type: boolean
-          title: Apply To All Teams
-          default: false
-      type: object
-      required:
-      - permissions
-      title: BulkUpdateTeamMemberPermissionsRequest
-      description: Request to bulk-update team member permissions across teams.
-    BulkTeamMemberAddRequest:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-        members:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/Member'
-            type: array
-          - type: 'null'
-          title: Members
-        all_users:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: All Users
-          default: false
-        max_budget_in_team:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget In Team
-      type: object
-      required:
-      - team_id
-      title: BulkTeamMemberAddRequest
-      description: Request for bulk team member addition
     Member:
       properties:
         user_id:
@@ -2033,133 +2121,6 @@ components:
       required:
       - role
       title: Member
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    LiteLLM_OrganizationMembershipTable:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        organization_id:
-          type: string
-          title: Organization Id
-        user_role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Role
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        user:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: User
-        litellm_budget_table:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
-          - type: 'null'
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-      type: object
-      required:
-      - user_id
-      - organization_id
-      - created_at
-      - updated_at
-      title: LiteLLM_OrganizationMembershipTable
-      description: Tracks which organizations a user belongs to and their spend within it.
-    BudgetLimitEntry:
-      properties:
-        budget_duration:
-          type: string
-          title: Budget Duration
-        max_budget:
-          type: number
-          title: Max Budget
-        reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Reset At
-      type: object
-      required:
-      - budget_duration
-      - max_budget
-      title: BudgetLimitEntry
-      description: A single budget window with its own limit and independent reset schedule.
-    KeyMetadata:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: KeyMetadata
-      description: Metadata for a key
-    TeamListResponse:
-      properties:
-        teams:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/TeamListItem'
-            - $ref: '#/components/schemas/LiteLLM_TeamTable'
-            - $ref: '#/components/schemas/LiteLLM_DeletedTeamTable'
-          type: array
-          title: Teams
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-        total_pages:
-          type: integer
-          title: Total Pages
-      type: object
-      required:
-      - teams
-      - total
-      - page
-      - page_size
-      - total_pages
-      title: TeamListResponse
-      description: Response to get the list of teams
     ValidationError:
       properties:
         loc:
@@ -2186,183 +2147,23 @@ components:
       - msg
       - type
       title: ValidationError
-    TeamMemberAddRequest:
+    UpdateTeamMemberPermissionsRequest:
       properties:
-        member:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/Member'
-            type: array
-          - $ref: '#/components/schemas/Member'
-          title: Member
-          description: Member object or list of member objects to add. Each member must include either user_id or user_email, and a role
         team_id:
           type: string
           title: Team Id
-          description: The ID of the team to add the member to
-        max_budget_in_team:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget In Team
-          description: Maximum budget allocated to this user within the team. If not set, user has unlimited budget within team limits
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-          description: Duration after which this team member's budget resets (e.g. '1h', '24h', '7d', '30d'). If not set, the budget never resets.
-        allowed_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Models
-          description: List of models this team member can access. If not set, inherits the team's default_team_member_models or all team models.
-      type: object
-      required:
-      - member
-      - team_id
-      title: TeamMemberAddRequest
-      description: "Request body for adding members to a team.\n\nExample:\n```json\n{\n    \"team_id\": \"45e3e396-ee08-4a61-a88e-16b3ce7e0849\",\n    \"member\": {\n        \"role\": \"user\",\n        \"user_id\": \"user123\"\n    },\n    \"max_budget_in_team\": 100.0\n}\n```"
-    LiteLLM_BudgetTableFull:
-      properties:
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        soft_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Soft Budget
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        allowed_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Models
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-      type: object
-      required:
-      - created_at
-      title: LiteLLM_BudgetTableFull
-      description: LiteLLM_BudgetTable + server-managed fields returned on API responses.
-    TeamMemberUpdateRequest:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        team_id:
-          type: string
-          title: Team Id
-        max_budget_in_team:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget In Team
-        role:
-          anyOf:
-          - type: string
-            enum:
-            - admin
-            - user
-          - type: 'null'
-          title: Role
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-          description: Tokens per minute limit for this team member
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-          description: Requests per minute limit for this team member
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-          description: Duration after which this team member's budget resets (e.g. '1h', '24h', '7d', '30d'). If not set, the budget never resets.
-        allowed_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Models
-          description: List of models this team member can access. Pass an empty list to remove per-member model restrictions.
-      type: object
-      required:
-      - team_id
-      title: TeamMemberUpdateRequest
-    SpendAnalyticsPaginatedResponse:
-      properties:
-        results:
+        team_member_permissions:
           items:
-            $ref: '#/components/schemas/DailySpendData'
+            type: string
           type: array
-          title: Results
-        metadata:
-          $ref: '#/components/schemas/DailySpendMetadata'
+          title: Team Member Permissions
       type: object
       required:
-      - results
-      title: SpendAnalyticsPaginatedResponse
-    LiteLLM_DeletedTeamTable:
+      - team_id
+      - team_member_permissions
+      title: UpdateTeamMemberPermissionsRequest
+      description: Request to update the team member permissions for a team
+    TeamAddMemberResponse:
       properties:
         team_alias:
           anyOf:
@@ -2540,123 +2341,79 @@ components:
             format: date-time
           - type: 'null'
           title: Created At
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        deleted_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Deleted At
-        deleted_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deleted By
-        deleted_by_api_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deleted By Api Key
-        litellm_changed_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Litellm Changed By
+        updated_users:
+          items:
+            $ref: '#/components/schemas/LiteLLM_UserTable'
+          type: array
+          title: Updated Users
+        updated_team_memberships:
+          items:
+            $ref: '#/components/schemas/LiteLLM_TeamMembership'
+          type: array
+          title: Updated Team Memberships
       type: object
       required:
       - team_id
-      title: LiteLLM_DeletedTeamTable
-      description: Audit record for deleted teams; mirrors the team plus deletion metadata.
-    LiteLLM_ObjectPermissionBase:
+      - updated_users
+      - updated_team_memberships
+      title: TeamAddMemberResponse
+    KeyMetricWithMetadata:
       properties:
-        mcp_servers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Servers
-        mcp_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Access Groups
-        mcp_tool_permissions:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Mcp Tool Permissions
-        mcp_toolsets:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Toolsets
-        blocked_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Blocked Tools
-        vector_stores:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Vector Stores
-        agents:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agents
-        agent_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agent Access Groups
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-        search_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Search Tools
-        mcp_tool_search_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mcp Tool Search Enabled
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          $ref: '#/components/schemas/KeyMetadata'
       type: object
-      title: LiteLLM_ObjectPermissionBase
-    GetTeamMemberPermissionsResponse:
+      required:
+      - metrics
+      title: KeyMetricWithMetadata
+      description: Base class for metrics with additional metadata
+    KeyMetadata:
       properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: KeyMetadata
+      description: Metadata for a key
+    LiteLLM_TeamTable:
+      properties:
+        team_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Alias
         team_id:
           type: string
           title: Team Id
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+        admins:
+          items: {}
+          type: array
+          title: Admins
+          default: []
+        members:
+          items: {}
+          type: array
+          title: Members
+          default: []
+        members_with_roles:
+          items:
+            $ref: '#/components/schemas/Member'
+          type: array
+          title: Members With Roles
+          default: []
         team_member_permissions:
           anyOf:
           - items:
@@ -2664,36 +2421,12 @@ components:
             type: array
           - type: 'null'
           title: Team Member Permissions
-          default: []
-        all_available_permissions:
-          items:
-            type: string
-          type: array
-          title: All Available Permissions
-      type: object
-      required:
-      - team_id
-      - all_available_permissions
-      title: GetTeamMemberPermissionsResponse
-      description: Response to get the team member permissions for a team
-    TeamMemberUpdateResponse:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        user_email:
+        metadata:
           anyOf:
-          - type: string
+          - additionalProperties: true
+            type: object
           - type: 'null'
-          title: User Email
-        team_id:
-          type: string
-          title: Team Id
-        max_budget_in_team:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget In Team
+          title: Metadata
         tpm_limit:
           anyOf:
           - type: integer
@@ -2704,23 +2437,134 @@ components:
           - type: integer
           - type: 'null'
           title: Rpm Limit
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        soft_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Soft Budget
         budget_duration:
           anyOf:
           - type: string
           - type: 'null'
           title: Budget Duration
-        allowed_models:
+        budget_limits:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BudgetLimitEntry'
+            type: array
+          - type: 'null'
+          title: Budget Limits
+        models:
+          items: {}
+          type: array
+          title: Models
+          default: []
+        blocked:
+          type: boolean
+          title: Blocked
+          default: false
+        router_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Router Settings
+        access_group_ids:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Allowed Models
+          title: Access Group Ids
+        default_team_member_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Default Team Member Models
+        spend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Spend
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        model_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Model Id
+        model_spend:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Spend
+          default: {}
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+          default: {}
+        policies:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Policies
+        allow_team_guardrail_config:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Allow Team Guardrail Config
+          default: false
+        litellm_model_table:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ModelTable'
+          - type: 'null'
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
+          - type: 'null'
+        object_permission_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Object Permission Id
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
       type: object
       required:
-      - user_id
       - team_id
-      title: TeamMemberUpdateResponse
+      title: LiteLLM_TeamTable
     UpdateTeamRequest:
       properties:
         team_id:
@@ -2954,7 +2798,480 @@ components:
         guardrails: Optional[List[str]] = None
 
         policies: Optional[List[str]] = None'
-    TeamMemberDeleteRequest:
+    AddTeamCallback:
+      properties:
+        callback_name:
+          type: string
+          title: Callback Name
+        callback_type:
+          anyOf:
+          - type: string
+            enum:
+            - success
+            - failure
+            - success_and_failure
+          - type: 'null'
+          title: Callback Type
+          default: success_and_failure
+        callback_vars:
+          additionalProperties:
+            type: string
+          type: object
+          title: Callback Vars
+      type: object
+      required:
+      - callback_name
+      - callback_vars
+      title: AddTeamCallback
+    GetTeamMemberPermissionsResponse:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        team_member_permissions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Team Member Permissions
+          default: []
+        all_available_permissions:
+          items:
+            type: string
+          type: array
+          title: All Available Permissions
+      type: object
+      required:
+      - team_id
+      - all_available_permissions
+      title: GetTeamMemberPermissionsResponse
+      description: Response to get the team member permissions for a team
+    LiteLLM_ObjectPermissionBase:
+      properties:
+        mcp_servers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Servers
+        mcp_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Access Groups
+        mcp_tool_permissions:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Mcp Tool Permissions
+        mcp_toolsets:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Toolsets
+        blocked_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Blocked Tools
+        vector_stores:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vector Stores
+        agents:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agents
+        agent_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agent Access Groups
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+        search_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Search Tools
+        mcp_tool_search_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mcp Tool Search Enabled
+      type: object
+      title: LiteLLM_ObjectPermissionBase
+    LiteLLM_ObjectPermissionTable:
+      properties:
+        object_permission_id:
+          type: string
+          title: Object Permission Id
+        mcp_servers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Servers
+          default: []
+        mcp_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Access Groups
+          default: []
+        mcp_tool_permissions:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Mcp Tool Permissions
+        vector_stores:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vector Stores
+          default: []
+        agents:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agents
+          default: []
+        agent_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agent Access Groups
+          default: []
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+          default: []
+        mcp_toolsets:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Toolsets
+        blocked_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Blocked Tools
+          default: []
+        search_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Search Tools
+          default: []
+        mcp_tool_search_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mcp Tool Search Enabled
+      type: object
+      required:
+      - object_permission_id
+      title: LiteLLM_ObjectPermissionTable
+      description: Represents a LiteLLM_ObjectPermissionTable record
+    TeamModelDeleteRequest:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+      type: object
+      required:
+      - team_id
+      - models
+      title: TeamModelDeleteRequest
+      description: Request to delete models from a team
+    TeamMemberAddRequest:
+      properties:
+        member:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Member'
+            type: array
+          - $ref: '#/components/schemas/Member'
+          title: Member
+          description: Member object or list of member objects to add. Each member must include either user_id or user_email, and a role
+        team_id:
+          type: string
+          title: Team Id
+          description: The ID of the team to add the member to
+        max_budget_in_team:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget In Team
+          description: Maximum budget allocated to this user within the team. If not set, user has unlimited budget within team limits
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+          description: Duration after which this team member's budget resets (e.g. '1h', '24h', '7d', '30d'). If not set, the budget never resets.
+        allowed_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Models
+          description: List of models this team member can access. If not set, inherits the team's default_team_member_models or all team models.
+      type: object
+      required:
+      - member
+      - team_id
+      title: TeamMemberAddRequest
+      description: "Request body for adding members to a team.\n\nExample:\n```json\n{\n    \"team_id\": \"45e3e396-ee08-4a61-a88e-16b3ce7e0849\",\n    \"member\": {\n        \"role\": \"user\",\n        \"user_id\": \"user123\"\n    },\n    \"max_budget_in_team\": 100.0\n}\n```"
+    SpendAnalyticsPaginatedResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/DailySpendData'
+          type: array
+          title: Results
+        metadata:
+          $ref: '#/components/schemas/DailySpendMetadata'
+      type: object
+      required:
+      - results
+      title: SpendAnalyticsPaginatedResponse
+    DeleteTeamRequest:
+      properties:
+        team_ids:
+          items:
+            type: string
+          type: array
+          title: Team Ids
+      type: object
+      required:
+      - team_ids
+      title: DeleteTeamRequest
+    BulkUpdateTeamMemberPermissionsResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        teams_updated:
+          type: integer
+          title: Teams Updated
+        permissions_appended:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Permissions Appended
+      type: object
+      required:
+      - message
+      - teams_updated
+      title: BulkUpdateTeamMemberPermissionsResponse
+      description: Response for bulk team member permissions update.
+    BudgetLimitEntry:
+      properties:
+        budget_duration:
+          type: string
+          title: Budget Duration
+        max_budget:
+          type: number
+          title: Max Budget
+        reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Reset At
+      type: object
+      required:
+      - budget_duration
+      - max_budget
+      title: BudgetLimitEntry
+      description: A single budget window with its own limit and independent reset schedule.
+    BulkTeamMemberAddResponse:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        results:
+          items:
+            $ref: '#/components/schemas/TeamMemberAddResult'
+          type: array
+          title: Results
+        total_requested:
+          type: integer
+          title: Total Requested
+        successful_additions:
+          type: integer
+          title: Successful Additions
+        failed_additions:
+          type: integer
+          title: Failed Additions
+        updated_team:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Updated Team
+      type: object
+      required:
+      - team_id
+      - results
+      - total_requested
+      - successful_additions
+      - failed_additions
+      title: BulkTeamMemberAddResponse
+      description: Response for bulk team member add operations
+    LiteLLM_BudgetTableFull:
+      properties:
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        soft_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Soft Budget
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        allowed_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Models
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+      type: object
+      required:
+      - created_at
+      title: LiteLLM_BudgetTableFull
+      description: LiteLLM_BudgetTable + server-managed fields returned on API responses.
+    BulkTeamMemberAddRequest:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        members:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Member'
+            type: array
+          - type: 'null'
+          title: Members
+        all_users:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: All Users
+          default: false
+        max_budget_in_team:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget In Team
+      type: object
+      required:
+      - team_id
+      title: BulkTeamMemberAddRequest
+      description: Request for bulk team member addition
+    TeamMemberUpdateRequest:
       properties:
         user_id:
           anyOf:
@@ -2969,54 +3286,71 @@ components:
         team_id:
           type: string
           title: Team Id
-      type: object
-      required:
-      - team_id
-      title: TeamMemberDeleteRequest
-    LiteLLM_TeamTable:
-      properties:
-        team_alias:
+        max_budget_in_team:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget In Team
+        role:
+          anyOf:
+          - type: string
+            enum:
+            - admin
+            - user
+          - type: 'null'
+          title: Role
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+          description: Tokens per minute limit for this team member
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+          description: Requests per minute limit for this team member
+        budget_duration:
           anyOf:
           - type: string
           - type: 'null'
-          title: Team Alias
-        team_id:
-          type: string
-          title: Team Id
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-        admins:
-          items: {}
-          type: array
-          title: Admins
-          default: []
-        members:
-          items: {}
-          type: array
-          title: Members
-          default: []
-        members_with_roles:
-          items:
-            $ref: '#/components/schemas/Member'
-          type: array
-          title: Members With Roles
-          default: []
-        team_member_permissions:
+          title: Budget Duration
+          description: Duration after which this team member's budget resets (e.g. '1h', '24h', '7d', '30d'). If not set, the budget never resets.
+        allowed_models:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Team Member Permissions
-        metadata:
+          title: Allowed Models
+          description: List of models this team member can access. Pass an empty list to remove per-member model restrictions.
+      type: object
+      required:
+      - team_id
+      title: TeamMemberUpdateRequest
+    LiteLLM_BudgetTable:
+      properties:
+        budget_id:
           anyOf:
-          - additionalProperties: true
-            type: object
+          - type: string
           - type: 'null'
-          title: Metadata
+          title: Budget Id
+        soft_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Soft Budget
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
         tpm_limit:
           anyOf:
           - type: integer
@@ -3027,134 +3361,92 @@ components:
           - type: integer
           - type: 'null'
           title: Rpm Limit
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        soft_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Soft Budget
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_limits:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BudgetLimitEntry'
-            type: array
-          - type: 'null'
-          title: Budget Limits
-        models:
-          items: {}
-          type: array
-          title: Models
-          default: []
-        blocked:
-          type: boolean
-          title: Blocked
-          default: false
-        router_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Router Settings
-        access_group_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Group Ids
-        default_team_member_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Default Team Member Models
-        spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Spend
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        model_id:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Model Id
-        model_spend:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Spend
-          default: {}
         model_max_budget:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
           title: Model Max Budget
-          default: {}
-        policies:
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        allowed_models:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Policies
-        allow_team_guardrail_config:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Allow Team Guardrail Config
-          default: false
-        litellm_model_table:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ModelTable'
-          - type: 'null'
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
-          - type: 'null'
-        object_permission_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Object Permission Id
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
+          title: Allowed Models
+      type: object
+      title: LiteLLM_BudgetTable
+      description: 'Represents user-controllable params for a LiteLLM_BudgetTable record.
+
+
+        Budget-write paths use `model_fields.keys()` on this class as an allowlist
+
+        for user input. Keep server-managed fields (e.g. `budget_reset_at`) on
+
+        `LiteLLM_BudgetTableFull` so they aren''t user-settable.'
+    BreakdownMetrics:
+      properties:
+        mcp_servers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Mcp Servers
+        models:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Models
+        model_groups:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Model Groups
+        providers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Providers
+        endpoints:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Endpoints
+        api_keys:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Keys
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Entities
+      type: object
+      title: BreakdownMetrics
+      description: Breakdown of spend by different dimensions
+    AllowedVectorStoreIndexItem:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        index_permissions:
+          items:
+            type: string
+            enum:
+            - read
+            - write
+          type: array
+          title: Index Permissions
       type: object
       required:
-      - team_id
-      title: LiteLLM_TeamTable
+      - index_name
+      - index_permissions
+      title: AllowedVectorStoreIndexItem
     SpendMetrics:
       properties:
         spend:
@@ -3207,112 +3499,23 @@ components:
           default: 0
       type: object
       title: SpendMetrics
-    UpdateTeamMemberPermissionsRequest:
+    PatchTeamRequest:
       properties:
         team_id:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Team Id
-        team_member_permissions:
-          items:
-            type: string
-          type: array
-          title: Team Member Permissions
-      type: object
-      required:
-      - team_id
-      - team_member_permissions
-      title: UpdateTeamMemberPermissionsRequest
-      description: Request to update the team member permissions for a team
-    TeamMemberInfoResponse:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        team_id:
-          type: string
-          title: Team Id
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Spend
-          default: 0.0
-        total_spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Total Spend
-          default: 0.0
-        litellm_budget_table:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_BudgetTableFull'
-          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
-          - type: 'null'
-          title: Litellm Budget Table
-        role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Role
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
         team_alias:
           anyOf:
           - type: string
           - type: 'null'
           title: Team Alias
-      type: object
-      required:
-      - user_id
-      - team_id
-      title: TeamMemberInfoResponse
-      description: Response for GET /team/{team_id}/members/me — caller's own membership row.
-    TeamAddMemberResponse:
-      properties:
-        team_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Alias
-        team_id:
-          type: string
-          title: Team Id
         organization_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Organization Id
-        admins:
-          items: {}
-          type: array
-          title: Admins
-          default: []
-        members:
-          items: {}
-          type: array
-          title: Members
-          default: []
-        members_with_roles:
-          items:
-            $ref: '#/components/schemas/Member'
-          type: array
-          title: Members With Roles
-          default: []
-        team_member_permissions:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Team Member Permissions
         metadata:
           anyOf:
           - additionalProperties: true
@@ -3339,27 +3542,141 @@ components:
           - type: number
           - type: 'null'
           title: Soft Budget
+        models:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Models
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
         budget_duration:
           anyOf:
           - type: string
           - type: 'null'
           title: Budget Duration
-        budget_limits:
+        tags:
           anyOf:
-          - items:
-              $ref: '#/components/schemas/BudgetLimitEntry'
+          - items: {}
             type: array
           - type: 'null'
-          title: Budget Limits
-        models:
-          items: {}
-          type: array
-          title: Models
-          default: []
-        blocked:
-          type: boolean
-          title: Blocked
-          default: false
+          title: Tags
+        model_aliases:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Aliases
+        guardrails:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Guardrails
+        policies:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Policies
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionBase'
+          - type: 'null'
+        disable_global_guardrails:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Disable Global Guardrails
+        team_member_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Team Member Budget
+        team_member_budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Member Budget Duration
+        team_member_rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Team Member Rpm Limit
+        team_member_tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Team Member Tpm Limit
+        team_member_key_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Member Key Duration
+        allowed_passthrough_routes:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Passthrough Routes
+        secret_manager_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Secret Manager Settings
+        prompts:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Prompts
+        model_rpm_limit:
+          anyOf:
+          - additionalProperties:
+              type: integer
+            type: object
+          - type: 'null'
+          title: Model Rpm Limit
+        model_tpm_limit:
+          anyOf:
+          - additionalProperties:
+              type: integer
+            type: object
+          - type: 'null'
+          title: Model Tpm Limit
+        mcp_rpm_limit:
+          anyOf:
+          - additionalProperties:
+              type: integer
+            type: object
+          - type: 'null'
+          title: Mcp Rpm Limit
+        allowed_vector_store_indexes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AllowedVectorStoreIndexItem'
+            type: array
+          - type: 'null'
+          title: Allowed Vector Store Indexes
+        enforced_batch_output_expires_after:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Enforced Batch Output Expires After
+        enforced_file_expires_after:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Enforced File Expires After
         router_settings:
           anyOf:
           - additionalProperties: true
@@ -3373,6 +3690,13 @@ components:
             type: array
           - type: 'null'
           title: Access Group Ids
+        budget_limits:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BudgetLimitEntry'
+            type: array
+          - type: 'null'
+          title: Budget Limits
         default_team_member_models:
           anyOf:
           - items:
@@ -3380,95 +3704,173 @@ components:
             type: array
           - type: 'null'
           title: Default Team Member Models
-        spend:
+      type: object
+      title: PatchTeamRequest
+      description: 'Body of PATCH /team/{team_id}.
+
+
+        Identical to UpdateTeamRequest except team_id is optional, because PATCH takes it
+
+        from the path. A team_id in the body is still accepted when it matches the path.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    DailySpendData:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        breakdown:
+          $ref: '#/components/schemas/BreakdownMetrics'
+      type: object
+      required:
+      - date
+      - metrics
+      title: DailySpendData
+    MetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        api_key_breakdown:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Key Breakdown
+      type: object
+      required:
+      - metrics
+      title: MetricWithMetadata
+    DailySpendMetadata:
+      properties:
+        total_spend:
+          type: number
+          title: Total Spend
+          default: 0.0
+        total_prompt_tokens:
+          type: integer
+          title: Total Prompt Tokens
+          default: 0
+        total_completion_tokens:
+          type: integer
+          title: Total Completion Tokens
+          default: 0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+        total_api_requests:
+          type: integer
+          title: Total Api Requests
+          default: 0
+        total_successful_requests:
+          type: integer
+          title: Total Successful Requests
+          default: 0
+        total_failed_requests:
+          type: integer
+          title: Total Failed Requests
+          default: 0
+        total_cache_read_input_tokens:
+          type: integer
+          title: Total Cache Read Input Tokens
+          default: 0
+        total_cache_creation_input_tokens:
+          type: integer
+          title: Total Cache Creation Input Tokens
+          default: 0
+        total_compression_saved_tokens:
+          type: integer
+          title: Total Compression Saved Tokens
+          default: 0
+        total_compression_savings_spend:
+          type: number
+          title: Total Compression Savings Spend
+          default: 0.0
+        total_prompt_caching_savings_spend:
+          type: number
+          title: Total Prompt Caching Savings Spend
+          default: 0.0
+        page:
+          type: integer
+          title: Page
+          default: 1
+        total_pages:
+          type: integer
+          title: Total Pages
+          default: 1
+        has_more:
+          type: boolean
+          title: Has More
+          default: false
+      type: object
+      title: DailySpendMetadata
+    TeamMemberUpdateResponse:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        team_id:
+          type: string
+          title: Team Id
+        max_budget_in_team:
           anyOf:
           - type: number
           - type: 'null'
-          title: Spend
-        max_parallel_requests:
+          title: Max Budget In Team
+        tpm_limit:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Max Parallel Requests
-        budget_reset_at:
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        budget_duration:
           anyOf:
           - type: string
-            format: date-time
           - type: 'null'
-          title: Budget Reset At
-        model_id:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Model Id
-        model_spend:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Spend
-          default: {}
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
-          default: {}
-        policies:
+          title: Budget Duration
+        allowed_models:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Policies
-        allow_team_guardrail_config:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Allow Team Guardrail Config
-          default: false
-        litellm_model_table:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ModelTable'
-          - type: 'null'
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
-          - type: 'null'
-        object_permission_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Object Permission Id
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_users:
-          items:
-            $ref: '#/components/schemas/LiteLLM_UserTable'
-          type: array
-          title: Updated Users
-        updated_team_memberships:
-          items:
-            $ref: '#/components/schemas/LiteLLM_TeamMembership'
-          type: array
-          title: Updated Team Memberships
+          title: Allowed Models
+      type: object
+      required:
+      - user_id
+      - team_id
+      title: TeamMemberUpdateResponse
+    BlockTeamRequest:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
       type: object
       required:
       - team_id
-      - updated_users
-      - updated_team_memberships
-      title: TeamAddMemberResponse
+      title: BlockTeamRequest
     LiteLLM_TeamMembership:
       properties:
         user_id:
@@ -3505,89 +3907,6 @@ components:
       - user_id
       - team_id
       title: LiteLLM_TeamMembership
-    DailySpendData:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        breakdown:
-          $ref: '#/components/schemas/BreakdownMetrics'
-      type: object
-      required:
-      - date
-      - metrics
-      title: DailySpendData
-    BlockTeamRequest:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-      type: object
-      required:
-      - team_id
-      title: BlockTeamRequest
-    AllowedVectorStoreIndexItem:
-      properties:
-        index_name:
-          type: string
-          title: Index Name
-        index_permissions:
-          items:
-            type: string
-            enum:
-            - read
-            - write
-          type: array
-          title: Index Permissions
-      type: object
-      required:
-      - index_name
-      - index_permissions
-      title: AllowedVectorStoreIndexItem
-    TeamModelAddRequest:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-        models:
-          items:
-            type: string
-          type: array
-          title: Models
-      type: object
-      required:
-      - team_id
-      - models
-      title: TeamModelAddRequest
-      description: Request to add models to a team
-    AddTeamCallback:
-      properties:
-        callback_name:
-          type: string
-          title: Callback Name
-        callback_type:
-          anyOf:
-          - type: string
-            enum:
-            - success
-            - failure
-            - success_and_failure
-          - type: 'null'
-          title: Callback Type
-          default: success_and_failure
-        callback_vars:
-          additionalProperties:
-            type: string
-          type: object
-          title: Callback Vars
-      type: object
-      required:
-      - callback_name
-      - callback_vars
-      title: AddTeamCallback
     NewTeamRequest:
       properties:
         team_alias:
@@ -3832,447 +4151,128 @@ components:
           title: Enforced File Expires After
       type: object
       title: NewTeamRequest
-    DailySpendMetadata:
+    TeamMemberInfoResponse:
       properties:
+        user_id:
+          type: string
+          title: User Id
+        team_id:
+          type: string
+          title: Team Id
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        spend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Spend
+          default: 0.0
         total_spend:
-          type: number
+          anyOf:
+          - type: number
+          - type: 'null'
           title: Total Spend
           default: 0.0
-        total_prompt_tokens:
-          type: integer
-          title: Total Prompt Tokens
-          default: 0
-        total_completion_tokens:
-          type: integer
-          title: Total Completion Tokens
-          default: 0
-        total_tokens:
-          type: integer
-          title: Total Tokens
-          default: 0
-        total_api_requests:
-          type: integer
-          title: Total Api Requests
-          default: 0
-        total_successful_requests:
-          type: integer
-          title: Total Successful Requests
-          default: 0
-        total_failed_requests:
-          type: integer
-          title: Total Failed Requests
-          default: 0
-        total_cache_read_input_tokens:
-          type: integer
-          title: Total Cache Read Input Tokens
-          default: 0
-        total_cache_creation_input_tokens:
-          type: integer
-          title: Total Cache Creation Input Tokens
-          default: 0
-        total_compression_saved_tokens:
-          type: integer
-          title: Total Compression Saved Tokens
-          default: 0
-        total_compression_savings_spend:
-          type: number
-          title: Total Compression Savings Spend
-          default: 0.0
-        total_prompt_caching_savings_spend:
-          type: number
-          title: Total Prompt Caching Savings Spend
-          default: 0.0
-        page:
-          type: integer
-          title: Page
-          default: 1
-        total_pages:
-          type: integer
-          title: Total Pages
-          default: 1
-        has_more:
-          type: boolean
-          title: Has More
-          default: false
-      type: object
-      title: DailySpendMetadata
-    BreakdownMetrics:
-      properties:
-        mcp_servers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Mcp Servers
-        models:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Models
-        model_groups:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Model Groups
-        providers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Providers
-        endpoints:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Endpoints
-        api_keys:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Keys
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Entities
-      type: object
-      title: BreakdownMetrics
-      description: Breakdown of spend by different dimensions
-    LiteLLM_ObjectPermissionTable:
-      properties:
-        object_permission_id:
-          type: string
-          title: Object Permission Id
-        mcp_servers:
+        litellm_budget_table:
           anyOf:
-          - items:
-              type: string
-            type: array
+          - $ref: '#/components/schemas/LiteLLM_BudgetTableFull'
+          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
           - type: 'null'
-          title: Mcp Servers
-          default: []
-        mcp_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Access Groups
-          default: []
-        mcp_tool_permissions:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Mcp Tool Permissions
-        vector_stores:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Vector Stores
-          default: []
-        agents:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agents
-          default: []
-        agent_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agent Access Groups
-          default: []
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-          default: []
-        mcp_toolsets:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Toolsets
-        blocked_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Blocked Tools
-          default: []
-        search_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Search Tools
-          default: []
-        mcp_tool_search_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mcp Tool Search Enabled
-      type: object
-      required:
-      - object_permission_id
-      title: LiteLLM_ObjectPermissionTable
-      description: Represents a LiteLLM_ObjectPermissionTable record
-    LiteLLM_ModelTable:
-      properties:
-        id:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Id
-        model_aliases:
-          anyOf:
-          - type: string
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Aliases
-        created_by:
-          type: string
-          title: Created By
-        updated_by:
-          type: string
-          title: Updated By
-        team:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_TeamTable'
-          - type: 'null'
-      type: object
-      required:
-      - created_by
-      - updated_by
-      title: LiteLLM_ModelTable
-    PatchTeamRequest:
-      properties:
-        team_id:
+          title: Litellm Budget Table
+        role:
           anyOf:
           - type: string
           - type: 'null'
-          title: Team Id
+          title: Role
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
         team_alias:
           anyOf:
           - type: string
           - type: 'null'
           title: Team Alias
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        soft_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Soft Budget
-        models:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Models
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        tags:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Tags
-        model_aliases:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Aliases
-        guardrails:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Guardrails
-        policies:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Policies
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionBase'
-          - type: 'null'
-        disable_global_guardrails:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Disable Global Guardrails
-        team_member_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Team Member Budget
-        team_member_budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Member Budget Duration
-        team_member_rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Team Member Rpm Limit
-        team_member_tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Team Member Tpm Limit
-        team_member_key_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Member Key Duration
-        allowed_passthrough_routes:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Passthrough Routes
-        secret_manager_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Secret Manager Settings
-        prompts:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Prompts
-        model_rpm_limit:
-          anyOf:
-          - additionalProperties:
-              type: integer
-            type: object
-          - type: 'null'
-          title: Model Rpm Limit
-        model_tpm_limit:
-          anyOf:
-          - additionalProperties:
-              type: integer
-            type: object
-          - type: 'null'
-          title: Model Tpm Limit
-        mcp_rpm_limit:
-          anyOf:
-          - additionalProperties:
-              type: integer
-            type: object
-          - type: 'null'
-          title: Mcp Rpm Limit
-        allowed_vector_store_indexes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AllowedVectorStoreIndexItem'
-            type: array
-          - type: 'null'
-          title: Allowed Vector Store Indexes
-        enforced_batch_output_expires_after:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Enforced Batch Output Expires After
-        enforced_file_expires_after:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Enforced File Expires After
-        router_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Router Settings
-        access_group_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Group Ids
-        budget_limits:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BudgetLimitEntry'
-            type: array
-          - type: 'null'
-          title: Budget Limits
-        default_team_member_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Default Team Member Models
       type: object
-      title: PatchTeamRequest
-      description: 'Body of PATCH /team/{team_id}.
-
-
-        Identical to UpdateTeamRequest except team_id is optional, because PATCH takes it
-
-        from the path. A team_id in the body is still accepted when it matches the path.'
+      required:
+      - user_id
+      - team_id
+      title: TeamMemberInfoResponse
+      description: Response for GET /team/{team_id}/members/me — caller's own membership row.
+    TeamModelAddRequest:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+      type: object
+      required:
+      - team_id
+      - models
+      title: TeamModelAddRequest
+      description: Request to add models to a team
+    TeamListResponse:
+      properties:
+        teams:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/TeamListItem'
+            - $ref: '#/components/schemas/LiteLLM_TeamTable'
+            - $ref: '#/components/schemas/LiteLLM_DeletedTeamTable'
+          type: array
+          title: Teams
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+        total_pages:
+          type: integer
+          title: Total Pages
+      type: object
+      required:
+      - teams
+      - total
+      - page
+      - page_size
+      - total_pages
+      title: TeamListResponse
+      description: Response to get the list of teams
+    BulkUpdateTeamMemberPermissionsRequest:
+      properties:
+        permissions:
+          items:
+            $ref: '#/components/schemas/KeyManagementRoutes'
+          type: array
+          title: Permissions
+        team_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Team Ids
+        apply_to_all_teams:
+          type: boolean
+          title: Apply To All Teams
+          default: false
+      type: object
+      required:
+      - permissions
+      title: BulkUpdateTeamMemberPermissionsRequest
+      description: Request to bulk-update team member permissions across teams.
   securitySchemes:
     APIKeyHeader:
       type: apiKey

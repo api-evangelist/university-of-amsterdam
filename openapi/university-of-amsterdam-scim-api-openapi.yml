@@ -723,6 +723,40 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    SCIMMember:
+      properties:
+        display:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display
+        value:
+          title: Value
+          type: string
+      required:
+      - value
+      title: SCIMMember
+      type: object
+    SCIMUserGroup:
+      properties:
+        display:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Display
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          default: direct
+          title: Type
+        value:
+          title: Value
+          type: string
+      required:
+      - value
+      title: SCIMUserGroup
+      type: object
     SCIMUser:
       properties:
         active:
@@ -782,24 +816,39 @@ components:
       - schemas
       title: SCIMUser
       type: object
-    SCIMPatchOperation:
+    SCIMUserName:
       properties:
-        op:
-          title: Op
-          type: string
-        path:
+        familyName:
           anyOf:
           - type: string
           - type: 'null'
-          title: Path
-        value:
+          title: Familyname
+        formatted:
           anyOf:
-          - {}
+          - type: string
           - type: 'null'
-          title: Value
-      required:
-      - op
-      title: SCIMPatchOperation
+          title: Formatted
+        givenName:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Givenname
+        honorificPrefix:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Honorificprefix
+        honorificSuffix:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Honorificsuffix
+        middleName:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Middlename
+      title: SCIMUserName
       type: object
     SCIMGroup:
       properties:
@@ -839,54 +888,89 @@ components:
       - displayName
       title: SCIMGroup
       type: object
-    SCIMUserName:
+    SCIMPatchOperation:
       properties:
-        familyName:
+        op:
+          title: Op
+          type: string
+        path:
           anyOf:
           - type: string
           - type: 'null'
-          title: Familyname
-        formatted:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Formatted
-        givenName:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Givenname
-        honorificPrefix:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Honorificprefix
-        honorificSuffix:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Honorificsuffix
-        middleName:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Middlename
-      title: SCIMUserName
-      type: object
-    SCIMMember:
-      properties:
-        display:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display
+          title: Path
         value:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Value
+      required:
+      - op
+      title: SCIMPatchOperation
+      type: object
+    SCIMPatchOp:
+      properties:
+        Operations:
+          items:
+            $ref: '#/components/schemas/SCIMPatchOperation'
+          title: Operations
+          type: array
+        schemas:
+          default:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+          items:
+            type: string
+          title: Schemas
+          type: array
+      required:
+      - Operations
+      title: SCIMPatchOp
+      type: object
+    SCIMUserEmail:
+      properties:
+        primary:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Primary
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+        value:
+          format: email
           title: Value
           type: string
       required:
       - value
-      title: SCIMMember
+      title: SCIMUserEmail
       type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     SCIMServiceProviderConfig:
       properties:
         authenticationSchemes:
@@ -935,90 +1019,6 @@ components:
           default:
             supported: false
       title: SCIMServiceProviderConfig
-      type: object
-    SCIMUserEmail:
-      properties:
-        primary:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Primary
-        type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Type
-        value:
-          format: email
-          title: Value
-          type: string
-      required:
-      - value
-      title: SCIMUserEmail
-      type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SCIMPatchOp:
-      properties:
-        Operations:
-          items:
-            $ref: '#/components/schemas/SCIMPatchOperation'
-          title: Operations
-          type: array
-        schemas:
-          default:
-          - urn:ietf:params:scim:api:messages:2.0:PatchOp
-          items:
-            type: string
-          title: Schemas
-          type: array
-      required:
-      - Operations
-      title: SCIMPatchOp
-      type: object
-    SCIMUserGroup:
-      properties:
-        display:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Display
-        type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          default: direct
-          title: Type
-        value:
-          title: Value
-          type: string
-      required:
-      - value
-      title: SCIMUserGroup
       type: object
     SCIMListResponse:
       properties:

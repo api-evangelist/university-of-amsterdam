@@ -94,6 +94,28 @@ paths:
       - Compliance
 components:
   schemas:
+    ComplianceCheckResult:
+      description: Result of a single compliance check.
+      properties:
+        article:
+          title: Article
+          type: string
+        check_name:
+          title: Check Name
+          type: string
+        detail:
+          title: Detail
+          type: string
+        passed:
+          title: Passed
+          type: boolean
+      required:
+      - check_name
+      - article
+      - passed
+      - detail
+      title: ComplianceCheckResult
+      type: object
     HTTPValidationError:
       properties:
         detail:
@@ -103,6 +125,26 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    ComplianceResponse:
+      description: Response from a compliance check endpoint.
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/ComplianceCheckResult'
+          title: Checks
+          type: array
+        compliant:
+          title: Compliant
+          type: boolean
+        regulation:
+          title: Regulation
+          type: string
+      required:
+      - compliant
+      - regulation
+      - checks
+      title: ComplianceResponse
+      type: object
     ComplianceCheckRequest:
       description: 'Request payload for compliance check endpoints.
 
@@ -139,28 +181,6 @@ components:
       - request_id
       title: ComplianceCheckRequest
       type: object
-    ComplianceCheckResult:
-      description: Result of a single compliance check.
-      properties:
-        article:
-          title: Article
-          type: string
-        check_name:
-          title: Check Name
-          type: string
-        detail:
-          title: Detail
-          type: string
-        passed:
-          title: Passed
-          type: boolean
-      required:
-      - check_name
-      - article
-      - passed
-      - detail
-      title: ComplianceCheckResult
-      type: object
     ValidationError:
       properties:
         loc:
@@ -187,26 +207,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ComplianceResponse:
-      description: Response from a compliance check endpoint.
-      properties:
-        checks:
-          items:
-            $ref: '#/components/schemas/ComplianceCheckResult'
-          title: Checks
-          type: array
-        compliant:
-          title: Compliant
-          type: boolean
-        regulation:
-          title: Regulation
-          type: string
-      required:
-      - compliant
-      - regulation
-      - checks
-      title: ComplianceResponse
-      type: object
   securitySchemes:
     APIKeyHeader:
       type: apiKey

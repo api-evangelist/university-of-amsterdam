@@ -142,33 +142,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    CoordinationRedisSettingsRequest:
-      properties:
-        settings:
-          additionalProperties: true
-          type: object
-          title: Settings
-          description: Coordination Redis connection params
-      type: object
-      required:
-      - settings
-      title: CoordinationRedisSettingsRequest
-    CoordinationRedisTestResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-          description: 'Connection status: ''healthy'' or ''unhealthy'''
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-          description: Error message if the connection failed
-      type: object
-      required:
-      - status
-      title: CoordinationRedisTestResponse
     CoordinationRedisSettingsResponse:
       properties:
         values:
@@ -237,6 +210,33 @@ components:
       - ui_field_name
       - section
       title: CoordinationRedisSettingsField
+    CoordinationRedisSettingsRequest:
+      properties:
+        settings:
+          additionalProperties: true
+          type: object
+          title: Settings
+          description: Coordination Redis connection params
+      type: object
+      required:
+      - settings
+      title: CoordinationRedisSettingsRequest
+    CoordinationRedisTestResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          description: 'Connection status: ''healthy'' or ''unhealthy'''
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+          description: Error message if the connection failed
+      type: object
+      required:
+      - status
+      title: CoordinationRedisTestResponse
     ValidationError:
       properties:
         loc:

@@ -336,101 +336,21 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    PluginAuthor:
-      description: Plugin author information.
+    ListPluginsResponse:
+      description: Response from listing plugins.
       properties:
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Author email
-          title: Email
-        name:
-          description: Author name
-          title: Name
-          type: string
+        count:
+          title: Count
+          type: integer
+        plugins:
+          items:
+            $ref: '#/components/schemas/PluginListItem'
+          title: Plugins
+          type: array
       required:
-      - name
-      title: PluginAuthor
-      type: object
-    PluginListItem:
-      description: Plugin item in list responses.
-      properties:
-        author:
-          anyOf:
-          - $ref: '#/components/schemas/PluginAuthor'
-          - type: 'null'
-        category:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Category
-        created_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created At
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Domain
-        enabled:
-          title: Enabled
-          type: boolean
-        homepage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Homepage
-        id:
-          title: Id
-          type: string
-        keywords:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Keywords
-        name:
-          title: Name
-          type: string
-        namespace:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Namespace
-        source:
-          additionalProperties:
-            type: string
-          title: Source
-          type: object
-        updated_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated At
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-      required:
-      - id
-      - name
-      - version
-      - description
-      - source
-      - enabled
-      - created_at
-      - updated_at
-      title: PluginListItem
+      - plugins
+      - count
+      title: ListPluginsResponse
       type: object
     RegisterPluginRequest:
       description: 'Request body for registering a plugin in the marketplace.
@@ -512,21 +432,101 @@ components:
       - source
       title: RegisterPluginRequest
       type: object
-    ListPluginsResponse:
-      description: Response from listing plugins.
+    PluginListItem:
+      description: Plugin item in list responses.
       properties:
-        count:
-          title: Count
-          type: integer
-        plugins:
-          items:
-            $ref: '#/components/schemas/PluginListItem'
-          title: Plugins
-          type: array
+        author:
+          anyOf:
+          - $ref: '#/components/schemas/PluginAuthor'
+          - type: 'null'
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain
+        enabled:
+          title: Enabled
+          type: boolean
+        homepage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Homepage
+        id:
+          title: Id
+          type: string
+        keywords:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Keywords
+        name:
+          title: Name
+          type: string
+        namespace:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Namespace
+        source:
+          additionalProperties:
+            type: string
+          title: Source
+          type: object
+        updated_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated At
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
       required:
-      - plugins
-      - count
-      title: ListPluginsResponse
+      - id
+      - name
+      - version
+      - description
+      - source
+      - enabled
+      - created_at
+      - updated_at
+      title: PluginListItem
+      type: object
+    PluginAuthor:
+      description: Plugin author information.
+      properties:
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Author email
+          title: Email
+        name:
+          description: Author name
+          title: Name
+          type: string
+      required:
+      - name
+      title: PluginAuthor
       type: object
     ValidationError:
       properties:

@@ -249,17 +249,30 @@ components:
       required:
       - id
       title: BudgetDeleteRequest
-    BudgetRequest:
+    BudgetConfig:
       properties:
-        budgets:
-          items:
-            type: string
-          type: array
-          title: Budgets
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
       type: object
-      required:
-      - budgets
-      title: BudgetRequest
+      title: BudgetConfig
     BudgetNewRequest:
       properties:
         budget_id:
@@ -321,6 +334,17 @@ components:
           description: Datetime when the budget is reset
       type: object
       title: BudgetNewRequest
+    BudgetRequest:
+      properties:
+        budgets:
+          items:
+            type: string
+          type: array
+          title: Budgets
+      type: object
+      required:
+      - budgets
+      title: BudgetRequest
     ValidationError:
       properties:
         loc:
@@ -347,30 +371,6 @@ components:
       - msg
       - type
       title: ValidationError
-    BudgetConfig:
-      properties:
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-      type: object
-      title: BudgetConfig
   securitySchemes:
     APIKeyHeader:
       type: apiKey

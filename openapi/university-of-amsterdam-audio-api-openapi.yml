@@ -116,6 +116,15 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     Body_audio_transcriptions_v1_audio_transcriptions_post:
       properties:
         file:
@@ -126,15 +135,6 @@ components:
       required:
       - file
       title: Body_audio_transcriptions_v1_audio_transcriptions_post
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     Body_audio_transcriptions_audio_transcriptions_post:
       properties:
         file:

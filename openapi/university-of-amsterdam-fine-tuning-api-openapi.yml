@@ -445,6 +445,29 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Hyperparameters:
+      properties:
+        batch_size:
+          anyOf:
+          - type: string
+          - type: integer
+          - type: 'null'
+          title: Batch Size
+        learning_rate_multiplier:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+          title: Learning Rate Multiplier
+        n_epochs:
+          anyOf:
+          - type: string
+          - type: integer
+          - type: 'null'
+          title: N Epochs
+      additionalProperties: true
+      type: object
+      title: Hyperparameters
     LiteLLMFineTuningJobCreate:
       properties:
         model:
@@ -494,29 +517,6 @@ components:
       - model
       - training_file
       title: LiteLLMFineTuningJobCreate
-    Hyperparameters:
-      properties:
-        batch_size:
-          anyOf:
-          - type: string
-          - type: integer
-          - type: 'null'
-          title: Batch Size
-        learning_rate_multiplier:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-          title: Learning Rate Multiplier
-        n_epochs:
-          anyOf:
-          - type: string
-          - type: integer
-          - type: 'null'
-          title: N Epochs
-      additionalProperties: true
-      type: object
-      title: Hyperparameters
     ValidationError:
       properties:
         loc:

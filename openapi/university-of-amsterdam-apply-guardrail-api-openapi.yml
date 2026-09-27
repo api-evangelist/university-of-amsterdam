@@ -60,15 +60,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ApplyGuardrailResponse:
-      properties:
-        response_text:
-          type: string
-          title: Response Text
-      type: object
-      required:
-      - response_text
-      title: ApplyGuardrailResponse
     ApplyGuardrailRequest:
       properties:
         guardrail_name:
@@ -184,6 +175,15 @@ components:
       - msg
       - type
       title: ValidationError
+    ApplyGuardrailResponse:
+      properties:
+        response_text:
+          type: string
+          title: Response Text
+      type: object
+      required:
+      - response_text
+      title: ApplyGuardrailResponse
   securitySchemes:
     APIKeyHeader:
       type: apiKey

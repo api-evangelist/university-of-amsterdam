@@ -524,58 +524,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    AgentConfig:
-      properties:
-        agent_name:
-          type: string
-          title: Agent Name
-        agent_card_params:
-          $ref: '#/components/schemas/AgentCard'
-        litellm_params:
-          additionalProperties: true
-          type: object
-          title: Litellm Params
-        object_permission:
-          $ref: '#/components/schemas/AgentObjectPermission'
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        session_tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Session Tpm Limit
-        session_rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Session Rpm Limit
-        static_headers:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Static Headers
-        extra_headers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Extra Headers
-      type: object
-      required:
-      - agent_name
-      - agent_card_params
-      title: AgentConfig
     AgentCardSignature:
       properties:
         protected:
@@ -593,6 +541,35 @@ components:
       type: object
       title: AgentCardSignature
       description: Represents a JWS signature of an AgentCard.
+    OAuthFlows:
+      properties:
+        authorizationCode:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Authorizationcode
+        clientCredentials:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Clientcredentials
+        implicit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Implicit
+        password:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Password
+      type: object
+      title: OAuthFlows
+      description: Defines the configuration for the supported OAuth 2.0 flows.
     AgentProvider:
       properties:
         organization:
@@ -604,125 +581,7 @@ components:
       type: object
       title: AgentProvider
       description: Represents the service provider of an agent.
-    MakeAgentsPublicRequest:
-      properties:
-        agent_ids:
-          items:
-            type: string
-          type: array
-          title: Agent Ids
-      type: object
-      required:
-      - agent_ids
-      title: MakeAgentsPublicRequest
-    AgentResponse:
-      properties:
-        agent_id:
-          type: string
-          title: Agent Id
-        agent_name:
-          type: string
-          title: Agent Name
-        litellm_params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Litellm Params
-        agent_card_params:
-          additionalProperties: true
-          type: object
-          title: Agent Card Params
-        object_permission:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Object Permission
-        spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Spend
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        session_tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Session Tpm Limit
-        session_rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Session Rpm Limit
-        static_headers:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Static Headers
-        extra_headers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Extra Headers
-        keys:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AgentKeySummary'
-            type: array
-          - type: 'null'
-          title: Keys
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-      type: object
-      required:
-      - agent_id
-      - agent_name
-      - agent_card_params
-      title: AgentResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    OpenIdConnectSecurityScheme:
+    APIKeySecurityScheme:
       properties:
         description:
           anyOf:
@@ -731,28 +590,67 @@ components:
           title: Description
         type:
           type: string
-          const: openIdConnect
+          const: apiKey
           title: Type
-        openIdConnectUrl:
+        in_:
           type: string
-          title: Openidconnecturl
+          enum:
+          - query
+          - header
+          - cookie
+          title: In
+        name:
+          type: string
+          title: Name
       type: object
       required:
       - type
-      - openIdConnectUrl
-      title: OpenIdConnectSecurityScheme
-      description: Defines a security scheme using OpenID Connect.
-    AgentInterface:
+      - in_
+      - name
+      title: APIKeySecurityScheme
+      description: Defines a security scheme using an API key.
+    MutualTLSSecurityScheme:
       properties:
-        url:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
           type: string
-          title: Url
-        transport:
-          type: string
-          title: Transport
+          const: mutualTLS
+          title: Type
       type: object
-      title: AgentInterface
-      description: Declares a combination of a target URL and a transport protocol.
+      required:
+      - type
+      title: MutualTLSSecurityScheme
+      description: Defines a security scheme using mTLS authentication.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     AgentObjectPermission:
       properties:
         mcp_servers:
@@ -794,83 +692,30 @@ components:
           title: Agents
       type: object
       title: AgentObjectPermission
-    HTTPAuthSecurityScheme:
+    AgentExtension:
       properties:
+        uri:
+          type: string
+          title: Uri
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
-        type:
-          type: string
-          const: http
-          title: Type
-        scheme:
-          type: string
-          title: Scheme
-        bearerFormat:
+        required:
           anyOf:
-          - type: string
+          - type: boolean
           - type: 'null'
-          title: Bearerformat
+          title: Required
+        params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Params
       type: object
-      required:
-      - type
-      - scheme
-      title: HTTPAuthSecurityScheme
-      description: Defines a security scheme using HTTP authentication.
-    APIKeySecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: apiKey
-          title: Type
-        in_:
-          type: string
-          enum:
-          - query
-          - header
-          - cookie
-          title: In
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - type
-      - in_
-      - name
-      title: APIKeySecurityScheme
-      description: Defines a security scheme using an API key.
-    OAuth2SecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: oauth2
-          title: Type
-        flows:
-          $ref: '#/components/schemas/OAuthFlows'
-        oauth2MetadataUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Oauth2Metadataurl
-      type: object
-      required:
-      - type
-      - flows
-      title: OAuth2SecurityScheme
-      description: Defines a security scheme using OAuth 2.0.
+      title: AgentExtension
+      description: A declaration of a protocol extension supported by an Agent.
     AgentCard:
       properties:
         protocolVersion:
@@ -973,56 +818,6 @@ components:
         It provides essential metadata including the agent''s identity, capabilities,
 
         skills, supported communication methods, and security requirements.'
-    AgentExtension:
-      properties:
-        uri:
-          type: string
-          title: Uri
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        required:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Required
-        params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Params
-      type: object
-      title: AgentExtension
-      description: A declaration of a protocol extension supported by an Agent.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     PatchAgentRequest:
       properties:
         agent_name:
@@ -1072,36 +867,105 @@ components:
           title: Extra Headers
       type: object
       title: PatchAgentRequest
-    OAuthFlows:
+    AgentResponse:
       properties:
-        authorizationCode:
+        agent_id:
+          type: string
+          title: Agent Id
+        agent_name:
+          type: string
+          title: Agent Name
+        litellm_params:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
-          title: Authorizationcode
-        clientCredentials:
+          title: Litellm Params
+        agent_card_params:
+          additionalProperties: true
+          type: object
+          title: Agent Card Params
+        object_permission:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
-          title: Clientcredentials
-        implicit:
+          title: Object Permission
+        spend:
           anyOf:
-          - additionalProperties: true
+          - type: number
+          - type: 'null'
+          title: Spend
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        session_tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Session Tpm Limit
+        session_rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Session Rpm Limit
+        static_headers:
+          anyOf:
+          - additionalProperties:
+              type: string
             type: object
           - type: 'null'
-          title: Implicit
-        password:
+          title: Static Headers
+        extra_headers:
           anyOf:
-          - additionalProperties: true
-            type: object
+          - items:
+              type: string
+            type: array
           - type: 'null'
-          title: Password
+          title: Extra Headers
+        keys:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AgentKeySummary'
+            type: array
+          - type: 'null'
+          title: Keys
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
       type: object
-      title: OAuthFlows
-      description: Defines the configuration for the supported OAuth 2.0 flows.
-    MutualTLSSecurityScheme:
+      required:
+      - agent_id
+      - agent_name
+      - agent_card_params
+      title: AgentResponse
+    OAuth2SecurityScheme:
       properties:
         description:
           anyOf:
@@ -1110,32 +974,65 @@ components:
           title: Description
         type:
           type: string
-          const: mutualTLS
+          const: oauth2
           title: Type
+        flows:
+          $ref: '#/components/schemas/OAuthFlows'
+        oauth2MetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Oauth2Metadataurl
       type: object
       required:
       - type
-      title: MutualTLSSecurityScheme
-      description: Defines a security scheme using mTLS authentication.
-    AgentKeySummary:
+      - flows
+      title: OAuth2SecurityScheme
+      description: Defines a security scheme using OAuth 2.0.
+    HTTPAuthSecurityScheme:
       properties:
-        token:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
           type: string
-          title: Token
-        key_alias:
+          const: http
+          title: Type
+        scheme:
+          type: string
+          title: Scheme
+        bearerFormat:
           anyOf:
           - type: string
           - type: 'null'
-          title: Key Alias
-        key_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Name
+          title: Bearerformat
       type: object
       required:
-      - token
-      title: AgentKeySummary
+      - type
+      - scheme
+      title: HTTPAuthSecurityScheme
+      description: Defines a security scheme using HTTP authentication.
+    AgentMakePublicResponse:
+      properties:
+        message:
+          type: string
+          title: Message
+        public_agent_groups:
+          items:
+            type: string
+          type: array
+          title: Public Agent Groups
+        updated_by:
+          type: string
+          title: Updated By
+      type: object
+      required:
+      - message
+      - public_agent_groups
+      - updated_by
+      title: AgentMakePublicResponse
     AgentSkill:
       properties:
         id:
@@ -1187,25 +1084,128 @@ components:
       type: object
       title: AgentSkill
       description: Represents a distinct capability or function that an agent can perform.
-    AgentMakePublicResponse:
+    AgentInterface:
       properties:
-        message:
+        url:
           type: string
-          title: Message
-        public_agent_groups:
+          title: Url
+        transport:
+          type: string
+          title: Transport
+      type: object
+      title: AgentInterface
+      description: Declares a combination of a target URL and a transport protocol.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    OpenIdConnectSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: openIdConnect
+          title: Type
+        openIdConnectUrl:
+          type: string
+          title: Openidconnecturl
+      type: object
+      required:
+      - type
+      - openIdConnectUrl
+      title: OpenIdConnectSecurityScheme
+      description: Defines a security scheme using OpenID Connect.
+    AgentKeySummary:
+      properties:
+        token:
+          type: string
+          title: Token
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        key_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Name
+      type: object
+      required:
+      - token
+      title: AgentKeySummary
+    AgentConfig:
+      properties:
+        agent_name:
+          type: string
+          title: Agent Name
+        agent_card_params:
+          $ref: '#/components/schemas/AgentCard'
+        litellm_params:
+          additionalProperties: true
+          type: object
+          title: Litellm Params
+        object_permission:
+          $ref: '#/components/schemas/AgentObjectPermission'
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        session_tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Session Tpm Limit
+        session_rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Session Rpm Limit
+        static_headers:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Static Headers
+        extra_headers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Extra Headers
+      type: object
+      required:
+      - agent_name
+      - agent_card_params
+      title: AgentConfig
+    MakeAgentsPublicRequest:
+      properties:
+        agent_ids:
           items:
             type: string
           type: array
-          title: Public Agent Groups
-        updated_by:
-          type: string
-          title: Updated By
+          title: Agent Ids
       type: object
       required:
-      - message
-      - public_agent_groups
-      - updated_by
-      title: AgentMakePublicResponse
+      - agent_ids
+      title: MakeAgentsPublicRequest
     AgentCapabilities:
       properties:
         streaming:

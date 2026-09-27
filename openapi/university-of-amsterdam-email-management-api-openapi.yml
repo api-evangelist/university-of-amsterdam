@@ -86,6 +86,26 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    EmailEventSettingsResponse:
+      properties:
+        settings:
+          items:
+            $ref: '#/components/schemas/EmailEventSettings'
+          type: array
+          title: Settings
+      type: object
+      required:
+      - settings
+      title: EmailEventSettingsResponse
+    EmailEvent:
+      type: string
+      enum:
+      - Virtual Key Created
+      - New User Invitation
+      - Virtual Key Rotated
+      - Soft Budget Crossed
+      - Max Budget Alert
+      title: EmailEvent
     EmailEventSettings:
       properties:
         event:
@@ -109,15 +129,6 @@ components:
       required:
       - settings
       title: EmailEventSettingsUpdateRequest
-    EmailEvent:
-      type: string
-      enum:
-      - Virtual Key Created
-      - New User Invitation
-      - Virtual Key Rotated
-      - Soft Budget Crossed
-      - Max Budget Alert
-      title: EmailEvent
     ValidationError:
       properties:
         loc:
@@ -144,17 +155,6 @@ components:
       - msg
       - type
       title: ValidationError
-    EmailEventSettingsResponse:
-      properties:
-        settings:
-          items:
-            $ref: '#/components/schemas/EmailEventSettings'
-          type: array
-          title: Settings
-      type: object
-      required:
-      - settings
-      title: EmailEventSettingsResponse
   securitySchemes:
     APIKeyHeader:
       type: apiKey

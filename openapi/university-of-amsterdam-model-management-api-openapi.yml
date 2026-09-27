@@ -1768,6 +1768,87 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ConfigurableClientsideParamsCustomAuth-Input:
+      properties:
+        api_base:
+          type: string
+          title: Api Base
+      additionalProperties: true
+      type: object
+      required:
+      - api_base
+      title: ConfigurableClientsideParamsCustomAuth
+    ImageURLListItem:
+      properties:
+        image_url:
+          $ref: '#/components/schemas/ImageURLObject'
+        index:
+          type: integer
+          title: Index
+        type:
+          type: string
+          const: image_url
+          title: Type
+      additionalProperties: true
+      type: object
+      required:
+      - image_url
+      - index
+      - type
+      title: ImageURLListItem
+    ListAccessGroupsResponse:
+      properties:
+        access_groups:
+          items:
+            $ref: '#/components/schemas/AccessGroupInfo'
+          type: array
+          title: Access Groups
+      type: object
+      required:
+      - access_groups
+      title: ListAccessGroupsResponse
+    UpdateModelGroupRequest:
+      properties:
+        model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Names
+        model_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Ids
+      type: object
+      title: UpdateModelGroupRequest
+    ChatCompletionReasoningSummaryTextBlock:
+      properties:
+        type:
+          const: summary_text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - type
+      title: ChatCompletionReasoningSummaryTextBlock
+      type: object
+    ChatCompletionAnnotation:
+      properties:
+        type:
+          type: string
+          const: url_citation
+          title: Type
+        url_citation:
+          $ref: '#/components/schemas/ChatCompletionAnnotationURLCitation'
+      additionalProperties: true
+      type: object
+      title: ChatCompletionAnnotation
     FunctionCall:
       properties:
         arguments:
@@ -1783,95 +1864,747 @@ components:
       required:
       - arguments
       title: FunctionCall
-    Deployment:
+    AccessGroupInfo:
       properties:
-        model_name:
+        access_group:
           type: string
-          title: Model Name
-        litellm_params:
-          $ref: '#/components/schemas/LiteLLM_Params'
-        model_info:
-          $ref: '#/components/schemas/ModelInfo'
-      additionalProperties: true
+          title: Access Group
+        model_names:
+          items:
+            type: string
+          type: array
+          title: Model Names
+        deployment_count:
+          type: integer
+          title: Deployment Count
       type: object
       required:
-      - model_name
-      - litellm_params
-      - model_info
-      title: Deployment
-    Choices:
+      - access_group
+      - model_names
+      - deployment_count
+      title: AccessGroupInfo
+    updateLiteLLMParams:
       properties:
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - content_filter
-          - function_call
-          - tool_calls
-          - length
-          - guardrail_intervened
-          - eos
-          - finish_reason_unspecified
-          - malformed_function_call
-          title: Finish Reason
-        index:
-          type: integer
-          title: Index
-        message:
-          $ref: '#/components/schemas/Message'
-        logprobs:
+        input_cost_per_token:
           anyOf:
-          - $ref: '#/components/schemas/ChoiceLogprobs'
-          - {}
+          - type: number
           - type: 'null'
-          title: Logprobs
-        provider_specific_fields:
+          title: Input Cost Per Token
+        output_cost_per_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token
+        input_cost_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Second
+        output_cost_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Second
+        output_cost_per_second_1080p:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Second 1080P
+        input_cost_per_pixel:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Pixel
+        output_cost_per_pixel:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Pixel
+        input_cost_per_token_flex:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Flex
+        input_cost_per_token_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Priority
+        cache_creation_input_token_cost:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Creation Input Token Cost
+        cache_creation_input_token_cost_above_1hr:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Creation Input Token Cost Above 1Hr
+        cache_creation_input_token_cost_above_200k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Creation Input Token Cost Above 200K Tokens
+        cache_creation_input_audio_token_cost:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Creation Input Audio Token Cost
+        cache_read_input_token_cost:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost
+        cache_read_input_token_cost_flex:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Flex
+        cache_read_input_token_cost_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Priority
+        cache_read_input_token_cost_above_200k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Above 200K Tokens
+        cache_read_input_token_cost_above_200k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Above 200K Tokens Priority
+        cache_read_input_token_cost_above_272k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Above 272K Tokens Priority
+        cache_read_input_audio_token_cost:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Audio Token Cost
+        input_cost_per_character:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Character
+        input_cost_per_character_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Character Above 128K Tokens
+        input_cost_per_audio_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Audio Token
+        input_cost_per_token_cache_hit:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Cache Hit
+        input_cost_per_token_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 128K Tokens
+        input_cost_per_token_above_200k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 200K Tokens
+        input_cost_per_token_above_200k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 200K Tokens Priority
+        input_cost_per_token_above_272k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 272K Tokens Priority
+        input_cost_per_query:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Query
+        input_cost_per_image:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Image
+        input_cost_per_image_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Image Above 128K Tokens
+        input_cost_per_audio_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Audio Per Second
+        input_cost_per_audio_per_second_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Audio Per Second Above 128K Tokens
+        input_cost_per_video_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Video Per Second
+        input_cost_per_video_per_second_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Video Per Second Above 128K Tokens
+        input_cost_per_video_per_second_above_15s_interval:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Video Per Second Above 15S Interval
+        input_cost_per_video_per_second_above_8s_interval:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Video Per Second Above 8S Interval
+        input_cost_per_token_batches:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Batches
+        output_cost_per_token_batches:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Batches
+        output_cost_per_token_flex:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Flex
+        output_cost_per_token_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Priority
+        output_cost_per_character:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Character
+        output_cost_per_audio_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Audio Token
+        output_cost_per_token_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 128K Tokens
+        output_cost_per_token_above_200k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 200K Tokens
+        output_cost_per_token_above_200k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 200K Tokens Priority
+        output_cost_per_token_above_272k_tokens_priority:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 272K Tokens Priority
+        output_cost_per_character_above_128k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Character Above 128K Tokens
+        output_cost_per_image:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Image
+        output_cost_per_image_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Image Token
+        output_cost_per_video_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Video Token
+        output_cost_per_reasoning_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Reasoning Token
+        output_cost_per_video_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Video Per Second
+        output_cost_per_audio_per_second:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Audio Per Second
+        search_context_cost_per_query:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
-          title: Provider Specific Fields
-      additionalProperties: true
-      type: object
-      required:
-      - finish_reason
-      - index
-      - message
-      title: Choices
-    ModelResponse:
-      properties:
-        id:
-          type: string
-          title: Id
-        created:
-          type: integer
-          title: Created
+          title: Search Context Cost Per Query
+        citation_cost_per_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Citation Cost Per Token
+        tiered_pricing:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Tiered Pricing
+        cache_read_input_token_cost_above_272k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Above 272K Tokens
+        cache_read_input_token_cost_above_512k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cache Read Input Token Cost Above 512K Tokens
+        input_cost_per_image_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Image Token
+        input_cost_per_video_token:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Video Token
+        input_cost_per_token_above_272k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 272K Tokens
+        input_cost_per_token_above_512k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Input Cost Per Token Above 512K Tokens
+        output_cost_per_token_above_272k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 272K Tokens
+        output_cost_per_token_above_512k_tokens:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Output Cost Per Token Above 512K Tokens
+        output_vector_size:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Output Vector Size
+        ocr_cost_per_page:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Ocr Cost Per Page
+        ocr_cost_per_credit:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Ocr Cost Per Credit
+        annotation_cost_per_page:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Annotation Cost Per Page
+        regional_processing_uplift_multiplier_eu:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Regional Processing Uplift Multiplier Eu
+        regional_processing_uplift_multiplier_us:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Regional Processing Uplift Multiplier Us
+        api_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Key
+        api_base:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Base
+        api_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Version
+        azure_ad_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Azure Ad Token
+        vertex_project:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vertex Project
+        vertex_location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vertex Location
+        vertex_credentials:
+          anyOf:
+          - type: string
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Vertex Credentials
+        region_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Region Name
+        gcs_bucket_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Gcs Bucket Name
+        aws_access_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Access Key Id
+        aws_secret_access_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Secret Access Key
+        aws_region_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Region Name
+        aws_bedrock_runtime_endpoint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Bedrock Runtime Endpoint
+        aws_bedrock_project_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Bedrock Project Id
+        s3_bucket_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: S3 Bucket Name
+        watsonx_region_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Watsonx Region Name
+        custom_llm_provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Llm Provider
+        tpm:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm
+        rpm:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm
+        itpm:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Itpm
+        otpm:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Otpm
+        timeout:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Timeout
+        stream_timeout:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Stream Timeout
+        max_retries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Retries
+        organization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization
+        configurable_clientside_auth_params:
+          anyOf:
+          - items:
+              anyOf:
+              - type: string
+              - $ref: '#/components/schemas/ConfigurableClientsideParamsCustomAuth-Input'
+            type: array
+          - type: 'null'
+          title: Configurable Clientside Auth Params
+        litellm_credential_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Litellm Credential Name
+        litellm_trace_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Litellm Trace Id
+        max_file_size_mb:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max File Size Mb
+        default_api_key_tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Default Api Key Tpm Limit
+        default_api_key_rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Default Api Key Rpm Limit
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        use_in_pass_through:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use In Pass Through
+          default: false
+        use_litellm_proxy:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Litellm Proxy
+          default: false
+        use_chat_completions_api:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Chat Completions Api
+        use_xai_oauth:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Use Xai Oauth
+          description: Use stored xAI OAuth credentials when no xAI API key is configured.
+          default: false
+        merge_reasoning_content_in_choices:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Merge Reasoning Content In Choices
+          default: false
+        model_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Info
+        mock_response:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/ModelResponse'
+          - {}
+          - type: 'null'
+          title: Mock Response
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        tag_regex:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tag Regex
+        auto_router_config_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auto Router Config Path
+        auto_router_config:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auto Router Config
+        auto_router_default_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auto Router Default Model
+        auto_router_embedding_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auto Router Embedding Model
+        complexity_router_config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Complexity Router Config
+        complexity_router_default_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Complexity Router Default Model
+        adaptive_router_default_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Adaptive Router Default Model
+        adaptive_router_config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Adaptive Router Config
+        quality_router_config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Quality Router Config
+        quality_router_default_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Quality Router Default Model
+        s3_encryption_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: S3 Encryption Key Id
+        vector_store_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vector Store Id
+        milvus_text_field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Milvus Text Field
+        milvus_db_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Milvus Db Name
+        milvus_partition_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Milvus Partition Names
         model:
           anyOf:
           - type: string
           - type: 'null'
           title: Model
-        object:
+      additionalProperties: true
+      type: object
+      title: updateLiteLLMParams
+    ConfigurableClientsideParamsCustomAuth-Output:
+      properties:
+        api_base:
           type: string
-          title: Object
-        system_fingerprint:
+          title: Api Base
+      type: object
+      required:
+      - api_base
+      title: ConfigurableClientsideParamsCustomAuth
+    ChoiceLogprobs:
+      properties:
+        content:
           anyOf:
-          - type: string
+          - items:
+              $ref: '#/components/schemas/ChatCompletionTokenLogprob'
+            type: array
           - type: 'null'
-          title: System Fingerprint
-        choices:
-          items:
-            $ref: '#/components/schemas/Choices'
-          type: array
-          title: Choices
+          title: Content
+      additionalProperties: true
+      type: object
+      title: ChoiceLogprobs
+    ChatCompletionAudioResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        data:
+          type: string
+          title: Data
+        expires_at:
+          type: integer
+          title: Expires At
+        transcript:
+          type: string
+          title: Transcript
       additionalProperties: true
       type: object
       required:
       - id
-      - created
-      - object
-      - choices
-      title: ModelResponse
+      - data
+      - expires_at
+      - transcript
+      title: ChatCompletionAudioResponse
     LiteLLM_Params:
       properties:
         input_cost_per_token:
@@ -2552,6 +3285,96 @@ components:
       - model
       title: LiteLLM_Params
       description: LiteLLM Params with 'model' requirement - used for completions
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ChatCompletionAnnotationURLCitation:
+      properties:
+        end_index:
+          type: integer
+          title: End Index
+        start_index:
+          type: integer
+          title: Start Index
+        title:
+          type: string
+          title: Title
+        url:
+          type: string
+          title: Url
+      additionalProperties: true
+      type: object
+      title: ChatCompletionAnnotationURLCitation
+    ChatCompletionReasoningItem:
+      description: Represents an OpenAI Responses API reasoning item for round-tripping in conversation history.
+      properties:
+        type:
+          const: reasoning
+          title: Type
+          type: string
+        id:
+          title: Id
+          type: string
+        encrypted_content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Encrypted Content
+        summary:
+          items:
+            $ref: '#/components/schemas/ChatCompletionReasoningSummaryTextBlock'
+          title: Summary
+          type: array
+      required:
+      - type
+      title: ChatCompletionReasoningItem
+      type: object
+    NewModelGroupRequest:
+      properties:
+        access_group:
+          type: string
+          title: Access Group
+        model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Names
+        model_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Ids
+      type: object
+      required:
+      - access_group
+      title: NewModelGroupRequest
     Message:
       properties:
         content:
@@ -2632,6 +3455,49 @@ components:
       - tool_calls
       - function_call
       title: Message
+    NewModelGroupResponse:
+      properties:
+        access_group:
+          type: string
+          title: Access Group
+        model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Names
+        model_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Ids
+        models_updated:
+          type: integer
+          title: Models Updated
+      type: object
+      required:
+      - access_group
+      - models_updated
+      title: NewModelGroupResponse
+    Deployment:
+      properties:
+        model_name:
+          type: string
+          title: Model Name
+        litellm_params:
+          $ref: '#/components/schemas/LiteLLM_Params'
+        model_info:
+          $ref: '#/components/schemas/ModelInfo'
+      additionalProperties: true
+      type: object
+      required:
+      - model_name
+      - litellm_params
+      - model_info
+      title: Deployment
     DeleteModelGroupResponse:
       properties:
         access_group:
@@ -2649,1107 +3515,6 @@ components:
       - models_updated
       - message
       title: DeleteModelGroupResponse
-    ChatCompletionThinkingBlock:
-      properties:
-        type:
-          const: thinking
-          title: Type
-          type: string
-        thinking:
-          title: Thinking
-          type: string
-        signature:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Signature
-        cache_control:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/ChatCompletionCachedContent'
-          - type: 'null'
-          title: Cache Control
-      required:
-      - type
-      title: ChatCompletionThinkingBlock
-      type: object
-    ChatCompletionReasoningItem:
-      description: Represents an OpenAI Responses API reasoning item for round-tripping in conversation history.
-      properties:
-        type:
-          const: reasoning
-          title: Type
-          type: string
-        id:
-          title: Id
-          type: string
-        encrypted_content:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Encrypted Content
-        summary:
-          items:
-            $ref: '#/components/schemas/ChatCompletionReasoningSummaryTextBlock'
-          title: Summary
-          type: array
-      required:
-      - type
-      title: ChatCompletionReasoningItem
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AccessGroupInfo:
-      properties:
-        access_group:
-          type: string
-          title: Access Group
-        model_names:
-          items:
-            type: string
-          type: array
-          title: Model Names
-        deployment_count:
-          type: integer
-          title: Deployment Count
-      type: object
-      required:
-      - access_group
-      - model_names
-      - deployment_count
-      title: AccessGroupInfo
-    ChatCompletionAnnotation:
-      properties:
-        type:
-          type: string
-          const: url_citation
-          title: Type
-        url_citation:
-          $ref: '#/components/schemas/ChatCompletionAnnotationURLCitation'
-      additionalProperties: true
-      type: object
-      title: ChatCompletionAnnotation
-    ChatCompletionMessageToolCall:
-      properties: {}
-      additionalProperties: true
-      type: object
-      title: ChatCompletionMessageToolCall
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ModelInfo:
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        db_model:
-          type: boolean
-          title: Db Model
-          default: false
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        base_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Base Model
-        tier:
-          anyOf:
-          - type: string
-            enum:
-            - free
-            - paid
-          - type: 'null'
-          title: Tier
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        team_public_model_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Public Model Name
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      title: ModelInfo
-    ConfigurableClientsideParamsCustomAuth-Output:
-      properties:
-        api_base:
-          type: string
-          title: Api Base
-      type: object
-      required:
-      - api_base
-      title: ConfigurableClientsideParamsCustomAuth
-    ListAccessGroupsResponse:
-      properties:
-        access_groups:
-          items:
-            $ref: '#/components/schemas/AccessGroupInfo'
-          type: array
-          title: Access Groups
-      type: object
-      required:
-      - access_groups
-      title: ListAccessGroupsResponse
-    ChatCompletionCachedContent:
-      properties:
-        type:
-          const: ephemeral
-          title: Type
-          type: string
-        ttl:
-          enum:
-          - 5m
-          - 1h
-          title: Ttl
-          type: string
-      required:
-      - type
-      title: ChatCompletionCachedContent
-      type: object
-    UpdateModelGroupRequest:
-      properties:
-        model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Names
-        model_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Ids
-      type: object
-      title: UpdateModelGroupRequest
-    UpdateUsefulLinksRequest:
-      properties:
-        useful_links:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - additionalProperties: true
-              type: object
-          type: object
-          title: Useful Links
-      type: object
-      required:
-      - useful_links
-      title: UpdateUsefulLinksRequest
-    ChatCompletionAudioResponse:
-      properties:
-        id:
-          type: string
-          title: Id
-        data:
-          type: string
-          title: Data
-        expires_at:
-          type: integer
-          title: Expires At
-        transcript:
-          type: string
-          title: Transcript
-      additionalProperties: true
-      type: object
-      required:
-      - id
-      - data
-      - expires_at
-      - transcript
-      title: ChatCompletionAudioResponse
-    PublicModelHubInfo:
-      properties:
-        docs_title:
-          type: string
-          title: Docs Title
-        custom_docs_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Docs Description
-        litellm_version:
-          type: string
-          title: Litellm Version
-        useful_links:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - additionalProperties: true
-                type: object
-            type: object
-          - type: 'null'
-          title: Useful Links
-      type: object
-      required:
-      - docs_title
-      - custom_docs_description
-      - litellm_version
-      - useful_links
-      title: PublicModelHubInfo
-    ChatCompletionAnnotationURLCitation:
-      properties:
-        end_index:
-          type: integer
-          title: End Index
-        start_index:
-          type: integer
-          title: Start Index
-        title:
-          type: string
-          title: Title
-        url:
-          type: string
-          title: Url
-      additionalProperties: true
-      type: object
-      title: ChatCompletionAnnotationURLCitation
-    LiteLLM_ProxyModelTable:
-      properties:
-        model_id:
-          type: string
-          title: Model Id
-        model_name:
-          type: string
-          title: Model Name
-        litellm_params:
-          additionalProperties: true
-          type: object
-          title: Litellm Params
-        model_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Info
-        blocked:
-          type: boolean
-          title: Blocked
-          default: false
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-      type: object
-      required:
-      - model_id
-      - model_name
-      - litellm_params
-      title: LiteLLM_ProxyModelTable
-    updateLiteLLMParams:
-      properties:
-        input_cost_per_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token
-        output_cost_per_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token
-        input_cost_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Second
-        output_cost_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Second
-        output_cost_per_second_1080p:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Second 1080P
-        input_cost_per_pixel:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Pixel
-        output_cost_per_pixel:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Pixel
-        input_cost_per_token_flex:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Flex
-        input_cost_per_token_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Priority
-        cache_creation_input_token_cost:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Creation Input Token Cost
-        cache_creation_input_token_cost_above_1hr:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Creation Input Token Cost Above 1Hr
-        cache_creation_input_token_cost_above_200k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Creation Input Token Cost Above 200K Tokens
-        cache_creation_input_audio_token_cost:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Creation Input Audio Token Cost
-        cache_read_input_token_cost:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost
-        cache_read_input_token_cost_flex:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Flex
-        cache_read_input_token_cost_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Priority
-        cache_read_input_token_cost_above_200k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Above 200K Tokens
-        cache_read_input_token_cost_above_200k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Above 200K Tokens Priority
-        cache_read_input_token_cost_above_272k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Above 272K Tokens Priority
-        cache_read_input_audio_token_cost:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Audio Token Cost
-        input_cost_per_character:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Character
-        input_cost_per_character_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Character Above 128K Tokens
-        input_cost_per_audio_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Audio Token
-        input_cost_per_token_cache_hit:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Cache Hit
-        input_cost_per_token_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 128K Tokens
-        input_cost_per_token_above_200k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 200K Tokens
-        input_cost_per_token_above_200k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 200K Tokens Priority
-        input_cost_per_token_above_272k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 272K Tokens Priority
-        input_cost_per_query:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Query
-        input_cost_per_image:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Image
-        input_cost_per_image_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Image Above 128K Tokens
-        input_cost_per_audio_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Audio Per Second
-        input_cost_per_audio_per_second_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Audio Per Second Above 128K Tokens
-        input_cost_per_video_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Video Per Second
-        input_cost_per_video_per_second_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Video Per Second Above 128K Tokens
-        input_cost_per_video_per_second_above_15s_interval:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Video Per Second Above 15S Interval
-        input_cost_per_video_per_second_above_8s_interval:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Video Per Second Above 8S Interval
-        input_cost_per_token_batches:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Batches
-        output_cost_per_token_batches:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Batches
-        output_cost_per_token_flex:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Flex
-        output_cost_per_token_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Priority
-        output_cost_per_character:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Character
-        output_cost_per_audio_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Audio Token
-        output_cost_per_token_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 128K Tokens
-        output_cost_per_token_above_200k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 200K Tokens
-        output_cost_per_token_above_200k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 200K Tokens Priority
-        output_cost_per_token_above_272k_tokens_priority:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 272K Tokens Priority
-        output_cost_per_character_above_128k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Character Above 128K Tokens
-        output_cost_per_image:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Image
-        output_cost_per_image_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Image Token
-        output_cost_per_video_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Video Token
-        output_cost_per_reasoning_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Reasoning Token
-        output_cost_per_video_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Video Per Second
-        output_cost_per_audio_per_second:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Audio Per Second
-        search_context_cost_per_query:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Search Context Cost Per Query
-        citation_cost_per_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Citation Cost Per Token
-        tiered_pricing:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Tiered Pricing
-        cache_read_input_token_cost_above_272k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Above 272K Tokens
-        cache_read_input_token_cost_above_512k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cache Read Input Token Cost Above 512K Tokens
-        input_cost_per_image_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Image Token
-        input_cost_per_video_token:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Video Token
-        input_cost_per_token_above_272k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 272K Tokens
-        input_cost_per_token_above_512k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Input Cost Per Token Above 512K Tokens
-        output_cost_per_token_above_272k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 272K Tokens
-        output_cost_per_token_above_512k_tokens:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Output Cost Per Token Above 512K Tokens
-        output_vector_size:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Output Vector Size
-        ocr_cost_per_page:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Ocr Cost Per Page
-        ocr_cost_per_credit:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Ocr Cost Per Credit
-        annotation_cost_per_page:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Annotation Cost Per Page
-        regional_processing_uplift_multiplier_eu:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Regional Processing Uplift Multiplier Eu
-        regional_processing_uplift_multiplier_us:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Regional Processing Uplift Multiplier Us
-        api_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Key
-        api_base:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Base
-        api_version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Version
-        azure_ad_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Azure Ad Token
-        vertex_project:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vertex Project
-        vertex_location:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vertex Location
-        vertex_credentials:
-          anyOf:
-          - type: string
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Vertex Credentials
-        region_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Region Name
-        gcs_bucket_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Gcs Bucket Name
-        aws_access_key_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Access Key Id
-        aws_secret_access_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Secret Access Key
-        aws_region_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Region Name
-        aws_bedrock_runtime_endpoint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Bedrock Runtime Endpoint
-        aws_bedrock_project_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Bedrock Project Id
-        s3_bucket_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: S3 Bucket Name
-        watsonx_region_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Watsonx Region Name
-        custom_llm_provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Llm Provider
-        tpm:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm
-        rpm:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm
-        itpm:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Itpm
-        otpm:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Otpm
-        timeout:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Timeout
-        stream_timeout:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Stream Timeout
-        max_retries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Retries
-        organization:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization
-        configurable_clientside_auth_params:
-          anyOf:
-          - items:
-              anyOf:
-              - type: string
-              - $ref: '#/components/schemas/ConfigurableClientsideParamsCustomAuth-Input'
-            type: array
-          - type: 'null'
-          title: Configurable Clientside Auth Params
-        litellm_credential_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Litellm Credential Name
-        litellm_trace_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Litellm Trace Id
-        max_file_size_mb:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max File Size Mb
-        default_api_key_tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Default Api Key Tpm Limit
-        default_api_key_rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Default Api Key Rpm Limit
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        use_in_pass_through:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use In Pass Through
-          default: false
-        use_litellm_proxy:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use Litellm Proxy
-          default: false
-        use_chat_completions_api:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use Chat Completions Api
-        use_xai_oauth:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Use Xai Oauth
-          description: Use stored xAI OAuth credentials when no xAI API key is configured.
-          default: false
-        merge_reasoning_content_in_choices:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Merge Reasoning Content In Choices
-          default: false
-        model_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Info
-        mock_response:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/ModelResponse'
-          - {}
-          - type: 'null'
-          title: Mock Response
-        tags:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tags
-        tag_regex:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tag Regex
-        auto_router_config_path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auto Router Config Path
-        auto_router_config:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auto Router Config
-        auto_router_default_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auto Router Default Model
-        auto_router_embedding_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auto Router Embedding Model
-        complexity_router_config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Complexity Router Config
-        complexity_router_default_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Complexity Router Default Model
-        adaptive_router_default_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Adaptive Router Default Model
-        adaptive_router_config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Adaptive Router Config
-        quality_router_config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Quality Router Config
-        quality_router_default_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Quality Router Default Model
-        s3_encryption_key_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: S3 Encryption Key Id
-        vector_store_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vector Store Id
-        milvus_text_field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Milvus Text Field
-        milvus_db_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Milvus Db Name
-        milvus_partition_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Milvus Partition Names
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-      additionalProperties: true
-      type: object
-      title: updateLiteLLMParams
-    ConfigurableClientsideParamsCustomAuth-Input:
-      properties:
-        api_base:
-          type: string
-          title: Api Base
-      additionalProperties: true
-      type: object
-      required:
-      - api_base
-      title: ConfigurableClientsideParamsCustomAuth
-    ImageURLListItem:
-      properties:
-        image_url:
-          $ref: '#/components/schemas/ImageURLObject'
-        index:
-          type: integer
-          title: Index
-        type:
-          type: string
-          const: image_url
-          title: Type
-      additionalProperties: true
-      type: object
-      required:
-      - image_url
-      - index
-      - type
-      title: ImageURLListItem
-    updateDeployment:
-      properties:
-        model_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model Name
-        litellm_params:
-          anyOf:
-          - $ref: '#/components/schemas/updateLiteLLMParams'
-          - type: 'null'
-        model_info:
-          anyOf:
-          - $ref: '#/components/schemas/ModelInfo'
-          - type: 'null'
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-      type: object
-      title: updateDeployment
     ImageURLObject:
       properties:
         url:
@@ -3765,15 +3530,6 @@ components:
       required:
       - url
       title: ImageURLObject
-    ModelInfoDelete:
-      properties:
-        id:
-          type: string
-          title: Id
-      type: object
-      required:
-      - id
-      title: ModelInfoDelete
     ChatCompletionRedactedThinkingBlock:
       properties:
         type:
@@ -3794,29 +3550,20 @@ components:
       - type
       title: ChatCompletionRedactedThinkingBlock
       type: object
-    NewModelGroupRequest:
+    UpdateUsefulLinksRequest:
       properties:
-        access_group:
-          type: string
-          title: Access Group
-        model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Names
-        model_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Ids
+        useful_links:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - additionalProperties: true
+              type: object
+          type: object
+          title: Useful Links
       type: object
       required:
-      - access_group
-      title: NewModelGroupRequest
+      - useful_links
+      title: UpdateUsefulLinksRequest
     ModelGroupInfoProxy:
       properties:
         model_group:
@@ -3952,88 +3699,6 @@ components:
       - model_group
       - providers
       title: ModelGroupInfoProxy
-    TopLogprob:
-      properties:
-        token:
-          type: string
-          title: Token
-        bytes:
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          - type: 'null'
-          title: Bytes
-        logprob:
-          type: number
-          title: Logprob
-      additionalProperties: true
-      type: object
-      required:
-      - token
-      - logprob
-      title: TopLogprob
-    ChoiceLogprobs:
-      properties:
-        content:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionTokenLogprob'
-            type: array
-          - type: 'null'
-          title: Content
-      additionalProperties: true
-      type: object
-      title: ChoiceLogprobs
-    NewModelGroupResponse:
-      properties:
-        access_group:
-          type: string
-          title: Access Group
-        model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Names
-        model_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Ids
-        models_updated:
-          type: integer
-          title: Models Updated
-      type: object
-      required:
-      - access_group
-      - models_updated
-      title: NewModelGroupResponse
-    ChatCompletionReasoningSummaryTextBlock:
-      properties:
-        type:
-          const: summary_text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - type
-      title: ChatCompletionReasoningSummaryTextBlock
-      type: object
-    BlockModelRequest:
-      properties:
-        model_id:
-          type: string
-          title: Model Id
-      type: object
-      required:
-      - model_id
-      title: BlockModelRequest
     UpdatePublicModelGroupsRequest:
       properties:
         model_groups:
@@ -4048,6 +3713,155 @@ components:
       - model_groups
       title: UpdatePublicModelGroupsRequest
       description: Request model for updating public model groups
+    ChatCompletionMessageToolCall:
+      properties: {}
+      additionalProperties: true
+      type: object
+      title: ChatCompletionMessageToolCall
+    Choices:
+      properties:
+        finish_reason:
+          type: string
+          enum:
+          - stop
+          - content_filter
+          - function_call
+          - tool_calls
+          - length
+          - guardrail_intervened
+          - eos
+          - finish_reason_unspecified
+          - malformed_function_call
+          title: Finish Reason
+        index:
+          type: integer
+          title: Index
+        message:
+          $ref: '#/components/schemas/Message'
+        logprobs:
+          anyOf:
+          - $ref: '#/components/schemas/ChoiceLogprobs'
+          - {}
+          - type: 'null'
+          title: Logprobs
+        provider_specific_fields:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Specific Fields
+      additionalProperties: true
+      type: object
+      required:
+      - finish_reason
+      - index
+      - message
+      title: Choices
+    LiteLLM_ProxyModelTable:
+      properties:
+        model_id:
+          type: string
+          title: Model Id
+        model_name:
+          type: string
+          title: Model Name
+        litellm_params:
+          additionalProperties: true
+          type: object
+          title: Litellm Params
+        model_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Info
+        blocked:
+          type: boolean
+          title: Blocked
+          default: false
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+      type: object
+      required:
+      - model_id
+      - model_name
+      - litellm_params
+      title: LiteLLM_ProxyModelTable
+    ChatCompletionCachedContent:
+      properties:
+        type:
+          const: ephemeral
+          title: Type
+          type: string
+        ttl:
+          enum:
+          - 5m
+          - 1h
+          title: Ttl
+          type: string
+      required:
+      - type
+      title: ChatCompletionCachedContent
+      type: object
+    PublicModelHubInfo:
+      properties:
+        docs_title:
+          type: string
+          title: Docs Title
+        custom_docs_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Docs Description
+        litellm_version:
+          type: string
+          title: Litellm Version
+        useful_links:
+          anyOf:
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+            type: object
+          - type: 'null'
+          title: Useful Links
+      type: object
+      required:
+      - docs_title
+      - custom_docs_description
+      - litellm_version
+      - useful_links
+      title: PublicModelHubInfo
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ChatCompletionTokenLogprob:
       properties:
         token:
@@ -4075,6 +3889,192 @@ components:
       - logprob
       - top_logprobs
       title: ChatCompletionTokenLogprob
+    ChatCompletionThinkingBlock:
+      properties:
+        type:
+          const: thinking
+          title: Type
+          type: string
+        thinking:
+          title: Thinking
+          type: string
+        signature:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Signature
+        cache_control:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - $ref: '#/components/schemas/ChatCompletionCachedContent'
+          - type: 'null'
+          title: Cache Control
+      required:
+      - type
+      title: ChatCompletionThinkingBlock
+      type: object
+    updateDeployment:
+      properties:
+        model_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Name
+        litellm_params:
+          anyOf:
+          - $ref: '#/components/schemas/updateLiteLLMParams'
+          - type: 'null'
+        model_info:
+          anyOf:
+          - $ref: '#/components/schemas/ModelInfo'
+          - type: 'null'
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+      type: object
+      title: updateDeployment
+    ModelInfo:
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        db_model:
+          type: boolean
+          title: Db Model
+          default: false
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        base_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Base Model
+        tier:
+          anyOf:
+          - type: string
+            enum:
+            - free
+            - paid
+          - type: 'null'
+          title: Tier
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        team_public_model_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Public Model Name
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      title: ModelInfo
+    ModelResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        created:
+          type: integer
+          title: Created
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        object:
+          type: string
+          title: Object
+        system_fingerprint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: System Fingerprint
+        choices:
+          items:
+            $ref: '#/components/schemas/Choices'
+          type: array
+          title: Choices
+      additionalProperties: true
+      type: object
+      required:
+      - id
+      - created
+      - object
+      - choices
+      title: ModelResponse
+    TopLogprob:
+      properties:
+        token:
+          type: string
+          title: Token
+        bytes:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Bytes
+        logprob:
+          type: number
+          title: Logprob
+      additionalProperties: true
+      type: object
+      required:
+      - token
+      - logprob
+      title: TopLogprob
+    ModelInfoDelete:
+      properties:
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - id
+      title: ModelInfoDelete
+    BlockModelRequest:
+      properties:
+        model_id:
+          type: string
+          title: Model Id
+      type: object
+      required:
+      - model_id
+      title: BlockModelRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

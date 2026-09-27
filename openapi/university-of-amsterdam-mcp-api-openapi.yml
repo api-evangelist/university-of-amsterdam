@@ -1410,6 +1410,50 @@ components:
       - msg
       - type
       title: ValidationError
+    MCPUserEnvVarSpec:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        is_set:
+          type: boolean
+          title: Is Set
+          default: false
+      type: object
+      required:
+      - name
+      title: MCPUserEnvVarSpec
+      description: 'Describes one per-user env var slot for the calling user.
+
+
+        Stored values are write-only: the status only reports whether a value
+
+        ``is_set`` and never echoes the decrypted secret back to the client.'
+    NewMCPToolsetRequest:
+      properties:
+        toolset_name:
+          type: string
+          title: Toolset Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        tools:
+          items:
+            $ref: '#/components/schemas/MCPToolsetTool'
+          type: array
+          title: Tools
+          default: []
+      type: object
+      required:
+      - toolset_name
+      title: NewMCPToolsetRequest
     MCPEnvVarScope:
       type: string
       enum:
@@ -1417,6 +1461,407 @@ components:
       - user
       title: MCPEnvVarScope
       description: "Scope for an MCP server environment variable.\n\n- ``global``: value is provided by the admin and used for all users.\n- ``user``: each user must provide their own value via the per-user\n  env-var endpoint. The admin-supplied ``value`` is treated as a\n  placeholder/hint and is not used at request time."
+    UpdateMCPServerRequest:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        server_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Name
+        alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alias
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        transport:
+          type: string
+          enum:
+          - sse
+          - http
+          - stdio
+          title: Transport
+          default: sse
+        auth_type:
+          anyOf:
+          - type: string
+            enum:
+            - none
+            - api_key
+            - bearer_token
+            - basic
+            - authorization
+            - oauth2
+            - aws_sigv4
+            - token
+            - oauth2_token_exchange
+            - oauth2_id_jag
+            - true_passthrough
+            - oauth_delegate
+          - type: 'null'
+          title: Auth Type
+        credentials:
+          anyOf:
+          - $ref: '#/components/schemas/MCPCredentials'
+          - type: 'null'
+        url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Url
+        spec_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Spec Path
+        mcp_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Mcp Info
+        mcp_access_groups:
+          items:
+            type: string
+          type: array
+          title: Mcp Access Groups
+        allowed_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Tools
+        tool_name_to_display_name:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Tool Name To Display Name
+        tool_name_to_description:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Tool Name To Description
+        extra_headers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Extra Headers
+        static_headers:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Static Headers
+        env_vars:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MCPEnvVar'
+            type: array
+          - type: 'null'
+          title: Env Vars
+        instructions:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Instructions
+        command:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Command
+        args:
+          items:
+            type: string
+          type: array
+          title: Args
+        env:
+          additionalProperties:
+            type: string
+          type: object
+          title: Env
+        issuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Issuer
+        authorization_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Authorization Url
+        token_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Url
+        registration_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Registration Url
+        oauth2_flow:
+          anyOf:
+          - type: string
+            enum:
+            - client_credentials
+            - authorization_code
+          - type: 'null'
+          title: Oauth2 Flow
+        token_exchange_endpoint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Exchange Endpoint
+        audience:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Audience
+        subject_token_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject Token Type
+        token_exchange_profile:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Exchange Profile
+        allow_all_keys:
+          type: boolean
+          title: Allow All Keys
+          default: false
+        available_on_public_internet:
+          type: boolean
+          title: Available On Public Internet
+          default: true
+        delegate_auth_to_upstream:
+          type: boolean
+          title: Delegate Auth To Upstream
+          default: false
+        oauth_passthrough:
+          type: boolean
+          title: Oauth Passthrough
+          default: false
+        dcr_bridge:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Dcr Bridge
+        is_byok:
+          type: boolean
+          title: Is Byok
+          default: false
+        byok_description:
+          items:
+            type: string
+          type: array
+          title: Byok Description
+        byok_api_key_help_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Byok Api Key Help Url
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        timeout:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Timeout
+        max_concurrent_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Concurrent Requests
+      type: object
+      required:
+      - server_id
+      title: UpdateMCPServerRequest
+    MCPUserEnvVarsRequest:
+      properties:
+        values:
+          additionalProperties:
+            type: string
+          type: object
+          title: Values
+      type: object
+      required:
+      - values
+      title: MCPUserEnvVarsRequest
+      description: Payload for storing the calling user's per-user env var values.
+    MCPOAuthUserCredentialStatus:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        has_credential:
+          type: boolean
+          title: Has Credential
+        expires_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Expires At
+        is_expired:
+          type: boolean
+          title: Is Expired
+          default: false
+        connected_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Connected At
+      type: object
+      required:
+      - server_id
+      - has_credential
+      title: MCPOAuthUserCredentialStatus
+      description: Describes whether the calling user has a stored OAuth credential.
+    MCPCredentials:
+      properties:
+        auth_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Auth Value
+        client_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+        client_secret:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Secret
+        scopes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Scopes
+        aws_access_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Access Key Id
+        aws_secret_access_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Secret Access Key
+        aws_session_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Session Token
+        aws_region_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Region Name
+        aws_service_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Service Name
+        aws_role_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Role Name
+        aws_session_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Aws Session Name
+        audience:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Audience
+        token_exchange_endpoint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Exchange Endpoint
+        subject_token_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Subject Token Type
+        id_jag_resource_token_endpoint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id Jag Resource Token Endpoint
+        id_jag_resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id Jag Resource
+        upstream_resource:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Upstream Resource
+        client_private_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Private Key
+        client_private_key_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Private Key Id
+        client_assertion_signing_alg:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Assertion Signing Alg
+        token_endpoint_auth_method:
+          anyOf:
+          - type: string
+            enum:
+            - client_secret_basic
+            - client_secret_post
+          - type: 'null'
+          title: Token Endpoint Auth Method
+        redirect_uris:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Redirect Uris
+        token_exchange_profile:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Exchange Profile
+      type: object
+      title: MCPCredentials
     MCPUserEnvVarsStatus:
       properties:
         server_id:
@@ -1451,6 +1896,19 @@ components:
       - server_id
       title: MCPUserEnvVarsStatus
       description: Per-user env var status for a single MCP server.
+    MCPUserCredentialResponse:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        has_credential:
+          type: boolean
+          title: Has Credential
+      type: object
+      required:
+      - server_id
+      - has_credential
+      title: MCPUserCredentialResponse
     MCPToolsetTool:
       properties:
         server_id:
@@ -1464,93 +1922,6 @@ components:
       - server_id
       - tool_name
       title: MCPToolsetTool
-    RejectMCPServerRequest:
-      properties:
-        review_notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Review Notes
-      type: object
-      title: RejectMCPServerRequest
-    MCPOAuthUserCredentialStatus:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        has_credential:
-          type: boolean
-          title: Has Credential
-        expires_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Expires At
-        is_expired:
-          type: boolean
-          title: Is Expired
-          default: false
-        connected_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Connected At
-      type: object
-      required:
-      - server_id
-      - has_credential
-      title: MCPOAuthUserCredentialStatus
-      description: Describes whether the calling user has a stored OAuth credential.
-    UpdateMCPToolsetRequest:
-      properties:
-        toolset_id:
-          type: string
-          title: Toolset Id
-        toolset_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Toolset Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        tools:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MCPToolsetTool'
-            type: array
-          - type: 'null'
-          title: Tools
-      type: object
-      required:
-      - toolset_id
-      title: UpdateMCPToolsetRequest
-    MCPUserEnvVarSpec:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        is_set:
-          type: boolean
-          title: Is Set
-          default: false
-      type: object
-      required:
-      - name
-      title: MCPUserEnvVarSpec
-      description: 'Describes one per-user env var slot for the calling user.
-
-
-        Stored values are write-only: the status only reports whether a value
-
-        ``is_set`` and never echoes the decrypted secret back to the client.'
     NewMCPServerRequest:
       properties:
         server_id:
@@ -1805,6 +2176,109 @@ components:
           description: 'Server-managed: set by the endpoint; caller values are overridden.'
       type: object
       title: NewMCPServerRequest
+    MakeMCPServersPublicRequest:
+      properties:
+        mcp_server_ids:
+          items:
+            type: string
+          type: array
+          title: Mcp Server Ids
+      type: object
+      required:
+      - mcp_server_ids
+      title: MakeMCPServersPublicRequest
+    MCPSubmissionsSummary:
+      properties:
+        total:
+          type: integer
+          title: Total
+        pending_review:
+          type: integer
+          title: Pending Review
+        active:
+          type: integer
+          title: Active
+        rejected:
+          type: integer
+          title: Rejected
+        items:
+          items:
+            $ref: '#/components/schemas/LiteLLM_MCPServerTable'
+          type: array
+          title: Items
+      type: object
+      required:
+      - total
+      - pending_review
+      - active
+      - rejected
+      - items
+      title: MCPSubmissionsSummary
+    MCPUserCredentialListItem:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        server_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Name
+        alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alias
+        credential_type:
+          type: string
+          title: Credential Type
+        has_credential:
+          type: boolean
+          title: Has Credential
+        expires_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Expires At
+        connected_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Connected At
+      type: object
+      required:
+      - server_id
+      - credential_type
+      - has_credential
+      title: MCPUserCredentialListItem
+      description: One entry in the /user-credentials list.
+    MCPOAuthUserCredentialRequest:
+      properties:
+        access_token:
+          type: string
+          title: Access Token
+        refresh_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Refresh Token
+        expires_in:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Expires In
+        scopes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Scopes
+      type: object
+      required:
+      - access_token
+      title: MCPOAuthUserCredentialRequest
+      description: Stores a user's OAuth2 token for an OpenAPI MCP server.
     MCPUserCredentialRequest:
       properties:
         credential:
@@ -2137,268 +2611,6 @@ components:
       - transport
       title: LiteLLM_MCPServerTable
       description: Represents a LiteLLM_MCPServerTable record
-    NewMCPToolsetRequest:
-      properties:
-        toolset_name:
-          type: string
-          title: Toolset Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        tools:
-          items:
-            $ref: '#/components/schemas/MCPToolsetTool'
-          type: array
-          title: Tools
-          default: []
-      type: object
-      required:
-      - toolset_name
-      title: NewMCPToolsetRequest
-    MCPUserCredentialListItem:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        server_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Server Name
-        alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alias
-        credential_type:
-          type: string
-          title: Credential Type
-        has_credential:
-          type: boolean
-          title: Has Credential
-        expires_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Expires At
-        connected_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Connected At
-      type: object
-      required:
-      - server_id
-      - credential_type
-      - has_credential
-      title: MCPUserCredentialListItem
-      description: One entry in the /user-credentials list.
-    MCPOAuthUserCredentialRequest:
-      properties:
-        access_token:
-          type: string
-          title: Access Token
-        refresh_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Refresh Token
-        expires_in:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Expires In
-        scopes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Scopes
-      type: object
-      required:
-      - access_token
-      title: MCPOAuthUserCredentialRequest
-      description: Stores a user's OAuth2 token for an OpenAPI MCP server.
-    MCPSubmissionsSummary:
-      properties:
-        total:
-          type: integer
-          title: Total
-        pending_review:
-          type: integer
-          title: Pending Review
-        active:
-          type: integer
-          title: Active
-        rejected:
-          type: integer
-          title: Rejected
-        items:
-          items:
-            $ref: '#/components/schemas/LiteLLM_MCPServerTable'
-          type: array
-          title: Items
-      type: object
-      required:
-      - total
-      - pending_review
-      - active
-      - rejected
-      - items
-      title: MCPSubmissionsSummary
-    MakeMCPServersPublicRequest:
-      properties:
-        mcp_server_ids:
-          items:
-            type: string
-          type: array
-          title: Mcp Server Ids
-      type: object
-      required:
-      - mcp_server_ids
-      title: MakeMCPServersPublicRequest
-    MCPCredentials:
-      properties:
-        auth_value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Auth Value
-        client_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Id
-        client_secret:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Secret
-        scopes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Scopes
-        aws_access_key_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Access Key Id
-        aws_secret_access_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Secret Access Key
-        aws_session_token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Session Token
-        aws_region_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Region Name
-        aws_service_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Service Name
-        aws_role_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Role Name
-        aws_session_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Aws Session Name
-        audience:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Audience
-        token_exchange_endpoint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Exchange Endpoint
-        subject_token_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Subject Token Type
-        id_jag_resource_token_endpoint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id Jag Resource Token Endpoint
-        id_jag_resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id Jag Resource
-        upstream_resource:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Upstream Resource
-        client_private_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Private Key
-        client_private_key_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Private Key Id
-        client_assertion_signing_alg:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Client Assertion Signing Alg
-        token_endpoint_auth_method:
-          anyOf:
-          - type: string
-            enum:
-            - client_secret_basic
-            - client_secret_post
-          - type: 'null'
-          title: Token Endpoint Auth Method
-        redirect_uris:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Redirect Uris
-        token_exchange_profile:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Exchange Profile
-      type: object
-      title: MCPCredentials
-    MCPUserCredentialResponse:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        has_credential:
-          type: boolean
-          title: Has Credential
-      type: object
-      required:
-      - server_id
-      - has_credential
-      title: MCPUserCredentialResponse
     MCPEnvVar:
       properties:
         name:
@@ -2430,253 +2642,41 @@ components:
         values are stored per-user in ``LiteLLM_MCPUserEnvVars`` and supplied by
 
         each user.'
-    MCPUserEnvVarsRequest:
+    RejectMCPServerRequest:
       properties:
-        values:
-          additionalProperties:
-            type: string
-          type: object
-          title: Values
+        review_notes:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Review Notes
       type: object
-      required:
-      - values
-      title: MCPUserEnvVarsRequest
-      description: Payload for storing the calling user's per-user env var values.
-    UpdateMCPServerRequest:
+      title: RejectMCPServerRequest
+    UpdateMCPToolsetRequest:
       properties:
-        server_id:
+        toolset_id:
           type: string
-          title: Server Id
-        server_name:
+          title: Toolset Id
+        toolset_name:
           anyOf:
           - type: string
           - type: 'null'
-          title: Server Name
-        alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alias
+          title: Toolset Name
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
-        transport:
-          type: string
-          enum:
-          - sse
-          - http
-          - stdio
-          title: Transport
-          default: sse
-        auth_type:
-          anyOf:
-          - type: string
-            enum:
-            - none
-            - api_key
-            - bearer_token
-            - basic
-            - authorization
-            - oauth2
-            - aws_sigv4
-            - token
-            - oauth2_token_exchange
-            - oauth2_id_jag
-            - true_passthrough
-            - oauth_delegate
-          - type: 'null'
-          title: Auth Type
-        credentials:
-          anyOf:
-          - $ref: '#/components/schemas/MCPCredentials'
-          - type: 'null'
-        url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Url
-        spec_path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Spec Path
-        mcp_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Mcp Info
-        mcp_access_groups:
-          items:
-            type: string
-          type: array
-          title: Mcp Access Groups
-        allowed_tools:
+        tools:
           anyOf:
           - items:
-              type: string
+              $ref: '#/components/schemas/MCPToolsetTool'
             type: array
           - type: 'null'
-          title: Allowed Tools
-        tool_name_to_display_name:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Tool Name To Display Name
-        tool_name_to_description:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Tool Name To Description
-        extra_headers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Extra Headers
-        static_headers:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Static Headers
-        env_vars:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MCPEnvVar'
-            type: array
-          - type: 'null'
-          title: Env Vars
-        instructions:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Instructions
-        command:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Command
-        args:
-          items:
-            type: string
-          type: array
-          title: Args
-        env:
-          additionalProperties:
-            type: string
-          type: object
-          title: Env
-        issuer:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Issuer
-        authorization_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Authorization Url
-        token_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Url
-        registration_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Registration Url
-        oauth2_flow:
-          anyOf:
-          - type: string
-            enum:
-            - client_credentials
-            - authorization_code
-          - type: 'null'
-          title: Oauth2 Flow
-        token_exchange_endpoint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Exchange Endpoint
-        audience:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Audience
-        subject_token_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Subject Token Type
-        token_exchange_profile:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Exchange Profile
-        allow_all_keys:
-          type: boolean
-          title: Allow All Keys
-          default: false
-        available_on_public_internet:
-          type: boolean
-          title: Available On Public Internet
-          default: true
-        delegate_auth_to_upstream:
-          type: boolean
-          title: Delegate Auth To Upstream
-          default: false
-        oauth_passthrough:
-          type: boolean
-          title: Oauth Passthrough
-          default: false
-        dcr_bridge:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Dcr Bridge
-        is_byok:
-          type: boolean
-          title: Is Byok
-          default: false
-        byok_description:
-          items:
-            type: string
-          type: array
-          title: Byok Description
-        byok_api_key_help_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Byok Api Key Help Url
-        source_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Source Url
-        timeout:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Timeout
-        max_concurrent_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Concurrent Requests
+          title: Tools
       type: object
       required:
-      - server_id
-      title: UpdateMCPServerRequest
+      - toolset_id
+      title: UpdateMCPToolsetRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

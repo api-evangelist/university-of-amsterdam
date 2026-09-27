@@ -108,6 +108,23 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    UIThemeConfig:
+      properties:
+        logo_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Url
+          description: URL or path to custom logo image. Can be a local file path or HTTP/HTTPS URL
+        favicon_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Favicon Url
+          description: URL to custom favicon image. Must be an HTTP/HTTPS URL to a .ico, .png, or .svg file
+      type: object
+      title: UIThemeConfig
+      description: Configuration for UI theme customization
     Body_upload_logo_upload_logo_post:
       properties:
         file:
@@ -118,6 +135,22 @@ components:
       required:
       - file
       title: Body_upload_logo_upload_logo_post
+    UIThemeSettingsResponse:
+      properties:
+        values:
+          additionalProperties: true
+          type: object
+          title: Values
+        field_schema:
+          additionalProperties: true
+          type: object
+          title: Field Schema
+      type: object
+      required:
+      - values
+      - field_schema
+      title: UIThemeSettingsResponse
+      description: Response model for UI theme settings
     ValidationError:
       properties:
         loc:
@@ -144,39 +177,6 @@ components:
       - msg
       - type
       title: ValidationError
-    UIThemeSettingsResponse:
-      properties:
-        values:
-          additionalProperties: true
-          type: object
-          title: Values
-        field_schema:
-          additionalProperties: true
-          type: object
-          title: Field Schema
-      type: object
-      required:
-      - values
-      - field_schema
-      title: UIThemeSettingsResponse
-      description: Response model for UI theme settings
-    UIThemeConfig:
-      properties:
-        logo_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Url
-          description: URL or path to custom logo image. Can be a local file path or HTTP/HTTPS URL
-        favicon_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Favicon Url
-          description: URL to custom favicon image. Must be an HTTP/HTTPS URL to a .ico, .png, or .svg file
-      type: object
-      title: UIThemeConfig
-      description: Configuration for UI theme customization
   securitySchemes:
     APIKeyHeader:
       type: apiKey

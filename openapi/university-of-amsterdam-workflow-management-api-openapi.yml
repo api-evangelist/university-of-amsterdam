@@ -321,6 +321,24 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    WorkflowMessageCreateRequest:
+      properties:
+        role:
+          type: string
+          title: Role
+        content:
+          type: string
+          title: Content
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
+      type: object
+      required:
+      - role
+      - content
+      title: WorkflowMessageCreateRequest
     WorkflowRunCreateRequest:
       properties:
         workflow_type:
@@ -342,6 +360,33 @@ components:
       required:
       - workflow_type
       title: WorkflowRunCreateRequest
+    WorkflowRunUpdateRequest:
+      properties:
+        status:
+          anyOf:
+          - type: string
+            enum:
+            - pending
+            - running
+            - paused
+            - completed
+            - failed
+          - type: 'null'
+          title: Status
+        output:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Output
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      title: WorkflowRunUpdateRequest
     WorkflowEventCreateRequest:
       properties:
         event_type:
@@ -387,51 +432,6 @@ components:
       - msg
       - type
       title: ValidationError
-    WorkflowRunUpdateRequest:
-      properties:
-        status:
-          anyOf:
-          - type: string
-            enum:
-            - pending
-            - running
-            - paused
-            - completed
-            - failed
-          - type: 'null'
-          title: Status
-        output:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Output
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      title: WorkflowRunUpdateRequest
-    WorkflowMessageCreateRequest:
-      properties:
-        role:
-          type: string
-          title: Role
-        content:
-          type: string
-          title: Content
-        session_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Id
-      type: object
-      required:
-      - role
-      - content
-      title: WorkflowMessageCreateRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

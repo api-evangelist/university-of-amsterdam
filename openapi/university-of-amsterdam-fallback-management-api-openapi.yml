@@ -199,6 +199,29 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    FallbackGetResponse:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name
+        fallback_models:
+          items:
+            type: string
+          type: array
+          title: Fallback Models
+          description: List of fallback model names
+        fallback_type:
+          type: string
+          title: Fallback Type
+          description: Type of fallback
+      type: object
+      required:
+      - model
+      - fallback_models
+      - fallback_type
+      title: FallbackGetResponse
+      description: Response model for getting fallbacks
     FallbackCreateRequest:
       properties:
         model:
@@ -227,27 +250,6 @@ components:
       - fallback_models
       title: FallbackCreateRequest
       description: Request model for creating/updating fallbacks
-    FallbackDeleteResponse:
-      properties:
-        model:
-          type: string
-          title: Model
-          description: The model name
-        fallback_type:
-          type: string
-          title: Fallback Type
-          description: Type of fallback
-        message:
-          type: string
-          title: Message
-          description: Success message
-      type: object
-      required:
-      - model
-      - fallback_type
-      - message
-      title: FallbackDeleteResponse
-      description: Response model for deleting fallbacks
     FallbackResponse:
       properties:
         model:
@@ -276,6 +278,27 @@ components:
       - message
       title: FallbackResponse
       description: Response model for fallback operations
+    FallbackDeleteResponse:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name
+        fallback_type:
+          type: string
+          title: Fallback Type
+          description: Type of fallback
+        message:
+          type: string
+          title: Message
+          description: Success message
+      type: object
+      required:
+      - model
+      - fallback_type
+      - message
+      title: FallbackDeleteResponse
+      description: Response model for deleting fallbacks
     ValidationError:
       properties:
         loc:
@@ -302,29 +325,6 @@ components:
       - msg
       - type
       title: ValidationError
-    FallbackGetResponse:
-      properties:
-        model:
-          type: string
-          title: Model
-          description: The model name
-        fallback_models:
-          items:
-            type: string
-          type: array
-          title: Fallback Models
-          description: List of fallback model names
-        fallback_type:
-          type: string
-          title: Fallback Type
-          description: Type of fallback
-      type: object
-      required:
-      - model
-      - fallback_models
-      - fallback_type
-      title: FallbackGetResponse
-      description: Response model for getting fallbacks
   securitySchemes:
     APIKeyHeader:
       type: apiKey

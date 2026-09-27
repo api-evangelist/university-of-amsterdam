@@ -179,6 +179,28 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    CreateJWTKeyMappingRequest:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        jwt_claim_name:
+          title: Jwt Claim Name
+          type: string
+        jwt_claim_value:
+          title: Jwt Claim Value
+          type: string
+        key:
+          title: Key
+          type: string
+      required:
+      - jwt_claim_name
+      - jwt_claim_value
+      - key
+      title: CreateJWTKeyMappingRequest
+      type: object
     UpdateJWTKeyMappingRequest:
       properties:
         description:
@@ -202,6 +224,15 @@ components:
       required:
       - id
       title: UpdateJWTKeyMappingRequest
+      type: object
+    DeleteJWTKeyMappingRequest:
+      properties:
+        id:
+          title: Id
+          type: string
+      required:
+      - id
+      title: DeleteJWTKeyMappingRequest
       type: object
     JWTKeyMappingResponse:
       properties:
@@ -275,37 +306,6 @@ components:
       - msg
       - type
       title: ValidationError
-    CreateJWTKeyMappingRequest:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        jwt_claim_name:
-          title: Jwt Claim Name
-          type: string
-        jwt_claim_value:
-          title: Jwt Claim Value
-          type: string
-        key:
-          title: Key
-          type: string
-      required:
-      - jwt_claim_name
-      - jwt_claim_value
-      - key
-      title: CreateJWTKeyMappingRequest
-      type: object
-    DeleteJWTKeyMappingRequest:
-      properties:
-        id:
-          title: Id
-          type: string
-      required:
-      - id
-      title: DeleteJWTKeyMappingRequest
-      type: object
   securitySchemes:
     APIKeyHeader:
       type: apiKey

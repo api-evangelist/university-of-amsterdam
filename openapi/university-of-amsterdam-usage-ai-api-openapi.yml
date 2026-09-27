@@ -58,22 +58,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ChatMessage:
-      properties:
-        content:
-          title: Content
-          type: string
-        role:
-          enum:
-          - user
-          - assistant
-          title: Role
-          type: string
-      required:
-      - role
-      - content
-      title: ChatMessage
-      type: object
     UsageAIChatRequest:
       properties:
         messages:
@@ -91,6 +75,22 @@ components:
       required:
       - messages
       title: UsageAIChatRequest
+      type: object
+    ChatMessage:
+      properties:
+        content:
+          title: Content
+          type: string
+        role:
+          enum:
+          - user
+          - assistant
+          title: Role
+          type: string
+      required:
+      - role
+      - content
+      title: ChatMessage
       type: object
     ValidationError:
       properties:

@@ -412,15 +412,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     PerUserAnalyticsResponse:
       properties:
         results:
@@ -449,6 +440,117 @@ components:
       - total_pages
       title: PerUserAnalyticsResponse
       description: Response for per-user analytics
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TagSummaryResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/TagSummaryMetrics'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: TagSummaryResponse
+      description: Response for tag summary analytics
+    DistinctTagResponse:
+      properties:
+        tag:
+          type: string
+          title: Tag
+      type: object
+      required:
+      - tag
+      title: DistinctTagResponse
+      description: Response for distinct user agent tags
+    TagActiveUsersResponse:
+      properties:
+        tag:
+          type: string
+          title: Tag
+        active_users:
+          type: integer
+          title: Active Users
+        date:
+          type: string
+          title: Date
+        period_start:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period Start
+        period_end:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period End
+      type: object
+      required:
+      - tag
+      - active_users
+      - date
+      title: TagActiveUsersResponse
+      description: Response for tag active users metrics
+    ActiveUsersAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/TagActiveUsersResponse'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: ActiveUsersAnalyticsResponse
+      description: Response for active users analytics
+    PerUserMetrics:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        user_agent:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Agent
+        successful_requests:
+          type: integer
+          title: Successful Requests
+          default: 0
+        failed_requests:
+          type: integer
+          title: Failed Requests
+          default: 0
+        total_requests:
+          type: integer
+          title: Total Requests
+          default: 0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+      type: object
+      required:
+      - user_id
+      title: PerUserMetrics
+      description: Metrics for individual user
     DistinctTagsResponse:
       properties:
         results:
@@ -495,86 +597,6 @@ components:
       - total_spend
       title: TagSummaryMetrics
       description: Summary metrics for a tag
-    PerUserMetrics:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        user_agent:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Agent
-        successful_requests:
-          type: integer
-          title: Successful Requests
-          default: 0
-        failed_requests:
-          type: integer
-          title: Failed Requests
-          default: 0
-        total_requests:
-          type: integer
-          title: Total Requests
-          default: 0
-        total_tokens:
-          type: integer
-          title: Total Tokens
-          default: 0
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-      type: object
-      required:
-      - user_id
-      title: PerUserMetrics
-      description: Metrics for individual user
-    TagSummaryResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagSummaryMetrics'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: TagSummaryResponse
-      description: Response for tag summary analytics
-    TagActiveUsersResponse:
-      properties:
-        tag:
-          type: string
-          title: Tag
-        active_users:
-          type: integer
-          title: Active Users
-        date:
-          type: string
-          title: Date
-        period_start:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period Start
-        period_end:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period End
-      type: object
-      required:
-      - tag
-      - active_users
-      - date
-      title: TagActiveUsersResponse
-      description: Response for tag active users metrics
     ValidationError:
       properties:
         loc:
@@ -601,28 +623,6 @@ components:
       - msg
       - type
       title: ValidationError
-    ActiveUsersAnalyticsResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagActiveUsersResponse'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: ActiveUsersAnalyticsResponse
-      description: Response for active users analytics
-    DistinctTagResponse:
-      properties:
-        tag:
-          type: string
-          title: Tag
-      type: object
-      required:
-      - tag
-      title: DistinctTagResponse
-      description: Response for distinct user agent tags
   securitySchemes:
     APIKeyHeader:
       type: apiKey

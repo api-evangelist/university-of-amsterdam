@@ -212,34 +212,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    MemoryListResponse:
-      properties:
-        memories:
-          items:
-            $ref: '#/components/schemas/LiteLLM_MemoryRow'
-          type: array
-          title: Memories
-        total:
-          type: integer
-          title: Total
-      type: object
-      required:
-      - memories
-      - total
-      title: MemoryListResponse
-    MemoryDeleteResponse:
-      properties:
-        key:
-          type: string
-          title: Key
-        deleted:
-          type: boolean
-          title: Deleted
-      type: object
-      required:
-      - key
-      - deleted
-      title: MemoryDeleteResponse
     LiteLLM_MemoryRow:
       properties:
         memory_id:
@@ -294,32 +266,43 @@ components:
       - key
       - value
       title: LiteLLM_MemoryRow
-    ValidationError:
+    MemoryDeleteResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        key:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Key
+        deleted:
+          type: boolean
+          title: Deleted
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - key
+      - deleted
+      title: MemoryDeleteResponse
+    MemoryUpdateRequest:
+      properties:
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: MemoryUpdateRequest
     MemoryCreateRequest:
       properties:
         key:
@@ -353,30 +336,47 @@ components:
       - key
       - value
       title: MemoryCreateRequest
-    MemoryUpdateRequest:
+    MemoryListResponse:
       properties:
-        value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Value
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
+        memories:
+          items:
+            $ref: '#/components/schemas/LiteLLM_MemoryRow'
+          type: array
+          title: Memories
+        total:
+          type: integer
+          title: Total
       type: object
-      title: MemoryUpdateRequest
+      required:
+      - memories
+      - total
+      title: MemoryListResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

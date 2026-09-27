@@ -1538,235 +1538,42 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    BlockedWord:
+    ContentFilterPattern:
       properties:
-        keyword:
+        pattern_type:
           type: string
-          title: Keyword
-          description: The keyword to block or mask
+          enum:
+          - prebuilt
+          - regex
+          title: Pattern Type
+          description: 'Type of pattern: ''prebuilt'' for predefined patterns or ''regex'' for custom'
+        pattern_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pattern Name
+          description: Name of prebuilt pattern (e.g., 'us_ssn', 'credit_card'). Required if pattern_type is 'prebuilt'
+        pattern:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pattern
+          description: Custom regex pattern. Required if pattern_type is 'regex'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name for this pattern (used in logging and error messages)
         action:
           $ref: '#/components/schemas/ContentFilterAction'
-          description: Action to take when keyword is detected (BLOCK or MASK)
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Optional description explaining why this keyword is sensitive
+          description: Action to take when pattern matches (BLOCK or MASK)
       type: object
       required:
-      - keyword
+      - pattern_type
       - action
-      title: BlockedWord
-      description: Represents a blocked word with its action and optional description
-    PatchGuardrailRequest:
-      properties:
-        guardrail_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guardrail Name
-        litellm_params:
-          anyOf:
-          - $ref: '#/components/schemas/BaseLitellmParams'
-          - type: 'null'
-        guardrail_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Guardrail Info
-      type: object
-      title: PatchGuardrailRequest
-    ListGuardrailSubmissionsResponse:
-      properties:
-        submissions:
-          items:
-            $ref: '#/components/schemas/GuardrailSubmissionItem'
-          type: array
-          title: Submissions
-        summary:
-          $ref: '#/components/schemas/GuardrailSubmissionSummary'
-      type: object
-      required:
-      - submissions
-      - summary
-      title: ListGuardrailSubmissionsResponse
-    GuardrailSubmissionSummary:
-      properties:
-        total:
-          type: integer
-          title: Total
-        pending_review:
-          type: integer
-          title: Pending Review
-        active:
-          type: integer
-          title: Active
-        rejected:
-          type: integer
-          title: Rejected
-      type: object
-      required:
-      - total
-      - pending_review
-      - active
-      - rejected
-      title: GuardrailSubmissionSummary
-    UsageChartPoint:
-      properties:
-        date:
-          type: string
-          title: Date
-        passed:
-          type: integer
-          title: Passed
-        blocked:
-          type: integer
-          title: Blocked
-        score:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Score
-      type: object
-      required:
-      - date
-      - passed
-      - blocked
-      title: UsageChartPoint
-    ApplyGuardrailResponse:
-      properties:
-        response_text:
-          type: string
-          title: Response Text
-      type: object
-      required:
-      - response_text
-      title: ApplyGuardrailResponse
-    UsageOverviewRow:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-        type:
-          type: string
-          title: Type
-        provider:
-          type: string
-          title: Provider
-        requestsEvaluated:
-          type: integer
-          title: Requestsevaluated
-        failRate:
-          type: number
-          title: Failrate
-        avgScore:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avgscore
-        avgLatency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avglatency
-        status:
-          type: string
-          title: Status
-        trend:
-          type: string
-          title: Trend
-      type: object
-      required:
-      - id
-      - name
-      - type
-      - provider
-      - requestsEvaluated
-      - failRate
-      - avgScore
-      - avgLatency
-      - status
-      - trend
-      title: UsageOverviewRow
-    Guardrail:
-      properties:
-        guardrail_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guardrail Id
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        litellm_params:
-          $ref: '#/components/schemas/LitellmParams'
-        guardrail_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Guardrail Info
-        policy_template:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Policy Template
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-      type: object
-      required:
-      - guardrail_name
-      - litellm_params
-      title: Guardrail
-    LakeraCategoryThresholds:
-      properties:
-        prompt_injection:
-          type: number
-          title: Prompt Injection
-        jailbreak:
-          type: number
-          title: Jailbreak
-      additionalProperties: true
-      type: object
-      title: LakeraCategoryThresholds
-    UsageLogsResponse:
-      properties:
-        logs:
-          items:
-            $ref: '#/components/schemas/UsageLogEntry'
-          type: array
-          title: Logs
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-      type: object
-      required:
-      - logs
-      - total
-      - page
-      - page_size
-      title: UsageLogsResponse
+      title: ContentFilterPattern
+      description: Represents a content filter pattern (prebuilt or custom regex)
     BedrockChecksConfigModel:
       properties:
         contentFilter:
@@ -1787,747 +1594,20 @@ components:
 
 
         Include only the checks you want to run; at least one must be set.'
-    HTTPValidationError:
+    ListGuardrailSubmissionsResponse:
       properties:
-        detail:
+        submissions:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/GuardrailSubmissionItem'
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ListGuardrailsResponse:
-      properties:
-        guardrails:
-          items:
-            $ref: '#/components/schemas/GuardrailInfoResponse'
-          type: array
-          title: Guardrails
+          title: Submissions
+        summary:
+          $ref: '#/components/schemas/GuardrailSubmissionSummary'
       type: object
       required:
-      - guardrails
-      title: ListGuardrailsResponse
-    UsageOverviewResponse:
-      properties:
-        rows:
-          items:
-            $ref: '#/components/schemas/UsageOverviewRow'
-          type: array
-          title: Rows
-        chart:
-          items:
-            $ref: '#/components/schemas/UsageChartPoint'
-          type: array
-          title: Chart
-        totalRequests:
-          type: integer
-          title: Totalrequests
-        totalBlocked:
-          type: integer
-          title: Totalblocked
-        passRate:
-          type: number
-          title: Passrate
-      type: object
-      required:
-      - rows
-      - chart
-      - totalRequests
-      - totalBlocked
-      - passRate
-      title: UsageOverviewResponse
-    UsageLogEntry:
-      properties:
-        id:
-          type: string
-          title: Id
-        timestamp:
-          type: string
-          title: Timestamp
-        action:
-          type: string
-          title: Action
-        score:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Score
-        latency_ms:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Latency Ms
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        input_snippet:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Input Snippet
-        output_snippet:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Output Snippet
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reason
-      type: object
-      required:
-      - id
-      - timestamp
-      - action
-      - score
-      - latency_ms
-      - model
-      - input_snippet
-      - output_snippet
-      - reason
-      title: UsageLogEntry
-    CiscoAIDefenseGuardrailConfigModelOptionalParams:
-      properties:
-        inspection_type:
-          type: string
-          enum:
-          - chat
-          - mcp
-          title: Inspection Type
-          description: Which Cisco AI Defense inspection surface to use. 'chat' scans LLM model conversations via /api/v1/inspect/chat. 'mcp' scans MCP tool calls via /api/v1/inspect/mcp. Each guardrail instance targets exactly one surface; configure two guardrails to scan both chat and MCP traffic.
-          default: chat
-        inspect_path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Inspect Path
-          description: Override for the inspection endpoint path. Defaults to /api/v1/inspect/chat when inspection_type='chat' and /api/v1/inspect/mcp when inspection_type='mcp'.
-        enabled_rules:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/CiscoAIDefenseRule'
-            type: array
-          - type: 'null'
-          title: Enabled Rules
-          description: Explicit list of Cisco AI Defense rules to evaluate. If omitted, the policies configured for the API key in the Cisco AI Defense UI are used.
-        integration_profile_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Integration Profile Id
-          description: Integration profile id to apply (advanced).
-        integration_profile_version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Integration Profile Version
-          description: Integration profile version to apply (advanced).
-        integration_tenant_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Integration Tenant Id
-          description: Integration tenant id to apply (advanced).
-        integration_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Integration Type
-          description: Integration type to apply (advanced).
-        on_flagged_action:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: On Flagged Action
-          description: Action to take when Cisco AI Defense flags content. 'block' raises an HTTPException; 'monitor' logs the detection and lets the request continue.
-          default: block
-        fallback_on_error:
-          anyOf:
-          - type: string
-            enum:
-            - allow
-            - block
-          - type: 'null'
-          title: Fallback On Error
-          description: 'Behaviour when the Cisco AI Defense API is unavailable: ''allow'' proceeds without scanning (high availability), ''block'' rejects the request (maximum security).'
-          default: block
-        timeout:
-          anyOf:
-          - type: number
-            maximum: 60.0
-            minimum: 1.0
-          - type: 'null'
-          title: Timeout
-          description: Timeout (seconds) for Cisco AI Defense API calls (1-60).
-          default: 10.0
-      additionalProperties: true
-      type: object
-      title: CiscoAIDefenseGuardrailConfigModelOptionalParams
-      description: Optional parameters for the Cisco AI Defense guardrail.
-    BedrockChecksPromptAttackCategoryItem:
-      properties:
-        category:
-          type: string
-          enum:
-          - JAILBREAK
-          - PROMPT_INJECTION
-          - PROMPT_LEAKAGE
-          title: Category
-      type: object
-      required:
-      - category
-      title: BedrockChecksPromptAttackCategoryItem
-    BedrockChecksContentFilterCategoryItem:
-      properties:
-        category:
-          type: string
-          enum:
-          - VIOLENCE
-          - HATE
-          - SEXUAL
-          - MISCONDUCT
-          - INSULTS
-          title: Category
-      type: object
-      required:
-      - category
-      title: BedrockChecksContentFilterCategoryItem
-    TestCustomCodeGuardrailRequest:
-      properties:
-        custom_code:
-          type: string
-          title: Custom Code
-        test_input:
-          additionalProperties: true
-          type: object
-          title: Test Input
-        input_type:
-          type: string
-          title: Input Type
-          default: request
-        request_data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Request Data
-      type: object
-      required:
-      - custom_code
-      - test_input
-      title: TestCustomCodeGuardrailRequest
-      description: Request model for testing custom code guardrails.
-    ApplyGuardrailRequest:
-      properties:
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        text:
-          type: string
-          title: Text
-        language:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Language
-        entities:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/PiiEntityType'
-            type: array
-          - type: 'null'
-          title: Entities
-        input_type:
-          type: string
-          title: Input Type
-          default: request
-        messages:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Messages
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - guardrail_name
-      - text
-      title: ApplyGuardrailRequest
-    GuardrailInfoResponse:
-      properties:
-        guardrail_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guardrail Id
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        litellm_params:
-          anyOf:
-          - $ref: '#/components/schemas/BaseLitellmParams'
-          - type: 'null'
-        guardrail_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Guardrail Info
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        guardrail_definition_location:
-          $ref: '#/components/schemas/GUARDRAIL_DEFINITION_LOCATION'
-          default: config
-      type: object
-      required:
-      - guardrail_name
-      title: GuardrailInfoResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    GUARDRAIL_DEFINITION_LOCATION:
-      type: string
-      enum:
-      - db
-      - config
-      title: GUARDRAIL_DEFINITION_LOCATION
-    BedrockChecksContentFilterModel:
-      properties:
-        categories:
-          items:
-            $ref: '#/components/schemas/BedrockChecksContentFilterCategoryItem'
-          type: array
-          title: Categories
-      type: object
-      required:
-      - categories
-      title: BedrockChecksContentFilterModel
-    CiscoAIDefenseRule:
-      properties:
-        rule_name:
-          type: string
-          enum:
-          - Code Detection
-          - Harassment
-          - Hate Speech
-          - PCI
-          - PHI
-          - PII
-          - Prompt Injection
-          - Profanity
-          - Sexual Content & Exploitation
-          - Social Division & Polarization
-          - Violence & Public Safety Threats
-          title: Rule Name
-          description: The canonical Cisco AI Defense rule name to evaluate.
-        entity_types:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Entity Types
-          description: Optional list of entity types for the rule (e.g. 'Email Address', 'Phone Number'). Applies to rules such as PII, PCI, and PHI.
-      type: object
-      required:
-      - rule_name
-      title: CiscoAIDefenseRule
-      description: A single rule to enable for Cisco AI Defense inspection.
-    BedrockChecksPromptAttackModel:
-      properties:
-        categories:
-          items:
-            $ref: '#/components/schemas/BedrockChecksPromptAttackCategoryItem'
-          type: array
-          title: Categories
-      type: object
-      required:
-      - categories
-      title: BedrockChecksPromptAttackModel
-    UsageDetailResponse:
-      properties:
-        guardrail_id:
-          type: string
-          title: Guardrail Id
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        type:
-          type: string
-          title: Type
-        provider:
-          type: string
-          title: Provider
-        requestsEvaluated:
-          type: integer
-          title: Requestsevaluated
-        failRate:
-          type: number
-          title: Failrate
-        avgScore:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avgscore
-        avgLatency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avglatency
-        status:
-          type: string
-          title: Status
-        trend:
-          type: string
-          title: Trend
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        time_series:
-          items:
-            $ref: '#/components/schemas/UsageChartPoint'
-          type: array
-          title: Time Series
-      type: object
-      required:
-      - guardrail_id
-      - guardrail_name
-      - type
-      - provider
-      - requestsEvaluated
-      - failRate
-      - avgScore
-      - avgLatency
-      - status
-      - trend
-      - description
-      - time_series
-      title: UsageDetailResponse
-    BaseLitellmParams:
-      properties:
-        patterns:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ContentFilterPattern'
-            type: array
-          - type: 'null'
-          title: Patterns
-          description: List of patterns (prebuilt or custom regex) to detect
-        blocked_words:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BlockedWord'
-            type: array
-          - type: 'null'
-          title: Blocked Words
-          description: List of blocked words with individual actions
-        blocked_words_file:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Blocked Words File
-          description: Path to YAML file containing blocked_words list
-        categories:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ContentFilterCategoryConfig'
-            type: array
-          - type: 'null'
-          title: Categories
-          description: List of prebuilt categories to enable (harmful_*, bias_*)
-        severity_threshold:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Severity Threshold
-          description: Minimum severity to block (high, medium, low)
-        pattern_redaction_format:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pattern Redaction Format
-          description: Format string for pattern redaction (use {pattern_name} placeholder)
-        keyword_redaction_tag:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Keyword Redaction Tag
-          description: Tag to use for keyword redaction
-        api_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Key
-          description: API key for the guardrail service
-        api_base:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Base
-          description: Base URL for the guardrail service API
-        experimental_use_latest_role_message_only:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Experimental Use Latest Role Message Only
-          description: When True, guardrails only receive the latest message for the relevant role (e.g., newest user input pre-call, newest assistant output post-call)
-          default: false
-        only_scan_new_messages:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Only Scan New Messages
-          description: When True, the guardrail only scans messages that have not already been scanned earlier in the same session (identified by litellm_session_id / session_id). Message content is hashed per session and cached; only the diff (new or edited messages) is sent to the guardrail provider on follow-up calls. Falls back to a full scan when the request has no session id or the cache is unavailable. Intended for blocking/detection guardrails; not applied when mask_request_content is set.
-          default: false
-        skip_system_message_in_guardrail:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Skip System Message In Guardrail
-          description: When True, unified guardrails skip system-role messages when building evaluation inputs (texts and structured_messages). When False, system messages are included even if litellm_settings sets a global skip. When None, use the global litellm.skip_system_message_in_guardrail setting.
-        skip_tool_message_in_guardrail:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Skip Tool Message In Guardrail
-          description: When True, unified guardrails skip tool-role messages when building evaluation inputs (texts and structured_messages). When False, tool messages are included even if litellm_settings sets a global skip. When None, use the global litellm.skip_tool_message_in_guardrail setting.
-        category_thresholds:
-          anyOf:
-          - $ref: '#/components/schemas/LakeraCategoryThresholds'
-          - type: 'null'
-          description: Threshold configuration for Lakera guardrail categories
-        detect_secrets_config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Detect Secrets Config
-          description: Configuration for detect-secrets guardrail
-        guard_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Guard Name
-          description: Name of the guardrail in guardrails.ai
-        default_on:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Default On
-          description: Whether the guardrail is enabled by default
-        mask_request_content:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mask Request Content
-          description: Will mask request content if guardrail makes any changes
-        mask_response_content:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mask Response Content
-          description: Will mask response content if guardrail makes any changes
-        pangea_input_recipe:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pangea Input Recipe
-          description: Recipe for input (LLM request)
-        pangea_output_recipe:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pangea Output Recipe
-          description: Recipe for output (LLM response)
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Optional field if guardrail requires a 'model' parameter
-        violation_message_template:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Violation Message Template
-          description: Custom message when a guardrail blocks an action. Supports placeholders like {tool_name}, {rule_id}, and {default_message}.
-        end_session_after_n_fails:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: End Session After N Fails
-          description: 'For /v1/realtime sessions: automatically close the session after this many guardrail violations.'
-        on_violation:
-          anyOf:
-          - type: string
-            enum:
-            - warn
-            - end_session
-          - type: 'null'
-          title: On Violation
-          description: 'For /v1/realtime sessions: ''warn'' speaks the violation message and continues; ''end_session'' speaks the message and closes the connection.'
-        realtime_violation_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Realtime Violation Message
-          description: The message the bot speaks aloud when a /v1/realtime guardrail fires. Falls back to violation_message_template if not set.
-        template_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Template Id
-          description: The ID of your Model Armor template
-        location:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Location
-          description: Google Cloud location/region (e.g., us-central1)
-        credentials:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Credentials
-          description: Path to Google Cloud credentials JSON file or JSON string
-        api_endpoint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Api Endpoint
-          description: Optional custom API endpoint for Model Armor
-        fail_on_error:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Fail On Error
-          description: Whether to fail the request if the guardrail encounters an error. Implemented by guardrail='model_armor' and 'generic_guardrail_api'. True (default) raises the error. False logs a critical error and lets the request proceed, so only a valid guardrail response can block or modify it.
-          default: true
-        skip_unscannable_attachments:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Skip Unscannable Attachments
-          description: Implemented by guardrail='model_armor'. When True, attachment references that carry no inline bytes (file_id, gs://, or http(s) URLs) pass through unscanned instead of blocking, while fail_on_error still governs real Model Armor API errors. Default False blocks them.
-          default: false
-        sanitize_error_detail:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Sanitize Error Detail
-          description: 'For guardrail=''model_armor'': omit the raw Model Armor response from caller-facing errors and logs by default. Set False to restore verbose output.'
-          default: true
-        additional_provider_specific_params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Additional Provider Specific Params
-          description: Additional provider-specific parameters for generic guardrail APIs
-        unreachable_fallback:
-          type: string
-          enum:
-          - fail_closed
-          - fail_open
-          title: Unreachable Fallback
-          description: Behavior when a guardrail endpoint is unreachable due to network errors. Implemented by guardrail='generic_guardrail_api', 'akto', 'vigil_guard', 'repelloai', 'headroom', and 'compresr'. 'fail_closed' raises an error (default). 'fail_open' logs a critical error and allows the request to proceed.
-          default: fail_closed
-        extra_headers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Extra Headers
-          description: Header names to forward from the client request to the guardrail (e.g. x-request-id). Only these headers' values are sent; others may be omitted or sent as [present]. Used by generic_guardrail_api (similar to MCP extra_headers).
-        custom_code:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Code
-          description: Python-like code containing the apply_guardrail function for custom guardrail logic
-        timeout:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Timeout
-          description: Per-request timeout for the guardrail provider API call (seconds). Accepts int, float, or numeric string; coerced to float on load. Each guardrail handler chooses its own default when unset.
-        on_sensitive_data:
-          anyOf:
-          - type: string
-            enum:
-            - block
-            - route
-          - type: 'null'
-          title: On Sensitive Data
-          description: Action to take when sensitive data is detected. 'block' raises an exception (default behavior). 'route' reroutes the request to the model specified in sensitive_data_route_to_model.
-        sensitive_data_route_to_model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sensitive Data Route To Model
-          description: Model to route requests to when sensitive data is detected and on_sensitive_data='route'. This is typically an on-premise model for data privacy. The routing decision persists for the entire session.
-        sticky_session_routing:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Sticky Session Routing
-          description: When True (default), after sensitive data is detected and routed, all subsequent requests in the same session will continue routing to the same model.
-          default: true
-        run_in_parallel:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Run In Parallel
-          description: When True, this pre_call or post_call guardrail runs concurrently with other opted-in guardrails of the same hook, after the sequential guardrails have run. Use only for block-only guardrails that inspect and reject; do not enable it for guardrails that modify the request or response (e.g. PII masking or sensitive-data routing), since parallel runs share one snapshot and their mutations would race.
-      additionalProperties: true
-      type: object
-      title: BaseLitellmParams
+      - submissions
+      - summary
+      title: ListGuardrailSubmissionsResponse
     RegisterGuardrailResponse:
       properties:
         guardrail_id:
@@ -2551,14 +1631,219 @@ components:
       - guardrail_name
       - status
       title: RegisterGuardrailResponse
-    CreateGuardrailRequest:
+    ToolPermissionRule:
       properties:
-        guardrail:
-          $ref: '#/components/schemas/Guardrail'
+        id:
+          type: string
+          title: Id
+          description: Unique identifier for the rule
+        tool_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tool Name
+          description: Regex pattern applied to the tool's function name
+        tool_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tool Type
+          description: Regex pattern applied to the tool type (e.g., function)
+        decision:
+          type: string
+          enum:
+          - allow
+          - deny
+          title: Decision
+          description: Whether to allow or deny this tool usage
+        allowed_param_patterns:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Allowed Param Patterns
+          description: Optional regex map enforcing nested parameter values using dot/[] paths
       type: object
       required:
-      - guardrail
-      title: CreateGuardrailRequest
+      - id
+      - decision
+      title: ToolPermissionRule
+      description: A rule defining permission for a specific tool or tool pattern
+    ListGuardrailsResponse:
+      properties:
+        guardrails:
+          items:
+            $ref: '#/components/schemas/GuardrailInfoResponse'
+          type: array
+          title: Guardrails
+      type: object
+      required:
+      - guardrails
+      title: ListGuardrailsResponse
+    ContentFilterCategoryConfig:
+      properties:
+        category:
+          type: string
+          title: Category
+          description: The category to detect
+        enabled:
+          type: boolean
+          title: Enabled
+          description: Whether the category is enabled
+          default: true
+        action:
+          type: string
+          enum:
+          - BLOCK
+          - MASK
+          title: Action
+          description: The action to take when the category is detected
+        severity_threshold:
+          type: string
+          enum:
+          - high
+          - medium
+          - low
+          title: Severity Threshold
+          description: The severity threshold to detect the category
+          default: medium
+        category_file:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category File
+          description: Optional override. Use your own category file instead of the default one.
+      additionalProperties: true
+      type: object
+      required:
+      - category
+      - action
+      title: ContentFilterCategoryConfig
+      description: "category: \"harmful_self_harm\"\n              enabled: true\n              action: \"BLOCK\"\n              severity_threshold: \"medium\"\n              category_file: \"/path/to/custom_file.yaml\"  # optional override"
+    GuardrailSubmissionItem:
+      properties:
+        guardrail_id:
+          type: string
+          title: Guardrail Id
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        status:
+          type: string
+          title: Status
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        team_guardrail:
+          type: boolean
+          title: Team Guardrail
+          default: false
+        litellm_params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Litellm Params
+        guardrail_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Guardrail Info
+        submitted_by_user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Submitted By User Id
+        submitted_by_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Submitted By Email
+        submitted_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Submitted At
+        reviewed_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Reviewed At
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+      type: object
+      required:
+      - guardrail_id
+      - guardrail_name
+      - status
+      title: GuardrailSubmissionItem
+    BlockedWord:
+      properties:
+        keyword:
+          type: string
+          title: Keyword
+          description: The keyword to block or mask
+        action:
+          $ref: '#/components/schemas/ContentFilterAction'
+          description: Action to take when keyword is detected (BLOCK or MASK)
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Optional description explaining why this keyword is sensitive
+      type: object
+      required:
+      - keyword
+      - action
+      title: BlockedWord
+      description: Represents a blocked word with its action and optional description
+    ApplyGuardrailResponse:
+      properties:
+        response_text:
+          type: string
+          title: Response Text
+      type: object
+      required:
+      - response_text
+      title: ApplyGuardrailResponse
+    GuardrailSubmissionSummary:
+      properties:
+        total:
+          type: integer
+          title: Total
+        pending_review:
+          type: integer
+          title: Pending Review
+        active:
+          type: integer
+          title: Active
+        rejected:
+          type: integer
+          title: Rejected
+      type: object
+      required:
+      - total
+      - pending_review
+      - active
+      - rejected
+      title: GuardrailSubmissionSummary
     LitellmParams:
       properties:
         optional_params:
@@ -3553,6 +2838,596 @@ components:
       - guardrail
       - mode
       title: LitellmParams
+    UsageOverviewRow:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        type:
+          type: string
+          title: Type
+        provider:
+          type: string
+          title: Provider
+        requestsEvaluated:
+          type: integer
+          title: Requestsevaluated
+        failRate:
+          type: number
+          title: Failrate
+        avgScore:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avgscore
+        avgLatency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avglatency
+        status:
+          type: string
+          title: Status
+        trend:
+          type: string
+          title: Trend
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - provider
+      - requestsEvaluated
+      - failRate
+      - avgScore
+      - avgLatency
+      - status
+      - trend
+      title: UsageOverviewRow
+    UsageDetailResponse:
+      properties:
+        guardrail_id:
+          type: string
+          title: Guardrail Id
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        type:
+          type: string
+          title: Type
+        provider:
+          type: string
+          title: Provider
+        requestsEvaluated:
+          type: integer
+          title: Requestsevaluated
+        failRate:
+          type: number
+          title: Failrate
+        avgScore:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avgscore
+        avgLatency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avglatency
+        status:
+          type: string
+          title: Status
+        trend:
+          type: string
+          title: Trend
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        time_series:
+          items:
+            $ref: '#/components/schemas/UsageChartPoint'
+          type: array
+          title: Time Series
+      type: object
+      required:
+      - guardrail_id
+      - guardrail_name
+      - type
+      - provider
+      - requestsEvaluated
+      - failRate
+      - avgScore
+      - avgLatency
+      - status
+      - trend
+      - description
+      - time_series
+      title: UsageDetailResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TestCustomCodeGuardrailRequest:
+      properties:
+        custom_code:
+          type: string
+          title: Custom Code
+        test_input:
+          additionalProperties: true
+          type: object
+          title: Test Input
+        input_type:
+          type: string
+          title: Input Type
+          default: request
+        request_data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Request Data
+      type: object
+      required:
+      - custom_code
+      - test_input
+      title: TestCustomCodeGuardrailRequest
+      description: Request model for testing custom code guardrails.
+    LakeraCategoryThresholds:
+      properties:
+        prompt_injection:
+          type: number
+          title: Prompt Injection
+        jailbreak:
+          type: number
+          title: Jailbreak
+      additionalProperties: true
+      type: object
+      title: LakeraCategoryThresholds
+    UpdateGuardrailRequest:
+      properties:
+        guardrail:
+          $ref: '#/components/schemas/Guardrail'
+      type: object
+      required:
+      - guardrail
+      title: UpdateGuardrailRequest
+    RegisterGuardrailRequest:
+      properties:
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        litellm_params:
+          additionalProperties: true
+          type: object
+          title: Litellm Params
+        guardrail_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Guardrail Info
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      required:
+      - guardrail_name
+      - litellm_params
+      title: RegisterGuardrailRequest
+      description: Request body for POST /guardrails/register. Follows Generic Guardrail API config.
+    ContentFilterAction:
+      type: string
+      enum:
+      - BLOCK
+      - MASK
+      title: ContentFilterAction
+      description: Action to take when content filter detects a match
+    PatchGuardrailRequest:
+      properties:
+        guardrail_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guardrail Name
+        litellm_params:
+          anyOf:
+          - $ref: '#/components/schemas/BaseLitellmParams'
+          - type: 'null'
+        guardrail_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Guardrail Info
+      type: object
+      title: PatchGuardrailRequest
+    BaseLitellmParams:
+      properties:
+        patterns:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ContentFilterPattern'
+            type: array
+          - type: 'null'
+          title: Patterns
+          description: List of patterns (prebuilt or custom regex) to detect
+        blocked_words:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BlockedWord'
+            type: array
+          - type: 'null'
+          title: Blocked Words
+          description: List of blocked words with individual actions
+        blocked_words_file:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Blocked Words File
+          description: Path to YAML file containing blocked_words list
+        categories:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ContentFilterCategoryConfig'
+            type: array
+          - type: 'null'
+          title: Categories
+          description: List of prebuilt categories to enable (harmful_*, bias_*)
+        severity_threshold:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Severity Threshold
+          description: Minimum severity to block (high, medium, low)
+        pattern_redaction_format:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pattern Redaction Format
+          description: Format string for pattern redaction (use {pattern_name} placeholder)
+        keyword_redaction_tag:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Keyword Redaction Tag
+          description: Tag to use for keyword redaction
+        api_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Key
+          description: API key for the guardrail service
+        api_base:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Base
+          description: Base URL for the guardrail service API
+        experimental_use_latest_role_message_only:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Experimental Use Latest Role Message Only
+          description: When True, guardrails only receive the latest message for the relevant role (e.g., newest user input pre-call, newest assistant output post-call)
+          default: false
+        only_scan_new_messages:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Only Scan New Messages
+          description: When True, the guardrail only scans messages that have not already been scanned earlier in the same session (identified by litellm_session_id / session_id). Message content is hashed per session and cached; only the diff (new or edited messages) is sent to the guardrail provider on follow-up calls. Falls back to a full scan when the request has no session id or the cache is unavailable. Intended for blocking/detection guardrails; not applied when mask_request_content is set.
+          default: false
+        skip_system_message_in_guardrail:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Skip System Message In Guardrail
+          description: When True, unified guardrails skip system-role messages when building evaluation inputs (texts and structured_messages). When False, system messages are included even if litellm_settings sets a global skip. When None, use the global litellm.skip_system_message_in_guardrail setting.
+        skip_tool_message_in_guardrail:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Skip Tool Message In Guardrail
+          description: When True, unified guardrails skip tool-role messages when building evaluation inputs (texts and structured_messages). When False, tool messages are included even if litellm_settings sets a global skip. When None, use the global litellm.skip_tool_message_in_guardrail setting.
+        category_thresholds:
+          anyOf:
+          - $ref: '#/components/schemas/LakeraCategoryThresholds'
+          - type: 'null'
+          description: Threshold configuration for Lakera guardrail categories
+        detect_secrets_config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Detect Secrets Config
+          description: Configuration for detect-secrets guardrail
+        guard_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guard Name
+          description: Name of the guardrail in guardrails.ai
+        default_on:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Default On
+          description: Whether the guardrail is enabled by default
+        mask_request_content:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mask Request Content
+          description: Will mask request content if guardrail makes any changes
+        mask_response_content:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mask Response Content
+          description: Will mask response content if guardrail makes any changes
+        pangea_input_recipe:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pangea Input Recipe
+          description: Recipe for input (LLM request)
+        pangea_output_recipe:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Pangea Output Recipe
+          description: Recipe for output (LLM response)
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Optional field if guardrail requires a 'model' parameter
+        violation_message_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Violation Message Template
+          description: Custom message when a guardrail blocks an action. Supports placeholders like {tool_name}, {rule_id}, and {default_message}.
+        end_session_after_n_fails:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: End Session After N Fails
+          description: 'For /v1/realtime sessions: automatically close the session after this many guardrail violations.'
+        on_violation:
+          anyOf:
+          - type: string
+            enum:
+            - warn
+            - end_session
+          - type: 'null'
+          title: On Violation
+          description: 'For /v1/realtime sessions: ''warn'' speaks the violation message and continues; ''end_session'' speaks the message and closes the connection.'
+        realtime_violation_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Realtime Violation Message
+          description: The message the bot speaks aloud when a /v1/realtime guardrail fires. Falls back to violation_message_template if not set.
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+          description: The ID of your Model Armor template
+        location:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Location
+          description: Google Cloud location/region (e.g., us-central1)
+        credentials:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Credentials
+          description: Path to Google Cloud credentials JSON file or JSON string
+        api_endpoint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Endpoint
+          description: Optional custom API endpoint for Model Armor
+        fail_on_error:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Fail On Error
+          description: Whether to fail the request if the guardrail encounters an error. Implemented by guardrail='model_armor' and 'generic_guardrail_api'. True (default) raises the error. False logs a critical error and lets the request proceed, so only a valid guardrail response can block or modify it.
+          default: true
+        skip_unscannable_attachments:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Skip Unscannable Attachments
+          description: Implemented by guardrail='model_armor'. When True, attachment references that carry no inline bytes (file_id, gs://, or http(s) URLs) pass through unscanned instead of blocking, while fail_on_error still governs real Model Armor API errors. Default False blocks them.
+          default: false
+        sanitize_error_detail:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Sanitize Error Detail
+          description: 'For guardrail=''model_armor'': omit the raw Model Armor response from caller-facing errors and logs by default. Set False to restore verbose output.'
+          default: true
+        additional_provider_specific_params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Additional Provider Specific Params
+          description: Additional provider-specific parameters for generic guardrail APIs
+        unreachable_fallback:
+          type: string
+          enum:
+          - fail_closed
+          - fail_open
+          title: Unreachable Fallback
+          description: Behavior when a guardrail endpoint is unreachable due to network errors. Implemented by guardrail='generic_guardrail_api', 'akto', 'vigil_guard', 'repelloai', 'headroom', and 'compresr'. 'fail_closed' raises an error (default). 'fail_open' logs a critical error and allows the request to proceed.
+          default: fail_closed
+        extra_headers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Extra Headers
+          description: Header names to forward from the client request to the guardrail (e.g. x-request-id). Only these headers' values are sent; others may be omitted or sent as [present]. Used by generic_guardrail_api (similar to MCP extra_headers).
+        custom_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Code
+          description: Python-like code containing the apply_guardrail function for custom guardrail logic
+        timeout:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Timeout
+          description: Per-request timeout for the guardrail provider API call (seconds). Accepts int, float, or numeric string; coerced to float on load. Each guardrail handler chooses its own default when unset.
+        on_sensitive_data:
+          anyOf:
+          - type: string
+            enum:
+            - block
+            - route
+          - type: 'null'
+          title: On Sensitive Data
+          description: Action to take when sensitive data is detected. 'block' raises an exception (default behavior). 'route' reroutes the request to the model specified in sensitive_data_route_to_model.
+        sensitive_data_route_to_model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sensitive Data Route To Model
+          description: Model to route requests to when sensitive data is detected and on_sensitive_data='route'. This is typically an on-premise model for data privacy. The routing decision persists for the entire session.
+        sticky_session_routing:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Sticky Session Routing
+          description: When True (default), after sensitive data is detected and routed, all subsequent requests in the same session will continue routing to the same model.
+          default: true
+        run_in_parallel:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Run In Parallel
+          description: When True, this pre_call or post_call guardrail runs concurrently with other opted-in guardrails of the same hook, after the sequential guardrails have run. Use only for block-only guardrails that inspect and reject; do not enable it for guardrails that modify the request or response (e.g. PII masking or sensitive-data routing), since parallel runs share one snapshot and their mutations would race.
+      additionalProperties: true
+      type: object
+      title: BaseLitellmParams
+    UsageLogEntry:
+      properties:
+        id:
+          type: string
+          title: Id
+        timestamp:
+          type: string
+          title: Timestamp
+        action:
+          type: string
+          title: Action
+        score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Score
+        latency_ms:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Latency Ms
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        input_snippet:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Input Snippet
+        output_snippet:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Output Snippet
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+      type: object
+      required:
+      - id
+      - timestamp
+      - action
+      - score
+      - latency_ms
+      - model
+      - input_snippet
+      - output_snippet
+      - reason
+      title: UsageLogEntry
+    Mode:
+      properties:
+        tags:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+          type: object
+          title: Tags
+          description: Tags for the guardrail mode
+        default:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Default
+          description: Default mode when no tags match
+      type: object
+      required:
+      - tags
+      title: Mode
     PiiEntityType:
       type: string
       enum:
@@ -3599,252 +3474,208 @@ components:
       - IN_PASSPORT
       - FI_PERSONAL_IDENTITY_CODE
       title: PiiEntityType
-    TestCustomCodeGuardrailResponse:
-      properties:
-        success:
-          type: boolean
-          title: Success
-        result:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Result
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-        error_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Type
-      type: object
-      required:
-      - success
-      title: TestCustomCodeGuardrailResponse
-      description: Response model for testing custom code guardrails.
-    ContentFilterAction:
-      type: string
-      enum:
-      - BLOCK
-      - MASK
-      title: ContentFilterAction
-      description: Action to take when content filter detects a match
-    ToolPermissionRule:
-      properties:
-        id:
-          type: string
-          title: Id
-          description: Unique identifier for the rule
-        tool_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tool Name
-          description: Regex pattern applied to the tool's function name
-        tool_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tool Type
-          description: Regex pattern applied to the tool type (e.g., function)
-        decision:
-          type: string
-          enum:
-          - allow
-          - deny
-          title: Decision
-          description: Whether to allow or deny this tool usage
-        allowed_param_patterns:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Allowed Param Patterns
-          description: Optional regex map enforcing nested parameter values using dot/[] paths
-      type: object
-      required:
-      - id
-      - decision
-      title: ToolPermissionRule
-      description: A rule defining permission for a specific tool or tool pattern
-    BedrockChecksSensitiveInformationModel:
-      properties:
-        entities:
-          items:
-            $ref: '#/components/schemas/BedrockChecksSensitiveInformationEntityItem'
-          type: array
-          title: Entities
-      type: object
-      required:
-      - entities
-      title: BedrockChecksSensitiveInformationModel
-    Mode:
-      properties:
-        tags:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - items:
-                type: string
-              type: array
-          type: object
-          title: Tags
-          description: Tags for the guardrail mode
-        default:
-          anyOf:
-          - type: string
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Default
-          description: Default mode when no tags match
-      type: object
-      required:
-      - tags
-      title: Mode
-    ContentFilterCategoryConfig:
-      properties:
-        category:
-          type: string
-          title: Category
-          description: The category to detect
-        enabled:
-          type: boolean
-          title: Enabled
-          description: Whether the category is enabled
-          default: true
-        action:
-          type: string
-          enum:
-          - BLOCK
-          - MASK
-          title: Action
-          description: The action to take when the category is detected
-        severity_threshold:
-          type: string
-          enum:
-          - high
-          - medium
-          - low
-          title: Severity Threshold
-          description: The severity threshold to detect the category
-          default: medium
-        category_file:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Category File
-          description: Optional override. Use your own category file instead of the default one.
-      additionalProperties: true
-      type: object
-      required:
-      - category
-      - action
-      title: ContentFilterCategoryConfig
-      description: "category: \"harmful_self_harm\"\n              enabled: true\n              action: \"BLOCK\"\n              severity_threshold: \"medium\"\n              category_file: \"/path/to/custom_file.yaml\"  # optional override"
-    UpdateGuardrailRequest:
-      properties:
-        guardrail:
-          $ref: '#/components/schemas/Guardrail'
-      type: object
-      required:
-      - guardrail
-      title: UpdateGuardrailRequest
-    ContentFilterPattern:
-      properties:
-        pattern_type:
-          type: string
-          enum:
-          - prebuilt
-          - regex
-          title: Pattern Type
-          description: 'Type of pattern: ''prebuilt'' for predefined patterns or ''regex'' for custom'
-        pattern_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pattern Name
-          description: Name of prebuilt pattern (e.g., 'us_ssn', 'credit_card'). Required if pattern_type is 'prebuilt'
-        pattern:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Pattern
-          description: Custom regex pattern. Required if pattern_type is 'regex'
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Name
-          description: Name for this pattern (used in logging and error messages)
-        action:
-          $ref: '#/components/schemas/ContentFilterAction'
-          description: Action to take when pattern matches (BLOCK or MASK)
-      type: object
-      required:
-      - pattern_type
-      - action
-      title: ContentFilterPattern
-      description: Represents a content filter pattern (prebuilt or custom regex)
-    GuardrailSubmissionItem:
+    GuardrailInfoResponse:
       properties:
         guardrail_id:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Guardrail Id
         guardrail_name:
           type: string
           title: Guardrail Name
-        status:
-          type: string
-          title: Status
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        team_guardrail:
-          type: boolean
-          title: Team Guardrail
-          default: false
         litellm_params:
           anyOf:
-          - additionalProperties: true
-            type: object
+          - $ref: '#/components/schemas/BaseLitellmParams'
           - type: 'null'
-          title: Litellm Params
         guardrail_info:
           anyOf:
           - additionalProperties: true
             type: object
           - type: 'null'
           title: Guardrail Info
-        submitted_by_user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Submitted By User Id
-        submitted_by_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Submitted By Email
-        submitted_at:
+        created_at:
           anyOf:
           - type: string
             format: date-time
           - type: 'null'
-          title: Submitted At
-        reviewed_at:
+          title: Created At
+        updated_at:
           anyOf:
           - type: string
             format: date-time
           - type: 'null'
-          title: Reviewed At
+          title: Updated At
+        guardrail_definition_location:
+          $ref: '#/components/schemas/GUARDRAIL_DEFINITION_LOCATION'
+          default: config
+      type: object
+      required:
+      - guardrail_name
+      title: GuardrailInfoResponse
+    CreateGuardrailRequest:
+      properties:
+        guardrail:
+          $ref: '#/components/schemas/Guardrail'
+      type: object
+      required:
+      - guardrail
+      title: CreateGuardrailRequest
+    BedrockChecksPromptAttackModel:
+      properties:
+        categories:
+          items:
+            $ref: '#/components/schemas/BedrockChecksPromptAttackCategoryItem'
+          type: array
+          title: Categories
+      type: object
+      required:
+      - categories
+      title: BedrockChecksPromptAttackModel
+    ApplyGuardrailRequest:
+      properties:
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        text:
+          type: string
+          title: Text
+        language:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Language
+        entities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PiiEntityType'
+            type: array
+          - type: 'null'
+          title: Entities
+        input_type:
+          type: string
+          title: Input Type
+          default: request
+        messages:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Messages
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - guardrail_name
+      - text
+      title: ApplyGuardrailRequest
+    CiscoAIDefenseGuardrailConfigModelOptionalParams:
+      properties:
+        inspection_type:
+          type: string
+          enum:
+          - chat
+          - mcp
+          title: Inspection Type
+          description: Which Cisco AI Defense inspection surface to use. 'chat' scans LLM model conversations via /api/v1/inspect/chat. 'mcp' scans MCP tool calls via /api/v1/inspect/mcp. Each guardrail instance targets exactly one surface; configure two guardrails to scan both chat and MCP traffic.
+          default: chat
+        inspect_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inspect Path
+          description: Override for the inspection endpoint path. Defaults to /api/v1/inspect/chat when inspection_type='chat' and /api/v1/inspect/mcp when inspection_type='mcp'.
+        enabled_rules:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CiscoAIDefenseRule'
+            type: array
+          - type: 'null'
+          title: Enabled Rules
+          description: Explicit list of Cisco AI Defense rules to evaluate. If omitted, the policies configured for the API key in the Cisco AI Defense UI are used.
+        integration_profile_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Integration Profile Id
+          description: Integration profile id to apply (advanced).
+        integration_profile_version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Integration Profile Version
+          description: Integration profile version to apply (advanced).
+        integration_tenant_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Integration Tenant Id
+          description: Integration tenant id to apply (advanced).
+        integration_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Integration Type
+          description: Integration type to apply (advanced).
+        on_flagged_action:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: On Flagged Action
+          description: Action to take when Cisco AI Defense flags content. 'block' raises an HTTPException; 'monitor' logs the detection and lets the request continue.
+          default: block
+        fallback_on_error:
+          anyOf:
+          - type: string
+            enum:
+            - allow
+            - block
+          - type: 'null'
+          title: Fallback On Error
+          description: 'Behaviour when the Cisco AI Defense API is unavailable: ''allow'' proceeds without scanning (high availability), ''block'' rejects the request (maximum security).'
+          default: block
+        timeout:
+          anyOf:
+          - type: number
+            maximum: 60.0
+            minimum: 1.0
+          - type: 'null'
+          title: Timeout
+          description: Timeout (seconds) for Cisco AI Defense API calls (1-60).
+          default: 10.0
+      additionalProperties: true
+      type: object
+      title: CiscoAIDefenseGuardrailConfigModelOptionalParams
+      description: Optional parameters for the Cisco AI Defense guardrail.
+    Guardrail:
+      properties:
+        guardrail_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Guardrail Id
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        litellm_params:
+          $ref: '#/components/schemas/LitellmParams'
+        guardrail_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Guardrail Info
+        policy_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Policy Template
         created_at:
           anyOf:
           - type: string
@@ -3859,36 +3690,131 @@ components:
           title: Updated At
       type: object
       required:
-      - guardrail_id
-      - guardrail_name
-      - status
-      title: GuardrailSubmissionItem
-    RegisterGuardrailRequest:
-      properties:
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        litellm_params:
-          additionalProperties: true
-          type: object
-          title: Litellm Params
-        guardrail_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Guardrail Info
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      required:
       - guardrail_name
       - litellm_params
-      title: RegisterGuardrailRequest
-      description: Request body for POST /guardrails/register. Follows Generic Guardrail API config.
+      title: Guardrail
+    BedrockChecksPromptAttackCategoryItem:
+      properties:
+        category:
+          type: string
+          enum:
+          - JAILBREAK
+          - PROMPT_INJECTION
+          - PROMPT_LEAKAGE
+          title: Category
+      type: object
+      required:
+      - category
+      title: BedrockChecksPromptAttackCategoryItem
+    BedrockChecksContentFilterModel:
+      properties:
+        categories:
+          items:
+            $ref: '#/components/schemas/BedrockChecksContentFilterCategoryItem'
+          type: array
+          title: Categories
+      type: object
+      required:
+      - categories
+      title: BedrockChecksContentFilterModel
+    CiscoAIDefenseRule:
+      properties:
+        rule_name:
+          type: string
+          enum:
+          - Code Detection
+          - Harassment
+          - Hate Speech
+          - PCI
+          - PHI
+          - PII
+          - Prompt Injection
+          - Profanity
+          - Sexual Content & Exploitation
+          - Social Division & Polarization
+          - Violence & Public Safety Threats
+          title: Rule Name
+          description: The canonical Cisco AI Defense rule name to evaluate.
+        entity_types:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Entity Types
+          description: Optional list of entity types for the rule (e.g. 'Email Address', 'Phone Number'). Applies to rules such as PII, PCI, and PHI.
+      type: object
+      required:
+      - rule_name
+      title: CiscoAIDefenseRule
+      description: A single rule to enable for Cisco AI Defense inspection.
+    UsageLogsResponse:
+      properties:
+        logs:
+          items:
+            $ref: '#/components/schemas/UsageLogEntry'
+          type: array
+          title: Logs
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+      type: object
+      required:
+      - logs
+      - total
+      - page
+      - page_size
+      title: UsageLogsResponse
+    UsageOverviewResponse:
+      properties:
+        rows:
+          items:
+            $ref: '#/components/schemas/UsageOverviewRow'
+          type: array
+          title: Rows
+        chart:
+          items:
+            $ref: '#/components/schemas/UsageChartPoint'
+          type: array
+          title: Chart
+        totalRequests:
+          type: integer
+          title: Totalrequests
+        totalBlocked:
+          type: integer
+          title: Totalblocked
+        passRate:
+          type: number
+          title: Passrate
+      type: object
+      required:
+      - rows
+      - chart
+      - totalRequests
+      - totalBlocked
+      - passRate
+      title: UsageOverviewResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PiiAction:
+      type: string
+      enum:
+      - BLOCK
+      - MASK
+      title: PiiAction
     BedrockChecksSensitiveInformationEntityItem:
       properties:
         type:
@@ -3930,12 +3856,86 @@ components:
       required:
       - type
       title: BedrockChecksSensitiveInformationEntityItem
-    PiiAction:
+    GUARDRAIL_DEFINITION_LOCATION:
       type: string
       enum:
-      - BLOCK
-      - MASK
-      title: PiiAction
+      - db
+      - config
+      title: GUARDRAIL_DEFINITION_LOCATION
+    BedrockChecksSensitiveInformationModel:
+      properties:
+        entities:
+          items:
+            $ref: '#/components/schemas/BedrockChecksSensitiveInformationEntityItem'
+          type: array
+          title: Entities
+      type: object
+      required:
+      - entities
+      title: BedrockChecksSensitiveInformationModel
+    UsageChartPoint:
+      properties:
+        date:
+          type: string
+          title: Date
+        passed:
+          type: integer
+          title: Passed
+        blocked:
+          type: integer
+          title: Blocked
+        score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Score
+      type: object
+      required:
+      - date
+      - passed
+      - blocked
+      title: UsageChartPoint
+    TestCustomCodeGuardrailResponse:
+      properties:
+        success:
+          type: boolean
+          title: Success
+        result:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Result
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        error_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Type
+      type: object
+      required:
+      - success
+      title: TestCustomCodeGuardrailResponse
+      description: Response model for testing custom code guardrails.
+    BedrockChecksContentFilterCategoryItem:
+      properties:
+        category:
+          type: string
+          enum:
+          - VIOLENCE
+          - HATE
+          - SEXUAL
+          - MISCONDUCT
+          - INSULTS
+          title: Category
+      type: object
+      required:
+      - category
+      title: BedrockChecksContentFilterCategoryItem
   securitySchemes:
     APIKeyHeader:
       type: apiKey

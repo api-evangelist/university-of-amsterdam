@@ -285,6 +285,104 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    AccessGroupUpdateRequest:
+      properties:
+        access_group_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Access Group Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        access_model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Model Names
+        access_mcp_server_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Mcp Server Ids
+        access_agent_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Agent Ids
+        assigned_team_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Assigned Team Ids
+        assigned_key_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Assigned Key Ids
+      type: object
+      title: AccessGroupUpdateRequest
+    AccessGroupCreateRequest:
+      properties:
+        access_group_name:
+          type: string
+          title: Access Group Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        access_model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Model Names
+        access_mcp_server_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Mcp Server Ids
+        access_agent_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Agent Ids
+        assigned_team_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Assigned Team Ids
+        assigned_key_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Assigned Key Ids
+      type: object
+      required:
+      - access_group_name
+      title: AccessGroupCreateRequest
     AccessGroupResponse:
       properties:
         access_group_id:
@@ -353,55 +451,6 @@ components:
       - created_at
       - updated_at
       title: AccessGroupResponse
-    AccessGroupCreateRequest:
-      properties:
-        access_group_name:
-          type: string
-          title: Access Group Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        access_model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Model Names
-        access_mcp_server_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Mcp Server Ids
-        access_agent_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Agent Ids
-        assigned_team_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Assigned Team Ids
-        assigned_key_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Assigned Key Ids
-      type: object
-      required:
-      - access_group_name
-      title: AccessGroupCreateRequest
     ValidationError:
       properties:
         loc:
@@ -428,55 +477,6 @@ components:
       - msg
       - type
       title: ValidationError
-    AccessGroupUpdateRequest:
-      properties:
-        access_group_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Access Group Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        access_model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Model Names
-        access_mcp_server_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Mcp Server Ids
-        access_agent_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Agent Ids
-        assigned_team_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Assigned Team Ids
-        assigned_key_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Assigned Key Ids
-      type: object
-      title: AccessGroupUpdateRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey
