@@ -1208,15 +1208,87 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
+    SpendAnalyticsPaginatedResponse:
       properties:
-        detail:
+        results:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/DailySpendData'
           type: array
-          title: Detail
+          title: Results
+        metadata:
+          $ref: '#/components/schemas/DailySpendMetadata'
       type: object
-      title: HTTPValidationError
+      required:
+      - results
+      title: SpendAnalyticsPaginatedResponse
+    BreakdownMetrics:
+      properties:
+        mcp_servers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Mcp Servers
+        models:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Models
+        model_groups:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Model Groups
+        providers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Providers
+        endpoints:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Endpoints
+        api_keys:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Keys
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Entities
+      type: object
+      title: BreakdownMetrics
+      description: Breakdown of spend by different dimensions
+    KeyMetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          $ref: '#/components/schemas/KeyMetadata'
+      type: object
+      required:
+      - metrics
+      title: KeyMetricWithMetadata
+      description: Base class for metrics with additional metadata
+    MetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        api_key_breakdown:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Key Breakdown
+      type: object
+      required:
+      - metrics
+      title: MetricWithMetadata
     FacetListResponse:
       properties:
         data:
@@ -1235,49 +1307,26 @@ components:
       - links
       title: FacetListResponse
       description: The distinct values one column takes over a filtered query. `data` holds bare values, not entity rows.
-    DailySpendData:
+    PageLinks:
       properties:
-        date:
+        self:
           type: string
-          format: date
-          title: Date
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        breakdown:
-          $ref: '#/components/schemas/BreakdownMetrics'
+          title: Self
+        prev:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prev
+        next:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next
       type: object
       required:
-      - date
-      - metrics
-      title: DailySpendData
-    MetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        api_key_breakdown:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Key Breakdown
-      type: object
-      required:
-      - metrics
-      title: MetricWithMetadata
-    KeyMetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          $ref: '#/components/schemas/KeyMetadata'
-      type: object
-      required:
-      - metrics
-      title: KeyMetricWithMetadata
-      description: Base class for metrics with additional metadata
+      - self
+      title: PageLinks
+      description: 'Hypermedia for a paginated list. No `first`/`last`: without a total count the last page is unknown.'
     SpendMetrics:
       properties:
         spend:
@@ -1330,26 +1379,6 @@ components:
           default: 0
       type: object
       title: SpendMetrics
-    PageLinks:
-      properties:
-        self:
-          type: string
-          title: Self
-        prev:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prev
-        next:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Next
-      type: object
-      required:
-      - self
-      title: PageLinks
-      description: 'Hypermedia for a paginated list. No `first`/`last`: without a total count the last page is unknown.'
     IPAddress:
       properties:
         ip:
@@ -1359,6 +1388,36 @@ components:
       required:
       - ip
       title: IPAddress
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SpendCalculateRequest:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        messages:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Messages
+        completion_response:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Completion Response
+      type: object
+      title: SpendCalculateRequest
     LiteLLM_SpendLogs:
       properties:
         request_id:
@@ -1481,40 +1540,6 @@ components:
       - messages
       - response
       title: LiteLLM_SpendLogs
-    SpendCalculateRequest:
-      properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        messages:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Messages
-        completion_response:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Completion Response
-      type: object
-      title: SpendCalculateRequest
-    SpendAnalyticsPaginatedResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/DailySpendData'
-          type: array
-          title: Results
-        metadata:
-          $ref: '#/components/schemas/DailySpendMetadata'
-      type: object
-      required:
-      - results
-      title: SpendAnalyticsPaginatedResponse
     PageMeta:
       properties:
         page:
@@ -1533,61 +1558,21 @@ components:
       - has_more
       title: PageMeta
       description: '`has_more` rather than `total_count`, which would need a COUNT(*) over the whole match set per keystroke.'
-    BreakdownMetrics:
+    DailySpendData:
       properties:
-        mcp_servers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Mcp Servers
-        models:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Models
-        model_groups:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Model Groups
-        providers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Providers
-        endpoints:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Endpoints
-        api_keys:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Keys
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Entities
+        date:
+          type: string
+          format: date
+          title: Date
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        breakdown:
+          $ref: '#/components/schemas/BreakdownMetrics'
       type: object
-      title: BreakdownMetrics
-      description: Breakdown of spend by different dimensions
-    KeyMetadata:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: KeyMetadata
-      description: Metadata for a key
+      required:
+      - date
+      - metrics
+      title: DailySpendData
     DailySpendMetadata:
       properties:
         total_spend:
@@ -1652,6 +1637,21 @@ components:
           default: false
       type: object
       title: DailySpendMetadata
+    KeyMetadata:
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: KeyMetadata
+      description: Metadata for a key
     ValidationError:
       properties:
         loc:

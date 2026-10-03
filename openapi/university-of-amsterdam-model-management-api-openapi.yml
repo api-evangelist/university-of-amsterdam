@@ -1768,45 +1768,28 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ConfigurableClientsideParamsCustomAuth-Input:
+    ChatCompletionAudioResponse:
       properties:
-        api_base:
+        id:
           type: string
-          title: Api Base
-      additionalProperties: true
-      type: object
-      required:
-      - api_base
-      title: ConfigurableClientsideParamsCustomAuth
-    ImageURLListItem:
-      properties:
-        image_url:
-          $ref: '#/components/schemas/ImageURLObject'
-        index:
+          title: Id
+        data:
+          type: string
+          title: Data
+        expires_at:
           type: integer
-          title: Index
-        type:
+          title: Expires At
+        transcript:
           type: string
-          const: image_url
-          title: Type
+          title: Transcript
       additionalProperties: true
       type: object
       required:
-      - image_url
-      - index
-      - type
-      title: ImageURLListItem
-    ListAccessGroupsResponse:
-      properties:
-        access_groups:
-          items:
-            $ref: '#/components/schemas/AccessGroupInfo'
-          type: array
-          title: Access Groups
-      type: object
-      required:
-      - access_groups
-      title: ListAccessGroupsResponse
+      - id
+      - data
+      - expires_at
+      - transcript
+      title: ChatCompletionAudioResponse
     UpdateModelGroupRequest:
       properties:
         model_names:
@@ -1825,30 +1808,6 @@ components:
           title: Model Ids
       type: object
       title: UpdateModelGroupRequest
-    ChatCompletionReasoningSummaryTextBlock:
-      properties:
-        type:
-          const: summary_text
-          title: Type
-          type: string
-        text:
-          title: Text
-          type: string
-      required:
-      - type
-      title: ChatCompletionReasoningSummaryTextBlock
-      type: object
-    ChatCompletionAnnotation:
-      properties:
-        type:
-          type: string
-          const: url_citation
-          title: Type
-        url_citation:
-          $ref: '#/components/schemas/ChatCompletionAnnotationURLCitation'
-      additionalProperties: true
-      type: object
-      title: ChatCompletionAnnotation
     FunctionCall:
       properties:
         arguments:
@@ -1864,25 +1823,218 @@ components:
       required:
       - arguments
       title: FunctionCall
-    AccessGroupInfo:
+    Choices:
       properties:
-        access_group:
+        finish_reason:
           type: string
-          title: Access Group
-        model_names:
-          items:
-            type: string
-          type: array
-          title: Model Names
-        deployment_count:
+          enum:
+          - stop
+          - content_filter
+          - function_call
+          - tool_calls
+          - length
+          - guardrail_intervened
+          - eos
+          - finish_reason_unspecified
+          - malformed_function_call
+          title: Finish Reason
+        index:
           type: integer
-          title: Deployment Count
+          title: Index
+        message:
+          $ref: '#/components/schemas/Message'
+        logprobs:
+          anyOf:
+          - $ref: '#/components/schemas/ChoiceLogprobs'
+          - {}
+          - type: 'null'
+          title: Logprobs
+        provider_specific_fields:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Specific Fields
+      additionalProperties: true
       type: object
       required:
-      - access_group
-      - model_names
-      - deployment_count
-      title: AccessGroupInfo
+      - finish_reason
+      - index
+      - message
+      title: Choices
+    ChatCompletionReasoningSummaryTextBlock:
+      properties:
+        type:
+          const: summary_text
+          title: Type
+          type: string
+        text:
+          title: Text
+          type: string
+      required:
+      - type
+      title: ChatCompletionReasoningSummaryTextBlock
+      type: object
+    ChatCompletionRedactedThinkingBlock:
+      properties:
+        type:
+          const: redacted_thinking
+          title: Type
+          type: string
+        data:
+          title: Data
+          type: string
+        cache_control:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - $ref: '#/components/schemas/ChatCompletionCachedContent'
+          - type: 'null'
+          title: Cache Control
+      required:
+      - type
+      title: ChatCompletionRedactedThinkingBlock
+      type: object
+    ChatCompletionAnnotation:
+      properties:
+        type:
+          type: string
+          const: url_citation
+          title: Type
+        url_citation:
+          $ref: '#/components/schemas/ChatCompletionAnnotationURLCitation'
+      additionalProperties: true
+      type: object
+      title: ChatCompletionAnnotation
+    ImageURLObject:
+      properties:
+        url:
+          type: string
+          title: Url
+        detail:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Detail
+      additionalProperties: true
+      type: object
+      required:
+      - url
+      title: ImageURLObject
+    updateDeployment:
+      properties:
+        model_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Name
+        litellm_params:
+          anyOf:
+          - $ref: '#/components/schemas/updateLiteLLMParams'
+          - type: 'null'
+        model_info:
+          anyOf:
+          - $ref: '#/components/schemas/ModelInfo'
+          - type: 'null'
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+      type: object
+      title: updateDeployment
+    Message:
+      properties:
+        content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Content
+        role:
+          type: string
+          enum:
+          - assistant
+          - user
+          - system
+          - tool
+          - function
+          title: Role
+        tool_calls:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ChatCompletionMessageToolCall'
+            type: array
+          - type: 'null'
+          title: Tool Calls
+        function_call:
+          anyOf:
+          - $ref: '#/components/schemas/FunctionCall'
+          - type: 'null'
+        audio:
+          anyOf:
+          - $ref: '#/components/schemas/ChatCompletionAudioResponse'
+          - type: 'null'
+        images:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ImageURLListItem'
+            type: array
+          - type: 'null'
+          title: Images
+        reasoning_content:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reasoning Content
+        thinking_blocks:
+          anyOf:
+          - items:
+              anyOf:
+              - $ref: '#/components/schemas/ChatCompletionThinkingBlock'
+              - $ref: '#/components/schemas/ChatCompletionRedactedThinkingBlock'
+            type: array
+          - type: 'null'
+          title: Thinking Blocks
+        reasoning_items:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ChatCompletionReasoningItem'
+            type: array
+          - type: 'null'
+          title: Reasoning Items
+        provider_specific_fields:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Specific Fields
+        annotations:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ChatCompletionAnnotation'
+            type: array
+          - type: 'null'
+          title: Annotations
+      additionalProperties: true
+      type: object
+      required:
+      - content
+      - role
+      - tool_calls
+      - function_call
+      title: Message
+    ChoiceLogprobs:
+      properties:
+        content:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ChatCompletionTokenLogprob'
+            type: array
+          - type: 'null'
+          title: Content
+      additionalProperties: true
+      type: object
+      title: ChoiceLogprobs
     updateLiteLLMParams:
       properties:
         input_cost_per_token:
@@ -2562,49 +2714,215 @@ components:
       additionalProperties: true
       type: object
       title: updateLiteLLMParams
-    ConfigurableClientsideParamsCustomAuth-Output:
-      properties:
-        api_base:
-          type: string
-          title: Api Base
-      type: object
-      required:
-      - api_base
-      title: ConfigurableClientsideParamsCustomAuth
-    ChoiceLogprobs:
-      properties:
-        content:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionTokenLogprob'
-            type: array
-          - type: 'null'
-          title: Content
-      additionalProperties: true
-      type: object
-      title: ChoiceLogprobs
-    ChatCompletionAudioResponse:
+    ModelResponse:
       properties:
         id:
           type: string
           title: Id
-        data:
-          type: string
-          title: Data
-        expires_at:
+        created:
           type: integer
-          title: Expires At
-        transcript:
+          title: Created
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        object:
           type: string
-          title: Transcript
+          title: Object
+        system_fingerprint:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: System Fingerprint
+        choices:
+          items:
+            $ref: '#/components/schemas/Choices'
+          type: array
+          title: Choices
       additionalProperties: true
       type: object
       required:
       - id
-      - data
-      - expires_at
-      - transcript
-      title: ChatCompletionAudioResponse
+      - created
+      - object
+      - choices
+      title: ModelResponse
+    ChatCompletionMessageToolCall:
+      properties: {}
+      additionalProperties: true
+      type: object
+      title: ChatCompletionMessageToolCall
+    ImageURLListItem:
+      properties:
+        image_url:
+          $ref: '#/components/schemas/ImageURLObject'
+        index:
+          type: integer
+          title: Index
+        type:
+          type: string
+          const: image_url
+          title: Type
+      additionalProperties: true
+      type: object
+      required:
+      - image_url
+      - index
+      - type
+      title: ImageURLListItem
+    LiteLLM_ProxyModelTable:
+      properties:
+        model_id:
+          type: string
+          title: Model Id
+        model_name:
+          type: string
+          title: Model Name
+        litellm_params:
+          additionalProperties: true
+          type: object
+          title: Litellm Params
+        model_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Info
+        blocked:
+          type: boolean
+          title: Blocked
+          default: false
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+      type: object
+      required:
+      - model_id
+      - model_name
+      - litellm_params
+      title: LiteLLM_ProxyModelTable
+    NewModelGroupRequest:
+      properties:
+        access_group:
+          type: string
+          title: Access Group
+        model_names:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Names
+        model_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Model Ids
+      type: object
+      required:
+      - access_group
+      title: NewModelGroupRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ChatCompletionTokenLogprob:
+      properties:
+        token:
+          type: string
+          title: Token
+        bytes:
+          anyOf:
+          - items:
+              type: integer
+            type: array
+          - type: 'null'
+          title: Bytes
+        logprob:
+          type: number
+          title: Logprob
+        top_logprobs:
+          items:
+            $ref: '#/components/schemas/TopLogprob'
+          type: array
+          title: Top Logprobs
+      additionalProperties: true
+      type: object
+      required:
+      - token
+      - logprob
+      - top_logprobs
+      title: ChatCompletionTokenLogprob
+    ChatCompletionCachedContent:
+      properties:
+        type:
+          const: ephemeral
+          title: Type
+          type: string
+        ttl:
+          enum:
+          - 5m
+          - 1h
+          title: Ttl
+          type: string
+      required:
+      - type
+      title: ChatCompletionCachedContent
+      type: object
+    ConfigurableClientsideParamsCustomAuth-Input:
+      properties:
+        api_base:
+          type: string
+          title: Api Base
+      additionalProperties: true
+      type: object
+      required:
+      - api_base
+      title: ConfigurableClientsideParamsCustomAuth
     LiteLLM_Params:
       properties:
         input_cost_per_token:
@@ -3285,49 +3603,6 @@ components:
       - model
       title: LiteLLM_Params
       description: LiteLLM Params with 'model' requirement - used for completions
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ChatCompletionAnnotationURLCitation:
-      properties:
-        end_index:
-          type: integer
-          title: End Index
-        start_index:
-          type: integer
-          title: Start Index
-        title:
-          type: string
-          title: Title
-        url:
-          type: string
-          title: Url
-      additionalProperties: true
-      type: object
-      title: ChatCompletionAnnotationURLCitation
     ChatCompletionReasoningItem:
       description: Represents an OpenAI Responses API reasoning item for round-tripping in conversation history.
       properties:
@@ -3352,109 +3627,70 @@ components:
       - type
       title: ChatCompletionReasoningItem
       type: object
-    NewModelGroupRequest:
+    ChatCompletionThinkingBlock:
       properties:
-        access_group:
+        type:
+          const: thinking
+          title: Type
           type: string
-          title: Access Group
-        model_names:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Names
-        model_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Model Ids
-      type: object
-      required:
-      - access_group
-      title: NewModelGroupRequest
-    Message:
-      properties:
-        content:
+        thinking:
+          title: Thinking
+          type: string
+        signature:
           anyOf:
           - type: string
           - type: 'null'
-          title: Content
-        role:
-          type: string
-          enum:
-          - assistant
-          - user
-          - system
-          - tool
-          - function
-          title: Role
-        tool_calls:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionMessageToolCall'
-            type: array
-          - type: 'null'
-          title: Tool Calls
-        function_call:
-          anyOf:
-          - $ref: '#/components/schemas/FunctionCall'
-          - type: 'null'
-        audio:
-          anyOf:
-          - $ref: '#/components/schemas/ChatCompletionAudioResponse'
-          - type: 'null'
-        images:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ImageURLListItem'
-            type: array
-          - type: 'null'
-          title: Images
-        reasoning_content:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reasoning Content
-        thinking_blocks:
-          anyOf:
-          - items:
-              anyOf:
-              - $ref: '#/components/schemas/ChatCompletionThinkingBlock'
-              - $ref: '#/components/schemas/ChatCompletionRedactedThinkingBlock'
-            type: array
-          - type: 'null'
-          title: Thinking Blocks
-        reasoning_items:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionReasoningItem'
-            type: array
-          - type: 'null'
-          title: Reasoning Items
-        provider_specific_fields:
+          title: Signature
+        cache_control:
           anyOf:
           - additionalProperties: true
             type: object
+          - $ref: '#/components/schemas/ChatCompletionCachedContent'
           - type: 'null'
-          title: Provider Specific Fields
-        annotations:
+          title: Cache Control
+      required:
+      - type
+      title: ChatCompletionThinkingBlock
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PublicModelHubInfo:
+      properties:
+        docs_title:
+          type: string
+          title: Docs Title
+        custom_docs_description:
           anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionAnnotation'
-            type: array
+          - type: string
           - type: 'null'
-          title: Annotations
-      additionalProperties: true
+          title: Custom Docs Description
+        litellm_version:
+          type: string
+          title: Litellm Version
+        useful_links:
+          anyOf:
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+            type: object
+          - type: 'null'
+          title: Useful Links
       type: object
       required:
-      - content
-      - role
-      - tool_calls
-      - function_call
-      title: Message
+      - docs_title
+      - custom_docs_description
+      - litellm_version
+      - useful_links
+      title: PublicModelHubInfo
     NewModelGroupResponse:
       properties:
         access_group:
@@ -3482,88 +3718,46 @@ components:
       - access_group
       - models_updated
       title: NewModelGroupResponse
-    Deployment:
+    BlockModelRequest:
       properties:
-        model_name:
+        model_id:
           type: string
-          title: Model Name
-        litellm_params:
-          $ref: '#/components/schemas/LiteLLM_Params'
-        model_info:
-          $ref: '#/components/schemas/ModelInfo'
-      additionalProperties: true
+          title: Model Id
       type: object
       required:
-      - model_name
-      - litellm_params
-      - model_info
-      title: Deployment
-    DeleteModelGroupResponse:
+      - model_id
+      title: BlockModelRequest
+    UpdatePublicModelGroupsRequest:
       properties:
-        access_group:
-          type: string
-          title: Access Group
-        models_updated:
+        model_groups:
+          items:
+            type: string
+          type: array
+          title: Model Groups
+          description: List of model group names to make public
+      additionalProperties: false
+      type: object
+      required:
+      - model_groups
+      title: UpdatePublicModelGroupsRequest
+      description: Request model for updating public model groups
+    ChatCompletionAnnotationURLCitation:
+      properties:
+        end_index:
           type: integer
-          title: Models Updated
-        message:
+          title: End Index
+        start_index:
+          type: integer
+          title: Start Index
+        title:
           type: string
-          title: Message
-      type: object
-      required:
-      - access_group
-      - models_updated
-      - message
-      title: DeleteModelGroupResponse
-    ImageURLObject:
-      properties:
+          title: Title
         url:
           type: string
           title: Url
-        detail:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Detail
       additionalProperties: true
       type: object
-      required:
-      - url
-      title: ImageURLObject
-    ChatCompletionRedactedThinkingBlock:
-      properties:
-        type:
-          const: redacted_thinking
-          title: Type
-          type: string
-        data:
-          title: Data
-          type: string
-        cache_control:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/ChatCompletionCachedContent'
-          - type: 'null'
-          title: Cache Control
-      required:
-      - type
-      title: ChatCompletionRedactedThinkingBlock
-      type: object
-    UpdateUsefulLinksRequest:
-      properties:
-        useful_links:
-          additionalProperties:
-            anyOf:
-            - type: string
-            - additionalProperties: true
-              type: object
-          type: object
-          title: Useful Links
-      type: object
-      required:
-      - useful_links
-      title: UpdateUsefulLinksRequest
+      title: ChatCompletionAnnotationURLCitation
     ModelGroupInfoProxy:
       properties:
         model_group:
@@ -3699,243 +3893,71 @@ components:
       - model_group
       - providers
       title: ModelGroupInfoProxy
-    UpdatePublicModelGroupsRequest:
+    AccessGroupInfo:
       properties:
-        model_groups:
+        access_group:
+          type: string
+          title: Access Group
+        model_names:
           items:
             type: string
           type: array
-          title: Model Groups
-          description: List of model group names to make public
-      additionalProperties: false
-      type: object
-      required:
-      - model_groups
-      title: UpdatePublicModelGroupsRequest
-      description: Request model for updating public model groups
-    ChatCompletionMessageToolCall:
-      properties: {}
-      additionalProperties: true
-      type: object
-      title: ChatCompletionMessageToolCall
-    Choices:
-      properties:
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - content_filter
-          - function_call
-          - tool_calls
-          - length
-          - guardrail_intervened
-          - eos
-          - finish_reason_unspecified
-          - malformed_function_call
-          title: Finish Reason
-        index:
+          title: Model Names
+        deployment_count:
           type: integer
-          title: Index
+          title: Deployment Count
+      type: object
+      required:
+      - access_group
+      - model_names
+      - deployment_count
+      title: AccessGroupInfo
+    ListAccessGroupsResponse:
+      properties:
+        access_groups:
+          items:
+            $ref: '#/components/schemas/AccessGroupInfo'
+          type: array
+          title: Access Groups
+      type: object
+      required:
+      - access_groups
+      title: ListAccessGroupsResponse
+    ConfigurableClientsideParamsCustomAuth-Output:
+      properties:
+        api_base:
+          type: string
+          title: Api Base
+      type: object
+      required:
+      - api_base
+      title: ConfigurableClientsideParamsCustomAuth
+    DeleteModelGroupResponse:
+      properties:
+        access_group:
+          type: string
+          title: Access Group
+        models_updated:
+          type: integer
+          title: Models Updated
         message:
-          $ref: '#/components/schemas/Message'
-        logprobs:
-          anyOf:
-          - $ref: '#/components/schemas/ChoiceLogprobs'
-          - {}
-          - type: 'null'
-          title: Logprobs
-        provider_specific_fields:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Provider Specific Fields
-      additionalProperties: true
+          type: string
+          title: Message
       type: object
       required:
-      - finish_reason
-      - index
+      - access_group
+      - models_updated
       - message
-      title: Choices
-    LiteLLM_ProxyModelTable:
+      title: DeleteModelGroupResponse
+    ModelInfoDelete:
       properties:
-        model_id:
+        id:
           type: string
-          title: Model Id
-        model_name:
-          type: string
-          title: Model Name
-        litellm_params:
-          additionalProperties: true
-          type: object
-          title: Litellm Params
-        model_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Info
-        blocked:
-          type: boolean
-          title: Blocked
-          default: false
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
+          title: Id
       type: object
       required:
-      - model_id
-      - model_name
-      - litellm_params
-      title: LiteLLM_ProxyModelTable
-    ChatCompletionCachedContent:
-      properties:
-        type:
-          const: ephemeral
-          title: Type
-          type: string
-        ttl:
-          enum:
-          - 5m
-          - 1h
-          title: Ttl
-          type: string
-      required:
-      - type
-      title: ChatCompletionCachedContent
-      type: object
-    PublicModelHubInfo:
-      properties:
-        docs_title:
-          type: string
-          title: Docs Title
-        custom_docs_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Docs Description
-        litellm_version:
-          type: string
-          title: Litellm Version
-        useful_links:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - additionalProperties: true
-                type: object
-            type: object
-          - type: 'null'
-          title: Useful Links
-      type: object
-      required:
-      - docs_title
-      - custom_docs_description
-      - litellm_version
-      - useful_links
-      title: PublicModelHubInfo
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ChatCompletionTokenLogprob:
-      properties:
-        token:
-          type: string
-          title: Token
-        bytes:
-          anyOf:
-          - items:
-              type: integer
-            type: array
-          - type: 'null'
-          title: Bytes
-        logprob:
-          type: number
-          title: Logprob
-        top_logprobs:
-          items:
-            $ref: '#/components/schemas/TopLogprob'
-          type: array
-          title: Top Logprobs
-      additionalProperties: true
-      type: object
-      required:
-      - token
-      - logprob
-      - top_logprobs
-      title: ChatCompletionTokenLogprob
-    ChatCompletionThinkingBlock:
-      properties:
-        type:
-          const: thinking
-          title: Type
-          type: string
-        thinking:
-          title: Thinking
-          type: string
-        signature:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Signature
-        cache_control:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/ChatCompletionCachedContent'
-          - type: 'null'
-          title: Cache Control
-      required:
-      - type
-      title: ChatCompletionThinkingBlock
-      type: object
-    updateDeployment:
-      properties:
-        model_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model Name
-        litellm_params:
-          anyOf:
-          - $ref: '#/components/schemas/updateLiteLLMParams'
-          - type: 'null'
-        model_info:
-          anyOf:
-          - $ref: '#/components/schemas/ModelInfo'
-          - type: 'null'
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-      type: object
-      title: updateDeployment
+      - id
+      title: ModelInfoDelete
     ModelInfo:
       properties:
         id:
@@ -4002,40 +4024,36 @@ components:
       required:
       - id
       title: ModelInfo
-    ModelResponse:
+    Deployment:
       properties:
-        id:
+        model_name:
           type: string
-          title: Id
-        created:
-          type: integer
-          title: Created
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        object:
-          type: string
-          title: Object
-        system_fingerprint:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: System Fingerprint
-        choices:
-          items:
-            $ref: '#/components/schemas/Choices'
-          type: array
-          title: Choices
+          title: Model Name
+        litellm_params:
+          $ref: '#/components/schemas/LiteLLM_Params'
+        model_info:
+          $ref: '#/components/schemas/ModelInfo'
       additionalProperties: true
       type: object
       required:
-      - id
-      - created
-      - object
-      - choices
-      title: ModelResponse
+      - model_name
+      - litellm_params
+      - model_info
+      title: Deployment
+    UpdateUsefulLinksRequest:
+      properties:
+        useful_links:
+          additionalProperties:
+            anyOf:
+            - type: string
+            - additionalProperties: true
+              type: object
+          type: object
+          title: Useful Links
+      type: object
+      required:
+      - useful_links
+      title: UpdateUsefulLinksRequest
     TopLogprob:
       properties:
         token:
@@ -4057,24 +4075,6 @@ components:
       - token
       - logprob
       title: TopLogprob
-    ModelInfoDelete:
-      properties:
-        id:
-          type: string
-          title: Id
-      type: object
-      required:
-      - id
-      title: ModelInfoDelete
-    BlockModelRequest:
-      properties:
-        model_id:
-          type: string
-          title: Model Id
-      type: object
-      required:
-      - model_id
-      title: BlockModelRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

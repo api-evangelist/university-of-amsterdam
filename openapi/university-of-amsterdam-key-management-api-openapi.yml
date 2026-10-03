@@ -1272,6 +1272,939 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    FailedKeyUpdate:
+      properties:
+        key:
+          type: string
+          title: Key
+        key_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Key Info
+        failed_reason:
+          type: string
+          title: Failed Reason
+      type: object
+      required:
+      - key
+      - failed_reason
+      title: FailedKeyUpdate
+      description: Failed key update with reason
+    UpdateRouterConfig:
+      properties:
+        routing_strategy_args:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routing Strategy Args
+        routing_strategy:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Routing Strategy
+        routing_groups:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/RoutingGroup'
+            type: array
+          - type: 'null'
+          title: Routing Groups
+        retry_policy:
+          anyOf:
+          - $ref: '#/components/schemas/RetryPolicy'
+          - type: 'null'
+        model_group_retry_policy:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/RetryPolicy'
+            type: object
+          - type: 'null'
+          title: Model Group Retry Policy
+        model_group_affinity_config:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Model Group Affinity Config
+        allowed_fails:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Allowed Fails
+        cooldown_time:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cooldown Time
+        num_retries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Num Retries
+        timeout:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Timeout
+        max_retries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Retries
+        retry_after:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Retry After
+        fallbacks:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Fallbacks
+        context_window_fallbacks:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Context Window Fallbacks
+        model_group_alias:
+          anyOf:
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+            type: object
+          - type: 'null'
+          title: Model Group Alias
+          default: {}
+        enable_tag_filtering:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Enable Tag Filtering
+      type: object
+      title: UpdateRouterConfig
+      description: Set of params that you can modify via `router.update_settings()`.
+    BlockKeyRequest:
+      properties:
+        key:
+          type: string
+          title: Key
+      type: object
+      required:
+      - key
+      title: BlockKeyRequest
+    AllowedVectorStoreIndexItem:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        index_permissions:
+          items:
+            type: string
+            enum:
+            - read
+            - write
+          type: array
+          title: Index Permissions
+      type: object
+      required:
+      - index_name
+      - index_permissions
+      title: AllowedVectorStoreIndexItem
+    LiteLLM_DeletedVerificationToken:
+      properties:
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+        key_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Name
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        expires:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires
+        models:
+          items: {}
+          type: array
+          title: Models
+          default: []
+        aliases:
+          additionalProperties: true
+          type: object
+          title: Aliases
+          default: {}
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+          default: {}
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+        project_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Id
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+          default: {}
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        allowed_cache_controls:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Cache Controls
+          default: []
+        allowed_routes:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Routes
+          default: []
+        key_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Type
+        permissions:
+          additionalProperties: true
+          type: object
+          title: Permissions
+          default: {}
+        model_spend:
+          additionalProperties: true
+          type: object
+          title: Model Spend
+          default: {}
+        model_max_budget:
+          additionalProperties: true
+          type: object
+          title: Model Max Budget
+          default: {}
+        budget_fallbacks:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Budget Fallbacks
+          default: {}
+        soft_budget_cooldown:
+          type: boolean
+          title: Soft Budget Cooldown
+          default: false
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+        litellm_budget_table:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Litellm Budget Table
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+        last_active:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Active
+        object_permission_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Object Permission Id
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
+          - type: 'null'
+        access_group_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Group Ids
+        rotation_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation Count
+          default: 0
+        auto_rotate:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Auto Rotate
+          default: false
+        rotation_interval:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rotation Interval
+        last_rotation_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Rotation At
+        key_rotation_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Key Rotation At
+        router_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Router Settings
+        budget_limits:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Budget Limits
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        deleted_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Deleted At
+        deleted_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted By
+        deleted_by_api_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deleted By Api Key
+        litellm_changed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Litellm Changed By
+      type: object
+      title: LiteLLM_DeletedVerificationToken
+      description: Audit record for deleted keys; mirrors the token plus deletion metadata.
+    KeyUpdateFields:
+      properties:
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_limits:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Budget Limits
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        model_tpm_limit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Tpm Limit
+        model_rpm_limit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Rpm Limit
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        rpm_limit_type:
+          anyOf:
+          - type: string
+            enum:
+            - guaranteed_throughput
+            - best_effort_throughput
+            - dynamic
+          - type: 'null'
+          title: Rpm Limit Type
+        tpm_limit_type:
+          anyOf:
+          - type: string
+            enum:
+            - guaranteed_throughput
+            - best_effort_throughput
+            - dynamic
+          - type: 'null'
+          title: Tpm Limit Type
+        temp_budget_increase:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Temp Budget Increase
+        temp_budget_expiry:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Temp Budget Expiry
+        duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Duration
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      additionalProperties: false
+      type: object
+      title: KeyUpdateFields
+      description: Allowlist of bulk-broadcastable fields for /team/key/bulk_update; `extra="forbid"` blocks RBAC/ownership/scope mutations even by team admins.
+    BulkUpdateKeyResponse:
+      properties:
+        total_requested:
+          type: integer
+          title: Total Requested
+        successful_updates:
+          items:
+            $ref: '#/components/schemas/SuccessfulKeyUpdate'
+          type: array
+          title: Successful Updates
+        failed_updates:
+          items:
+            $ref: '#/components/schemas/FailedKeyUpdate'
+          type: array
+          title: Failed Updates
+      type: object
+      required:
+      - total_requested
+      - successful_updates
+      - failed_updates
+      title: BulkUpdateKeyResponse
+      description: Response for bulk key update operations
+    SuccessfulKeyUpdate:
+      properties:
+        key:
+          type: string
+          title: Key
+        key_info:
+          additionalProperties: true
+          type: object
+          title: Key Info
+      type: object
+      required:
+      - key
+      - key_info
+      title: SuccessfulKeyUpdate
+      description: Successfully updated key with its updated information
+    RoutingGroup:
+      properties:
+        group_name:
+          type: string
+          title: Group Name
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+        routing_strategy:
+          type: string
+          title: Routing Strategy
+        routing_strategy_args:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routing Strategy Args
+      type: object
+      required:
+      - group_name
+      - models
+      - routing_strategy
+      title: RoutingGroup
+      description: A group of models that share a routing strategy.
+    RetryPolicy:
+      properties:
+        BadRequestErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Badrequesterrorretries
+        AuthenticationErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Authenticationerrorretries
+        TimeoutErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Timeouterrorretries
+        RateLimitErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Ratelimiterrorretries
+        ContentPolicyViolationErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Contentpolicyviolationerrorretries
+        InternalServerErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Internalservererrorretries
+      type: object
+      title: RetryPolicy
+      description: 'Use this to set a custom number of retries per exception type
+
+        If RateLimitErrorRetries = 3, then 3 retries will be made for RateLimitError
+
+        Mapping of Exception type to number of retries
+
+        https://docs.litellm.ai/docs/exception_mapping'
+    UpdateKeyRequest:
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Duration
+        models:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Models
+          default: []
+        spend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Spend
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_limits:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BudgetLimitEntry'
+            type: array
+          - type: 'null'
+          title: Budget Limits
+        allowed_cache_controls:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Cache Controls
+          default: []
+        config:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Config
+          default: {}
+        permissions:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Permissions
+          default: {}
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+          default: {}
+        budget_fallbacks:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Budget Fallbacks
+        model_rpm_limit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Rpm Limit
+        model_tpm_limit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Tpm Limit
+        mcp_rpm_limit:
+          anyOf:
+          - additionalProperties:
+              type: integer
+            type: object
+          - type: 'null'
+          title: Mcp Rpm Limit
+        tag_rpm_limit:
+          anyOf:
+          - additionalProperties:
+              type: integer
+            type: object
+          - type: 'null'
+          title: Tag Rpm Limit
+        guardrails:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Guardrails
+        policies:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Policies
+        prompts:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Prompts
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+        aliases:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Aliases
+          default: {}
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionBase'
+          - type: 'null'
+        key:
+          type: string
+          title: Key
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+        disable_global_guardrails:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Disable Global Guardrails
+        throttle_on_budget_exceeded:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Throttle On Budget Exceeded
+        enforced_params:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Enforced Params
+        allowed_routes:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Routes
+          default: []
+        allowed_passthrough_routes:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Passthrough Routes
+        allowed_vector_store_indexes:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AllowedVectorStoreIndexItem'
+            type: array
+          - type: 'null'
+          title: Allowed Vector Store Indexes
+        rpm_limit_type:
+          anyOf:
+          - type: string
+            enum:
+            - guaranteed_throughput
+            - best_effort_throughput
+            - dynamic
+          - type: 'null'
+          title: Rpm Limit Type
+        tpm_limit_type:
+          anyOf:
+          - type: string
+            enum:
+            - guaranteed_throughput
+            - best_effort_throughput
+            - dynamic
+          - type: 'null'
+          title: Tpm Limit Type
+        router_settings:
+          anyOf:
+          - $ref: '#/components/schemas/UpdateRouterConfig'
+          - type: 'null'
+        access_group_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Access Group Ids
+        temp_budget_increase:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Temp Budget Increase
+        temp_budget_expiry:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Temp Budget Expiry
+        auto_rotate:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Auto Rotate
+        rotation_interval:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rotation Interval
+        organization_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Organization Id
+      type: object
+      required:
+      - key
+      title: UpdateKeyRequest
     RegenerateKeyRequest:
       properties:
         key_alias:
@@ -1588,200 +2521,26 @@ components:
           title: Grace Period
       type: object
       title: RegenerateKeyRequest
-    RetryPolicy:
-      properties:
-        BadRequestErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Badrequesterrorretries
-        AuthenticationErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Authenticationerrorretries
-        TimeoutErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Timeouterrorretries
-        RateLimitErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Ratelimiterrorretries
-        ContentPolicyViolationErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Contentpolicyviolationerrorretries
-        InternalServerErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Internalservererrorretries
-      type: object
-      title: RetryPolicy
-      description: 'Use this to set a custom number of retries per exception type
-
-        If RateLimitErrorRetries = 3, then 3 retries will be made for RateLimitError
-
-        Mapping of Exception type to number of retries
-
-        https://docs.litellm.ai/docs/exception_mapping'
-    LitellmUserRoles:
-      type: string
-      enum:
-      - proxy_admin
-      - proxy_admin_viewer
-      - org_admin
-      - internal_user
-      - internal_user_viewer
-      - team
-      - customer
-      title: LitellmUserRoles
-      description: 'Admin Roles:
-
-        PROXY_ADMIN: admin over the platform
-
-        PROXY_ADMIN_VIEW_ONLY: can login, view all own keys, view all spend
-
-        ORG_ADMIN: admin over a specific organization, can create teams, users only within their organization
-
-
-        Internal User Roles:
-
-        INTERNAL_USER: can login, view/create/delete their own keys, view their spend
-
-        INTERNAL_USER_VIEW_ONLY: can login, view their own keys, view their own spend
-
-
-
-        Team Roles:
-
-        TEAM: used for JWT auth
-
-
-
-        Customer Roles:
-
-        CUSTOMER: External users -> these are customers'
-    KeyHealthResponse:
+    BulkUpdateKeyRequestItem:
       properties:
         key:
           type: string
-          enum:
-          - healthy
-          - unhealthy
           title: Key
-        logging_callbacks:
-          anyOf:
-          - $ref: '#/components/schemas/LoggingCallbackStatus'
-          - type: 'null'
-      type: object
-      title: KeyHealthResponse
-    BulkUpdateKeyRequest:
-      properties:
-        keys:
-          items:
-            $ref: '#/components/schemas/BulkUpdateKeyRequestItem'
-          type: array
-          title: Keys
-      type: object
-      required:
-      - keys
-      title: BulkUpdateKeyRequest
-      description: Request for bulk key updates
-    KeyUpdateFields:
-      properties:
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
         budget_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Budget Id
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_limits:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Budget Limits
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        model_tpm_limit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Tpm Limit
-        model_rpm_limit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Rpm Limit
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        rpm_limit_type:
-          anyOf:
-          - type: string
-            enum:
-            - guaranteed_throughput
-            - best_effort_throughput
-            - dynamic
-          - type: 'null'
-          title: Rpm Limit Type
-        tpm_limit_type:
-          anyOf:
-          - type: string
-            enum:
-            - guaranteed_throughput
-            - best_effort_throughput
-            - dynamic
-          - type: 'null'
-          title: Tpm Limit Type
-        temp_budget_increase:
+        max_budget:
           anyOf:
           - type: number
           - type: 'null'
-          title: Temp Budget Increase
-        temp_budget_expiry:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Temp Budget Expiry
-        duration:
+          title: Max Budget
+        team_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Duration
+          title: Team Id
         tags:
           anyOf:
           - items:
@@ -1789,691 +2548,56 @@ components:
             type: array
           - type: 'null'
           title: Tags
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      additionalProperties: false
-      type: object
-      title: KeyUpdateFields
-      description: Allowlist of bulk-broadcastable fields for /team/key/bulk_update; `extra="forbid"` blocks RBAC/ownership/scope mutations even by team admins.
-    Member:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: The unique ID of the user to add. Either user_id or user_email must be provided
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-          description: The email address of the user to add. Either user_id or user_email must be provided
-        role:
-          type: string
-          enum:
-          - admin
-          - user
-          title: Role
-          description: The role of the user within the team. 'admin' users can manage team settings and members, 'user' is a regular team member
       type: object
       required:
-      - role
-      title: Member
-    ValidationError:
+      - key
+      title: BulkUpdateKeyRequestItem
+      description: Individual key update request item
+    KeyListResponseObject:
       properties:
-        loc:
+        keys:
           items:
             anyOf:
             - type: string
-            - type: integer
+            - $ref: '#/components/schemas/UserAPIKeyAuth'
+            - $ref: '#/components/schemas/LiteLLM_DeletedVerificationToken'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    UpdateRouterConfig:
-      properties:
-        routing_strategy_args:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Routing Strategy Args
-        routing_strategy:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Routing Strategy
-        routing_groups:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/RoutingGroup'
-            type: array
-          - type: 'null'
-          title: Routing Groups
-        retry_policy:
-          anyOf:
-          - $ref: '#/components/schemas/RetryPolicy'
-          - type: 'null'
-        model_group_retry_policy:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/RetryPolicy'
-            type: object
-          - type: 'null'
-          title: Model Group Retry Policy
-        model_group_affinity_config:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Model Group Affinity Config
-        allowed_fails:
+          title: Keys
+        total_count:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Allowed Fails
-        cooldown_time:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cooldown Time
-        num_retries:
+          title: Total Count
+        current_page:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Num Retries
-        timeout:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Timeout
-        max_retries:
+          title: Current Page
+        total_pages:
           anyOf:
           - type: integer
           - type: 'null'
-          title: Max Retries
-        retry_after:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Retry After
-        fallbacks:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Fallbacks
-        context_window_fallbacks:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Context Window Fallbacks
-        model_group_alias:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - additionalProperties: true
-                type: object
-            type: object
-          - type: 'null'
-          title: Model Group Alias
-          default: {}
-        enable_tag_filtering:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Enable Tag Filtering
+          title: Total Pages
       type: object
-      title: UpdateRouterConfig
-      description: Set of params that you can modify via `router.update_settings()`.
-    RoutingGroup:
+      title: KeyListResponseObject
+    KeyRequest:
       properties:
-        group_name:
-          type: string
-          title: Group Name
-        models:
-          items:
-            type: string
-          type: array
-          title: Models
-        routing_strategy:
-          type: string
-          title: Routing Strategy
-        routing_strategy_args:
+        keys:
           anyOf:
-          - additionalProperties: true
-            type: object
+          - items:
+              type: string
+            type: array
           - type: 'null'
-          title: Routing Strategy Args
+          title: Keys
+        key_aliases:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Key Aliases
       type: object
-      required:
-      - group_name
-      - models
-      - routing_strategy
-      title: RoutingGroup
-      description: A group of models that share a routing strategy.
-    LoggingCallbackStatus:
-      properties:
-        callbacks:
-          items:
-            type: string
-          type: array
-          title: Callbacks
-        status:
-          type: string
-          enum:
-          - healthy
-          - unhealthy
-          title: Status
-        details:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Details
-      type: object
-      title: LoggingCallbackStatus
-    LiteLLM_ObjectPermissionBase:
-      properties:
-        mcp_servers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Servers
-        mcp_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Access Groups
-        mcp_tool_permissions:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Mcp Tool Permissions
-        mcp_toolsets:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Toolsets
-        blocked_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Blocked Tools
-        vector_stores:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Vector Stores
-        agents:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agents
-        agent_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agent Access Groups
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-        search_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Search Tools
-        mcp_tool_search_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mcp Tool Search Enabled
-      type: object
-      title: LiteLLM_ObjectPermissionBase
-    LiteLLM_ObjectPermissionTable:
-      properties:
-        object_permission_id:
-          type: string
-          title: Object Permission Id
-        mcp_servers:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Servers
-          default: []
-        mcp_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Access Groups
-          default: []
-        mcp_tool_permissions:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Mcp Tool Permissions
-        vector_stores:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Vector Stores
-          default: []
-        agents:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agents
-          default: []
-        agent_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agent Access Groups
-          default: []
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-          default: []
-        mcp_toolsets:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Mcp Toolsets
-        blocked_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Blocked Tools
-          default: []
-        search_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Search Tools
-          default: []
-        mcp_tool_search_enabled:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Mcp Tool Search Enabled
-      type: object
-      required:
-      - object_permission_id
-      title: LiteLLM_ObjectPermissionTable
-      description: Represents a LiteLLM_ObjectPermissionTable record
-    BulkUpdateKeyResponse:
-      properties:
-        total_requested:
-          type: integer
-          title: Total Requested
-        successful_updates:
-          items:
-            $ref: '#/components/schemas/SuccessfulKeyUpdate'
-          type: array
-          title: Successful Updates
-        failed_updates:
-          items:
-            $ref: '#/components/schemas/FailedKeyUpdate'
-          type: array
-          title: Failed Updates
-      type: object
-      required:
-      - total_requested
-      - successful_updates
-      - failed_updates
-      title: BulkUpdateKeyResponse
-      description: Response for bulk key update operations
-    LiteLLM_VerificationToken:
-      properties:
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-        key_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Name
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        expires:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires
-        models:
-          items: {}
-          type: array
-          title: Models
-          default: []
-        aliases:
-          additionalProperties: true
-          type: object
-          title: Aliases
-          default: {}
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-          default: {}
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-        project_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Id
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-          default: {}
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        allowed_cache_controls:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Cache Controls
-          default: []
-        allowed_routes:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Routes
-          default: []
-        key_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Type
-        permissions:
-          additionalProperties: true
-          type: object
-          title: Permissions
-          default: {}
-        model_spend:
-          additionalProperties: true
-          type: object
-          title: Model Spend
-          default: {}
-        model_max_budget:
-          additionalProperties: true
-          type: object
-          title: Model Max Budget
-          default: {}
-        budget_fallbacks:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Budget Fallbacks
-          default: {}
-        soft_budget_cooldown:
-          type: boolean
-          title: Soft Budget Cooldown
-          default: false
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-        litellm_budget_table:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Litellm Budget Table
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-        last_active:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Active
-        object_permission_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Object Permission Id
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
-          - type: 'null'
-        access_group_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Group Ids
-        rotation_count:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rotation Count
-          default: 0
-        auto_rotate:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Auto Rotate
-          default: false
-        rotation_interval:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Rotation Interval
-        last_rotation_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Rotation At
-        key_rotation_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Key Rotation At
-        router_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Router Settings
-        budget_limits:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Budget Limits
-      type: object
-      title: LiteLLM_VerificationToken
-    BudgetLimitEntry:
-      properties:
-        budget_duration:
-          type: string
-          title: Budget Duration
-        max_budget:
-          type: number
-          title: Max Budget
-        reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Reset At
-      type: object
-      required:
-      - budget_duration
-      - max_budget
-      title: BudgetLimitEntry
-      description: A single budget window with its own limit and independent reset schedule.
+      title: KeyRequest
     GenerateKeyRequest:
       properties:
         key_alias:
@@ -2777,773 +2901,6 @@ components:
           title: Project Id
       type: object
       title: GenerateKeyRequest
-    GenerateKeyResponse:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Duration
-        models:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Models
-          default: []
-        spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Spend
-          default: 0
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-          default: {}
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_limits:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/BudgetLimitEntry'
-            type: array
-          - type: 'null'
-          title: Budget Limits
-        allowed_cache_controls:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Cache Controls
-          default: []
-        config:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Config
-          default: {}
-        permissions:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Permissions
-          default: {}
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
-          default: {}
-        budget_fallbacks:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Budget Fallbacks
-        model_rpm_limit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Rpm Limit
-        model_tpm_limit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Tpm Limit
-        mcp_rpm_limit:
-          anyOf:
-          - additionalProperties:
-              type: integer
-            type: object
-          - type: 'null'
-          title: Mcp Rpm Limit
-        tag_rpm_limit:
-          anyOf:
-          - additionalProperties:
-              type: integer
-            type: object
-          - type: 'null'
-          title: Tag Rpm Limit
-        guardrails:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Guardrails
-        policies:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Policies
-        prompts:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Prompts
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-        aliases:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Aliases
-          default: {}
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionBase'
-          - type: 'null'
-        key:
-          type: string
-          title: Key
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        tags:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tags
-        disable_global_guardrails:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Disable Global Guardrails
-        throttle_on_budget_exceeded:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Throttle On Budget Exceeded
-        enforced_params:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Enforced Params
-        allowed_routes:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Routes
-          default: []
-        allowed_passthrough_routes:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Passthrough Routes
-        allowed_vector_store_indexes:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AllowedVectorStoreIndexItem'
-            type: array
-          - type: 'null'
-          title: Allowed Vector Store Indexes
-        rpm_limit_type:
-          anyOf:
-          - type: string
-            enum:
-            - guaranteed_throughput
-            - best_effort_throughput
-            - dynamic
-          - type: 'null'
-          title: Rpm Limit Type
-        tpm_limit_type:
-          anyOf:
-          - type: string
-            enum:
-            - guaranteed_throughput
-            - best_effort_throughput
-            - dynamic
-          - type: 'null'
-          title: Tpm Limit Type
-        router_settings:
-          anyOf:
-          - $ref: '#/components/schemas/UpdateRouterConfig'
-          - type: 'null'
-        access_group_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Group Ids
-        key_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Name
-        key_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Type
-        expires:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires
-        token_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token Id
-        organization_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Organization Id
-        project_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Id
-        litellm_budget_table:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Litellm Budget Table
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-      type: object
-      required:
-      - key
-      title: GenerateKeyResponse
-    FailedKeyUpdate:
-      properties:
-        key:
-          type: string
-          title: Key
-        key_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Key Info
-        failed_reason:
-          type: string
-          title: Failed Reason
-      type: object
-      required:
-      - key
-      - failed_reason
-      title: FailedKeyUpdate
-      description: Failed key update with reason
-    AllowedVectorStoreIndexItem:
-      properties:
-        index_name:
-          type: string
-          title: Index Name
-        index_permissions:
-          items:
-            type: string
-            enum:
-            - read
-            - write
-          type: array
-          title: Index Permissions
-      type: object
-      required:
-      - index_name
-      - index_permissions
-      title: AllowedVectorStoreIndexItem
-    BulkUpdateTeamKeysRequest:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-        key_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Key Ids
-        all_keys_in_team:
-          type: boolean
-          title: All Keys In Team
-          default: false
-        update_fields:
-          $ref: '#/components/schemas/KeyUpdateFields'
-      type: object
-      required:
-      - team_id
-      - update_fields
-      title: BulkUpdateTeamKeysRequest
-      description: Apply one update payload to many keys inside a team; provide either `key_ids` or `all_keys_in_team=True`.
-    LiteLLM_DeletedVerificationToken:
-      properties:
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Token
-        key_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Name
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        expires:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Expires
-        models:
-          items: {}
-          type: array
-          title: Models
-          default: []
-        aliases:
-          additionalProperties: true
-          type: object
-          title: Aliases
-          default: {}
-        config:
-          additionalProperties: true
-          type: object
-          title: Config
-          default: {}
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        agent_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Agent Id
-        project_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Project Id
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-          default: {}
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        allowed_cache_controls:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Cache Controls
-          default: []
-        allowed_routes:
-          anyOf:
-          - items: {}
-            type: array
-          - type: 'null'
-          title: Allowed Routes
-          default: []
-        key_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Type
-        permissions:
-          additionalProperties: true
-          type: object
-          title: Permissions
-          default: {}
-        model_spend:
-          additionalProperties: true
-          type: object
-          title: Model Spend
-          default: {}
-        model_max_budget:
-          additionalProperties: true
-          type: object
-          title: Model Max Budget
-          default: {}
-        budget_fallbacks:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          type: object
-          title: Budget Fallbacks
-          default: {}
-        soft_budget_cooldown:
-          type: boolean
-          title: Soft Budget Cooldown
-          default: false
-        blocked:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Blocked
-        litellm_budget_table:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Litellm Budget Table
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        org_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Org Id
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        created_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created By
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        updated_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated By
-        last_active:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Active
-        object_permission_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Object Permission Id
-        object_permission:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
-          - type: 'null'
-        access_group_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Access Group Ids
-        rotation_count:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rotation Count
-          default: 0
-        auto_rotate:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Auto Rotate
-          default: false
-        rotation_interval:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Rotation Interval
-        last_rotation_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Last Rotation At
-        key_rotation_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Key Rotation At
-        router_settings:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Router Settings
-        budget_limits:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Budget Limits
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        deleted_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Deleted At
-        deleted_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deleted By
-        deleted_by_api_key:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Deleted By Api Key
-        litellm_changed_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Litellm Changed By
-      type: object
-      title: LiteLLM_DeletedVerificationToken
-      description: Audit record for deleted keys; mirrors the token plus deletion metadata.
-    ResetSpendRequest:
-      properties:
-        reset_to:
-          type: number
-          title: Reset To
-      type: object
-      required:
-      - reset_to
-      title: ResetSpendRequest
-    LiteLLMKeyType:
-      type: string
-      enum:
-      - llm_api
-      - management
-      - read_only
-      - default
-      title: LiteLLMKeyType
-      description: Enum for key types that determine what routes a key can access
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SuccessfulKeyUpdate:
-      properties:
-        key:
-          type: string
-          title: Key
-        key_info:
-          additionalProperties: true
-          type: object
-          title: Key Info
-      type: object
-      required:
-      - key
-      - key_info
-      title: SuccessfulKeyUpdate
-      description: Successfully updated key with its updated information
-    KeyListResponseObject:
-      properties:
-        keys:
-          items:
-            anyOf:
-            - type: string
-            - $ref: '#/components/schemas/UserAPIKeyAuth'
-            - $ref: '#/components/schemas/LiteLLM_DeletedVerificationToken'
-          type: array
-          title: Keys
-        total_count:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total Count
-        current_page:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Current Page
-        total_pages:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total Pages
-      type: object
-      title: KeyListResponseObject
-    KeyRequest:
-      properties:
-        keys:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Keys
-        key_aliases:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Key Aliases
-      type: object
-      title: KeyRequest
-    BlockKeyRequest:
-      properties:
-        key:
-          type: string
-          title: Key
-      type: object
-      required:
-      - key
-      title: BlockKeyRequest
     UserAPIKeyAuth:
       properties:
         token:
@@ -4042,39 +3399,400 @@ components:
       type: object
       title: UserAPIKeyAuth
       description: Return the row in the db
-    BulkUpdateKeyRequestItem:
+    KeyHealthResponse:
       properties:
         key:
           type: string
+          enum:
+          - healthy
+          - unhealthy
           title: Key
-        budget_id:
+        logging_callbacks:
+          anyOf:
+          - $ref: '#/components/schemas/LoggingCallbackStatus'
+          - type: 'null'
+      type: object
+      title: KeyHealthResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    LiteLLM_VerificationToken:
+      properties:
+        token:
           anyOf:
           - type: string
           - type: 'null'
-          title: Budget Id
+          title: Token
+        key_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Name
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
         max_budget:
           anyOf:
           - type: number
           - type: 'null'
           title: Max Budget
+        expires:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Expires
+        models:
+          items: {}
+          type: array
+          title: Models
+          default: []
+        aliases:
+          additionalProperties: true
+          type: object
+          title: Aliases
+          default: {}
+        config:
+          additionalProperties: true
+          type: object
+          title: Config
+          default: {}
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
         team_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Team Id
-        tags:
+        agent_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Agent Id
+        project_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Id
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+          default: {}
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        allowed_cache_controls:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Cache Controls
+          default: []
+        allowed_routes:
+          anyOf:
+          - items: {}
+            type: array
+          - type: 'null'
+          title: Allowed Routes
+          default: []
+        key_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Type
+        permissions:
+          additionalProperties: true
+          type: object
+          title: Permissions
+          default: {}
+        model_spend:
+          additionalProperties: true
+          type: object
+          title: Model Spend
+          default: {}
+        model_max_budget:
+          additionalProperties: true
+          type: object
+          title: Model Max Budget
+          default: {}
+        budget_fallbacks:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+          title: Budget Fallbacks
+          default: {}
+        soft_budget_cooldown:
+          type: boolean
+          title: Soft Budget Cooldown
+          default: false
+        blocked:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Blocked
+        litellm_budget_table:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Litellm Budget Table
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        org_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Org Id
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+        last_active:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Active
+        object_permission_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Object Permission Id
+        object_permission:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_ObjectPermissionTable'
+          - type: 'null'
+        access_group_ids:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: Tags
+          title: Access Group Ids
+        rotation_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rotation Count
+          default: 0
+        auto_rotate:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Auto Rotate
+          default: false
+        rotation_interval:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rotation Interval
+        last_rotation_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Last Rotation At
+        key_rotation_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Key Rotation At
+        router_settings:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Router Settings
+        budget_limits:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Budget Limits
+      type: object
+      title: LiteLLM_VerificationToken
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LoggingCallbackStatus:
+      properties:
+        callbacks:
+          items:
+            type: string
+          type: array
+          title: Callbacks
+        status:
+          type: string
+          enum:
+          - healthy
+          - unhealthy
+          title: Status
+        details:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Details
+      type: object
+      title: LoggingCallbackStatus
+    BulkUpdateKeyRequest:
+      properties:
+        keys:
+          items:
+            $ref: '#/components/schemas/BulkUpdateKeyRequestItem'
+          type: array
+          title: Keys
       type: object
       required:
-      - key
-      title: BulkUpdateKeyRequestItem
-      description: Individual key update request item
-    UpdateKeyRequest:
+      - keys
+      title: BulkUpdateKeyRequest
+      description: Request for bulk key updates
+    BudgetLimitEntry:
+      properties:
+        budget_duration:
+          type: string
+          title: Budget Duration
+        max_budget:
+          type: number
+          title: Max Budget
+        reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Reset At
+      type: object
+      required:
+      - budget_duration
+      - max_budget
+      title: BudgetLimitEntry
+      description: A single budget window with its own limit and independent reset schedule.
+    LitellmUserRoles:
+      type: string
+      enum:
+      - proxy_admin
+      - proxy_admin_viewer
+      - org_admin
+      - internal_user
+      - internal_user_viewer
+      - team
+      - customer
+      title: LitellmUserRoles
+      description: 'Admin Roles:
+
+        PROXY_ADMIN: admin over the platform
+
+        PROXY_ADMIN_VIEW_ONLY: can login, view all own keys, view all spend
+
+        ORG_ADMIN: admin over a specific organization, can create teams, users only within their organization
+
+
+        Internal User Roles:
+
+        INTERNAL_USER: can login, view/create/delete their own keys, view their spend
+
+        INTERNAL_USER_VIEW_ONLY: can login, view their own keys, view their own spend
+
+
+
+        Team Roles:
+
+        TEAM: used for JWT auth
+
+
+
+        Customer Roles:
+
+        CUSTOMER: External users -> these are customers'
+    GenerateKeyResponse:
       properties:
         key_alias:
           anyOf:
@@ -4098,6 +3816,7 @@ components:
           - type: number
           - type: 'null'
           title: Spend
+          default: 0
         max_budget:
           anyOf:
           - type: number
@@ -4129,6 +3848,7 @@ components:
             type: object
           - type: 'null'
           title: Metadata
+          default: {}
         tpm_limit:
           anyOf:
           - type: integer
@@ -4332,36 +4052,316 @@ components:
             type: array
           - type: 'null'
           title: Access Group Ids
-        temp_budget_increase:
+        key_name:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Temp Budget Increase
-        temp_budget_expiry:
+          title: Key Name
+        key_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Type
+        expires:
           anyOf:
           - type: string
             format: date-time
           - type: 'null'
-          title: Temp Budget Expiry
-        auto_rotate:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Auto Rotate
-        rotation_interval:
+          title: Expires
+        token_id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Rotation Interval
+          title: Token Id
         organization_id:
           anyOf:
           - type: string
           - type: 'null'
           title: Organization Id
+        project_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Project Id
+        litellm_budget_table:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Litellm Budget Table
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+        created_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created By
+        updated_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated By
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
       type: object
       required:
       - key
-      title: UpdateKeyRequest
+      title: GenerateKeyResponse
+    LiteLLM_ObjectPermissionTable:
+      properties:
+        object_permission_id:
+          type: string
+          title: Object Permission Id
+        mcp_servers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Servers
+          default: []
+        mcp_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Access Groups
+          default: []
+        mcp_tool_permissions:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Mcp Tool Permissions
+        vector_stores:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vector Stores
+          default: []
+        agents:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agents
+          default: []
+        agent_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agent Access Groups
+          default: []
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+          default: []
+        mcp_toolsets:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Toolsets
+        blocked_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Blocked Tools
+          default: []
+        search_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Search Tools
+          default: []
+        mcp_tool_search_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mcp Tool Search Enabled
+      type: object
+      required:
+      - object_permission_id
+      title: LiteLLM_ObjectPermissionTable
+      description: Represents a LiteLLM_ObjectPermissionTable record
+    LiteLLMKeyType:
+      type: string
+      enum:
+      - llm_api
+      - management
+      - read_only
+      - default
+      title: LiteLLMKeyType
+      description: Enum for key types that determine what routes a key can access
+    BulkUpdateTeamKeysRequest:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        key_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Key Ids
+        all_keys_in_team:
+          type: boolean
+          title: All Keys In Team
+          default: false
+        update_fields:
+          $ref: '#/components/schemas/KeyUpdateFields'
+      type: object
+      required:
+      - team_id
+      - update_fields
+      title: BulkUpdateTeamKeysRequest
+      description: Apply one update payload to many keys inside a team; provide either `key_ids` or `all_keys_in_team=True`.
+    LiteLLM_ObjectPermissionBase:
+      properties:
+        mcp_servers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Servers
+        mcp_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Access Groups
+        mcp_tool_permissions:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Mcp Tool Permissions
+        mcp_toolsets:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Toolsets
+        blocked_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Blocked Tools
+        vector_stores:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vector Stores
+        agents:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agents
+        agent_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agent Access Groups
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+        search_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Search Tools
+        mcp_tool_search_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mcp Tool Search Enabled
+      type: object
+      title: LiteLLM_ObjectPermissionBase
+    Member:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: The unique ID of the user to add. Either user_id or user_email must be provided
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+          description: The email address of the user to add. Either user_id or user_email must be provided
+        role:
+          type: string
+          enum:
+          - admin
+          - user
+          title: Role
+          description: The role of the user within the team. 'admin' users can manage team settings and members, 'user' is a regular team member
+      type: object
+      required:
+      - role
+      title: Member
+    ResetSpendRequest:
+      properties:
+        reset_to:
+          type: number
+          title: Reset To
+      type: object
+      required:
+      - reset_to
+      title: ResetSpendRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

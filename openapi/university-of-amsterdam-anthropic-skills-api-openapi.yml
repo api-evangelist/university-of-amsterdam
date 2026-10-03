@@ -355,20 +355,6 @@ components:
       - updated_at
       title: Skill
       type: object
-    DeleteSkillResponse:
-      description: Response from deleting a skill
-      properties:
-        id:
-          title: Id
-          type: string
-        type:
-          default: skill_deleted
-          title: Type
-          type: string
-      required:
-      - id
-      title: DeleteSkillResponse
-      type: object
     ListSkillsResponse:
       description: Response from listing skills
       properties:
@@ -416,6 +402,20 @@ components:
       - msg
       - type
       title: ValidationError
+    DeleteSkillResponse:
+      description: Response from deleting a skill
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          default: skill_deleted
+          title: Type
+          type: string
+      required:
+      - id
+      title: DeleteSkillResponse
+      type: object
   securitySchemes:
     APIKeyHeader:
       type: apiKey

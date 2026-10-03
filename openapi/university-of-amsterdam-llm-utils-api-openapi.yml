@@ -132,15 +132,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     RawRequestTypedDict:
       properties:
         raw_request_api_base:
@@ -167,103 +158,6 @@ components:
           title: Error
       type: object
       title: RawRequestTypedDict
-    TokenCountRequest:
-      properties:
-        model:
-          type: string
-          title: Model
-        prompt:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Prompt
-        messages:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Messages
-        contents:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Contents
-        tools:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Tools
-        system:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: System
-      type: object
-      required:
-      - model
-      title: TokenCountRequest
-    TokenCountResponse:
-      properties:
-        total_tokens:
-          type: integer
-          title: Total Tokens
-        request_model:
-          type: string
-          title: Request Model
-        model_used:
-          type: string
-          title: Model Used
-        tokenizer_type:
-          type: string
-          title: Tokenizer Type
-        original_response:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Original Response
-        error:
-          type: boolean
-          title: Error
-          default: false
-        error_message:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error Message
-        status_code:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Status Code
-      type: object
-      required:
-      - total_tokens
-      - request_model
-      - model_used
-      - tokenizer_type
-      title: TokenCountResponse
-    TransformRequestBody:
-      properties:
-        call_type:
-          $ref: '#/components/schemas/CallTypes'
-        request_body:
-          additionalProperties: true
-          type: object
-          title: Request Body
-      type: object
-      required:
-      - call_type
-      - request_body
-      title: TransformRequestBody
     CallTypes:
       type: string
       enum:
@@ -413,6 +307,112 @@ components:
       - send_message
       - acreate_skill
       title: CallTypes
+    TokenCountResponse:
+      properties:
+        total_tokens:
+          type: integer
+          title: Total Tokens
+        request_model:
+          type: string
+          title: Request Model
+        model_used:
+          type: string
+          title: Model Used
+        tokenizer_type:
+          type: string
+          title: Tokenizer Type
+        original_response:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Original Response
+        error:
+          type: boolean
+          title: Error
+          default: false
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+        status_code:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Status Code
+      type: object
+      required:
+      - total_tokens
+      - request_model
+      - model_used
+      - tokenizer_type
+      title: TokenCountResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TransformRequestBody:
+      properties:
+        call_type:
+          $ref: '#/components/schemas/CallTypes'
+        request_body:
+          additionalProperties: true
+          type: object
+          title: Request Body
+      type: object
+      required:
+      - call_type
+      - request_body
+      title: TransformRequestBody
+    TokenCountRequest:
+      properties:
+        model:
+          type: string
+          title: Model
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt
+        messages:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Messages
+        contents:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Contents
+        tools:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Tools
+        system:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: System
+      type: object
+      required:
+      - model
+      title: TokenCountRequest
     ValidationError:
       properties:
         loc:

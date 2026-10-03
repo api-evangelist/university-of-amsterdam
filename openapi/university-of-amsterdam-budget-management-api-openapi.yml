@@ -231,48 +231,17 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
+    BudgetRequest:
       properties:
-        detail:
+        budgets:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            type: string
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BudgetDeleteRequest:
-      properties:
-        id:
-          type: string
-          title: Id
+          title: Budgets
       type: object
       required:
-      - id
-      title: BudgetDeleteRequest
-    BudgetConfig:
-      properties:
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-      type: object
-      title: BudgetConfig
+      - budgets
+      title: BudgetRequest
     BudgetNewRequest:
       properties:
         budget_id:
@@ -334,17 +303,48 @@ components:
           description: Datetime when the budget is reset
       type: object
       title: BudgetNewRequest
-    BudgetRequest:
+    HTTPValidationError:
       properties:
-        budgets:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Budgets
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BudgetDeleteRequest:
+      properties:
+        id:
+          type: string
+          title: Id
       type: object
       required:
-      - budgets
-      title: BudgetRequest
+      - id
+      title: BudgetDeleteRequest
+    BudgetConfig:
+      properties:
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+      type: object
+      title: BudgetConfig
     ValidationError:
       properties:
         loc:

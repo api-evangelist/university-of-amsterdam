@@ -122,26 +122,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CacheTestRequest:
-      properties:
-        cache_settings:
-          additionalProperties: true
-          type: object
-          title: Cache Settings
-          description: Cache settings to test connection with
-      type: object
-      required:
-      - cache_settings
-      title: CacheTestRequest
     CacheTestResponse:
       properties:
         status:
@@ -163,6 +143,26 @@ components:
       - status
       - message
       title: CacheTestResponse
+    CacheTestRequest:
+      properties:
+        cache_settings:
+          additionalProperties: true
+          type: object
+          title: Cache Settings
+          description: Cache settings to test connection with
+      type: object
+      required:
+      - cache_settings
+      title: CacheTestRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     CacheSettingsField:
       properties:
         field_name:
@@ -206,6 +206,17 @@ components:
       - field_description
       - ui_field_name
       title: CacheSettingsField
+    CacheSettingsUpdateRequest:
+      properties:
+        cache_settings:
+          additionalProperties: true
+          type: object
+          title: Cache Settings
+          description: Cache settings to save
+      type: object
+      required:
+      - cache_settings
+      title: CacheSettingsUpdateRequest
     CacheSettingsResponse:
       properties:
         fields:
@@ -257,17 +268,6 @@ components:
       - msg
       - type
       title: ValidationError
-    CacheSettingsUpdateRequest:
-      properties:
-        cache_settings:
-          additionalProperties: true
-          type: object
-          title: Cache Settings
-          description: Cache settings to save
-      type: object
-      required:
-      - cache_settings
-      title: CacheSettingsUpdateRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

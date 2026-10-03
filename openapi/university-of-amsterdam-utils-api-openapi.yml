@@ -67,16 +67,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    Body_convert_prompt_file_to_json_utils_dotprompt_json_converter_post:
-      properties:
-        file:
-          type: string
-          contentMediaType: application/octet-stream
-          title: File
-      type: object
-      required:
-      - file
-      title: Body_convert_prompt_file_to_json_utils_dotprompt_json_converter_post
     ValidationError:
       properties:
         loc:
@@ -103,6 +93,16 @@ components:
       - msg
       - type
       title: ValidationError
+    Body_convert_prompt_file_to_json_utils_dotprompt_json_converter_post:
+      properties:
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+      type: object
+      required:
+      - file
+      title: Body_convert_prompt_file_to_json_utils_dotprompt_json_converter_post
   securitySchemes:
     APIKeyHeader:
       type: apiKey

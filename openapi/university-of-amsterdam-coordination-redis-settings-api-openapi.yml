@@ -133,15 +133,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     CoordinationRedisSettingsResponse:
       properties:
         values:
@@ -171,45 +162,15 @@ components:
       - fields
       - source
       title: CoordinationRedisSettingsResponse
-    CoordinationRedisSettingsField:
+    HTTPValidationError:
       properties:
-        field_name:
-          type: string
-          title: Field Name
-        field_type:
-          type: string
-          title: Field Type
-        field_value:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Field Value
-        field_description:
-          type: string
-          title: Field Description
-        field_default:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Field Default
-        ui_field_name:
-          type: string
-          title: Ui Field Name
-        section:
-          type: string
-          enum:
-          - connection
-          - cluster
-          - sentinel
-          title: Section
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - field_name
-      - field_type
-      - field_description
-      - ui_field_name
-      - section
-      title: CoordinationRedisSettingsField
+      title: HTTPValidationError
     CoordinationRedisSettingsRequest:
       properties:
         settings:
@@ -263,6 +224,45 @@ components:
       - msg
       - type
       title: ValidationError
+    CoordinationRedisSettingsField:
+      properties:
+        field_name:
+          type: string
+          title: Field Name
+        field_type:
+          type: string
+          title: Field Type
+        field_value:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Field Value
+        field_description:
+          type: string
+          title: Field Description
+        field_default:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Field Default
+        ui_field_name:
+          type: string
+          title: Ui Field Name
+        section:
+          type: string
+          enum:
+          - connection
+          - cluster
+          - sentinel
+          title: Section
+      type: object
+      required:
+      - field_name
+      - field_type
+      - field_description
+      - ui_field_name
+      - section
+      title: CoordinationRedisSettingsField
   securitySchemes:
     APIKeyHeader:
       type: apiKey

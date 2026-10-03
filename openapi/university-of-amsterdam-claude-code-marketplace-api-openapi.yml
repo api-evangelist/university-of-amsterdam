@@ -336,22 +336,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ListPluginsResponse:
-      description: Response from listing plugins.
-      properties:
-        count:
-          title: Count
-          type: integer
-        plugins:
-          items:
-            $ref: '#/components/schemas/PluginListItem'
-          title: Plugins
-          type: array
-      required:
-      - plugins
-      - count
-      title: ListPluginsResponse
-      type: object
     RegisterPluginRequest:
       description: 'Request body for registering a plugin in the marketplace.
 
@@ -432,6 +416,39 @@ components:
       - source
       title: RegisterPluginRequest
       type: object
+    ListPluginsResponse:
+      description: Response from listing plugins.
+      properties:
+        count:
+          title: Count
+          type: integer
+        plugins:
+          items:
+            $ref: '#/components/schemas/PluginListItem'
+          title: Plugins
+          type: array
+      required:
+      - plugins
+      - count
+      title: ListPluginsResponse
+      type: object
+    PluginAuthor:
+      description: Plugin author information.
+      properties:
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Author email
+          title: Email
+        name:
+          description: Author name
+          title: Name
+          type: string
+      required:
+      - name
+      title: PluginAuthor
+      type: object
     PluginListItem:
       description: Plugin item in list responses.
       properties:
@@ -510,23 +527,6 @@ components:
       - created_at
       - updated_at
       title: PluginListItem
-      type: object
-    PluginAuthor:
-      description: Plugin author information.
-      properties:
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Author email
-          title: Email
-        name:
-          description: Author name
-          title: Name
-          type: string
-      required:
-      - name
-      title: PluginAuthor
       type: object
     ValidationError:
       properties:

@@ -190,6 +190,27 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    FallbackDeleteResponse:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name
+        fallback_type:
+          type: string
+          title: Fallback Type
+          description: Type of fallback
+        message:
+          type: string
+          title: Message
+          description: Success message
+      type: object
+      required:
+      - model
+      - fallback_type
+      - message
+      title: FallbackDeleteResponse
+      description: Response model for deleting fallbacks
     HTTPValidationError:
       properties:
         detail:
@@ -199,57 +220,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    FallbackGetResponse:
-      properties:
-        model:
-          type: string
-          title: Model
-          description: The model name
-        fallback_models:
-          items:
-            type: string
-          type: array
-          title: Fallback Models
-          description: List of fallback model names
-        fallback_type:
-          type: string
-          title: Fallback Type
-          description: Type of fallback
-      type: object
-      required:
-      - model
-      - fallback_models
-      - fallback_type
-      title: FallbackGetResponse
-      description: Response model for getting fallbacks
-    FallbackCreateRequest:
-      properties:
-        model:
-          type: string
-          title: Model
-          description: The model name to configure fallbacks for (e.g., 'gpt-3.5-turbo')
-        fallback_models:
-          items:
-            type: string
-          type: array
-          minItems: 1
-          title: Fallback Models
-          description: List of fallback model names in order of priority
-        fallback_type:
-          type: string
-          enum:
-          - general
-          - context_window
-          - content_policy
-          title: Fallback Type
-          description: 'Type of fallback: ''general'' (default), ''context_window'', or ''content_policy'''
-          default: general
-      type: object
-      required:
-      - model
-      - fallback_models
-      title: FallbackCreateRequest
-      description: Request model for creating/updating fallbacks
     FallbackResponse:
       properties:
         model:
@@ -278,27 +248,29 @@ components:
       - message
       title: FallbackResponse
       description: Response model for fallback operations
-    FallbackDeleteResponse:
+    FallbackGetResponse:
       properties:
         model:
           type: string
           title: Model
           description: The model name
+        fallback_models:
+          items:
+            type: string
+          type: array
+          title: Fallback Models
+          description: List of fallback model names
         fallback_type:
           type: string
           title: Fallback Type
           description: Type of fallback
-        message:
-          type: string
-          title: Message
-          description: Success message
       type: object
       required:
       - model
+      - fallback_models
       - fallback_type
-      - message
-      title: FallbackDeleteResponse
-      description: Response model for deleting fallbacks
+      title: FallbackGetResponse
+      description: Response model for getting fallbacks
     ValidationError:
       properties:
         loc:
@@ -325,6 +297,34 @@ components:
       - msg
       - type
       title: ValidationError
+    FallbackCreateRequest:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name to configure fallbacks for (e.g., 'gpt-3.5-turbo')
+        fallback_models:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Fallback Models
+          description: List of fallback model names in order of priority
+        fallback_type:
+          type: string
+          enum:
+          - general
+          - context_window
+          - content_policy
+          title: Fallback Type
+          description: 'Type of fallback: ''general'' (default), ''context_window'', or ''content_policy'''
+          default: general
+      type: object
+      required:
+      - model
+      - fallback_models
+      title: FallbackCreateRequest
+      description: Request model for creating/updating fallbacks
   securitySchemes:
     APIKeyHeader:
       type: apiKey

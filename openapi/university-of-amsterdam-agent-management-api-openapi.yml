@@ -105,47 +105,19 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    HTTPValidationError:
+    SpendAnalyticsPaginatedResponse:
       properties:
-        detail:
+        results:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/DailySpendData'
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DailySpendData:
-      properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        breakdown:
-          $ref: '#/components/schemas/BreakdownMetrics'
-      type: object
-      required:
-      - date
-      - metrics
-      title: DailySpendData
-    MetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
+          title: Results
         metadata:
-          additionalProperties: true
-          type: object
-          title: Metadata
-        api_key_breakdown:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Key Breakdown
+          $ref: '#/components/schemas/DailySpendMetadata'
       type: object
       required:
-      - metrics
-      title: MetricWithMetadata
+      - results
+      title: SpendAnalyticsPaginatedResponse
     BreakdownMetrics:
       properties:
         mcp_servers:
@@ -186,6 +158,34 @@ components:
       type: object
       title: BreakdownMetrics
       description: Breakdown of spend by different dimensions
+    KeyMetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          $ref: '#/components/schemas/KeyMetadata'
+      type: object
+      required:
+      - metrics
+      title: KeyMetricWithMetadata
+      description: Base class for metrics with additional metadata
+    MetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        api_key_breakdown:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Key Breakdown
+      type: object
+      required:
+      - metrics
+      title: MetricWithMetadata
     SpendMetrics:
       properties:
         spend:
@@ -238,45 +238,30 @@ components:
           default: 0
       type: object
       title: SpendMetrics
-    SpendAnalyticsPaginatedResponse:
+    HTTPValidationError:
       properties:
-        results:
+        detail:
           items:
-            $ref: '#/components/schemas/DailySpendData'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Results
-        metadata:
-          $ref: '#/components/schemas/DailySpendMetadata'
+          title: Detail
       type: object
-      required:
-      - results
-      title: SpendAnalyticsPaginatedResponse
-    KeyMetricWithMetadata:
+      title: HTTPValidationError
+    DailySpendData:
       properties:
+        date:
+          type: string
+          format: date
+          title: Date
         metrics:
           $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          $ref: '#/components/schemas/KeyMetadata'
+        breakdown:
+          $ref: '#/components/schemas/BreakdownMetrics'
       type: object
       required:
+      - date
       - metrics
-      title: KeyMetricWithMetadata
-      description: Base class for metrics with additional metadata
-    KeyMetadata:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: KeyMetadata
-      description: Metadata for a key
+      title: DailySpendData
     DailySpendMetadata:
       properties:
         total_spend:
@@ -341,6 +326,21 @@ components:
           default: false
       type: object
       title: DailySpendMetadata
+    KeyMetadata:
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: KeyMetadata
+      description: Metadata for a key
     ValidationError:
       properties:
         loc:

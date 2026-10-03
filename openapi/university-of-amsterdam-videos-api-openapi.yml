@@ -704,15 +704,16 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
+    Body_video_generation_videos_post:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        input_reference:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: Input Reference
       type: object
-      title: HTTPValidationError
+      title: Body_video_generation_videos_post
     Body_video_create_character_v1_videos_characters_post:
       properties:
         video:
@@ -727,16 +728,15 @@ components:
       - video
       - name
       title: Body_video_create_character_v1_videos_characters_post
-    Body_video_generation_videos_post:
+    HTTPValidationError:
       properties:
-        input_reference:
-          anyOf:
-          - type: string
-            contentMediaType: application/octet-stream
-          - type: 'null'
-          title: Input Reference
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      title: Body_video_generation_videos_post
+      title: HTTPValidationError
     Body_video_generation_v1_videos_post:
       properties:
         input_reference:

@@ -79,44 +79,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    RouterSettingsField:
-      properties:
-        field_name:
-          type: string
-          title: Field Name
-        field_type:
-          type: string
-          title: Field Type
-        field_value:
-          title: Field Value
-        field_description:
-          type: string
-          title: Field Description
-        field_default:
-          title: Field Default
-        options:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Options
-        ui_field_name:
-          type: string
-          title: Ui Field Name
-        link:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Link
-      type: object
-      required:
-      - field_name
-      - field_type
-      - field_value
-      - field_description
-      - ui_field_name
-      title: RouterSettingsField
     RouterFieldsResponse:
       properties:
         fields:
@@ -161,6 +123,44 @@ components:
       - current_values
       - routing_strategy_descriptions
       title: RouterSettingsResponse
+    RouterSettingsField:
+      properties:
+        field_name:
+          type: string
+          title: Field Name
+        field_type:
+          type: string
+          title: Field Type
+        field_value:
+          title: Field Value
+        field_description:
+          type: string
+          title: Field Description
+        field_default:
+          title: Field Default
+        options:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Options
+        ui_field_name:
+          type: string
+          title: Ui Field Name
+        link:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Link
+      type: object
+      required:
+      - field_name
+      - field_type
+      - field_value
+      - field_description
+      - ui_field_name
+      title: RouterSettingsField
   securitySchemes:
     APIKeyHeader:
       type: apiKey

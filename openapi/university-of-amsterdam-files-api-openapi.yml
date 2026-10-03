@@ -812,6 +812,37 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    Body_create_file__provider__v1_files_post:
+      properties:
+        purpose:
+          type: string
+          title: Purpose
+        target_model_names:
+          type: string
+          title: Target Model Names
+          default: ''
+        target_storage:
+          type: string
+          title: Target Storage
+          default: default
+        custom_llm_provider:
+          type: string
+          title: Custom Llm Provider
+          default: openai
+        file:
+          type: string
+          contentMediaType: application/octet-stream
+          title: File
+        litellm_metadata:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Litellm Metadata
+      type: object
+      required:
+      - purpose
+      - file
+      title: Body_create_file__provider__v1_files_post
     HTTPValidationError:
       properties:
         detail:
@@ -852,37 +883,6 @@ components:
       - purpose
       - file
       title: Body_create_file_v1_files_post
-    Body_create_file__provider__v1_files_post:
-      properties:
-        purpose:
-          type: string
-          title: Purpose
-        target_model_names:
-          type: string
-          title: Target Model Names
-          default: ''
-        target_storage:
-          type: string
-          title: Target Storage
-          default: default
-        custom_llm_provider:
-          type: string
-          title: Custom Llm Provider
-          default: openai
-        file:
-          type: string
-          contentMediaType: application/octet-stream
-          title: File
-        litellm_metadata:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Litellm Metadata
-      type: object
-      required:
-      - purpose
-      - file
-      title: Body_create_file__provider__v1_files_post
     Body_create_file_files_post:
       properties:
         purpose:

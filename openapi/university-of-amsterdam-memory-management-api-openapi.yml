@@ -203,6 +203,67 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    MemoryCreateRequest:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: Memory key (acts as the namespace in the URL).
+        value:
+          type: string
+          title: Value
+          description: Memory content. Typically markdown/text for LLM context.
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+          description: Optional JSON metadata (tags, structured fields).
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: Scope to this user. Defaults to the caller's user_id.
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+          description: Scope to this team. Defaults to the caller's team_id.
+      type: object
+      required:
+      - key
+      - value
+      title: MemoryCreateRequest
+    MemoryDeleteResponse:
+      properties:
+        key:
+          type: string
+          title: Key
+        deleted:
+          type: boolean
+          title: Deleted
+      type: object
+      required:
+      - key
+      - deleted
+      title: MemoryDeleteResponse
+    MemoryListResponse:
+      properties:
+        memories:
+          items:
+            $ref: '#/components/schemas/LiteLLM_MemoryRow'
+          type: array
+          title: Memories
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - memories
+      - total
+      title: MemoryListResponse
     HTTPValidationError:
       properties:
         detail:
@@ -212,6 +273,30 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    MemoryUpdateRequest:
+      properties:
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: MemoryUpdateRequest
     LiteLLM_MemoryRow:
       properties:
         memory_id:
@@ -266,91 +351,6 @@ components:
       - key
       - value
       title: LiteLLM_MemoryRow
-    MemoryDeleteResponse:
-      properties:
-        key:
-          type: string
-          title: Key
-        deleted:
-          type: boolean
-          title: Deleted
-      type: object
-      required:
-      - key
-      - deleted
-      title: MemoryDeleteResponse
-    MemoryUpdateRequest:
-      properties:
-        value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Value
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: MemoryUpdateRequest
-    MemoryCreateRequest:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: Memory key (acts as the namespace in the URL).
-        value:
-          type: string
-          title: Value
-          description: Memory content. Typically markdown/text for LLM context.
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-          description: Optional JSON metadata (tags, structured fields).
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: Scope to this user. Defaults to the caller's user_id.
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-          description: Scope to this team. Defaults to the caller's team_id.
-      type: object
-      required:
-      - key
-      - value
-      title: MemoryCreateRequest
-    MemoryListResponse:
-      properties:
-        memories:
-          items:
-            $ref: '#/components/schemas/LiteLLM_MemoryRow'
-          type: array
-          title: Memories
-        total:
-          type: integer
-          title: Total
-      type: object
-      required:
-      - memories
-      - total
-      title: MemoryListResponse
     ValidationError:
       properties:
         loc:

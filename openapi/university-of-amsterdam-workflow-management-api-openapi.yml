@@ -312,6 +312,46 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    WorkflowEventCreateRequest:
+      properties:
+        event_type:
+          type: string
+          title: Event Type
+        step_name:
+          type: string
+          title: Step Name
+        data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - event_type
+      - step_name
+      title: WorkflowEventCreateRequest
+    WorkflowRunCreateRequest:
+      properties:
+        workflow_type:
+          type: string
+          title: Workflow Type
+        input:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - workflow_type
+      title: WorkflowRunCreateRequest
     HTTPValidationError:
       properties:
         detail:
@@ -339,27 +379,6 @@ components:
       - role
       - content
       title: WorkflowMessageCreateRequest
-    WorkflowRunCreateRequest:
-      properties:
-        workflow_type:
-          type: string
-          title: Workflow Type
-        input:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Input
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - workflow_type
-      title: WorkflowRunCreateRequest
     WorkflowRunUpdateRequest:
       properties:
         status:
@@ -387,25 +406,6 @@ components:
           title: Metadata
       type: object
       title: WorkflowRunUpdateRequest
-    WorkflowEventCreateRequest:
-      properties:
-        event_type:
-          type: string
-          title: Event Type
-        step_name:
-          type: string
-          title: Step Name
-        data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - event_type
-      - step_name
-      title: WorkflowEventCreateRequest
     ValidationError:
       properties:
         loc:

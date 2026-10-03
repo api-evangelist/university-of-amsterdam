@@ -1354,15 +1354,48 @@ paths:
       - Policies
 components:
   schemas:
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PolicyAttachmentListResponse:
+      properties:
+        attachments:
+          items:
+            $ref: '#/components/schemas/PolicyAttachmentDBResponse'
+          type: array
+          title: Attachments
+          description: List of policy attachments.
+        total_count:
+          type: integer
+          title: Total Count
+          description: Total number of attachments.
+          default: 0
+      type: object
+      title: PolicyAttachmentListResponse
+      description: Response for listing policy attachments.
     PolicyAttachmentDBResponse:
       properties:
         attachment_id:
@@ -1456,103 +1489,6 @@ components:
       - test_messages
       title: PipelineTestRequest
       description: Request body for testing a guardrail pipeline with sample messages.
-    PolicyVersionCompareResponse:
-      properties:
-        version_a:
-          $ref: '#/components/schemas/PolicyDBResponse'
-          description: First version.
-        version_b:
-          $ref: '#/components/schemas/PolicyDBResponse'
-          description: Second version.
-        field_diffs:
-          additionalProperties:
-            additionalProperties: true
-            type: object
-          type: object
-          title: Field Diffs
-          description: 'Field name -> {version_a: val, version_b: val} for differing fields.'
-      type: object
-      required:
-      - version_a
-      - version_b
-      title: PolicyVersionCompareResponse
-      description: Response for comparing two policy versions.
-    PolicyVersionStatusUpdateRequest:
-      properties:
-        version_status:
-          type: string
-          title: Version Status
-          description: 'New status: ''published'' or ''production''.'
-      type: object
-      required:
-      - version_status
-      title: PolicyVersionStatusUpdateRequest
-      description: Request body for updating a policy version's status.
-    PolicyAttachmentCreateRequest:
-      properties:
-        policy_name:
-          type: string
-          title: Policy Name
-          description: Name of the policy to attach.
-        scope:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scope
-          description: Use '*' for global scope (applies to all requests).
-        teams:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Teams
-          description: Team aliases or patterns this attachment applies to.
-        keys:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Keys
-          description: Key aliases or patterns this attachment applies to.
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-          description: Model names or patterns this attachment applies to.
-        tags:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Tags
-          description: Tag patterns this attachment applies to. Supports wildcards (e.g., health-*).
-      type: object
-      required:
-      - policy_name
-      title: PolicyAttachmentCreateRequest
-      description: Request body for creating a policy attachment.
-    PolicyAttachmentListResponse:
-      properties:
-        attachments:
-          items:
-            $ref: '#/components/schemas/PolicyAttachmentDBResponse'
-          type: array
-          title: Attachments
-          description: List of policy attachments.
-        total_count:
-          type: integer
-          title: Total Count
-          description: Total number of attachments.
-          default: 0
-      type: object
-      title: PolicyAttachmentListResponse
-      description: Response for listing policy attachments.
     PolicyUpdateRequest:
       properties:
         policy_name:
@@ -1604,66 +1540,55 @@ components:
       type: object
       title: PolicyUpdateRequest
       description: Request body for updating a policy.
-    PolicyConditionRequest:
+    PolicyAttachmentCreateRequest:
       properties:
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-          description: Model name pattern (exact match or regex) for when policy applies.
-      type: object
-      title: PolicyConditionRequest
-      description: Condition for when a policy applies.
-    PolicyVersionCreateRequest:
-      properties:
-        source_policy_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Source Policy Id
-          description: Policy ID to clone from. If None, clone from current production version.
-      type: object
-      title: PolicyVersionCreateRequest
-      description: Request body for creating a new policy version (draft).
-    UsageChartPoint:
-      properties:
-        date:
+        policy_name:
           type: string
-          title: Date
-        passed:
-          type: integer
-          title: Passed
-        blocked:
-          type: integer
-          title: Blocked
-        score:
+          title: Policy Name
+          description: Name of the policy to attach.
+        scope:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Score
+          title: Scope
+          description: Use '*' for global scope (applies to all requests).
+        teams:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Teams
+          description: Team aliases or patterns this attachment applies to.
+        keys:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Keys
+          description: Key aliases or patterns this attachment applies to.
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+          description: Model names or patterns this attachment applies to.
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+          description: Tag patterns this attachment applies to. Supports wildcards (e.g., health-*).
       type: object
       required:
-      - date
-      - passed
-      - blocked
-      title: UsageChartPoint
-    PolicyListDBResponse:
-      properties:
-        policies:
-          items:
-            $ref: '#/components/schemas/PolicyDBResponse'
-          type: array
-          title: Policies
-          description: List of policies.
-        total_count:
-          type: integer
-          title: Total Count
-          description: Total number of policies.
-          default: 0
-      type: object
-      title: PolicyListDBResponse
-      description: Response for listing policies from the database.
+      - policy_name
+      title: PolicyAttachmentCreateRequest
+      description: Request body for creating a policy attachment.
     PolicyVersionListResponse:
       properties:
         policy_name:
@@ -1686,6 +1611,214 @@ components:
       - policy_name
       title: PolicyVersionListResponse
       description: Response for listing all versions of a policy.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    PolicyListDBResponse:
+      properties:
+        policies:
+          items:
+            $ref: '#/components/schemas/PolicyDBResponse'
+          type: array
+          title: Policies
+          description: List of policies.
+        total_count:
+          type: integer
+          title: Total Count
+          description: Total number of policies.
+          default: 0
+      type: object
+      title: PolicyListDBResponse
+      description: Response for listing policies from the database.
+    PolicyCreateRequest:
+      properties:
+        policy_name:
+          type: string
+          title: Policy Name
+          description: Unique name for the policy.
+        inherit:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Inherit
+          description: Name of parent policy to inherit from.
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Human-readable description of the policy.
+        guardrails_add:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Guardrails Add
+          description: List of guardrail names to add.
+        guardrails_remove:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Guardrails Remove
+          description: List of guardrail names to remove (from inherited).
+        condition:
+          anyOf:
+          - $ref: '#/components/schemas/PolicyConditionRequest'
+          - type: 'null'
+          description: Condition for when this policy applies.
+        pipeline:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Pipeline
+          description: Optional guardrail pipeline for ordered execution. Contains 'mode' and 'steps'.
+      type: object
+      required:
+      - policy_name
+      title: PolicyCreateRequest
+      description: Request body for creating a new policy.
+    PolicyVersionStatusUpdateRequest:
+      properties:
+        version_status:
+          type: string
+          title: Version Status
+          description: 'New status: ''published'' or ''production''.'
+      type: object
+      required:
+      - version_status
+      title: PolicyVersionStatusUpdateRequest
+      description: Request body for updating a policy version's status.
+    PolicyVersionCompareResponse:
+      properties:
+        version_a:
+          $ref: '#/components/schemas/PolicyDBResponse'
+          description: First version.
+        version_b:
+          $ref: '#/components/schemas/PolicyDBResponse'
+          description: Second version.
+        field_diffs:
+          additionalProperties:
+            additionalProperties: true
+            type: object
+          type: object
+          title: Field Diffs
+          description: 'Field name -> {version_a: val, version_b: val} for differing fields.'
+      type: object
+      required:
+      - version_a
+      - version_b
+      title: PolicyVersionCompareResponse
+      description: Response for comparing two policy versions.
+    UsageOverviewResponse:
+      properties:
+        rows:
+          items:
+            $ref: '#/components/schemas/UsageOverviewRow'
+          type: array
+          title: Rows
+        chart:
+          items:
+            $ref: '#/components/schemas/UsageChartPoint'
+          type: array
+          title: Chart
+        totalRequests:
+          type: integer
+          title: Totalrequests
+        totalBlocked:
+          type: integer
+          title: Totalblocked
+        passRate:
+          type: number
+          title: Passrate
+      type: object
+      required:
+      - rows
+      - chart
+      - totalRequests
+      - totalBlocked
+      - passRate
+      title: UsageOverviewResponse
+    PolicyConditionRequest:
+      properties:
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+          description: Model name pattern (exact match or regex) for when policy applies.
+      type: object
+      title: PolicyConditionRequest
+      description: Condition for when a policy applies.
+    PolicyVersionCreateRequest:
+      properties:
+        source_policy_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Policy Id
+          description: Policy ID to clone from. If None, clone from current production version.
+      type: object
+      title: PolicyVersionCreateRequest
+      description: Request body for creating a new policy version (draft).
+    UsageOverviewRow:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        type:
+          type: string
+          title: Type
+        provider:
+          type: string
+          title: Provider
+        requestsEvaluated:
+          type: integer
+          title: Requestsevaluated
+        failRate:
+          type: number
+          title: Failrate
+        avgScore:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avgscore
+        avgLatency:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Avglatency
+        status:
+          type: string
+          title: Status
+        trend:
+          type: string
+          title: Trend
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - provider
+      - requestsEvaluated
+      - failRate
+      - avgScore
+      - avgLatency
+      - status
+      - trend
+      title: UsageOverviewRow
     PolicyDBResponse:
       properties:
         policy_id:
@@ -1801,215 +1934,107 @@ components:
       - policy_name
       title: PolicyDBResponse
       description: Response for a policy from the database.
-    PolicyCreateRequest:
+    UsageChartPoint:
       properties:
-        policy_name:
+        date:
           type: string
-          title: Policy Name
-          description: Unique name for the policy.
-        inherit:
+          title: Date
+        passed:
+          type: integer
+          title: Passed
+        blocked:
+          type: integer
+          title: Blocked
+        score:
           anyOf:
-          - type: string
+          - type: number
           - type: 'null'
-          title: Inherit
-          description: Name of parent policy to inherit from.
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-          description: Human-readable description of the policy.
-        guardrails_add:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Guardrails Add
-          description: List of guardrail names to add.
-        guardrails_remove:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Guardrails Remove
-          description: List of guardrail names to remove (from inherited).
-        condition:
-          anyOf:
-          - $ref: '#/components/schemas/PolicyConditionRequest'
-          - type: 'null'
-          description: Condition for when this policy applies.
-        pipeline:
-          anyOf:
-          - additionalProperties: true
+          title: Score
+      type: object
+      required:
+      - date
+      - passed
+      - blocked
+      title: UsageChartPoint
+    TestPolicyTemplateRequest:
+      properties:
+        guardrail_definitions:
+          description: All guardrailDefinitions from the policy template
+          items:
+            additionalProperties: true
             type: object
-          - type: 'null'
-          title: Pipeline
-          description: Optional guardrail pipeline for ordered execution. Contains 'mode' and 'steps'.
-      type: object
-      required:
-      - policy_name
-      title: PolicyCreateRequest
-      description: Request body for creating a new policy.
-    UsageOverviewResponse:
-      properties:
-        rows:
-          items:
-            $ref: '#/components/schemas/UsageOverviewRow'
+          title: Guardrail Definitions
           type: array
-          title: Rows
-        chart:
+        text:
+          description: Test input text to run guardrails against
+          title: Text
+          type: string
+      required:
+      - guardrail_definitions
+      - text
+      title: TestPolicyTemplateRequest
+      type: object
+    GenericGuardrailAPIInputs:
+      properties:
+        images:
           items:
-            $ref: '#/components/schemas/UsageChartPoint'
+            type: string
+          title: Images
           type: array
-          title: Chart
-        totalRequests:
-          type: integer
-          title: Totalrequests
-        totalBlocked:
-          type: integer
-          title: Totalblocked
-        passRate:
-          type: number
-          title: Passrate
-      type: object
-      required:
-      - rows
-      - chart
-      - totalRequests
-      - totalBlocked
-      - passRate
-      title: UsageOverviewResponse
-    UsageOverviewRow:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-        type:
-          type: string
-          title: Type
-        provider:
-          type: string
-          title: Provider
-        requestsEvaluated:
-          type: integer
-          title: Requestsevaluated
-        failRate:
-          type: number
-          title: Failrate
-        avgScore:
+        model:
           anyOf:
-          - type: number
+          - type: string
           - type: 'null'
-          title: Avgscore
-        avgLatency:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Avglatency
-        status:
-          type: string
-          title: Status
-        trend:
-          type: string
-          title: Trend
-      type: object
-      required:
-      - id
-      - name
-      - type
-      - provider
-      - requestsEvaluated
-      - failRate
-      - avgScore
-      - avgLatency
-      - status
-      - trend
-      title: UsageOverviewRow
-    ValidationError:
-      properties:
-        loc:
+          title: Model
+        structured_messages:
           items:
             anyOf:
-            - type: string
-            - type: integer
+            - $ref: '#/components/schemas/ChatCompletionUserMessage'
+            - $ref: '#/components/schemas/ChatCompletionAssistantMessage'
+            - $ref: '#/components/schemas/ChatCompletionToolMessage'
+            - $ref: '#/components/schemas/ChatCompletionSystemMessage'
+            - $ref: '#/components/schemas/ChatCompletionFunctionMessage'
+            - $ref: '#/components/schemas/ChatCompletionDeveloperMessage'
+          title: Structured Messages
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+        texts:
+          items:
+            type: string
+          title: Texts
+          type: array
+        tool_calls:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ChatCompletionToolCallChunk'
+            type: array
+          - items:
+              $ref: '#/components/schemas/ChatCompletionMessageToolCall'
+            type: array
+          title: Tool Calls
+        tools:
+          items:
+            $ref: '#/components/schemas/ChatCompletionToolParam'
+          title: Tools
+          type: array
+      title: GenericGuardrailAPIInputs
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ChatCompletionToolCallFunctionChunk:
+    SuggestTemplatesRequest:
       properties:
-        name:
+        attack_examples:
+          items:
+            type: string
+          title: Attack Examples
+          type: array
+        description:
+          default: ''
+          title: Description
+          type: string
+        model:
           anyOf:
           - type: string
           - type: 'null'
-          title: Name
-        arguments:
-          title: Arguments
-          type: string
-        provider_specific_fields:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Provider Specific Fields
-      title: ChatCompletionToolCallFunctionChunk
-      type: object
-    ChatCompletionVideoObject:
-      properties:
-        type:
-          const: video_url
-          title: Type
-          type: string
-        video_url:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/ChatCompletionVideoUrlObject'
-          title: Video Url
-      required:
-      - type
-      - video_url
-      title: ChatCompletionVideoObject
-      type: object
-    GuardrailTestResultEntry:
-      properties:
-        action:
-          title: Action
-          type: string
-        details:
-          title: Details
-          type: string
-        guardrail_name:
-          title: Guardrail Name
-          type: string
-        output_text:
-          title: Output Text
-          type: string
-      required:
-      - guardrail_name
-      - action
-      - output_text
-      - details
-      title: GuardrailTestResultEntry
+          title: Model
+      title: SuggestTemplatesRequest
       type: object
     ChatCompletionReasoningSummaryTextBlock:
       properties:
@@ -2024,81 +2049,36 @@ components:
       - type
       title: ChatCompletionReasoningSummaryTextBlock
       type: object
-    ChatCompletionFileObjectFile:
+    ChatCompletionAudioObject:
       properties:
-        file_data:
-          title: File Data
-          type: string
-        file_id:
-          title: File Id
-          type: string
-        filename:
-          title: Filename
-          type: string
-        format:
-          title: Format
-          type: string
-        detail:
-          title: Detail
-          type: string
-        video_metadata:
-          additionalProperties: true
-          title: Video Metadata
-          type: object
-      title: ChatCompletionFileObjectFile
-      type: object
-    EnrichTemplateRequest:
-      properties:
-        competitors:
-          anyOf:
-          - items:
-              type: string
-            maxItems: 100
-            type: array
-          - type: 'null'
-          description: Optional list of competitor names
-          title: Competitors
-        instruction:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Refinement instruction for modifying the competitor list (e.g. 'add 10 more from Asia')
-          title: Instruction
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        parameters:
-          additionalProperties: true
-          title: Parameters
-          type: object
-        template_id:
-          title: Template Id
+        input_audio:
+          $ref: '#/components/schemas/InputAudio'
+        type:
+          const: input_audio
+          title: Type
           type: string
       required:
-      - template_id
-      - parameters
-      title: EnrichTemplateRequest
+      - input_audio
+      - type
+      title: ChatCompletionAudioObject
       type: object
-    ChatCompletionToolParamFunctionChunk:
+    DocumentObject:
       properties:
-        description:
-          title: Description
+        type:
+          const: text
+          title: Type
           type: string
-        name:
-          title: Name
+        media_type:
+          title: Media Type
           type: string
-        parameters:
-          additionalProperties: true
-          title: Parameters
-          type: object
-        strict:
-          title: Strict
-          type: boolean
+        data:
+          title: Data
+          type: string
       required:
-      - name
-      title: ChatCompletionToolParamFunctionChunk
+      - type
+      - media_type
+      - data
+      title: DocumentObject
       type: object
     TestPoliciesAndGuardrailsRequest:
       description: Request body for POST /utils/test_policies_and_guardrails.
@@ -2147,6 +2127,179 @@ components:
           type: object
       title: TestPoliciesAndGuardrailsRequest
       type: object
+    ChatCompletionRedactedThinkingBlock:
+      properties:
+        type:
+          const: redacted_thinking
+          title: Type
+          type: string
+        data:
+          title: Data
+          type: string
+        cache_control:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - $ref: '#/components/schemas/ChatCompletionCachedContent'
+          - type: 'null'
+          title: Cache Control
+      required:
+      - type
+      title: ChatCompletionRedactedThinkingBlock
+      type: object
+    TestPolicyTemplateResponse:
+      properties:
+        overall_action:
+          title: Overall Action
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/GuardrailTestResultEntry'
+          title: Results
+          type: array
+      required:
+      - overall_action
+      - results
+      title: TestPolicyTemplateResponse
+      type: object
+    PolicyTestResponse:
+      description: Response for /policy/test endpoint.
+      properties:
+        context:
+          $ref: '#/components/schemas/PolicyMatchContext'
+        matching_policies:
+          items:
+            type: string
+          title: Matching Policies
+          type: array
+        message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message
+        resolved_guardrails:
+          items:
+            type: string
+          title: Resolved Guardrails
+          type: array
+      required:
+      - context
+      - matching_policies
+      - resolved_guardrails
+      title: PolicyTestResponse
+      type: object
+    ChatCompletionImageObject:
+      properties:
+        type:
+          const: image_url
+          title: Type
+          type: string
+        image_url:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/ChatCompletionImageUrlObject'
+          title: Image Url
+      required:
+      - type
+      - image_url
+      title: ChatCompletionImageObject
+      type: object
+    ChatCompletionVideoUrlObject:
+      properties:
+        url:
+          title: Url
+          type: string
+        detail:
+          title: Detail
+          type: string
+      required:
+      - url
+      title: ChatCompletionVideoUrlObject
+      type: object
+    ChatCompletionToolParam:
+      properties:
+        cache_control:
+          $ref: '#/components/schemas/ChatCompletionCachedContent'
+        function:
+          $ref: '#/components/schemas/ChatCompletionToolParamFunctionChunk'
+        type:
+          anyOf:
+          - const: function
+            type: string
+          - type: string
+          title: Type
+      required:
+      - type
+      - function
+      title: ChatCompletionToolParam
+      type: object
+    ChatCompletionMessageToolCall:
+      properties: {}
+      additionalProperties: true
+      type: object
+      title: ChatCompletionMessageToolCall
+    PolicyValidateRequest:
+      additionalProperties: false
+      description: Request body for the /policy/validate endpoint.
+      properties:
+        policies:
+          additionalProperties: true
+          description: Policy configuration to validate. Map of policy names to policy definitions.
+          title: Policies
+          type: object
+      required:
+      - policies
+      title: PolicyValidateRequest
+      type: object
+    PolicyValidationError:
+      additionalProperties: false
+      description: Represents a validation error or warning for a policy.
+      properties:
+        error_type:
+          $ref: '#/components/schemas/PolicyValidationErrorType'
+          description: Type of validation error.
+        field:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Specific field that caused the error (e.g., 'guardrails.add', 'scope.teams').
+          title: Field
+        message:
+          description: Human-readable error message.
+          title: Message
+          type: string
+        policy_name:
+          description: Name of the policy with the issue.
+          title: Policy Name
+          type: string
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The invalid value that caused the error.
+          title: Value
+      required:
+      - policy_name
+      - error_type
+      - message
+      title: PolicyValidationError
+      type: object
+    InputAudio:
+      properties:
+        data:
+          title: Data
+          type: string
+        format:
+          enum:
+          - wav
+          - mp3
+          title: Format
+          type: string
+      required:
+      - data
+      - format
+      title: InputAudio
+      type: object
     PolicyMatchContext:
       additionalProperties: false
       description: 'Context used to match a request against policies.
@@ -2182,97 +2335,52 @@ components:
           title: Team Alias
       title: PolicyMatchContext
       type: object
-    PolicyGuardrailsResponse:
-      description: Guardrails configuration for a policy.
+    ChatCompletionVideoObject:
       properties:
-        add:
-          items:
-            type: string
-          title: Add
-          type: array
-        remove:
-          items:
-            type: string
-          title: Remove
-          type: array
-      title: PolicyGuardrailsResponse
-      type: object
-    GenericGuardrailAPIInputs:
-      properties:
-        images:
-          items:
-            type: string
-          title: Images
-          type: array
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        structured_messages:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/ChatCompletionUserMessage'
-            - $ref: '#/components/schemas/ChatCompletionAssistantMessage'
-            - $ref: '#/components/schemas/ChatCompletionToolMessage'
-            - $ref: '#/components/schemas/ChatCompletionSystemMessage'
-            - $ref: '#/components/schemas/ChatCompletionFunctionMessage'
-            - $ref: '#/components/schemas/ChatCompletionDeveloperMessage'
-          title: Structured Messages
-          type: array
-        texts:
-          items:
-            type: string
-          title: Texts
-          type: array
-        tool_calls:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ChatCompletionToolCallChunk'
-            type: array
-          - items:
-              $ref: '#/components/schemas/ChatCompletionMessageToolCall'
-            type: array
-          title: Tool Calls
-        tools:
-          items:
-            $ref: '#/components/schemas/ChatCompletionToolParam'
-          title: Tools
-          type: array
-      title: GenericGuardrailAPIInputs
-      type: object
-    PolicyInfoResponse:
-      description: Response for /policy/info/{policy_name} endpoint.
-      properties:
-        guardrails:
-          $ref: '#/components/schemas/PolicyGuardrailsResponse'
-        inherit:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Inherit
-        inheritance_chain:
-          items:
-            type: string
-          title: Inheritance Chain
-          type: array
-        policy_name:
-          title: Policy Name
+        type:
+          const: video_url
+          title: Type
           type: string
-        resolved_guardrails:
-          items:
-            type: string
-          title: Resolved Guardrails
-          type: array
-        scope:
-          $ref: '#/components/schemas/PolicyScopeResponse'
+        video_url:
+          anyOf:
+          - type: string
+          - $ref: '#/components/schemas/ChatCompletionVideoUrlObject'
+          title: Video Url
       required:
-      - policy_name
-      - scope
-      - guardrails
-      - resolved_guardrails
-      - inheritance_chain
-      title: PolicyInfoResponse
+      - type
+      - video_url
+      title: ChatCompletionVideoObject
+      type: object
+    PolicyListResponse:
+      description: Response for /policy/list endpoint.
+      properties:
+        policies:
+          additionalProperties:
+            $ref: '#/components/schemas/PolicySummaryItem'
+          title: Policies
+          type: object
+        total_count:
+          title: Total Count
+          type: integer
+      required:
+      - policies
+      - total_count
+      title: PolicyListResponse
+      type: object
+    ChatCompletionImageUrlObject:
+      properties:
+        url:
+          title: Url
+          type: string
+        detail:
+          title: Detail
+          type: string
+        format:
+          title: Format
+          type: string
+      required:
+      - url
+      title: ChatCompletionImageUrlObject
       type: object
     ChatCompletionUserMessage:
       properties:
@@ -2300,38 +2408,98 @@ components:
       - content
       title: ChatCompletionUserMessage
       type: object
-    ChatCompletionToolParam:
+    ChatCompletionCachedContent:
       properties:
-        cache_control:
-          $ref: '#/components/schemas/ChatCompletionCachedContent'
-        function:
-          $ref: '#/components/schemas/ChatCompletionToolParamFunctionChunk'
         type:
-          anyOf:
-          - const: function
-            type: string
-          - type: string
+          const: ephemeral
           title: Type
+          type: string
+        ttl:
+          enum:
+          - 5m
+          - 1h
+          title: Ttl
+          type: string
       required:
+      - type
+      title: ChatCompletionCachedContent
+      type: object
+    ChatCompletionToolCallChunk:
+      properties:
+        function:
+          $ref: '#/components/schemas/ChatCompletionToolCallFunctionChunk'
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        index:
+          title: Index
+          type: integer
+        type:
+          const: function
+          title: Type
+          type: string
+      required:
+      - id
       - type
       - function
-      title: ChatCompletionToolParam
+      - index
+      title: ChatCompletionToolCallChunk
       type: object
-    ChatCompletionTextObject:
+    ChatCompletionFileObjectFile:
       properties:
-        type:
-          const: text
-          title: Type
+        file_data:
+          title: File Data
           type: string
-        text:
-          title: Text
+        file_id:
+          title: File Id
           type: string
-        cache_control:
-          $ref: '#/components/schemas/ChatCompletionCachedContent'
+        filename:
+          title: Filename
+          type: string
+        format:
+          title: Format
+          type: string
+        detail:
+          title: Detail
+          type: string
+        video_metadata:
+          additionalProperties: true
+          title: Video Metadata
+          type: object
+      title: ChatCompletionFileObjectFile
+      type: object
+    PolicyValidationResponse:
+      additionalProperties: false
+      description: 'Response from policy validation.
+
+
+        - `valid`: True if no blocking errors were found
+
+        - `errors`: List of blocking errors (prevent policy from being applied)
+
+        - `warnings`: List of non-blocking warnings (policy can still be applied)'
+      properties:
+        errors:
+          description: List of blocking validation errors.
+          items:
+            $ref: '#/components/schemas/PolicyValidationError'
+          title: Errors
+          type: array
+        valid:
+          description: True if the policy configuration is valid.
+          title: Valid
+          type: boolean
+        warnings:
+          description: List of non-blocking validation warnings.
+          items:
+            $ref: '#/components/schemas/PolicyValidationError'
+          title: Warnings
+          type: array
       required:
-      - type
-      - text
-      title: ChatCompletionTextObject
+      - valid
+      title: PolicyValidationResponse
       type: object
     ChatCompletionReasoningItem:
       description: Represents an OpenAI Responses API reasoning item for round-tripping in conversation history.
@@ -2379,56 +2547,65 @@ components:
       - content
       title: ChatCompletionSystemMessage
       type: object
-    ChatCompletionAssistantToolCall:
+    ChatCompletionThinkingBlock:
       properties:
-        id:
+        type:
+          const: thinking
+          title: Type
+          type: string
+        thinking:
+          title: Thinking
+          type: string
+        signature:
           anyOf:
           - type: string
           - type: 'null'
-          title: Id
-        type:
-          const: function
-          title: Type
-          type: string
-        function:
-          $ref: '#/components/schemas/ChatCompletionToolCallFunctionChunk'
+          title: Signature
+        cache_control:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - $ref: '#/components/schemas/ChatCompletionCachedContent'
+          - type: 'null'
+          title: Cache Control
       required:
-      - id
       - type
-      - function
-      title: ChatCompletionAssistantToolCall
+      title: ChatCompletionThinkingBlock
       type: object
-    PolicyValidationResponse:
-      additionalProperties: false
-      description: 'Response from policy validation.
-
-
-        - `valid`: True if no blocking errors were found
-
-        - `errors`: List of blocking errors (prevent policy from being applied)
-
-        - `warnings`: List of non-blocking warnings (policy can still be applied)'
+    GuardrailTestResultEntry:
       properties:
-        errors:
-          description: List of blocking validation errors.
-          items:
-            $ref: '#/components/schemas/PolicyValidationError'
-          title: Errors
-          type: array
-        valid:
-          description: True if the policy configuration is valid.
-          title: Valid
-          type: boolean
-        warnings:
-          description: List of non-blocking validation warnings.
-          items:
-            $ref: '#/components/schemas/PolicyValidationError'
-          title: Warnings
-          type: array
+        action:
+          title: Action
+          type: string
+        details:
+          title: Details
+          type: string
+        guardrail_name:
+          title: Guardrail Name
+          type: string
+        output_text:
+          title: Output Text
+          type: string
       required:
-      - valid
-      title: PolicyValidationResponse
+      - guardrail_name
+      - action
+      - output_text
+      - details
+      title: GuardrailTestResultEntry
       type: object
+    PolicyValidationErrorType:
+      description: Types of validation errors that can occur.
+      enum:
+      - invalid_guardrail
+      - invalid_team
+      - invalid_key
+      - invalid_model
+      - invalid_inheritance
+      - circular_inheritance
+      - invalid_scope
+      - invalid_syntax
+      title: PolicyValidationErrorType
+      type: string
     ChatCompletionAssistantMessage:
       properties:
         role:
@@ -2490,19 +2667,6 @@ components:
       - role
       title: ChatCompletionAssistantMessage
       type: object
-    ChatCompletionFileObject:
-      properties:
-        type:
-          const: file
-          title: Type
-          type: string
-        file:
-          $ref: '#/components/schemas/ChatCompletionFileObjectFile'
-      required:
-      - type
-      - file
-      title: ChatCompletionFileObject
-      type: object
     PolicySummaryItem:
       description: Summary of a single policy for list endpoint.
       properties:
@@ -2531,234 +2695,6 @@ components:
       - resolved_guardrails
       - inheritance_chain
       title: PolicySummaryItem
-      type: object
-    ChatCompletionAudioObject:
-      properties:
-        input_audio:
-          $ref: '#/components/schemas/InputAudio'
-        type:
-          const: input_audio
-          title: Type
-          type: string
-      required:
-      - input_audio
-      - type
-      title: ChatCompletionAudioObject
-      type: object
-    PolicyValidationError:
-      additionalProperties: false
-      description: Represents a validation error or warning for a policy.
-      properties:
-        error_type:
-          $ref: '#/components/schemas/PolicyValidationErrorType'
-          description: Type of validation error.
-        field:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Specific field that caused the error (e.g., 'guardrails.add', 'scope.teams').
-          title: Field
-        message:
-          description: Human-readable error message.
-          title: Message
-          type: string
-        policy_name:
-          description: Name of the policy with the issue.
-          title: Policy Name
-          type: string
-        value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The invalid value that caused the error.
-          title: Value
-      required:
-      - policy_name
-      - error_type
-      - message
-      title: PolicyValidationError
-      type: object
-    InputAudio:
-      properties:
-        data:
-          title: Data
-          type: string
-        format:
-          enum:
-          - wav
-          - mp3
-          title: Format
-          type: string
-      required:
-      - data
-      - format
-      title: InputAudio
-      type: object
-    PolicyListResponse:
-      description: Response for /policy/list endpoint.
-      properties:
-        policies:
-          additionalProperties:
-            $ref: '#/components/schemas/PolicySummaryItem'
-          title: Policies
-          type: object
-        total_count:
-          title: Total Count
-          type: integer
-      required:
-      - policies
-      - total_count
-      title: PolicyListResponse
-      type: object
-    ChatCompletionRedactedThinkingBlock:
-      properties:
-        type:
-          const: redacted_thinking
-          title: Type
-          type: string
-        data:
-          title: Data
-          type: string
-        cache_control:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/ChatCompletionCachedContent'
-          - type: 'null'
-          title: Cache Control
-      required:
-      - type
-      title: ChatCompletionRedactedThinkingBlock
-      type: object
-    TestPolicyTemplateResponse:
-      properties:
-        overall_action:
-          title: Overall Action
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/GuardrailTestResultEntry'
-          title: Results
-          type: array
-      required:
-      - overall_action
-      - results
-      title: TestPolicyTemplateResponse
-      type: object
-    ChatCompletionMessageToolCall:
-      properties: {}
-      additionalProperties: true
-      type: object
-      title: ChatCompletionMessageToolCall
-    PolicyScopeResponse:
-      description: Scope configuration for a policy.
-      properties:
-        keys:
-          items:
-            type: string
-          title: Keys
-          type: array
-        models:
-          items:
-            type: string
-          title: Models
-          type: array
-        tags:
-          items:
-            type: string
-          title: Tags
-          type: array
-        teams:
-          items:
-            type: string
-          title: Teams
-          type: array
-      title: PolicyScopeResponse
-      type: object
-    DocumentObject:
-      properties:
-        type:
-          const: text
-          title: Type
-          type: string
-        media_type:
-          title: Media Type
-          type: string
-        data:
-          title: Data
-          type: string
-      required:
-      - type
-      - media_type
-      - data
-      title: DocumentObject
-      type: object
-    ChatCompletionImageObject:
-      properties:
-        type:
-          const: image_url
-          title: Type
-          type: string
-        image_url:
-          anyOf:
-          - type: string
-          - $ref: '#/components/schemas/ChatCompletionImageUrlObject'
-          title: Image Url
-      required:
-      - type
-      - image_url
-      title: ChatCompletionImageObject
-      type: object
-    ChatCompletionCachedContent:
-      properties:
-        type:
-          const: ephemeral
-          title: Type
-          type: string
-        ttl:
-          enum:
-          - 5m
-          - 1h
-          title: Ttl
-          type: string
-      required:
-      - type
-      title: ChatCompletionCachedContent
-      type: object
-    ChatCompletionToolCallChunk:
-      properties:
-        function:
-          $ref: '#/components/schemas/ChatCompletionToolCallFunctionChunk'
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Id
-        index:
-          title: Index
-          type: integer
-        type:
-          const: function
-          title: Type
-          type: string
-      required:
-      - id
-      - type
-      - function
-      - index
-      title: ChatCompletionToolCallChunk
-      type: object
-    ChatCompletionVideoUrlObject:
-      properties:
-        url:
-          title: Url
-          type: string
-        detail:
-          title: Detail
-          type: string
-      required:
-      - url
-      title: ChatCompletionVideoUrlObject
       type: object
     ChatCompletionFunctionMessage:
       properties:
@@ -2789,31 +2725,99 @@ components:
       - tool_call_id
       title: ChatCompletionFunctionMessage
       type: object
-    PolicyTestResponse:
-      description: Response for /policy/test endpoint.
+    ChatCompletionDeveloperMessage:
       properties:
-        context:
-          $ref: '#/components/schemas/PolicyMatchContext'
-        matching_policies:
-          items:
-            type: string
-          title: Matching Policies
-          type: array
-        message:
+        role:
+          const: developer
+          title: Role
+          type: string
+        content:
+          anyOf:
+          - type: string
+          - items: {}
+            type: array
+          title: Content
+        name:
+          title: Name
+          type: string
+        cache_control:
+          $ref: '#/components/schemas/ChatCompletionCachedContent'
+      required:
+      - role
+      - content
+      title: ChatCompletionDeveloperMessage
+      type: object
+    ChatCompletionAssistantToolCall:
+      properties:
+        id:
           anyOf:
           - type: string
           - type: 'null'
-          title: Message
-        resolved_guardrails:
-          items:
-            type: string
-          title: Resolved Guardrails
-          type: array
+          title: Id
+        type:
+          const: function
+          title: Type
+          type: string
+        function:
+          $ref: '#/components/schemas/ChatCompletionToolCallFunctionChunk'
       required:
-      - context
-      - matching_policies
-      - resolved_guardrails
-      title: PolicyTestResponse
+      - id
+      - type
+      - function
+      title: ChatCompletionAssistantToolCall
+      type: object
+    EnrichTemplateRequest:
+      properties:
+        competitors:
+          anyOf:
+          - items:
+              type: string
+            maxItems: 100
+            type: array
+          - type: 'null'
+          description: Optional list of competitor names
+          title: Competitors
+        instruction:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Refinement instruction for modifying the competitor list (e.g. 'add 10 more from Asia')
+          title: Instruction
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        parameters:
+          additionalProperties: true
+          title: Parameters
+          type: object
+        template_id:
+          title: Template Id
+          type: string
+      required:
+      - template_id
+      - parameters
+      title: EnrichTemplateRequest
+      type: object
+    ChatCompletionToolParamFunctionChunk:
+      properties:
+        description:
+          title: Description
+          type: string
+        name:
+          title: Name
+          type: string
+        parameters:
+          additionalProperties: true
+          title: Parameters
+          type: object
+        strict:
+          title: Strict
+          type: boolean
+      required:
+      - name
+      title: ChatCompletionToolParamFunctionChunk
       type: object
     ChatCompletionDocumentObject:
       properties:
@@ -2841,90 +2845,6 @@ components:
       - citations
       title: ChatCompletionDocumentObject
       type: object
-    CitationsObject:
-      properties:
-        enabled:
-          title: Enabled
-          type: boolean
-      required:
-      - enabled
-      title: CitationsObject
-      type: object
-    ChatCompletionThinkingBlock:
-      properties:
-        type:
-          const: thinking
-          title: Type
-          type: string
-        thinking:
-          title: Thinking
-          type: string
-        signature:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Signature
-        cache_control:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/ChatCompletionCachedContent'
-          - type: 'null'
-          title: Cache Control
-      required:
-      - type
-      title: ChatCompletionThinkingBlock
-      type: object
-    ChatCompletionDeveloperMessage:
-      properties:
-        role:
-          const: developer
-          title: Role
-          type: string
-        content:
-          anyOf:
-          - type: string
-          - items: {}
-            type: array
-          title: Content
-        name:
-          title: Name
-          type: string
-        cache_control:
-          $ref: '#/components/schemas/ChatCompletionCachedContent'
-      required:
-      - role
-      - content
-      title: ChatCompletionDeveloperMessage
-      type: object
-    ChatCompletionImageUrlObject:
-      properties:
-        url:
-          title: Url
-          type: string
-        detail:
-          title: Detail
-          type: string
-        format:
-          title: Format
-          type: string
-      required:
-      - url
-      title: ChatCompletionImageUrlObject
-      type: object
-    PolicyValidateRequest:
-      additionalProperties: false
-      description: Request body for the /policy/validate endpoint.
-      properties:
-        policies:
-          additionalProperties: true
-          description: Policy configuration to validate. Map of policy names to policy definitions.
-          title: Policies
-          type: object
-      required:
-      - policies
-      title: PolicyValidateRequest
-      type: object
     ChatCompletionToolMessage:
       properties:
         role:
@@ -2947,54 +2867,134 @@ components:
       - tool_call_id
       title: ChatCompletionToolMessage
       type: object
-    PolicyValidationErrorType:
-      description: Types of validation errors that can occur.
-      enum:
-      - invalid_guardrail
-      - invalid_team
-      - invalid_key
-      - invalid_model
-      - invalid_inheritance
-      - circular_inheritance
-      - invalid_scope
-      - invalid_syntax
-      title: PolicyValidationErrorType
-      type: string
-    TestPolicyTemplateRequest:
+    PolicyScopeResponse:
+      description: Scope configuration for a policy.
       properties:
-        guardrail_definitions:
-          description: All guardrailDefinitions from the policy template
-          items:
-            additionalProperties: true
-            type: object
-          title: Guardrail Definitions
-          type: array
-        text:
-          description: Test input text to run guardrails against
-          title: Text
-          type: string
-      required:
-      - guardrail_definitions
-      - text
-      title: TestPolicyTemplateRequest
-      type: object
-    SuggestTemplatesRequest:
-      properties:
-        attack_examples:
+        keys:
           items:
             type: string
-          title: Attack Examples
+          title: Keys
           type: array
-        description:
-          default: ''
-          title: Description
+        models:
+          items:
+            type: string
+          title: Models
+          type: array
+        tags:
+          items:
+            type: string
+          title: Tags
+          type: array
+        teams:
+          items:
+            type: string
+          title: Teams
+          type: array
+      title: PolicyScopeResponse
+      type: object
+    CitationsObject:
+      properties:
+        enabled:
+          title: Enabled
+          type: boolean
+      required:
+      - enabled
+      title: CitationsObject
+      type: object
+    PolicyGuardrailsResponse:
+      description: Guardrails configuration for a policy.
+      properties:
+        add:
+          items:
+            type: string
+          title: Add
+          type: array
+        remove:
+          items:
+            type: string
+          title: Remove
+          type: array
+      title: PolicyGuardrailsResponse
+      type: object
+    ChatCompletionTextObject:
+      properties:
+        type:
+          const: text
+          title: Type
           type: string
-        model:
+        text:
+          title: Text
+          type: string
+        cache_control:
+          $ref: '#/components/schemas/ChatCompletionCachedContent'
+      required:
+      - type
+      - text
+      title: ChatCompletionTextObject
+      type: object
+    PolicyInfoResponse:
+      description: Response for /policy/info/{policy_name} endpoint.
+      properties:
+        guardrails:
+          $ref: '#/components/schemas/PolicyGuardrailsResponse'
+        inherit:
           anyOf:
           - type: string
           - type: 'null'
-          title: Model
-      title: SuggestTemplatesRequest
+          title: Inherit
+        inheritance_chain:
+          items:
+            type: string
+          title: Inheritance Chain
+          type: array
+        policy_name:
+          title: Policy Name
+          type: string
+        resolved_guardrails:
+          items:
+            type: string
+          title: Resolved Guardrails
+          type: array
+        scope:
+          $ref: '#/components/schemas/PolicyScopeResponse'
+      required:
+      - policy_name
+      - scope
+      - guardrails
+      - resolved_guardrails
+      - inheritance_chain
+      title: PolicyInfoResponse
+      type: object
+    ChatCompletionToolCallFunctionChunk:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        arguments:
+          title: Arguments
+          type: string
+        provider_specific_fields:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Provider Specific Fields
+      title: ChatCompletionToolCallFunctionChunk
+      type: object
+    ChatCompletionFileObject:
+      properties:
+        type:
+          const: file
+          title: Type
+          type: string
+        file:
+          $ref: '#/components/schemas/ChatCompletionFileObjectFile'
+      required:
+      - type
+      - file
+      title: ChatCompletionFileObject
       type: object
   securitySchemes:
     APIKeyHeader:

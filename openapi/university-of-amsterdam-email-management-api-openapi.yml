@@ -77,6 +77,18 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    EmailEventSettings:
+      properties:
+        event:
+          $ref: '#/components/schemas/EmailEvent'
+        enabled:
+          type: boolean
+          title: Enabled
+      type: object
+      required:
+      - event
+      - enabled
+      title: EmailEventSettings
     HTTPValidationError:
       properties:
         detail:
@@ -97,27 +109,6 @@ components:
       required:
       - settings
       title: EmailEventSettingsResponse
-    EmailEvent:
-      type: string
-      enum:
-      - Virtual Key Created
-      - New User Invitation
-      - Virtual Key Rotated
-      - Soft Budget Crossed
-      - Max Budget Alert
-      title: EmailEvent
-    EmailEventSettings:
-      properties:
-        event:
-          $ref: '#/components/schemas/EmailEvent'
-        enabled:
-          type: boolean
-          title: Enabled
-      type: object
-      required:
-      - event
-      - enabled
-      title: EmailEventSettings
     EmailEventSettingsUpdateRequest:
       properties:
         settings:
@@ -129,6 +120,15 @@ components:
       required:
       - settings
       title: EmailEventSettingsUpdateRequest
+    EmailEvent:
+      type: string
+      enum:
+      - Virtual Key Created
+      - New User Invitation
+      - Virtual Key Rotated
+      - Soft Budget Crossed
+      - Max Budget Alert
+      title: EmailEvent
     ValidationError:
       properties:
         loc:
