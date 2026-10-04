@@ -195,26 +195,6 @@ paths:
       - Config
 components:
   schemas:
-    PassThroughEndpointResponse:
-      properties:
-        endpoints:
-          items:
-            $ref: '#/components/schemas/PassThroughGenericEndpoint'
-          type: array
-          title: Endpoints
-      type: object
-      required:
-      - endpoints
-      title: PassThroughEndpointResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     PassThroughGenericEndpoint:
       properties:
         id:
@@ -292,6 +272,15 @@ components:
       - path
       - target
       title: PassThroughGenericEndpoint
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -318,6 +307,17 @@ components:
       - msg
       - type
       title: ValidationError
+    PassThroughEndpointResponse:
+      properties:
+        endpoints:
+          items:
+            $ref: '#/components/schemas/PassThroughGenericEndpoint'
+          type: array
+          title: Endpoints
+      type: object
+      required:
+      - endpoints
+      title: PassThroughEndpointResponse
     PassThroughGuardrailSettings:
       properties:
         request_fields:

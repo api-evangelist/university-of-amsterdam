@@ -319,6 +319,46 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    DeleteSkillResponse:
+      description: Response from deleting a skill
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          default: skill_deleted
+          title: Type
+          type: string
+      required:
+      - id
+      title: DeleteSkillResponse
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     Skill:
       description: Represents a skill from the Anthropic Skills API
       properties:
@@ -375,46 +415,6 @@ components:
       required:
       - data
       title: ListSkillsResponse
-      type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    DeleteSkillResponse:
-      description: Response from deleting a skill
-      properties:
-        id:
-          title: Id
-          type: string
-        type:
-          default: skill_deleted
-          title: Type
-          type: string
-      required:
-      - id
-      title: DeleteSkillResponse
       type: object
   securitySchemes:
     APIKeyHeader:

@@ -190,27 +190,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    FallbackDeleteResponse:
+    ValidationError:
       properties:
-        model:
-          type: string
-          title: Model
-          description: The model name
-        fallback_type:
-          type: string
-          title: Fallback Type
-          description: Type of fallback
-        message:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
           title: Message
-          description: Success message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - model
-      - fallback_type
-      - message
-      title: FallbackDeleteResponse
-      description: Response model for deleting fallbacks
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -248,55 +253,6 @@ components:
       - message
       title: FallbackResponse
       description: Response model for fallback operations
-    FallbackGetResponse:
-      properties:
-        model:
-          type: string
-          title: Model
-          description: The model name
-        fallback_models:
-          items:
-            type: string
-          type: array
-          title: Fallback Models
-          description: List of fallback model names
-        fallback_type:
-          type: string
-          title: Fallback Type
-          description: Type of fallback
-      type: object
-      required:
-      - model
-      - fallback_models
-      - fallback_type
-      title: FallbackGetResponse
-      description: Response model for getting fallbacks
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     FallbackCreateRequest:
       properties:
         model:
@@ -325,6 +281,50 @@ components:
       - fallback_models
       title: FallbackCreateRequest
       description: Request model for creating/updating fallbacks
+    FallbackDeleteResponse:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name
+        fallback_type:
+          type: string
+          title: Fallback Type
+          description: Type of fallback
+        message:
+          type: string
+          title: Message
+          description: Success message
+      type: object
+      required:
+      - model
+      - fallback_type
+      - message
+      title: FallbackDeleteResponse
+      description: Response model for deleting fallbacks
+    FallbackGetResponse:
+      properties:
+        model:
+          type: string
+          title: Model
+          description: The model name
+        fallback_models:
+          items:
+            type: string
+          type: array
+          title: Fallback Models
+          description: List of fallback model names
+        fallback_type:
+          type: string
+          title: Fallback Type
+          description: Type of fallback
+      type: object
+      required:
+      - model
+      - fallback_models
+      - fallback_type
+      title: FallbackGetResponse
+      description: Response model for getting fallbacks
   securitySchemes:
     APIKeyHeader:
       type: apiKey

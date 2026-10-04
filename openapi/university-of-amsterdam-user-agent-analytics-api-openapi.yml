@@ -412,6 +412,55 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ActiveUsersAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/TagActiveUsersResponse'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: ActiveUsersAnalyticsResponse
+      description: Response for active users analytics
+    PerUserAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/PerUserMetrics'
+          type: array
+          title: Results
+        total_count:
+          type: integer
+          title: Total Count
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+        total_pages:
+          type: integer
+          title: Total Pages
+      type: object
+      required:
+      - results
+      - total_count
+      - page
+      - page_size
+      - total_pages
+      title: PerUserAnalyticsResponse
+      description: Response for per-user analytics
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     TagSummaryMetrics:
       properties:
         tag:
@@ -446,27 +495,44 @@ components:
       - total_spend
       title: TagSummaryMetrics
       description: Summary metrics for a tag
-    ActiveUsersAnalyticsResponse:
+    TagSummaryResponse:
       properties:
         results:
           items:
-            $ref: '#/components/schemas/TagActiveUsersResponse'
+            $ref: '#/components/schemas/TagSummaryMetrics'
           type: array
           title: Results
       type: object
       required:
       - results
-      title: ActiveUsersAnalyticsResponse
-      description: Response for active users analytics
-    HTTPValidationError:
+      title: TagSummaryResponse
+      description: Response for tag summary analytics
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     PerUserMetrics:
       properties:
         user_id:
@@ -507,68 +573,6 @@ components:
       - user_id
       title: PerUserMetrics
       description: Metrics for individual user
-    PerUserAnalyticsResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/PerUserMetrics'
-          type: array
-          title: Results
-        total_count:
-          type: integer
-          title: Total Count
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-        total_pages:
-          type: integer
-          title: Total Pages
-      type: object
-      required:
-      - results
-      - total_count
-      - page
-      - page_size
-      - total_pages
-      title: PerUserAnalyticsResponse
-      description: Response for per-user analytics
-    DistinctTagResponse:
-      properties:
-        tag:
-          type: string
-          title: Tag
-      type: object
-      required:
-      - tag
-      title: DistinctTagResponse
-      description: Response for distinct user agent tags
-    DistinctTagsResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/DistinctTagResponse'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: DistinctTagsResponse
-      description: Response for all distinct user agent tags
-    TagSummaryResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagSummaryMetrics'
-          type: array
-          title: Results
-      type: object
-      required:
-      - results
-      title: TagSummaryResponse
-      description: Response for tag summary analytics
     TagActiveUsersResponse:
       properties:
         tag:
@@ -597,32 +601,28 @@ components:
       - date
       title: TagActiveUsersResponse
       description: Response for tag active users metrics
-    ValidationError:
+    DistinctTagResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        tag:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Tag
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - tag
+      title: DistinctTagResponse
+      description: Response for distinct user agent tags
+    DistinctTagsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/DistinctTagResponse'
+          type: array
+          title: Results
+      type: object
+      required:
+      - results
+      title: DistinctTagsResponse
+      description: Response for all distinct user agent tags
   securitySchemes:
     APIKeyHeader:
       type: apiKey

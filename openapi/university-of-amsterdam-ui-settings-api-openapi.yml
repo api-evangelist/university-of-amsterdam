@@ -67,22 +67,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    UISettingsResponse:
-      properties:
-        values:
-          additionalProperties: true
-          type: object
-          title: Values
-        field_schema:
-          additionalProperties: true
-          type: object
-          title: Field Schema
-      type: object
-      required:
-      - values
-      - field_schema
-      title: UISettingsResponse
-      description: Response model for UI settings
     HTTPValidationError:
       properties:
         detail:
@@ -118,6 +102,22 @@ components:
       - msg
       - type
       title: ValidationError
+    UISettingsResponse:
+      properties:
+        values:
+          additionalProperties: true
+          type: object
+          title: Values
+        field_schema:
+          additionalProperties: true
+          type: object
+          title: Field Schema
+      type: object
+      required:
+      - values
+      - field_schema
+      title: UISettingsResponse
+      description: Response model for UI settings
   securitySchemes:
     APIKeyHeader:
       type: apiKey

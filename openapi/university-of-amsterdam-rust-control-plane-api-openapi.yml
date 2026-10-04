@@ -76,29 +76,6 @@ components:
       - standard_logging_payload
       title: CallbackLogRecord
       description: A single finished logging event to replay through the callbacks.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CallbackLogFailure:
-      properties:
-        index:
-          type: integer
-          title: Index
-        error:
-          type: string
-          title: Error
-      type: object
-      required:
-      - index
-      - error
-      title: CallbackLogFailure
-      description: A record that failed to replay, identified by its index in the batch.
     CallbackLogsResponse:
       properties:
         processed:
@@ -120,6 +97,28 @@ components:
       description: 'Per-batch result: counts plus per-record failure detail so the caller can
 
         distinguish a transient callback error from a structurally bad payload.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CallbackLogsRequest:
+      properties:
+        records:
+          items:
+            $ref: '#/components/schemas/CallbackLogRecord'
+          type: array
+          maxItems: 1000
+          title: Records
+      type: object
+      required:
+      - records
+      title: CallbackLogsRequest
+      description: A batch of logging events posted by an external producer.
     ValidationError:
       properties:
         loc:
@@ -146,19 +145,20 @@ components:
       - msg
       - type
       title: ValidationError
-    CallbackLogsRequest:
+    CallbackLogFailure:
       properties:
-        records:
-          items:
-            $ref: '#/components/schemas/CallbackLogRecord'
-          type: array
-          maxItems: 1000
-          title: Records
+        index:
+          type: integer
+          title: Index
+        error:
+          type: string
+          title: Error
       type: object
       required:
-      - records
-      title: CallbackLogsRequest
-      description: A batch of logging events posted by an external producer.
+      - index
+      - error
+      title: CallbackLogFailure
+      description: A record that failed to replay, identified by its index in the batch.
   securitySchemes:
     APIKeyHeader:
       type: apiKey

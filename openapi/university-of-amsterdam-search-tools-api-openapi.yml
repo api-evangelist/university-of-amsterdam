@@ -582,83 +582,6 @@ paths:
       - search_tools
 components:
   schemas:
-    UpdateSearchToolRequest:
-      properties:
-        search_tool:
-          $ref: '#/components/schemas/SearchTool'
-      required:
-      - search_tool
-      title: UpdateSearchToolRequest
-      type: object
-    TestSearchToolConnectionRequest:
-      properties:
-        litellm_params:
-          additionalProperties: true
-          title: Litellm Params
-          type: object
-      required:
-      - litellm_params
-      title: TestSearchToolConnectionRequest
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SearchToolInfoResponse:
-      description: Response model for search tool information.
-      properties:
-        created_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created At
-        is_from_config:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Is From Config
-        litellm_params:
-          additionalProperties: true
-          title: Litellm Params
-          type: object
-        search_tool_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Search Tool Id
-        search_tool_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Search Tool Info
-        search_tool_name:
-          title: Search Tool Name
-          type: string
-        updated_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated At
-      title: SearchToolInfoResponse
-      type: object
-    ListSearchToolsResponse:
-      description: Response model for listing search tools.
-      properties:
-        search_tools:
-          items:
-            $ref: '#/components/schemas/SearchToolInfoResponse'
-          title: Search Tools
-          type: array
-      required:
-      - search_tools
-      title: ListSearchToolsResponse
-      type: object
     CreateSearchToolRequest:
       properties:
         search_tool:
@@ -701,32 +624,6 @@ components:
       - litellm_params
       title: SearchTool
       type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     SearchToolLiteLLMParams:
       description: LiteLLM params for search tools configuration.
       properties:
@@ -756,6 +653,109 @@ components:
       required:
       - search_provider
       title: SearchToolLiteLLMParams
+      type: object
+    ListSearchToolsResponse:
+      description: Response model for listing search tools.
+      properties:
+        search_tools:
+          items:
+            $ref: '#/components/schemas/SearchToolInfoResponse'
+          title: Search Tools
+          type: array
+      required:
+      - search_tools
+      title: ListSearchToolsResponse
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TestSearchToolConnectionRequest:
+      properties:
+        litellm_params:
+          additionalProperties: true
+          title: Litellm Params
+          type: object
+      required:
+      - litellm_params
+      title: TestSearchToolConnectionRequest
+      type: object
+    SearchToolInfoResponse:
+      description: Response model for search tool information.
+      properties:
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        is_from_config:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is From Config
+        litellm_params:
+          additionalProperties: true
+          title: Litellm Params
+          type: object
+        search_tool_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Search Tool Id
+        search_tool_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Search Tool Info
+        search_tool_name:
+          title: Search Tool Name
+          type: string
+        updated_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated At
+      title: SearchToolInfoResponse
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UpdateSearchToolRequest:
+      properties:
+        search_tool:
+          $ref: '#/components/schemas/SearchTool'
+      required:
+      - search_tool
+      title: UpdateSearchToolRequest
       type: object
   securitySchemes:
     APIKeyHeader:

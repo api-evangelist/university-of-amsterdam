@@ -716,30 +716,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    TestPromptRequest:
-      properties:
-        dotprompt_content:
-          type: string
-          title: Dotprompt Content
-        prompt_variables:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Prompt Variables
-        conversation_history:
-          anyOf:
-          - items:
-              additionalProperties:
-                type: string
-              type: object
-            type: array
-          - type: 'null'
-          title: Conversation History
-      type: object
-      required:
-      - dotprompt_content
-      title: TestPromptRequest
     PromptTemplateBase:
       properties:
         litellm_prompt_id:
@@ -759,6 +735,32 @@ components:
       - litellm_prompt_id
       - content
       title: PromptTemplateBase
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -768,41 +770,18 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    PromptInfo:
+    PatchPromptRequest:
       properties:
-        prompt_type:
-          type: string
-          enum:
-          - config
-          - db
-          title: Prompt Type
-        environment:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Environment
-          default: development
-      additionalProperties: true
-      type: object
-      required:
-      - prompt_type
-      title: PromptInfo
-    Prompt:
-      properties:
-        prompt_id:
-          type: string
-          title: Prompt Id
         litellm_params:
-          $ref: '#/components/schemas/PromptLiteLLMParams'
+          anyOf:
+          - $ref: '#/components/schemas/PromptLiteLLMParams'
+          - type: 'null'
         prompt_info:
           anyOf:
           - $ref: '#/components/schemas/PromptInfo'
           - type: 'null'
       type: object
-      required:
-      - prompt_id
-      - litellm_params
-      title: Prompt
+      title: PatchPromptRequest
     PromptLiteLLMParams:
       properties:
         prompt_id:
@@ -851,6 +830,71 @@ components:
       required:
       - prompt_integration
       title: PromptLiteLLMParams
+    Prompt:
+      properties:
+        prompt_id:
+          type: string
+          title: Prompt Id
+        litellm_params:
+          $ref: '#/components/schemas/PromptLiteLLMParams'
+        prompt_info:
+          anyOf:
+          - $ref: '#/components/schemas/PromptInfo'
+          - type: 'null'
+      type: object
+      required:
+      - prompt_id
+      - litellm_params
+      title: Prompt
+    ListPromptsResponse:
+      properties:
+        prompts:
+          items:
+            $ref: '#/components/schemas/PromptSpec'
+          type: array
+          title: Prompts
+      type: object
+      required:
+      - prompts
+      title: ListPromptsResponse
+    PromptInfo:
+      properties:
+        prompt_type:
+          type: string
+          enum:
+          - config
+          - db
+          title: Prompt Type
+        environment:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Environment
+          default: development
+      additionalProperties: true
+      type: object
+      required:
+      - prompt_type
+      title: PromptInfo
+    PromptInfoResponse:
+      properties:
+        prompt_spec:
+          $ref: '#/components/schemas/PromptSpec'
+        raw_prompt_template:
+          anyOf:
+          - $ref: '#/components/schemas/PromptTemplateBase'
+          - type: 'null'
+        environments:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Environments
+      type: object
+      required:
+      - prompt_spec
+      title: PromptInfoResponse
     PromptSpec:
       properties:
         prompt_id:
@@ -894,74 +938,30 @@ components:
       - litellm_params
       - prompt_info
       title: PromptSpec
-    PatchPromptRequest:
+    TestPromptRequest:
       properties:
-        litellm_params:
+        dotprompt_content:
+          type: string
+          title: Dotprompt Content
+        prompt_variables:
           anyOf:
-          - $ref: '#/components/schemas/PromptLiteLLMParams'
+          - additionalProperties: true
+            type: object
           - type: 'null'
-        prompt_info:
-          anyOf:
-          - $ref: '#/components/schemas/PromptInfo'
-          - type: 'null'
-      type: object
-      title: PatchPromptRequest
-    PromptInfoResponse:
-      properties:
-        prompt_spec:
-          $ref: '#/components/schemas/PromptSpec'
-        raw_prompt_template:
-          anyOf:
-          - $ref: '#/components/schemas/PromptTemplateBase'
-          - type: 'null'
-        environments:
+          title: Prompt Variables
+        conversation_history:
           anyOf:
           - items:
-              type: string
+              additionalProperties:
+                type: string
+              type: object
             type: array
           - type: 'null'
-          title: Environments
+          title: Conversation History
       type: object
       required:
-      - prompt_spec
-      title: PromptInfoResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ListPromptsResponse:
-      properties:
-        prompts:
-          items:
-            $ref: '#/components/schemas/PromptSpec'
-          type: array
-          title: Prompts
-      type: object
-      required:
-      - prompts
-      title: ListPromptsResponse
+      - dotprompt_content
+      title: TestPromptRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

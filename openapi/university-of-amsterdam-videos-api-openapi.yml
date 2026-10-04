@@ -704,30 +704,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    Body_video_generation_videos_post:
-      properties:
-        input_reference:
-          anyOf:
-          - type: string
-            contentMediaType: application/octet-stream
-          - type: 'null'
-          title: Input Reference
-      type: object
-      title: Body_video_generation_videos_post
-    Body_video_create_character_v1_videos_characters_post:
-      properties:
-        video:
-          type: string
-          contentMediaType: application/octet-stream
-          title: Video
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - video
-      - name
-      title: Body_video_create_character_v1_videos_characters_post
     HTTPValidationError:
       properties:
         detail:
@@ -737,16 +713,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    Body_video_generation_v1_videos_post:
-      properties:
-        input_reference:
-          anyOf:
-          - type: string
-            contentMediaType: application/octet-stream
-          - type: 'null'
-          title: Input Reference
-      type: object
-      title: Body_video_generation_v1_videos_post
     Body_video_create_character_videos_characters_post:
       properties:
         video:
@@ -761,6 +727,20 @@ components:
       - video
       - name
       title: Body_video_create_character_videos_characters_post
+    Body_video_create_character_v1_videos_characters_post:
+      properties:
+        video:
+          type: string
+          contentMediaType: application/octet-stream
+          title: Video
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - video
+      - name
+      title: Body_video_create_character_v1_videos_characters_post
     ValidationError:
       properties:
         loc:
@@ -787,6 +767,26 @@ components:
       - msg
       - type
       title: ValidationError
+    Body_video_generation_videos_post:
+      properties:
+        input_reference:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: Input Reference
+      type: object
+      title: Body_video_generation_videos_post
+    Body_video_generation_v1_videos_post:
+      properties:
+        input_reference:
+          anyOf:
+          - type: string
+            contentMediaType: application/octet-stream
+          - type: 'null'
+          title: Input Reference
+      type: object
+      title: Body_video_generation_v1_videos_post
   securitySchemes:
     APIKeyHeader:
       type: apiKey

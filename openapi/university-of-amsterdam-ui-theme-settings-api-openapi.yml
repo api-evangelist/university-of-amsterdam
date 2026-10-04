@@ -118,23 +118,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    UIThemeConfig:
-      properties:
-        logo_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Url
-          description: URL or path to custom logo image. Can be a local file path or HTTP/HTTPS URL
-        favicon_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Favicon Url
-          description: URL to custom favicon image. Must be an HTTP/HTTPS URL to a .ico, .png, or .svg file
-      type: object
-      title: UIThemeConfig
-      description: Configuration for UI theme customization
     UIThemeSettingsResponse:
       properties:
         values:
@@ -177,6 +160,23 @@ components:
       - msg
       - type
       title: ValidationError
+    UIThemeConfig:
+      properties:
+        logo_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Url
+          description: URL or path to custom logo image. Can be a local file path or HTTP/HTTPS URL
+        favicon_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Favicon Url
+          description: URL to custom favicon image. Must be an HTTP/HTTPS URL to a .ico, .png, or .svg file
+      type: object
+      title: UIThemeConfig
+      description: Configuration for UI theme customization
   securitySchemes:
     APIKeyHeader:
       type: apiKey

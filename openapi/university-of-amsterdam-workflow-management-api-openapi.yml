@@ -312,46 +312,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    WorkflowEventCreateRequest:
+    ValidationError:
       properties:
-        event_type:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Event Type
-        step_name:
+          title: Message
+        type:
           type: string
-          title: Step Name
-        data:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Data
-      type: object
-      required:
-      - event_type
-      - step_name
-      title: WorkflowEventCreateRequest
-    WorkflowRunCreateRequest:
-      properties:
-        workflow_type:
-          type: string
-          title: Workflow Type
+          title: Error Type
         input:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
           title: Input
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
+        ctx:
+          type: object
+          title: Context
       type: object
       required:
-      - workflow_type
-      title: WorkflowRunCreateRequest
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -361,24 +347,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    WorkflowMessageCreateRequest:
-      properties:
-        role:
-          type: string
-          title: Role
-        content:
-          type: string
-          title: Content
-        session_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Session Id
-      type: object
-      required:
-      - role
-      - content
-      title: WorkflowMessageCreateRequest
     WorkflowRunUpdateRequest:
       properties:
         status:
@@ -406,32 +374,64 @@ components:
           title: Metadata
       type: object
       title: WorkflowRunUpdateRequest
-    ValidationError:
+    WorkflowMessageCreateRequest:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        role:
           type: string
-          title: Message
-        type:
+          title: Role
+        content:
           type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Content
+        session_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Session Id
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - role
+      - content
+      title: WorkflowMessageCreateRequest
+    WorkflowRunCreateRequest:
+      properties:
+        workflow_type:
+          type: string
+          title: Workflow Type
+        input:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Input
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - workflow_type
+      title: WorkflowRunCreateRequest
+    WorkflowEventCreateRequest:
+      properties:
+        event_type:
+          type: string
+          title: Event Type
+        step_name:
+          type: string
+          title: Step Name
+        data:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Data
+      type: object
+      required:
+      - event_type
+      - step_name
+      title: WorkflowEventCreateRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

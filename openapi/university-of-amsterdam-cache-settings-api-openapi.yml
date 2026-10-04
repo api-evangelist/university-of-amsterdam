@@ -122,27 +122,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    CacheTestResponse:
-      properties:
-        status:
-          type: string
-          title: Status
-          description: 'Connection status: ''success'' or ''failed'''
-        message:
-          type: string
-          title: Message
-          description: Connection result message
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-          description: Error message if connection failed
-      type: object
-      required:
-      - status
-      - message
-      title: CacheTestResponse
     CacheTestRequest:
       properties:
         cache_settings:
@@ -206,17 +185,6 @@ components:
       - field_description
       - ui_field_name
       title: CacheSettingsField
-    CacheSettingsUpdateRequest:
-      properties:
-        cache_settings:
-          additionalProperties: true
-          type: object
-          title: Cache Settings
-          description: Cache settings to save
-      type: object
-      required:
-      - cache_settings
-      title: CacheSettingsUpdateRequest
     CacheSettingsResponse:
       properties:
         fields:
@@ -242,6 +210,38 @@ components:
       - current_values
       - redis_type_descriptions
       title: CacheSettingsResponse
+    CacheTestResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+          description: 'Connection status: ''success'' or ''failed'''
+        message:
+          type: string
+          title: Message
+          description: Connection result message
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+          description: Error message if connection failed
+      type: object
+      required:
+      - status
+      - message
+      title: CacheTestResponse
+    CacheSettingsUpdateRequest:
+      properties:
+        cache_settings:
+          additionalProperties: true
+          type: object
+          title: Cache Settings
+          description: Cache settings to save
+      type: object
+      required:
+      - cache_settings
+      title: CacheSettingsUpdateRequest
     ValidationError:
       properties:
         loc:

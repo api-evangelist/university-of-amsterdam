@@ -1422,151 +1422,46 @@ components:
       - values
       title: MCPUserEnvVarsRequest
       description: Payload for storing the calling user's per-user env var values.
-    MCPEnvVarScope:
-      type: string
-      enum:
-      - global
-      - user
-      title: MCPEnvVarScope
-      description: "Scope for an MCP server environment variable.\n\n- ``global``: value is provided by the admin and used for all users.\n- ``user``: each user must provide their own value via the per-user\n  env-var endpoint. The admin-supplied ``value`` is treated as a\n  placeholder/hint and is not used at request time."
-    MCPOAuthUserCredentialStatus:
+    MCPEnvVar:
       properties:
-        server_id:
+        name:
           type: string
-          title: Server Id
-        has_credential:
-          type: boolean
-          title: Has Credential
-        expires_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Expires At
-        is_expired:
-          type: boolean
-          title: Is Expired
-          default: false
-        connected_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Connected At
-      type: object
-      required:
-      - server_id
-      - has_credential
-      title: MCPOAuthUserCredentialStatus
-      description: Describes whether the calling user has a stored OAuth credential.
-    MCPUserCredentialListItem:
-      properties:
-        server_id:
+          title: Name
+        value:
           type: string
-          title: Server Id
-        server_name:
+          title: Value
+          default: ''
+        scope:
+          $ref: '#/components/schemas/MCPEnvVarScope'
+          default: global
+        description:
           anyOf:
           - type: string
           - type: 'null'
-          title: Server Name
-        alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alias
-        credential_type:
-          type: string
-          title: Credential Type
-        has_credential:
-          type: boolean
-          title: Has Credential
-        expires_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Expires At
-        connected_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Connected At
+          title: Description
       type: object
       required:
-      - server_id
-      - credential_type
-      - has_credential
-      title: MCPUserCredentialListItem
-      description: One entry in the /user-credentials list.
-    MCPSubmissionsSummary:
+      - name
+      title: MCPEnvVar
+      description: 'One environment variable for an MCP server.
+
+
+        Variables can be interpolated into ``static_headers`` using ``${NAME}``
+
+        syntax. ``scope=global`` values are stored on the server. ``scope=user``
+
+        values are stored per-user in ``LiteLLM_MCPUserEnvVars`` and supplied by
+
+        each user.'
+    RejectMCPServerRequest:
       properties:
-        total:
-          type: integer
-          title: Total
-        pending_review:
-          type: integer
-          title: Pending Review
-        active:
-          type: integer
-          title: Active
-        rejected:
-          type: integer
-          title: Rejected
-        items:
-          items:
-            $ref: '#/components/schemas/LiteLLM_MCPServerTable'
-          type: array
-          title: Items
-      type: object
-      required:
-      - total
-      - pending_review
-      - active
-      - rejected
-      - items
-      title: MCPSubmissionsSummary
-    MCPUserEnvVarsStatus:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        server_name:
+        review_notes:
           anyOf:
           - type: string
           - type: 'null'
-          title: Server Name
-        alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alias
-        required:
-          items:
-            $ref: '#/components/schemas/MCPUserEnvVarSpec'
-          type: array
-          title: Required
-        missing_count:
-          type: integer
-          title: Missing Count
-          default: 0
-        setup_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Setup Url
+          title: Review Notes
       type: object
-      required:
-      - server_id
-      title: MCPUserEnvVarsStatus
-      description: Per-user env var status for a single MCP server.
-    MakeMCPServersPublicRequest:
-      properties:
-        mcp_server_ids:
-          items:
-            type: string
-          type: array
-          title: Mcp Server Ids
-      type: object
-      required:
-      - mcp_server_ids
-      title: MakeMCPServersPublicRequest
+      title: RejectMCPServerRequest
     MCPCredentials:
       properties:
         auth_value:
@@ -1693,32 +1588,75 @@ components:
           title: Token Exchange Profile
       type: object
       title: MCPCredentials
-    NewMCPToolsetRequest:
+    MCPOAuthUserCredentialStatus:
       properties:
-        toolset_name:
+        server_id:
           type: string
-          title: Toolset Name
+          title: Server Id
+        has_credential:
+          type: boolean
+          title: Has Credential
+        expires_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Expires At
+        is_expired:
+          type: boolean
+          title: Is Expired
+          default: false
+        connected_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Connected At
+      type: object
+      required:
+      - server_id
+      - has_credential
+      title: MCPOAuthUserCredentialStatus
+      description: Describes whether the calling user has a stored OAuth credential.
+    MCPToolsetTool:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        tool_name:
+          type: string
+          title: Tool Name
+      type: object
+      required:
+      - server_id
+      - tool_name
+      title: MCPToolsetTool
+    MCPUserEnvVarSpec:
+      properties:
+        name:
+          type: string
+          title: Name
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
-        tools:
-          items:
-            $ref: '#/components/schemas/MCPToolsetTool'
-          type: array
-          title: Tools
-          default: []
+        is_set:
+          type: boolean
+          title: Is Set
+          default: false
       type: object
       required:
-      - toolset_name
-      title: NewMCPToolsetRequest
-    NewMCPServerRequest:
+      - name
+      title: MCPUserEnvVarSpec
+      description: 'Describes one per-user env var slot for the calling user.
+
+
+        Stored values are write-only: the status only reports whether a value
+
+        ``is_set`` and never echoes the decrypted secret back to the client.'
+    UpdateMCPServerRequest:
       properties:
         server_id:
-          anyOf:
-          - type: string
-          - type: 'null'
+          type: string
           title: Server Id
         server_name:
           anyOf:
@@ -1946,51 +1884,44 @@ components:
           - type: integer
           - type: 'null'
           title: Max Concurrent Requests
-        approval_status:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Approval Status
-          description: 'Server-managed: set by the endpoint; caller values are overridden.'
-        submitted_by:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Submitted By
-          description: 'Server-managed: set by the endpoint; caller values are overridden.'
-        submitted_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Submitted At
-          description: 'Server-managed: set by the endpoint; caller values are overridden.'
-      type: object
-      title: NewMCPServerRequest
-    MCPUserEnvVarSpec:
-      properties:
-        name:
-          type: string
-          title: Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        is_set:
-          type: boolean
-          title: Is Set
-          default: false
       type: object
       required:
-      - name
-      title: MCPUserEnvVarSpec
-      description: 'Describes one per-user env var slot for the calling user.
-
-
-        Stored values are write-only: the status only reports whether a value
-
-        ``is_set`` and never echoes the decrypted secret back to the client.'
+      - server_id
+      title: UpdateMCPServerRequest
+    MCPUserEnvVarsStatus:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        server_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Name
+        alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alias
+        required:
+          items:
+            $ref: '#/components/schemas/MCPUserEnvVarSpec'
+          type: array
+          title: Required
+        missing_count:
+          type: integer
+          title: Missing Count
+          default: 0
+        setup_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Setup Url
+      type: object
+      required:
+      - server_id
+      title: MCPUserEnvVarsStatus
+      description: Per-user env var status for a single MCP server.
     MCPOAuthUserCredentialRequest:
       properties:
         access_token:
@@ -2018,67 +1949,24 @@ components:
       - access_token
       title: MCPOAuthUserCredentialRequest
       description: Stores a user's OAuth2 token for an OpenAPI MCP server.
-    RejectMCPServerRequest:
+    MCPEnvVarScope:
+      type: string
+      enum:
+      - global
+      - user
+      title: MCPEnvVarScope
+      description: "Scope for an MCP server environment variable.\n\n- ``global``: value is provided by the admin and used for all users.\n- ``user``: each user must provide their own value via the per-user\n  env-var endpoint. The admin-supplied ``value`` is treated as a\n  placeholder/hint and is not used at request time."
+    MakeMCPServersPublicRequest:
       properties:
-        review_notes:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Review Notes
-      type: object
-      title: RejectMCPServerRequest
-    UpdateMCPToolsetRequest:
-      properties:
-        toolset_id:
-          type: string
-          title: Toolset Id
-        toolset_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Toolset Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        tools:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/MCPToolsetTool'
-            type: array
-          - type: 'null'
-          title: Tools
+        mcp_server_ids:
+          items:
+            type: string
+          type: array
+          title: Mcp Server Ids
       type: object
       required:
-      - toolset_id
-      title: UpdateMCPToolsetRequest
-    MCPUserCredentialResponse:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        has_credential:
-          type: boolean
-          title: Has Credential
-      type: object
-      required:
-      - server_id
-      - has_credential
-      title: MCPUserCredentialResponse
-    MCPUserCredentialRequest:
-      properties:
-        credential:
-          type: string
-          title: Credential
-        save:
-          type: boolean
-          title: Save
-          default: true
-      type: object
-      required:
-      - credential
-      title: MCPUserCredentialRequest
+      - mcp_server_ids
+      title: MakeMCPServersPublicRequest
     LiteLLM_MCPServerTable:
       properties:
         server_id:
@@ -2398,23 +2286,65 @@ components:
       - transport
       title: LiteLLM_MCPServerTable
       description: Represents a LiteLLM_MCPServerTable record
-    MCPToolsetTool:
+    MCPSubmissionsSummary:
       properties:
-        server_id:
-          type: string
-          title: Server Id
-        tool_name:
-          type: string
-          title: Tool Name
+        total:
+          type: integer
+          title: Total
+        pending_review:
+          type: integer
+          title: Pending Review
+        active:
+          type: integer
+          title: Active
+        rejected:
+          type: integer
+          title: Rejected
+        items:
+          items:
+            $ref: '#/components/schemas/LiteLLM_MCPServerTable'
+          type: array
+          title: Items
       type: object
       required:
-      - server_id
-      - tool_name
-      title: MCPToolsetTool
-    UpdateMCPServerRequest:
+      - total
+      - pending_review
+      - active
+      - rejected
+      - items
+      title: MCPSubmissionsSummary
+    UpdateMCPToolsetRequest:
+      properties:
+        toolset_id:
+          type: string
+          title: Toolset Id
+        toolset_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Toolset Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        tools:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/MCPToolsetTool'
+            type: array
+          - type: 'null'
+          title: Tools
+      type: object
+      required:
+      - toolset_id
+      title: UpdateMCPToolsetRequest
+    NewMCPServerRequest:
       properties:
         server_id:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Server Id
         server_name:
           anyOf:
@@ -2642,41 +2572,111 @@ components:
           - type: integer
           - type: 'null'
           title: Max Concurrent Requests
+        approval_status:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Approval Status
+          description: 'Server-managed: set by the endpoint; caller values are overridden.'
+        submitted_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Submitted By
+          description: 'Server-managed: set by the endpoint; caller values are overridden.'
+        submitted_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Submitted At
+          description: 'Server-managed: set by the endpoint; caller values are overridden.'
+      type: object
+      title: NewMCPServerRequest
+    MCPUserCredentialListItem:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        server_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Name
+        alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alias
+        credential_type:
+          type: string
+          title: Credential Type
+        has_credential:
+          type: boolean
+          title: Has Credential
+        expires_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Expires At
+        connected_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Connected At
       type: object
       required:
       - server_id
-      title: UpdateMCPServerRequest
-    MCPEnvVar:
+      - credential_type
+      - has_credential
+      title: MCPUserCredentialListItem
+      description: One entry in the /user-credentials list.
+    NewMCPToolsetRequest:
       properties:
-        name:
+        toolset_name:
           type: string
-          title: Name
-        value:
-          type: string
-          title: Value
-          default: ''
-        scope:
-          $ref: '#/components/schemas/MCPEnvVarScope'
-          default: global
+          title: Toolset Name
         description:
           anyOf:
           - type: string
           - type: 'null'
           title: Description
+        tools:
+          items:
+            $ref: '#/components/schemas/MCPToolsetTool'
+          type: array
+          title: Tools
+          default: []
       type: object
       required:
-      - name
-      title: MCPEnvVar
-      description: 'One environment variable for an MCP server.
-
-
-        Variables can be interpolated into ``static_headers`` using ``${NAME}``
-
-        syntax. ``scope=global`` values are stored on the server. ``scope=user``
-
-        values are stored per-user in ``LiteLLM_MCPUserEnvVars`` and supplied by
-
-        each user.'
+      - toolset_name
+      title: NewMCPToolsetRequest
+    MCPUserCredentialResponse:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        has_credential:
+          type: boolean
+          title: Has Credential
+      type: object
+      required:
+      - server_id
+      - has_credential
+      title: MCPUserCredentialResponse
+    MCPUserCredentialRequest:
+      properties:
+        credential:
+          type: string
+          title: Credential
+        save:
+          type: boolean
+          title: Save
+          default: true
+      type: object
+      required:
+      - credential
+      title: MCPUserCredentialRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

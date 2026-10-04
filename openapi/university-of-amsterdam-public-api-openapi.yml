@@ -203,361 +203,6 @@ paths:
                 title: Response Get Agent Fields Public Agents Fields Get
 components:
   schemas:
-    AgentSkill:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-        examples:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Examples
-        inputModes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Inputmodes
-        outputModes:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Outputmodes
-        security:
-          anyOf:
-          - items:
-              additionalProperties:
-                items:
-                  type: string
-                type: array
-              type: object
-            type: array
-          - type: 'null'
-          title: Security
-      type: object
-      title: AgentSkill
-      description: Represents a distinct capability or function that an agent can perform.
-    HTTPAuthSecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: http
-          title: Type
-        scheme:
-          type: string
-          title: Scheme
-        bearerFormat:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bearerformat
-      type: object
-      required:
-      - type
-      - scheme
-      title: HTTPAuthSecurityScheme
-      description: Defines a security scheme using HTTP authentication.
-    AgentCardSignature:
-      properties:
-        protected:
-          type: string
-          title: Protected
-        signature:
-          type: string
-          title: Signature
-        header:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Header
-      type: object
-      title: AgentCardSignature
-      description: Represents a JWS signature of an AgentCard.
-    AgentCreateInfo:
-      properties:
-        agent_type:
-          type: string
-          title: Agent Type
-        agent_type_display_name:
-          type: string
-          title: Agent Type Display Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        logo_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Url
-        credential_fields:
-          items:
-            $ref: '#/components/schemas/AgentCredentialField'
-          type: array
-          title: Credential Fields
-        litellm_params_template:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Litellm Params Template
-        model_template:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model Template
-      type: object
-      required:
-      - agent_type
-      - agent_type_display_name
-      - credential_fields
-      title: AgentCreateInfo
-    SupportedEndpointsResponse:
-      properties:
-        endpoints:
-          items:
-            $ref: '#/components/schemas/SupportedEndpoint'
-          type: array
-          title: Endpoints
-      type: object
-      required:
-      - endpoints
-      title: SupportedEndpointsResponse
-    OpenIdConnectSecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: openIdConnect
-          title: Type
-        openIdConnectUrl:
-          type: string
-          title: Openidconnecturl
-      type: object
-      required:
-      - type
-      - openIdConnectUrl
-      title: OpenIdConnectSecurityScheme
-      description: Defines a security scheme using OpenID Connect.
-    OAuthFlows:
-      properties:
-        authorizationCode:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Authorizationcode
-        clientCredentials:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Clientcredentials
-        implicit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Implicit
-        password:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Password
-      type: object
-      title: OAuthFlows
-      description: Defines the configuration for the supported OAuth 2.0 flows.
-    AgentExtension:
-      properties:
-        uri:
-          type: string
-          title: Uri
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        required:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Required
-        params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Params
-      type: object
-      title: AgentExtension
-      description: A declaration of a protocol extension supported by an Agent.
-    ProviderCredentialField:
-      properties:
-        key:
-          type: string
-          title: Key
-        label:
-          type: string
-          title: Label
-        placeholder:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Placeholder
-        tooltip:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tooltip
-        required:
-          type: boolean
-          title: Required
-          default: false
-        field_type:
-          type: string
-          enum:
-          - text
-          - password
-          - select
-          - upload
-          - textarea
-          title: Field Type
-          default: text
-        options:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Options
-        default_value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Value
-      type: object
-      required:
-      - key
-      - label
-      title: ProviderCredentialField
-    AgentCapabilities:
-      properties:
-        streaming:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Streaming
-        pushNotifications:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Pushnotifications
-        stateTransitionHistory:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Statetransitionhistory
-        extensions:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AgentExtension'
-            type: array
-          - type: 'null'
-          title: Extensions
-      type: object
-      title: AgentCapabilities
-      description: Defines optional capabilities supported by an agent.
-    MCPPublicServer:
-      properties:
-        server_id:
-          type: string
-          title: Server Id
-        name:
-          type: string
-          title: Name
-        alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Alias
-        server_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Server Name
-        transport:
-          type: string
-          enum:
-          - sse
-          - http
-          - stdio
-          title: Transport
-        spec_path:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Spec Path
-        auth_type:
-          anyOf:
-          - type: string
-            enum:
-            - none
-            - api_key
-            - bearer_token
-            - basic
-            - authorization
-            - oauth2
-            - aws_sigv4
-            - token
-            - oauth2_token_exchange
-            - oauth2_id_jag
-            - true_passthrough
-            - oauth_delegate
-          - type: 'null'
-          title: Auth Type
-        mcp_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Mcp Info
-      type: object
-      required:
-      - server_id
-      - name
-      - transport
-      title: MCPPublicServer
-      description: Safe params for public MCP servers
     APIKeySecurityScheme:
       properties:
         description:
@@ -586,215 +231,6 @@ components:
       - name
       title: APIKeySecurityScheme
       description: Defines a security scheme using an API key.
-    AgentCredentialField:
-      properties:
-        key:
-          type: string
-          title: Key
-        label:
-          type: string
-          title: Label
-        placeholder:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Placeholder
-        tooltip:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Tooltip
-        required:
-          type: boolean
-          title: Required
-          default: false
-        field_type:
-          type: string
-          enum:
-          - text
-          - password
-          - select
-          - upload
-          - textarea
-          title: Field Type
-          default: text
-        options:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Options
-        default_value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Value
-        include_in_litellm_params:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Include In Litellm Params
-      type: object
-      required:
-      - key
-      - label
-      title: AgentCredentialField
-    AgentCard:
-      properties:
-        protocolVersion:
-          type: string
-          title: Protocolversion
-        name:
-          type: string
-          title: Name
-        description:
-          type: string
-          title: Description
-        url:
-          type: string
-          title: Url
-        version:
-          type: string
-          title: Version
-        capabilities:
-          $ref: '#/components/schemas/AgentCapabilities'
-        defaultInputModes:
-          items:
-            type: string
-          type: array
-          title: Defaultinputmodes
-        defaultOutputModes:
-          items:
-            type: string
-          type: array
-          title: Defaultoutputmodes
-        skills:
-          items:
-            $ref: '#/components/schemas/AgentSkill'
-          type: array
-          title: Skills
-        preferredTransport:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Preferredtransport
-        additionalInterfaces:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AgentInterface'
-            type: array
-          - type: 'null'
-          title: Additionalinterfaces
-        iconUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Iconurl
-        provider:
-          anyOf:
-          - $ref: '#/components/schemas/AgentProvider'
-          - type: 'null'
-        documentationUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Documentationurl
-        securitySchemes:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - $ref: '#/components/schemas/APIKeySecurityScheme'
-              - $ref: '#/components/schemas/HTTPAuthSecurityScheme'
-              - $ref: '#/components/schemas/OAuth2SecurityScheme'
-              - $ref: '#/components/schemas/OpenIdConnectSecurityScheme'
-              - $ref: '#/components/schemas/MutualTLSSecurityScheme'
-            type: object
-          - type: 'null'
-          title: Securityschemes
-        security:
-          anyOf:
-          - items:
-              additionalProperties:
-                items:
-                  type: string
-                type: array
-              type: object
-            type: array
-          - type: 'null'
-          title: Security
-        supportsAuthenticatedExtendedCard:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Supportsauthenticatedextendedcard
-        signatures:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AgentCardSignature'
-            type: array
-          - type: 'null'
-          title: Signatures
-      type: object
-      title: AgentCard
-      description: 'The AgentCard is a self-describing manifest for an agent.
-
-        It provides essential metadata including the agent''s identity, capabilities,
-
-        skills, supported communication methods, and security requirements.'
-    PublicModelHubInfo:
-      properties:
-        docs_title:
-          type: string
-          title: Docs Title
-        custom_docs_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Docs Description
-        litellm_version:
-          type: string
-          title: Litellm Version
-        useful_links:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - additionalProperties: true
-                type: object
-            type: object
-          - type: 'null'
-          title: Useful Links
-      type: object
-      required:
-      - docs_title
-      - custom_docs_description
-      - litellm_version
-      - useful_links
-      title: PublicModelHubInfo
-    SupportedEndpoint:
-      properties:
-        key:
-          type: string
-          title: Key
-        label:
-          type: string
-          title: Label
-        endpoint:
-          type: string
-          title: Endpoint
-        providers:
-          items:
-            $ref: '#/components/schemas/EndpointProvider'
-          type: array
-          title: Providers
-      type: object
-      required:
-      - key
-      - label
-      - endpoint
-      - providers
-      title: SupportedEndpoint
     AgentProvider:
       properties:
         organization:
@@ -806,85 +242,6 @@ components:
       type: object
       title: AgentProvider
       description: Represents the service provider of an agent.
-    EndpointProvider:
-      properties:
-        slug:
-          type: string
-          title: Slug
-        display_name:
-          type: string
-          title: Display Name
-      type: object
-      required:
-      - slug
-      - display_name
-      title: EndpointProvider
-    ProviderCreateInfo:
-      properties:
-        provider:
-          type: string
-          title: Provider
-        provider_display_name:
-          type: string
-          title: Provider Display Name
-        litellm_provider:
-          type: string
-          title: Litellm Provider
-        credential_fields:
-          items:
-            $ref: '#/components/schemas/ProviderCredentialField'
-          type: array
-          title: Credential Fields
-        default_model_placeholder:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Model Placeholder
-      type: object
-      required:
-      - provider
-      - provider_display_name
-      - litellm_provider
-      - credential_fields
-      title: ProviderCreateInfo
-    BlogPostsResponse:
-      properties:
-        posts:
-          items:
-            $ref: '#/components/schemas/BlogPost'
-          type: array
-          title: Posts
-      type: object
-      required:
-      - posts
-      title: BlogPostsResponse
-    MutualTLSSecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: mutualTLS
-          title: Type
-      type: object
-      required:
-      - type
-      title: MutualTLSSecurityScheme
-      description: Defines a security scheme using mTLS authentication.
-    AgentInterface:
-      properties:
-        url:
-          type: string
-          title: Url
-        transport:
-          type: string
-          title: Transport
-      type: object
-      title: AgentInterface
-      description: Declares a combination of a target URL and a transport protocol.
     ModelGroupInfoProxy:
       properties:
         model_group:
@@ -1020,6 +377,679 @@ components:
       - model_group
       - providers
       title: ModelGroupInfoProxy
+    AgentSkill:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        examples:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Examples
+        inputModes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Inputmodes
+        outputModes:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Outputmodes
+        security:
+          anyOf:
+          - items:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: array
+          - type: 'null'
+          title: Security
+      type: object
+      title: AgentSkill
+      description: Represents a distinct capability or function that an agent can perform.
+    ProviderCredentialField:
+      properties:
+        key:
+          type: string
+          title: Key
+        label:
+          type: string
+          title: Label
+        placeholder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Placeholder
+        tooltip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tooltip
+        required:
+          type: boolean
+          title: Required
+          default: false
+        field_type:
+          type: string
+          enum:
+          - text
+          - password
+          - select
+          - upload
+          - textarea
+          title: Field Type
+          default: text
+        options:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Options
+        default_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Value
+      type: object
+      required:
+      - key
+      - label
+      title: ProviderCredentialField
+    SupportedEndpointsResponse:
+      properties:
+        endpoints:
+          items:
+            $ref: '#/components/schemas/SupportedEndpoint'
+          type: array
+          title: Endpoints
+      type: object
+      required:
+      - endpoints
+      title: SupportedEndpointsResponse
+    AgentExtension:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        required:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Required
+        params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Params
+      type: object
+      title: AgentExtension
+      description: A declaration of a protocol extension supported by an Agent.
+    AgentInterface:
+      properties:
+        url:
+          type: string
+          title: Url
+        transport:
+          type: string
+          title: Transport
+      type: object
+      title: AgentInterface
+      description: Declares a combination of a target URL and a transport protocol.
+    EndpointProvider:
+      properties:
+        slug:
+          type: string
+          title: Slug
+        display_name:
+          type: string
+          title: Display Name
+      type: object
+      required:
+      - slug
+      - display_name
+      title: EndpointProvider
+    MutualTLSSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: mutualTLS
+          title: Type
+      type: object
+      required:
+      - type
+      title: MutualTLSSecurityScheme
+      description: Defines a security scheme using mTLS authentication.
+    BlogPostsResponse:
+      properties:
+        posts:
+          items:
+            $ref: '#/components/schemas/BlogPost'
+          type: array
+          title: Posts
+      type: object
+      required:
+      - posts
+      title: BlogPostsResponse
+    AgentCardSignature:
+      properties:
+        protected:
+          type: string
+          title: Protected
+        signature:
+          type: string
+          title: Signature
+        header:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Header
+      type: object
+      title: AgentCardSignature
+      description: Represents a JWS signature of an AgentCard.
+    PublicModelHubInfo:
+      properties:
+        docs_title:
+          type: string
+          title: Docs Title
+        custom_docs_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Docs Description
+        litellm_version:
+          type: string
+          title: Litellm Version
+        useful_links:
+          anyOf:
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+            type: object
+          - type: 'null'
+          title: Useful Links
+      type: object
+      required:
+      - docs_title
+      - custom_docs_description
+      - litellm_version
+      - useful_links
+      title: PublicModelHubInfo
+    OAuthFlows:
+      properties:
+        authorizationCode:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Authorizationcode
+        clientCredentials:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Clientcredentials
+        implicit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Implicit
+        password:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Password
+      type: object
+      title: OAuthFlows
+      description: Defines the configuration for the supported OAuth 2.0 flows.
+    AgentCreateInfo:
+      properties:
+        agent_type:
+          type: string
+          title: Agent Type
+        agent_type_display_name:
+          type: string
+          title: Agent Type Display Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        logo_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Url
+        credential_fields:
+          items:
+            $ref: '#/components/schemas/AgentCredentialField'
+          type: array
+          title: Credential Fields
+        litellm_params_template:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Litellm Params Template
+        model_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Template
+      type: object
+      required:
+      - agent_type
+      - agent_type_display_name
+      - credential_fields
+      title: AgentCreateInfo
+    AgentCard:
+      properties:
+        protocolVersion:
+          type: string
+          title: Protocolversion
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        url:
+          type: string
+          title: Url
+        version:
+          type: string
+          title: Version
+        capabilities:
+          $ref: '#/components/schemas/AgentCapabilities'
+        defaultInputModes:
+          items:
+            type: string
+          type: array
+          title: Defaultinputmodes
+        defaultOutputModes:
+          items:
+            type: string
+          type: array
+          title: Defaultoutputmodes
+        skills:
+          items:
+            $ref: '#/components/schemas/AgentSkill'
+          type: array
+          title: Skills
+        preferredTransport:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Preferredtransport
+        additionalInterfaces:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AgentInterface'
+            type: array
+          - type: 'null'
+          title: Additionalinterfaces
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Iconurl
+        provider:
+          anyOf:
+          - $ref: '#/components/schemas/AgentProvider'
+          - type: 'null'
+        documentationUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Documentationurl
+        securitySchemes:
+          anyOf:
+          - additionalProperties:
+              anyOf:
+              - $ref: '#/components/schemas/APIKeySecurityScheme'
+              - $ref: '#/components/schemas/HTTPAuthSecurityScheme'
+              - $ref: '#/components/schemas/OAuth2SecurityScheme'
+              - $ref: '#/components/schemas/OpenIdConnectSecurityScheme'
+              - $ref: '#/components/schemas/MutualTLSSecurityScheme'
+            type: object
+          - type: 'null'
+          title: Securityschemes
+        security:
+          anyOf:
+          - items:
+              additionalProperties:
+                items:
+                  type: string
+                type: array
+              type: object
+            type: array
+          - type: 'null'
+          title: Security
+        supportsAuthenticatedExtendedCard:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Supportsauthenticatedextendedcard
+        signatures:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AgentCardSignature'
+            type: array
+          - type: 'null'
+          title: Signatures
+      type: object
+      title: AgentCard
+      description: 'The AgentCard is a self-describing manifest for an agent.
+
+        It provides essential metadata including the agent''s identity, capabilities,
+
+        skills, supported communication methods, and security requirements.'
+    HTTPAuthSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: http
+          title: Type
+        scheme:
+          type: string
+          title: Scheme
+        bearerFormat:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bearerformat
+      type: object
+      required:
+      - type
+      - scheme
+      title: HTTPAuthSecurityScheme
+      description: Defines a security scheme using HTTP authentication.
+    AgentCapabilities:
+      properties:
+        streaming:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Streaming
+        pushNotifications:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Pushnotifications
+        stateTransitionHistory:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Statetransitionhistory
+        extensions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AgentExtension'
+            type: array
+          - type: 'null'
+          title: Extensions
+      type: object
+      title: AgentCapabilities
+      description: Defines optional capabilities supported by an agent.
+    ConfigurableClientsideParamsCustomAuth-Output:
+      properties:
+        api_base:
+          type: string
+          title: Api Base
+      type: object
+      required:
+      - api_base
+      title: ConfigurableClientsideParamsCustomAuth
+    BlogPost:
+      properties:
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        date:
+          type: string
+          title: Date
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - title
+      - description
+      - date
+      - url
+      title: BlogPost
+    MCPPublicServer:
+      properties:
+        server_id:
+          type: string
+          title: Server Id
+        name:
+          type: string
+          title: Name
+        alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Alias
+        server_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Server Name
+        transport:
+          type: string
+          enum:
+          - sse
+          - http
+          - stdio
+          title: Transport
+        spec_path:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Spec Path
+        auth_type:
+          anyOf:
+          - type: string
+            enum:
+            - none
+            - api_key
+            - bearer_token
+            - basic
+            - authorization
+            - oauth2
+            - aws_sigv4
+            - token
+            - oauth2_token_exchange
+            - oauth2_id_jag
+            - true_passthrough
+            - oauth_delegate
+          - type: 'null'
+          title: Auth Type
+        mcp_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Mcp Info
+      type: object
+      required:
+      - server_id
+      - name
+      - transport
+      title: MCPPublicServer
+      description: Safe params for public MCP servers
+    OpenIdConnectSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: openIdConnect
+          title: Type
+        openIdConnectUrl:
+          type: string
+          title: Openidconnecturl
+      type: object
+      required:
+      - type
+      - openIdConnectUrl
+      title: OpenIdConnectSecurityScheme
+      description: Defines a security scheme using OpenID Connect.
+    SupportedEndpoint:
+      properties:
+        key:
+          type: string
+          title: Key
+        label:
+          type: string
+          title: Label
+        endpoint:
+          type: string
+          title: Endpoint
+        providers:
+          items:
+            $ref: '#/components/schemas/EndpointProvider'
+          type: array
+          title: Providers
+      type: object
+      required:
+      - key
+      - label
+      - endpoint
+      - providers
+      title: SupportedEndpoint
+    ProviderCreateInfo:
+      properties:
+        provider:
+          type: string
+          title: Provider
+        provider_display_name:
+          type: string
+          title: Provider Display Name
+        litellm_provider:
+          type: string
+          title: Litellm Provider
+        credential_fields:
+          items:
+            $ref: '#/components/schemas/ProviderCredentialField'
+          type: array
+          title: Credential Fields
+        default_model_placeholder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Model Placeholder
+      type: object
+      required:
+      - provider
+      - provider_display_name
+      - litellm_provider
+      - credential_fields
+      title: ProviderCreateInfo
+    AgentCredentialField:
+      properties:
+        key:
+          type: string
+          title: Key
+        label:
+          type: string
+          title: Label
+        placeholder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Placeholder
+        tooltip:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Tooltip
+        required:
+          type: boolean
+          title: Required
+          default: false
+        field_type:
+          type: string
+          enum:
+          - text
+          - password
+          - select
+          - upload
+          - textarea
+          title: Field Type
+          default: text
+        options:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Options
+        default_value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Value
+        include_in_litellm_params:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Include In Litellm Params
+      type: object
+      required:
+      - key
+      - label
+      title: AgentCredentialField
     OAuth2SecurityScheme:
       properties:
         description:
@@ -1044,36 +1074,6 @@ components:
       - flows
       title: OAuth2SecurityScheme
       description: Defines a security scheme using OAuth 2.0.
-    BlogPost:
-      properties:
-        title:
-          type: string
-          title: Title
-        description:
-          type: string
-          title: Description
-        date:
-          type: string
-          title: Date
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - title
-      - description
-      - date
-      - url
-      title: BlogPost
-    ConfigurableClientsideParamsCustomAuth-Output:
-      properties:
-        api_base:
-          type: string
-          title: Api Base
-      type: object
-      required:
-      - api_base
-      title: ConfigurableClientsideParamsCustomAuth
   securitySchemes:
     APIKeyHeader:
       type: apiKey

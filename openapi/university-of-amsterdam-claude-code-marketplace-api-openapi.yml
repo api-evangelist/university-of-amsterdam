@@ -327,6 +327,49 @@ paths:
       - Claude Code Marketplace
 components:
   schemas:
+    PluginAuthor:
+      description: Plugin author information.
+      properties:
+        email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Author email
+          title: Email
+        name:
+          description: Author name
+          title: Name
+          type: string
+      required:
+      - name
+      title: PluginAuthor
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -336,6 +379,85 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    PluginListItem:
+      description: Plugin item in list responses.
+      properties:
+        author:
+          anyOf:
+          - $ref: '#/components/schemas/PluginAuthor'
+          - type: 'null'
+        category:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Category
+        created_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Created At
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain
+        enabled:
+          title: Enabled
+          type: boolean
+        homepage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Homepage
+        id:
+          title: Id
+          type: string
+        keywords:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Keywords
+        name:
+          title: Name
+          type: string
+        namespace:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Namespace
+        source:
+          additionalProperties:
+            type: string
+          title: Source
+          type: object
+        updated_at:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Updated At
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+      required:
+      - id
+      - name
+      - version
+      - description
+      - source
+      - enabled
+      - created_at
+      - updated_at
+      title: PluginListItem
+      type: object
     RegisterPluginRequest:
       description: 'Request body for registering a plugin in the marketplace.
 
@@ -432,128 +554,6 @@ components:
       - count
       title: ListPluginsResponse
       type: object
-    PluginAuthor:
-      description: Plugin author information.
-      properties:
-        email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Author email
-          title: Email
-        name:
-          description: Author name
-          title: Name
-          type: string
-      required:
-      - name
-      title: PluginAuthor
-      type: object
-    PluginListItem:
-      description: Plugin item in list responses.
-      properties:
-        author:
-          anyOf:
-          - $ref: '#/components/schemas/PluginAuthor'
-          - type: 'null'
-        category:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Category
-        created_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Created At
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Domain
-        enabled:
-          title: Enabled
-          type: boolean
-        homepage:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Homepage
-        id:
-          title: Id
-          type: string
-        keywords:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Keywords
-        name:
-          title: Name
-          type: string
-        namespace:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Namespace
-        source:
-          additionalProperties:
-            type: string
-          title: Source
-          type: object
-        updated_at:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Updated At
-        version:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Version
-      required:
-      - id
-      - name
-      - version
-      - description
-      - source
-      - enabled
-      - created_at
-      - updated_at
-      title: PluginListItem
-      type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

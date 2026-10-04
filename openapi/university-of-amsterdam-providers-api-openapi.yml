@@ -54,6 +54,34 @@ paths:
                 title: Response Get Provider Fields Public Providers Fields Get
 components:
   schemas:
+    ProviderCreateInfo:
+      properties:
+        provider:
+          type: string
+          title: Provider
+        provider_display_name:
+          type: string
+          title: Provider Display Name
+        litellm_provider:
+          type: string
+          title: Litellm Provider
+        credential_fields:
+          items:
+            $ref: '#/components/schemas/ProviderCredentialField'
+          type: array
+          title: Credential Fields
+        default_model_placeholder:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Default Model Placeholder
+      type: object
+      required:
+      - provider
+      - provider_display_name
+      - litellm_provider
+      - credential_fields
+      title: ProviderCreateInfo
     ProviderCredentialField:
       properties:
         key:
@@ -103,34 +131,6 @@ components:
       - key
       - label
       title: ProviderCredentialField
-    ProviderCreateInfo:
-      properties:
-        provider:
-          type: string
-          title: Provider
-        provider_display_name:
-          type: string
-          title: Provider Display Name
-        litellm_provider:
-          type: string
-          title: Litellm Provider
-        credential_fields:
-          items:
-            $ref: '#/components/schemas/ProviderCredentialField'
-          type: array
-          title: Credential Fields
-        default_model_placeholder:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Default Model Placeholder
-      type: object
-      required:
-      - provider
-      - provider_display_name
-      - litellm_provider
-      - credential_fields
-      title: ProviderCreateInfo
   securitySchemes:
     APIKeyHeader:
       type: apiKey

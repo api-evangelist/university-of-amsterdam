@@ -77,6 +77,26 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    EmailEventSettingsResponse:
+      properties:
+        settings:
+          items:
+            $ref: '#/components/schemas/EmailEventSettings'
+          type: array
+          title: Settings
+      type: object
+      required:
+      - settings
+      title: EmailEventSettingsResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     EmailEventSettings:
       properties:
         event:
@@ -89,26 +109,6 @@ components:
       - event
       - enabled
       title: EmailEventSettings
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    EmailEventSettingsResponse:
-      properties:
-        settings:
-          items:
-            $ref: '#/components/schemas/EmailEventSettings'
-          type: array
-          title: Settings
-      type: object
-      required:
-      - settings
-      title: EmailEventSettingsResponse
     EmailEventSettingsUpdateRequest:
       properties:
         settings:
@@ -120,15 +120,6 @@ components:
       required:
       - settings
       title: EmailEventSettingsUpdateRequest
-    EmailEvent:
-      type: string
-      enum:
-      - Virtual Key Created
-      - New User Invitation
-      - Virtual Key Rotated
-      - Soft Budget Crossed
-      - Max Budget Alert
-      title: EmailEvent
     ValidationError:
       properties:
         loc:
@@ -155,6 +146,15 @@ components:
       - msg
       - type
       title: ValidationError
+    EmailEvent:
+      type: string
+      enum:
+      - Virtual Key Created
+      - New User Invitation
+      - Virtual Key Rotated
+      - Soft Budget Crossed
+      - Max Budget Alert
+      title: EmailEvent
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -778,46 +778,266 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    BreakdownMetrics:
+    AllowedVectorStoreIndexItem:
       properties:
-        mcp_servers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Mcp Servers
-        models:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Models
-        model_groups:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Model Groups
-        providers:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Providers
-        endpoints:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Endpoints
-        api_keys:
-          additionalProperties:
-            $ref: '#/components/schemas/KeyMetricWithMetadata'
-          type: object
-          title: Api Keys
-        entities:
-          additionalProperties:
-            $ref: '#/components/schemas/MetricWithMetadata'
-          type: object
-          title: Entities
+        index_name:
+          type: string
+          title: Index Name
+        index_permissions:
+          items:
+            type: string
+            enum:
+            - read
+            - write
+          type: array
+          title: Index Permissions
       type: object
-      title: BreakdownMetrics
-      description: Breakdown of spend by different dimensions
+      required:
+      - index_name
+      - index_permissions
+      title: AllowedVectorStoreIndexItem
+    RoutingGroup:
+      properties:
+        group_name:
+          type: string
+          title: Group Name
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+        routing_strategy:
+          type: string
+          title: Routing Strategy
+        routing_strategy_args:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routing Strategy Args
+      type: object
+      required:
+      - group_name
+      - models
+      - routing_strategy
+      title: RoutingGroup
+      description: A group of models that share a routing strategy.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    UserListResponse:
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/LiteLLM_UserTableWithKeyCount'
+          type: array
+          title: Users
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+        total_pages:
+          type: integer
+          title: Total Pages
+      type: object
+      required:
+      - users
+      - total
+      - page
+      - page_size
+      - total_pages
+      title: UserListResponse
+      description: Response model for the user list endpoint
+    KeyMetricWithMetadata:
+      properties:
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        metadata:
+          $ref: '#/components/schemas/KeyMetadata'
+      type: object
+      required:
+      - metrics
+      title: KeyMetricWithMetadata
+      description: Base class for metrics with additional metadata
+    LiteLLM_OrganizationMembershipTable:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        organization_id:
+          type: string
+          title: Organization Id
+        user_role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Role
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        user:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: User
+        litellm_budget_table:
+          anyOf:
+          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
+          - type: 'null'
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+      type: object
+      required:
+      - user_id
+      - organization_id
+      - created_at
+      - updated_at
+      title: LiteLLM_OrganizationMembershipTable
+      description: Tracks which organizations a user belongs to and their spend within it.
+    LiteLLM_BudgetTable:
+      properties:
+        budget_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Id
+        soft_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Soft Budget
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        max_parallel_requests:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Parallel Requests
+        tpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tpm Limit
+        rpm_limit:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Rpm Limit
+        model_max_budget:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Model Max Budget
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        allowed_models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Models
+      type: object
+      title: LiteLLM_BudgetTable
+      description: 'Represents user-controllable params for a LiteLLM_BudgetTable record.
+
+
+        Budget-write paths use `model_fields.keys()` on this class as an allowlist
+
+        for user input. Keep server-managed fields (e.g. `budget_reset_at`) on
+
+        `LiteLLM_BudgetTableFull` so they aren''t user-settable.'
+    BulkUpdateUserResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/UserUpdateResult'
+          type: array
+          title: Results
+        total_requested:
+          type: integer
+          title: Total Requested
+        successful_updates:
+          type: integer
+          title: Successful Updates
+        failed_updates:
+          type: integer
+          title: Failed Updates
+      type: object
+      required:
+      - results
+      - total_requested
+      - successful_updates
+      - failed_updates
+      title: BulkUpdateUserResponse
+      description: Response for bulk user update operations
+    DailySpendData:
+      properties:
+        date:
+          type: string
+          format: date
+          title: Date
+        metrics:
+          $ref: '#/components/schemas/SpendMetrics'
+        breakdown:
+          $ref: '#/components/schemas/BreakdownMetrics'
+      type: object
+      required:
+      - date
+      - metrics
+      title: DailySpendData
     UpdateUserRequest:
       properties:
         key_alias:
@@ -1022,313 +1242,26 @@ components:
           title: User Email
       type: object
       title: UpdateUserRequest
-    UpdateRouterConfig:
+    BudgetLimitEntry:
       properties:
-        routing_strategy_args:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Routing Strategy Args
-        routing_strategy:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Routing Strategy
-        routing_groups:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/RoutingGroup'
-            type: array
-          - type: 'null'
-          title: Routing Groups
-        retry_policy:
-          anyOf:
-          - $ref: '#/components/schemas/RetryPolicy'
-          - type: 'null'
-        model_group_retry_policy:
-          anyOf:
-          - additionalProperties:
-              $ref: '#/components/schemas/RetryPolicy'
-            type: object
-          - type: 'null'
-          title: Model Group Retry Policy
-        model_group_affinity_config:
-          anyOf:
-          - additionalProperties:
-              items:
-                type: string
-              type: array
-            type: object
-          - type: 'null'
-          title: Model Group Affinity Config
-        allowed_fails:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Allowed Fails
-        cooldown_time:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Cooldown Time
-        num_retries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Num Retries
-        timeout:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Timeout
-        max_retries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Retries
-        retry_after:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Retry After
-        fallbacks:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Fallbacks
-        context_window_fallbacks:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Context Window Fallbacks
-        model_group_alias:
-          anyOf:
-          - additionalProperties:
-              anyOf:
-              - type: string
-              - additionalProperties: true
-                type: object
-            type: object
-          - type: 'null'
-          title: Model Group Alias
-          default: {}
-        enable_tag_filtering:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Enable Tag Filtering
-      type: object
-      title: UpdateRouterConfig
-      description: Set of params that you can modify via `router.update_settings()`.
-    AllowedVectorStoreIndexItem:
-      properties:
-        index_name:
-          type: string
-          title: Index Name
-        index_permissions:
-          items:
-            type: string
-            enum:
-            - read
-            - write
-          type: array
-          title: Index Permissions
-      type: object
-      required:
-      - index_name
-      - index_permissions
-      title: AllowedVectorStoreIndexItem
-    UserInfoResponse:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        user_info:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - $ref: '#/components/schemas/BaseModel'
-          - type: 'null'
-          title: User Info
-        keys:
-          items: {}
-          type: array
-          title: Keys
-        teams:
-          items: {}
-          type: array
-          title: Teams
-      type: object
-      required:
-      - user_id
-      - user_info
-      - keys
-      - teams
-      title: UserInfoResponse
-    BaseModel:
-      properties: {}
-      type: object
-      title: BaseModel
-    LiteLLM_BudgetTable:
-      properties:
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        soft_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Soft Budget
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        max_parallel_requests:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Max Parallel Requests
-        tpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Tpm Limit
-        rpm_limit:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Rpm Limit
-        model_max_budget:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Model Max Budget
         budget_duration:
+          type: string
+          title: Budget Duration
+        max_budget:
+          type: number
+          title: Max Budget
+        reset_at:
           anyOf:
           - type: string
+            format: date-time
           - type: 'null'
-          title: Budget Duration
-        allowed_models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Allowed Models
-      type: object
-      title: LiteLLM_BudgetTable
-      description: 'Represents user-controllable params for a LiteLLM_BudgetTable record.
-
-
-        Budget-write paths use `model_fields.keys()` on this class as an allowlist
-
-        for user input. Keep server-managed fields (e.g. `budget_reset_at`) on
-
-        `LiteLLM_BudgetTableFull` so they aren''t user-settable.'
-    BulkUpdateUserResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/UserUpdateResult'
-          type: array
-          title: Results
-        total_requested:
-          type: integer
-          title: Total Requested
-        successful_updates:
-          type: integer
-          title: Successful Updates
-        failed_updates:
-          type: integer
-          title: Failed Updates
+          title: Reset At
       type: object
       required:
-      - results
-      - total_requested
-      - successful_updates
-      - failed_updates
-      title: BulkUpdateUserResponse
-      description: Response for bulk user update operations
-    RoutingGroup:
-      properties:
-        group_name:
-          type: string
-          title: Group Name
-        models:
-          items:
-            type: string
-          type: array
-          title: Models
-        routing_strategy:
-          type: string
-          title: Routing Strategy
-        routing_strategy_args:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Routing Strategy Args
-      type: object
-      required:
-      - group_name
-      - models
-      - routing_strategy
-      title: RoutingGroup
-      description: A group of models that share a routing strategy.
-    RetryPolicy:
-      properties:
-        BadRequestErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Badrequesterrorretries
-        AuthenticationErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Authenticationerrorretries
-        TimeoutErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Timeouterrorretries
-        RateLimitErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Ratelimiterrorretries
-        ContentPolicyViolationErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Contentpolicyviolationerrorretries
-        InternalServerErrorRetries:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Internalservererrorretries
-      type: object
-      title: RetryPolicy
-      description: 'Use this to set a custom number of retries per exception type
-
-        If RateLimitErrorRetries = 3, then 3 retries will be made for RateLimitError
-
-        Mapping of Exception type to number of retries
-
-        https://docs.litellm.ai/docs/exception_mapping'
+      - budget_duration
+      - max_budget
+      title: BudgetLimitEntry
+      description: A single budget window with its own limit and independent reset schedule.
     MetricWithMetadata:
       properties:
         metrics:
@@ -1346,6 +1279,172 @@ components:
       required:
       - metrics
       title: MetricWithMetadata
+    DeleteUserRequest:
+      properties:
+        user_ids:
+          items:
+            type: string
+          type: array
+          title: User Ids
+      type: object
+      required:
+      - user_ids
+      title: DeleteUserRequest
+    LiteLLM_ObjectPermissionBase:
+      properties:
+        mcp_servers:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Servers
+        mcp_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Access Groups
+        mcp_tool_permissions:
+          anyOf:
+          - additionalProperties:
+              items:
+                type: string
+              type: array
+            type: object
+          - type: 'null'
+          title: Mcp Tool Permissions
+        mcp_toolsets:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Mcp Toolsets
+        blocked_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Blocked Tools
+        vector_stores:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vector Stores
+        agents:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agents
+        agent_access_groups:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Agent Access Groups
+        models:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Models
+        search_tools:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Search Tools
+        mcp_tool_search_enabled:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Mcp Tool Search Enabled
+      type: object
+      title: LiteLLM_ObjectPermissionBase
+    BulkUpdateUserRequest:
+      properties:
+        users:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/UpdateUserRequest'
+            type: array
+          - type: 'null'
+          title: Users
+        all_users:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: All Users
+          default: false
+        user_updates:
+          anyOf:
+          - $ref: '#/components/schemas/UpdateUserRequestNoUserIDorEmail'
+          - type: 'null'
+      type: object
+      title: BulkUpdateUserRequest
+      description: Request for bulk user updates
+    SpendMetrics:
+      properties:
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        prompt_tokens:
+          type: integer
+          title: Prompt Tokens
+          default: 0
+        completion_tokens:
+          type: integer
+          title: Completion Tokens
+          default: 0
+        cache_read_input_tokens:
+          type: integer
+          title: Cache Read Input Tokens
+          default: 0
+        cache_creation_input_tokens:
+          type: integer
+          title: Cache Creation Input Tokens
+          default: 0
+        compression_saved_tokens:
+          type: integer
+          title: Compression Saved Tokens
+          default: 0
+        compression_savings_spend:
+          type: number
+          title: Compression Savings Spend
+          default: 0.0
+        prompt_caching_savings_spend:
+          type: number
+          title: Prompt Caching Savings Spend
+          default: 0.0
+        total_tokens:
+          type: integer
+          title: Total Tokens
+          default: 0
+        successful_requests:
+          type: integer
+          title: Successful Requests
+          default: 0
+        failed_requests:
+          type: integer
+          title: Failed Requests
+          default: 0
+        api_requests:
+          type: integer
+          title: Api Requests
+          default: 0
+      type: object
+      title: SpendMetrics
     LiteLLM_UserTableWithKeyCount:
       properties:
         user_id:
@@ -1495,143 +1594,6 @@ components:
       required:
       - user_id
       title: LiteLLM_UserTableWithKeyCount
-    UserUpdateResult:
-      properties:
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        success:
-          type: boolean
-          title: Success
-        error:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Error
-        updated_user:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Updated User
-      type: object
-      required:
-      - success
-      title: UserUpdateResult
-      description: Result of a single user update operation
-    NewUserRequestTeam:
-      properties:
-        team_id:
-          type: string
-          title: Team Id
-        max_budget_in_team:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget In Team
-        user_role:
-          type: string
-          enum:
-          - user
-          - admin
-          title: User Role
-          default: user
-      type: object
-      required:
-      - team_id
-      title: NewUserRequestTeam
-    UserInfoV2Response:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-        user_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Alias
-        user_role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Role
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        max_budget:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Max Budget
-        models:
-          items:
-            type: string
-          type: array
-          title: Models
-          default: []
-        budget_duration:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Duration
-        budget_reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Budget Reset At
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-        created_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Created At
-        updated_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Updated At
-        sso_user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Sso User Id
-        teams:
-          items:
-            type: string
-          type: array
-          title: Teams
-          default: []
-      type: object
-      required:
-      - user_id
-      title: UserInfoV2Response
-      description: 'Response model for GET /v2/user/info
-
-
-        Returns ONLY the user object - no keys, no teams objects.
-
-        This is a lightweight alternative to UserInfoResponse.'
     UpdateUserRequestNoUserIDorEmail:
       properties:
         key_alias:
@@ -1831,95 +1793,6 @@ components:
           title: User Role
       type: object
       title: UpdateUserRequestNoUserIDorEmail
-    LiteLLM_OrganizationMembershipTable:
-      properties:
-        user_id:
-          type: string
-          title: User Id
-        organization_id:
-          type: string
-          title: Organization Id
-        user_role:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Role
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        budget_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Budget Id
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        updated_at:
-          type: string
-          format: date-time
-          title: Updated At
-        user:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: User
-        litellm_budget_table:
-          anyOf:
-          - $ref: '#/components/schemas/LiteLLM_BudgetTable'
-          - type: 'null'
-        user_email:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Email
-      type: object
-      required:
-      - user_id
-      - organization_id
-      - created_at
-      - updated_at
-      title: LiteLLM_OrganizationMembershipTable
-      description: Tracks which organizations a user belongs to and their spend within it.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    DeleteUserRequest:
-      properties:
-        user_ids:
-          items:
-            type: string
-          type: array
-          title: User Ids
-      type: object
-      required:
-      - user_ids
-      title: DeleteUserRequest
     HTTPValidationError:
       properties:
         detail:
@@ -1929,129 +1802,6 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    KeyMetadata:
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: KeyMetadata
-      description: Metadata for a key
-    DailySpendMetadata:
-      properties:
-        total_spend:
-          type: number
-          title: Total Spend
-          default: 0.0
-        total_prompt_tokens:
-          type: integer
-          title: Total Prompt Tokens
-          default: 0
-        total_completion_tokens:
-          type: integer
-          title: Total Completion Tokens
-          default: 0
-        total_tokens:
-          type: integer
-          title: Total Tokens
-          default: 0
-        total_api_requests:
-          type: integer
-          title: Total Api Requests
-          default: 0
-        total_successful_requests:
-          type: integer
-          title: Total Successful Requests
-          default: 0
-        total_failed_requests:
-          type: integer
-          title: Total Failed Requests
-          default: 0
-        total_cache_read_input_tokens:
-          type: integer
-          title: Total Cache Read Input Tokens
-          default: 0
-        total_cache_creation_input_tokens:
-          type: integer
-          title: Total Cache Creation Input Tokens
-          default: 0
-        total_compression_saved_tokens:
-          type: integer
-          title: Total Compression Saved Tokens
-          default: 0
-        total_compression_savings_spend:
-          type: number
-          title: Total Compression Savings Spend
-          default: 0.0
-        total_prompt_caching_savings_spend:
-          type: number
-          title: Total Prompt Caching Savings Spend
-          default: 0.0
-        page:
-          type: integer
-          title: Page
-          default: 1
-        total_pages:
-          type: integer
-          title: Total Pages
-          default: 1
-        has_more:
-          type: boolean
-          title: Has More
-          default: false
-      type: object
-      title: DailySpendMetadata
-    BudgetLimitEntry:
-      properties:
-        budget_duration:
-          type: string
-          title: Budget Duration
-        max_budget:
-          type: number
-          title: Max Budget
-        reset_at:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: 'null'
-          title: Reset At
-      type: object
-      required:
-      - budget_duration
-      - max_budget
-      title: BudgetLimitEntry
-      description: A single budget window with its own limit and independent reset schedule.
-    KeyMetricWithMetadata:
-      properties:
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        metadata:
-          $ref: '#/components/schemas/KeyMetadata'
-      type: object
-      required:
-      - metrics
-      title: KeyMetricWithMetadata
-      description: Base class for metrics with additional metadata
-    SpendAnalyticsPaginatedResponse:
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/DailySpendData'
-          type: array
-          title: Results
-        metadata:
-          $ref: '#/components/schemas/DailySpendMetadata'
-      type: object
-      required:
-      - results
-      title: SpendAnalyticsPaginatedResponse
     LiteLLM_ObjectPermissionTable:
       properties:
         object_permission_id:
@@ -2499,97 +2249,187 @@ components:
       required:
       - key
       title: NewUserResponse
-    BulkUpdateUserRequest:
+    DailySpendMetadata:
       properties:
-        users:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/UpdateUserRequest'
-            type: array
-          - type: 'null'
-          title: Users
-        all_users:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: All Users
-          default: false
-        user_updates:
-          anyOf:
-          - $ref: '#/components/schemas/UpdateUserRequestNoUserIDorEmail'
-          - type: 'null'
-      type: object
-      title: BulkUpdateUserRequest
-      description: Request for bulk user updates
-    SpendMetrics:
-      properties:
-        spend:
+        total_spend:
           type: number
-          title: Spend
+          title: Total Spend
           default: 0.0
-        prompt_tokens:
+        total_prompt_tokens:
           type: integer
-          title: Prompt Tokens
+          title: Total Prompt Tokens
           default: 0
-        completion_tokens:
+        total_completion_tokens:
           type: integer
-          title: Completion Tokens
+          title: Total Completion Tokens
           default: 0
-        cache_read_input_tokens:
-          type: integer
-          title: Cache Read Input Tokens
-          default: 0
-        cache_creation_input_tokens:
-          type: integer
-          title: Cache Creation Input Tokens
-          default: 0
-        compression_saved_tokens:
-          type: integer
-          title: Compression Saved Tokens
-          default: 0
-        compression_savings_spend:
-          type: number
-          title: Compression Savings Spend
-          default: 0.0
-        prompt_caching_savings_spend:
-          type: number
-          title: Prompt Caching Savings Spend
-          default: 0.0
         total_tokens:
           type: integer
           title: Total Tokens
           default: 0
-        successful_requests:
+        total_api_requests:
           type: integer
-          title: Successful Requests
+          title: Total Api Requests
           default: 0
-        failed_requests:
+        total_successful_requests:
           type: integer
-          title: Failed Requests
+          title: Total Successful Requests
           default: 0
-        api_requests:
+        total_failed_requests:
           type: integer
-          title: Api Requests
+          title: Total Failed Requests
           default: 0
+        total_cache_read_input_tokens:
+          type: integer
+          title: Total Cache Read Input Tokens
+          default: 0
+        total_cache_creation_input_tokens:
+          type: integer
+          title: Total Cache Creation Input Tokens
+          default: 0
+        total_compression_saved_tokens:
+          type: integer
+          title: Total Compression Saved Tokens
+          default: 0
+        total_compression_savings_spend:
+          type: number
+          title: Total Compression Savings Spend
+          default: 0.0
+        total_prompt_caching_savings_spend:
+          type: number
+          title: Total Prompt Caching Savings Spend
+          default: 0.0
+        page:
+          type: integer
+          title: Page
+          default: 1
+        total_pages:
+          type: integer
+          title: Total Pages
+          default: 1
+        has_more:
+          type: boolean
+          title: Has More
+          default: false
       type: object
-      title: SpendMetrics
-    LiteLLM_ObjectPermissionBase:
+      title: DailySpendMetadata
+    UserInfoV2Response:
       properties:
-        mcp_servers:
+        user_id:
+          type: string
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        user_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Alias
+        user_role:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Role
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        max_budget:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget
+        models:
+          items:
+            type: string
+          type: array
+          title: Models
+          default: []
+        budget_duration:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Budget Duration
+        budget_reset_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Budget Reset At
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+        created_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Updated At
+        sso_user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sso User Id
+        teams:
+          items:
+            type: string
+          type: array
+          title: Teams
+          default: []
+      type: object
+      required:
+      - user_id
+      title: UserInfoV2Response
+      description: 'Response model for GET /v2/user/info
+
+
+        Returns ONLY the user object - no keys, no teams objects.
+
+        This is a lightweight alternative to UserInfoResponse.'
+    UpdateRouterConfig:
+      properties:
+        routing_strategy_args:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Routing Strategy Args
+        routing_strategy:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Routing Strategy
+        routing_groups:
           anyOf:
           - items:
-              type: string
+              $ref: '#/components/schemas/RoutingGroup'
             type: array
           - type: 'null'
-          title: Mcp Servers
-        mcp_access_groups:
+          title: Routing Groups
+        retry_policy:
           anyOf:
-          - items:
-              type: string
-            type: array
+          - $ref: '#/components/schemas/RetryPolicy'
           - type: 'null'
-          title: Mcp Access Groups
-        mcp_tool_permissions:
+        model_group_retry_policy:
+          anyOf:
+          - additionalProperties:
+              $ref: '#/components/schemas/RetryPolicy'
+            type: object
+          - type: 'null'
+          title: Model Group Retry Policy
+        model_group_affinity_config:
           anyOf:
           - additionalProperties:
               items:
@@ -2597,78 +2437,225 @@ components:
               type: array
             type: object
           - type: 'null'
-          title: Mcp Tool Permissions
-        mcp_toolsets:
+          title: Model Group Affinity Config
+        allowed_fails:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Allowed Fails
+        cooldown_time:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Cooldown Time
+        num_retries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Num Retries
+        timeout:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Timeout
+        max_retries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Retries
+        retry_after:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Retry After
+        fallbacks:
           anyOf:
           - items:
-              type: string
+              additionalProperties: true
+              type: object
             type: array
           - type: 'null'
-          title: Mcp Toolsets
-        blocked_tools:
+          title: Fallbacks
+        context_window_fallbacks:
           anyOf:
           - items:
-              type: string
+              additionalProperties: true
+              type: object
             type: array
           - type: 'null'
-          title: Blocked Tools
-        vector_stores:
+          title: Context Window Fallbacks
+        model_group_alias:
           anyOf:
-          - items:
-              type: string
-            type: array
+          - additionalProperties:
+              anyOf:
+              - type: string
+              - additionalProperties: true
+                type: object
+            type: object
           - type: 'null'
-          title: Vector Stores
-        agents:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agents
-        agent_access_groups:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Agent Access Groups
-        models:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Models
-        search_tools:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Search Tools
-        mcp_tool_search_enabled:
+          title: Model Group Alias
+          default: {}
+        enable_tag_filtering:
           anyOf:
           - type: boolean
           - type: 'null'
-          title: Mcp Tool Search Enabled
+          title: Enable Tag Filtering
       type: object
-      title: LiteLLM_ObjectPermissionBase
-    DailySpendData:
+      title: UpdateRouterConfig
+      description: Set of params that you can modify via `router.update_settings()`.
+    SpendAnalyticsPaginatedResponse:
       properties:
-        date:
-          type: string
-          format: date
-          title: Date
-        metrics:
-          $ref: '#/components/schemas/SpendMetrics'
-        breakdown:
-          $ref: '#/components/schemas/BreakdownMetrics'
+        results:
+          items:
+            $ref: '#/components/schemas/DailySpendData'
+          type: array
+          title: Results
+        metadata:
+          $ref: '#/components/schemas/DailySpendMetadata'
       type: object
       required:
-      - date
-      - metrics
-      title: DailySpendData
+      - results
+      title: SpendAnalyticsPaginatedResponse
+    NewUserRequestTeam:
+      properties:
+        team_id:
+          type: string
+          title: Team Id
+        max_budget_in_team:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Max Budget In Team
+        user_role:
+          type: string
+          enum:
+          - user
+          - admin
+          title: User Role
+          default: user
+      type: object
+      required:
+      - team_id
+      title: NewUserRequestTeam
+    UserUpdateResult:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        user_email:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Email
+        success:
+          type: boolean
+          title: Success
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+        updated_user:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Updated User
+      type: object
+      required:
+      - success
+      title: UserUpdateResult
+      description: Result of a single user update operation
+    BreakdownMetrics:
+      properties:
+        mcp_servers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Mcp Servers
+        models:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Models
+        model_groups:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Model Groups
+        providers:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Providers
+        endpoints:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Endpoints
+        api_keys:
+          additionalProperties:
+            $ref: '#/components/schemas/KeyMetricWithMetadata'
+          type: object
+          title: Api Keys
+        entities:
+          additionalProperties:
+            $ref: '#/components/schemas/MetricWithMetadata'
+          type: object
+          title: Entities
+      type: object
+      title: BreakdownMetrics
+      description: Breakdown of spend by different dimensions
+    KeyMetadata:
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: KeyMetadata
+      description: Metadata for a key
+    UserInfoResponse:
+      properties:
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        user_info:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - $ref: '#/components/schemas/BaseModel'
+          - type: 'null'
+          title: User Info
+        keys:
+          items: {}
+          type: array
+          title: Keys
+        teams:
+          items: {}
+          type: array
+          title: Teams
+      type: object
+      required:
+      - user_id
+      - user_info
+      - keys
+      - teams
+      title: UserInfoResponse
+    BaseModel:
+      properties: {}
+      type: object
+      title: BaseModel
     NewUserRequest:
       properties:
         key_alias:
@@ -2901,34 +2888,47 @@ components:
           title: Organizations
       type: object
       title: NewUserRequest
-    UserListResponse:
+    RetryPolicy:
       properties:
-        users:
-          items:
-            $ref: '#/components/schemas/LiteLLM_UserTableWithKeyCount'
-          type: array
-          title: Users
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-        total_pages:
-          type: integer
-          title: Total Pages
+        BadRequestErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Badrequesterrorretries
+        AuthenticationErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Authenticationerrorretries
+        TimeoutErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Timeouterrorretries
+        RateLimitErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Ratelimiterrorretries
+        ContentPolicyViolationErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Contentpolicyviolationerrorretries
+        InternalServerErrorRetries:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Internalservererrorretries
       type: object
-      required:
-      - users
-      - total
-      - page
-      - page_size
-      - total_pages
-      title: UserListResponse
-      description: Response model for the user list endpoint
+      title: RetryPolicy
+      description: 'Use this to set a custom number of retries per exception type
+
+        If RateLimitErrorRetries = 3, then 3 retries will be made for RateLimitError
+
+        Mapping of Exception type to number of retries
+
+        https://docs.litellm.ai/docs/exception_mapping'
   securitySchemes:
     APIKeyHeader:
       type: apiKey

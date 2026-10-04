@@ -49,6 +49,15 @@ paths:
       - usage_ai
 components:
   schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     UsageAIChatRequest:
       properties:
         messages:
@@ -67,31 +76,6 @@ components:
       - messages
       title: UsageAIChatRequest
       type: object
-    ChatMessage:
-      properties:
-        content:
-          title: Content
-          type: string
-        role:
-          enum:
-          - user
-          - assistant
-          title: Role
-          type: string
-      required:
-      - role
-      - content
-      title: ChatMessage
-      type: object
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
@@ -118,6 +102,22 @@ components:
       - msg
       - type
       title: ValidationError
+    ChatMessage:
+      properties:
+        content:
+          title: Content
+          type: string
+        role:
+          enum:
+          - user
+          - assistant
+          title: Role
+          type: string
+      required:
+      - role
+      - content
+      title: ChatMessage
+      type: object
   securitySchemes:
     APIKeyHeader:
       type: apiKey

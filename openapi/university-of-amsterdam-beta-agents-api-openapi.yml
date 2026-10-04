@@ -58,7 +58,7 @@ paths:
                 title: Response Get Agent Fields Public Agents Fields Get
 components:
   schemas:
-    MutualTLSSecurityScheme:
+    APIKeySecurityScheme:
       properties:
         description:
           anyOf:
@@ -67,24 +67,92 @@ components:
           title: Description
         type:
           type: string
-          const: mutualTLS
+          const: apiKey
           title: Type
+        in_:
+          type: string
+          enum:
+          - query
+          - header
+          - cookie
+          title: In
+        name:
+          type: string
+          title: Name
       type: object
       required:
       - type
-      title: MutualTLSSecurityScheme
-      description: Defines a security scheme using mTLS authentication.
-    AgentInterface:
+      - in_
+      - name
+      title: APIKeySecurityScheme
+      description: Defines a security scheme using an API key.
+    AgentCapabilities:
       properties:
+        streaming:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Streaming
+        pushNotifications:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Pushnotifications
+        stateTransitionHistory:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Statetransitionhistory
+        extensions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/AgentExtension'
+            type: array
+          - type: 'null'
+          title: Extensions
+      type: object
+      title: AgentCapabilities
+      description: Defines optional capabilities supported by an agent.
+    AgentProvider:
+      properties:
+        organization:
+          type: string
+          title: Organization
         url:
           type: string
           title: Url
-        transport:
-          type: string
-          title: Transport
       type: object
-      title: AgentInterface
-      description: Declares a combination of a target URL and a transport protocol.
+      title: AgentProvider
+      description: Represents the service provider of an agent.
+    OAuthFlows:
+      properties:
+        authorizationCode:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Authorizationcode
+        clientCredentials:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Clientcredentials
+        implicit:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Implicit
+        password:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Password
+      type: object
+      title: OAuthFlows
+      description: Defines the configuration for the supported OAuth 2.0 flows.
     AgentSkill:
       properties:
         id:
@@ -136,31 +204,6 @@ components:
       type: object
       title: AgentSkill
       description: Represents a distinct capability or function that an agent can perform.
-    HTTPAuthSecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: http
-          title: Type
-        scheme:
-          type: string
-          title: Scheme
-        bearerFormat:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Bearerformat
-      type: object
-      required:
-      - type
-      - scheme
-      title: HTTPAuthSecurityScheme
-      description: Defines a security scheme using HTTP authentication.
     AgentCardSignature:
       properties:
         protected:
@@ -178,91 +221,6 @@ components:
       type: object
       title: AgentCardSignature
       description: Represents a JWS signature of an AgentCard.
-    OAuth2SecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: oauth2
-          title: Type
-        flows:
-          $ref: '#/components/schemas/OAuthFlows'
-        oauth2MetadataUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Oauth2Metadataurl
-      type: object
-      required:
-      - type
-      - flows
-      title: OAuth2SecurityScheme
-      description: Defines a security scheme using OAuth 2.0.
-    AgentCreateInfo:
-      properties:
-        agent_type:
-          type: string
-          title: Agent Type
-        agent_type_display_name:
-          type: string
-          title: Agent Type Display Name
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        logo_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Logo Url
-        credential_fields:
-          items:
-            $ref: '#/components/schemas/AgentCredentialField'
-          type: array
-          title: Credential Fields
-        litellm_params_template:
-          anyOf:
-          - additionalProperties:
-              type: string
-            type: object
-          - type: 'null'
-          title: Litellm Params Template
-        model_template:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model Template
-      type: object
-      required:
-      - agent_type
-      - agent_type_display_name
-      - credential_fields
-      title: AgentCreateInfo
-    OpenIdConnectSecurityScheme:
-      properties:
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        type:
-          type: string
-          const: openIdConnect
-          title: Type
-        openIdConnectUrl:
-          type: string
-          title: Openidconnecturl
-      type: object
-      required:
-      - type
-      - openIdConnectUrl
-      title: OpenIdConnectSecurityScheme
-      description: Defines a security scheme using OpenID Connect.
     AgentCredentialField:
       properties:
         key:
@@ -317,6 +275,102 @@ components:
       - key
       - label
       title: AgentCredentialField
+    AgentCreateInfo:
+      properties:
+        agent_type:
+          type: string
+          title: Agent Type
+        agent_type_display_name:
+          type: string
+          title: Agent Type Display Name
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        logo_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo Url
+        credential_fields:
+          items:
+            $ref: '#/components/schemas/AgentCredentialField'
+          type: array
+          title: Credential Fields
+        litellm_params_template:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          title: Litellm Params Template
+        model_template:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model Template
+      type: object
+      required:
+      - agent_type
+      - agent_type_display_name
+      - credential_fields
+      title: AgentCreateInfo
+    AgentExtension:
+      properties:
+        uri:
+          type: string
+          title: Uri
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        required:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Required
+        params:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Params
+      type: object
+      title: AgentExtension
+      description: A declaration of a protocol extension supported by an Agent.
+    AgentInterface:
+      properties:
+        url:
+          type: string
+          title: Url
+        transport:
+          type: string
+          title: Transport
+      type: object
+      title: AgentInterface
+      description: Declares a combination of a target URL and a transport protocol.
+    OpenIdConnectSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: openIdConnect
+          title: Type
+        openIdConnectUrl:
+          type: string
+          title: Openidconnecturl
+      type: object
+      required:
+      - type
+      - openIdConnectUrl
+      title: OpenIdConnectSecurityScheme
+      description: Defines a security scheme using OpenID Connect.
     AgentCard:
       properties:
         protocolVersion:
@@ -419,98 +473,7 @@ components:
         It provides essential metadata including the agent''s identity, capabilities,
 
         skills, supported communication methods, and security requirements.'
-    OAuthFlows:
-      properties:
-        authorizationCode:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Authorizationcode
-        clientCredentials:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Clientcredentials
-        implicit:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Implicit
-        password:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Password
-      type: object
-      title: OAuthFlows
-      description: Defines the configuration for the supported OAuth 2.0 flows.
-    AgentCapabilities:
-      properties:
-        streaming:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Streaming
-        pushNotifications:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Pushnotifications
-        stateTransitionHistory:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Statetransitionhistory
-        extensions:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/AgentExtension'
-            type: array
-          - type: 'null'
-          title: Extensions
-      type: object
-      title: AgentCapabilities
-      description: Defines optional capabilities supported by an agent.
-    AgentExtension:
-      properties:
-        uri:
-          type: string
-          title: Uri
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Description
-        required:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Required
-        params:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Params
-      type: object
-      title: AgentExtension
-      description: A declaration of a protocol extension supported by an Agent.
-    AgentProvider:
-      properties:
-        organization:
-          type: string
-          title: Organization
-        url:
-          type: string
-          title: Url
-      type: object
-      title: AgentProvider
-      description: Represents the service provider of an agent.
-    APIKeySecurityScheme:
+    HTTPAuthSecurityScheme:
       properties:
         description:
           anyOf:
@@ -519,25 +482,62 @@ components:
           title: Description
         type:
           type: string
-          const: apiKey
+          const: http
           title: Type
-        in_:
+        scheme:
           type: string
-          enum:
-          - query
-          - header
-          - cookie
-          title: In
-        name:
-          type: string
-          title: Name
+          title: Scheme
+        bearerFormat:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Bearerformat
       type: object
       required:
       - type
-      - in_
-      - name
-      title: APIKeySecurityScheme
-      description: Defines a security scheme using an API key.
+      - scheme
+      title: HTTPAuthSecurityScheme
+      description: Defines a security scheme using HTTP authentication.
+    MutualTLSSecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: mutualTLS
+          title: Type
+      type: object
+      required:
+      - type
+      title: MutualTLSSecurityScheme
+      description: Defines a security scheme using mTLS authentication.
+    OAuth2SecurityScheme:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        type:
+          type: string
+          const: oauth2
+          title: Type
+        flows:
+          $ref: '#/components/schemas/OAuthFlows'
+        oauth2MetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Oauth2Metadataurl
+      type: object
+      required:
+      - type
+      - flows
+      title: OAuth2SecurityScheme
+      description: Defines a security scheme using OAuth 2.0.
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -136,32 +136,52 @@ paths:
       - policy_resolve
 components:
   schemas:
-    ValidationError:
+    AttachmentImpactResponse:
+      description: Response for estimating the impact of a policy attachment.
       properties:
-        loc:
+        affected_keys_count:
+          default: 0
+          description: Number of keys that would be affected (named + unnamed).
+          title: Affected Keys Count
+          type: integer
+        affected_teams_count:
+          default: 0
+          description: Number of teams that would be affected (named + unnamed).
+          title: Affected Teams Count
+          type: integer
+        sample_keys:
+          description: Sample of affected key aliases (up to 10).
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            type: string
+          title: Sample Keys
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+        sample_teams:
+          description: Sample of affected team aliases (up to 10).
+          items:
+            type: string
+          title: Sample Teams
+          type: array
+        unnamed_keys_count:
+          default: 0
+          description: Number of affected keys without an alias.
+          title: Unnamed Keys Count
+          type: integer
+        unnamed_teams_count:
+          default: 0
+          description: Number of affected teams without an alias.
+          title: Unnamed Teams Count
+          type: integer
+      title: AttachmentImpactResponse
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     PolicyResolveResponse:
       description: Response for resolving effective policies/guardrails for a context.
       properties:
@@ -178,6 +198,59 @@ components:
           title: Matched Policies
           type: array
       title: PolicyResolveResponse
+      type: object
+    PolicyResolveRequest:
+      description: Request body for resolving effective policies/guardrails for a context.
+      properties:
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Key alias to resolve for.
+          title: Key Alias
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Model name to resolve for.
+          title: Model
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Tags to resolve for.
+          title: Tags
+        team_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Team alias to resolve for.
+          title: Team Alias
+      title: PolicyResolveRequest
+      type: object
+    PolicyMatchDetail:
+      description: Details about why a specific policy matched.
+      properties:
+        guardrails_added:
+          description: Guardrails this policy contributes.
+          items:
+            type: string
+          title: Guardrails Added
+          type: array
+        matched_via:
+          description: How the policy was matched (e.g., 'tag:healthcare', 'team:health-team', 'scope:*').
+          title: Matched Via
+          type: string
+        policy_name:
+          description: Name of the matched policy.
+          title: Policy Name
+          type: string
+      required:
+      - policy_name
+      - matched_via
+      title: PolicyMatchDetail
       type: object
     PolicyAttachmentCreateRequest:
       properties:
@@ -228,105 +301,32 @@ components:
       - policy_name
       title: PolicyAttachmentCreateRequest
       description: Request body for creating a policy attachment.
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
-    PolicyMatchDetail:
-      description: Details about why a specific policy matched.
-      properties:
-        guardrails_added:
-          description: Guardrails this policy contributes.
-          items:
-            type: string
-          title: Guardrails Added
-          type: array
-        matched_via:
-          description: How the policy was matched (e.g., 'tag:healthcare', 'team:health-team', 'scope:*').
-          title: Matched Via
-          type: string
-        policy_name:
-          description: Name of the matched policy.
-          title: Policy Name
-          type: string
       required:
-      - policy_name
-      - matched_via
-      title: PolicyMatchDetail
-      type: object
-    AttachmentImpactResponse:
-      description: Response for estimating the impact of a policy attachment.
-      properties:
-        affected_keys_count:
-          default: 0
-          description: Number of keys that would be affected (named + unnamed).
-          title: Affected Keys Count
-          type: integer
-        affected_teams_count:
-          default: 0
-          description: Number of teams that would be affected (named + unnamed).
-          title: Affected Teams Count
-          type: integer
-        sample_keys:
-          description: Sample of affected key aliases (up to 10).
-          items:
-            type: string
-          title: Sample Keys
-          type: array
-        sample_teams:
-          description: Sample of affected team aliases (up to 10).
-          items:
-            type: string
-          title: Sample Teams
-          type: array
-        unnamed_keys_count:
-          default: 0
-          description: Number of affected keys without an alias.
-          title: Unnamed Keys Count
-          type: integer
-        unnamed_teams_count:
-          default: 0
-          description: Number of affected teams without an alias.
-          title: Unnamed Teams Count
-          type: integer
-      title: AttachmentImpactResponse
-      type: object
-    PolicyResolveRequest:
-      description: Request body for resolving effective policies/guardrails for a context.
-      properties:
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Key alias to resolve for.
-          title: Key Alias
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Model name to resolve for.
-          title: Model
-        tags:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Tags to resolve for.
-          title: Tags
-        team_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Team alias to resolve for.
-          title: Team Alias
-      title: PolicyResolveRequest
-      type: object
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

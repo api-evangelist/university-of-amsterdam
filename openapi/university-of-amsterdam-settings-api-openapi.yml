@@ -67,32 +67,31 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    ValidationError:
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    MCPSemanticFilterSettingsResponse:
+      properties:
+        values:
+          additionalProperties: true
           type: object
-          title: Context
+          title: Values
+        field_schema:
+          additionalProperties: true
+          type: object
+          title: Field Schema
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - values
+      - field_schema
+      title: MCPSemanticFilterSettingsResponse
+      description: Response model for MCP semantic filter settings
     MCPSemanticFilterSettings:
       properties:
         enabled:
@@ -122,31 +121,32 @@ components:
       type: object
       title: MCPSemanticFilterSettings
       description: Configuration for MCP Semantic Tool Filter
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    MCPSemanticFilterSettingsResponse:
-      properties:
-        values:
-          additionalProperties: true
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
           type: object
-          title: Values
-        field_schema:
-          additionalProperties: true
-          type: object
-          title: Field Schema
+          title: Context
       type: object
       required:
-      - values
-      - field_schema
-      title: MCPSemanticFilterSettingsResponse
-      description: Response model for MCP semantic filter settings
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

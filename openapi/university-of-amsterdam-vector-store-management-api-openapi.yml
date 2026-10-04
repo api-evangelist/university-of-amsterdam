@@ -274,6 +274,51 @@ components:
       type: object
       title: LiteLLM_ManagedVectorStoreListResponse
       description: Response format for listing vector stores
+    VectorStoreUpdateRequest:
+      properties:
+        vector_store_id:
+          type: string
+          title: Vector Store Id
+        custom_llm_provider:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Custom Llm Provider
+        vector_store_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vector Store Name
+        vector_store_description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Vector Store Description
+        vector_store_metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Vector Store Metadata
+      type: object
+      required:
+      - vector_store_id
+      title: VectorStoreUpdateRequest
+    ResponseLiteLLM_ManagedVectorStore:
+      properties:
+        vector_store:
+          $ref: '#/components/schemas/LiteLLM_ManagedVectorStoresTable'
+      type: object
+      title: ResponseLiteLLM_ManagedVectorStore
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     LiteLLM_ManagedVectorStoresTable:
       properties:
         vector_store_id:
@@ -336,15 +381,50 @@ components:
       - vector_store_id
       - custom_llm_provider
       title: LiteLLM_ManagedVectorStoresTable
-    HTTPValidationError:
+    VectorStoreInfoRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        vector_store_id:
+          type: string
+          title: Vector Store Id
       type: object
-      title: HTTPValidationError
+      required:
+      - vector_store_id
+      title: VectorStoreInfoRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    VectorStoreDeleteRequest:
+      properties:
+        vector_store_id:
+          type: string
+          title: Vector Store Id
+      type: object
+      required:
+      - vector_store_id
+      title: VectorStoreDeleteRequest
     LiteLLM_ManagedVectorStore:
       properties:
         vector_store_id:
@@ -406,86 +486,6 @@ components:
       type: object
       title: LiteLLM_ManagedVectorStore
       description: LiteLLM managed vector store object - this is is the object stored in the database
-    VectorStoreInfoRequest:
-      properties:
-        vector_store_id:
-          type: string
-          title: Vector Store Id
-      type: object
-      required:
-      - vector_store_id
-      title: VectorStoreInfoRequest
-    VectorStoreUpdateRequest:
-      properties:
-        vector_store_id:
-          type: string
-          title: Vector Store Id
-        custom_llm_provider:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Custom Llm Provider
-        vector_store_name:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vector Store Name
-        vector_store_description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Vector Store Description
-        vector_store_metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Vector Store Metadata
-      type: object
-      required:
-      - vector_store_id
-      title: VectorStoreUpdateRequest
-    ResponseLiteLLM_ManagedVectorStore:
-      properties:
-        vector_store:
-          $ref: '#/components/schemas/LiteLLM_ManagedVectorStoresTable'
-      type: object
-      title: ResponseLiteLLM_ManagedVectorStore
-    VectorStoreDeleteRequest:
-      properties:
-        vector_store_id:
-          type: string
-          title: Vector Store Id
-      type: object
-      required:
-      - vector_store_id
-      title: VectorStoreDeleteRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

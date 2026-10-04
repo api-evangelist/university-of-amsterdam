@@ -33,6 +33,23 @@ paths:
       - Litellm
 components:
   schemas:
+    WorkerRegistryEntry:
+      properties:
+        worker_id:
+          type: string
+          title: Worker Id
+        name:
+          type: string
+          title: Name
+        url:
+          type: string
+          title: Url
+      type: object
+      required:
+      - worker_id
+      - name
+      - url
+      title: WorkerRegistryEntry
     UiDiscoveryEndpoints:
       properties:
         server_root_path:
@@ -74,23 +91,6 @@ components:
       - admin_ui_disabled
       - sso_configured
       title: UiDiscoveryEndpoints
-    WorkerRegistryEntry:
-      properties:
-        worker_id:
-          type: string
-          title: Worker Id
-        name:
-          type: string
-          title: Name
-        url:
-          type: string
-          title: Url
-      type: object
-      required:
-      - worker_id
-      - name
-      - url
-      title: WorkerRegistryEntry
   securitySchemes:
     APIKeyHeader:
       type: apiKey

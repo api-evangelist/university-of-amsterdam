@@ -231,17 +231,15 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    BudgetRequest:
+    HTTPValidationError:
       properties:
-        budgets:
+        detail:
           items:
-            type: string
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Budgets
+          title: Detail
       type: object
-      required:
-      - budgets
-      title: BudgetRequest
+      title: HTTPValidationError
     BudgetNewRequest:
       properties:
         budget_id:
@@ -303,24 +301,6 @@ components:
           description: Datetime when the budget is reset
       type: object
       title: BudgetNewRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    BudgetDeleteRequest:
-      properties:
-        id:
-          type: string
-          title: Id
-      type: object
-      required:
-      - id
-      title: BudgetDeleteRequest
     BudgetConfig:
       properties:
         max_budget:
@@ -345,6 +325,17 @@ components:
           title: Rpm Limit
       type: object
       title: BudgetConfig
+    BudgetRequest:
+      properties:
+        budgets:
+          items:
+            type: string
+          type: array
+          title: Budgets
+      type: object
+      required:
+      - budgets
+      title: BudgetRequest
     ValidationError:
       properties:
         loc:
@@ -371,6 +362,15 @@ components:
       - msg
       - type
       title: ValidationError
+    BudgetDeleteRequest:
+      properties:
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - id
+      title: BudgetDeleteRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -51,15 +51,6 @@ paths:
       - Apply Guardrail
 components:
   schemas:
-    ApplyGuardrailResponse:
-      properties:
-        response_text:
-          type: string
-          title: Response Text
-      type: object
-      required:
-      - response_text
-      title: ApplyGuardrailResponse
     HTTPValidationError:
       properties:
         detail:
@@ -112,32 +103,15 @@ components:
       - guardrail_name
       - text
       title: ApplyGuardrailRequest
-    ValidationError:
+    ApplyGuardrailResponse:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        response_text:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
+          title: Response Text
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - response_text
+      title: ApplyGuardrailResponse
     PiiEntityType:
       type: string
       enum:
@@ -184,6 +158,32 @@ components:
       - IN_PASSPORT
       - FI_PERSONAL_IDENTITY_CODE
       title: PiiEntityType
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey
