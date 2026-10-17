@@ -412,18 +412,34 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    ActiveUsersAnalyticsResponse:
+    TagActiveUsersResponse:
       properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagActiveUsersResponse'
-          type: array
-          title: Results
+        tag:
+          type: string
+          title: Tag
+        active_users:
+          type: integer
+          title: Active Users
+        date:
+          type: string
+          title: Date
+        period_start:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period Start
+        period_end:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Period End
       type: object
       required:
-      - results
-      title: ActiveUsersAnalyticsResponse
-      description: Response for active users analytics
+      - tag
+      - active_users
+      - date
+      title: TagActiveUsersResponse
+      description: Response for tag active users metrics
     PerUserAnalyticsResponse:
       properties:
         results:
@@ -452,15 +468,6 @@ components:
       - total_pages
       title: PerUserAnalyticsResponse
       description: Response for per-user analytics
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     TagSummaryMetrics:
       properties:
         tag:
@@ -495,18 +502,16 @@ components:
       - total_spend
       title: TagSummaryMetrics
       description: Summary metrics for a tag
-    TagSummaryResponse:
+    DistinctTagResponse:
       properties:
-        results:
-          items:
-            $ref: '#/components/schemas/TagSummaryMetrics'
-          type: array
-          title: Results
+        tag:
+          type: string
+          title: Tag
       type: object
       required:
-      - results
-      title: TagSummaryResponse
-      description: Response for tag summary analytics
+      - tag
+      title: DistinctTagResponse
+      description: Response for distinct user agent tags
     ValidationError:
       properties:
         loc:
@@ -573,44 +578,39 @@ components:
       - user_id
       title: PerUserMetrics
       description: Metrics for individual user
-    TagActiveUsersResponse:
+    HTTPValidationError:
       properties:
-        tag:
-          type: string
-          title: Tag
-        active_users:
-          type: integer
-          title: Active Users
-        date:
-          type: string
-          title: Date
-        period_start:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period Start
-        period_end:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Period End
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ActiveUsersAnalyticsResponse:
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/TagActiveUsersResponse'
+          type: array
+          title: Results
       type: object
       required:
-      - tag
-      - active_users
-      - date
-      title: TagActiveUsersResponse
-      description: Response for tag active users metrics
-    DistinctTagResponse:
+      - results
+      title: ActiveUsersAnalyticsResponse
+      description: Response for active users analytics
+    TagSummaryResponse:
       properties:
-        tag:
-          type: string
-          title: Tag
+        results:
+          items:
+            $ref: '#/components/schemas/TagSummaryMetrics'
+          type: array
+          title: Results
       type: object
       required:
-      - tag
-      title: DistinctTagResponse
-      description: Response for distinct user agent tags
+      - results
+      title: TagSummaryResponse
+      description: Response for tag summary analytics
     DistinctTagsResponse:
       properties:
         results:

@@ -67,15 +67,22 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
+    UISettingsResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        values:
+          additionalProperties: true
+          type: object
+          title: Values
+        field_schema:
+          additionalProperties: true
+          type: object
+          title: Field Schema
       type: object
-      title: HTTPValidationError
+      required:
+      - values
+      - field_schema
+      title: UISettingsResponse
+      description: Response model for UI settings
     ValidationError:
       properties:
         loc:
@@ -102,22 +109,15 @@ components:
       - msg
       - type
       title: ValidationError
-    UISettingsResponse:
+    HTTPValidationError:
       properties:
-        values:
-          additionalProperties: true
-          type: object
-          title: Values
-        field_schema:
-          additionalProperties: true
-          type: object
-          title: Field Schema
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - values
-      - field_schema
-      title: UISettingsResponse
-      description: Response model for UI settings
+      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

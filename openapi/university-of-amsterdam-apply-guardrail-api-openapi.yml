@@ -51,67 +51,6 @@ paths:
       - Apply Guardrail
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ApplyGuardrailRequest:
-      properties:
-        guardrail_name:
-          type: string
-          title: Guardrail Name
-        text:
-          type: string
-          title: Text
-        language:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Language
-        entities:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/PiiEntityType'
-            type: array
-          - type: 'null'
-          title: Entities
-        input_type:
-          type: string
-          title: Input Type
-          default: request
-        messages:
-          anyOf:
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-          - type: 'null'
-          title: Messages
-        metadata:
-          anyOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: Metadata
-      type: object
-      required:
-      - guardrail_name
-      - text
-      title: ApplyGuardrailRequest
-    ApplyGuardrailResponse:
-      properties:
-        response_text:
-          type: string
-          title: Response Text
-      type: object
-      required:
-      - response_text
-      title: ApplyGuardrailResponse
     PiiEntityType:
       type: string
       enum:
@@ -184,6 +123,67 @@ components:
       - msg
       - type
       title: ValidationError
+    ApplyGuardrailRequest:
+      properties:
+        guardrail_name:
+          type: string
+          title: Guardrail Name
+        text:
+          type: string
+          title: Text
+        language:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Language
+        entities:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/PiiEntityType'
+            type: array
+          - type: 'null'
+          title: Entities
+        input_type:
+          type: string
+          title: Input Type
+          default: request
+        messages:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Messages
+        metadata:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: Metadata
+      type: object
+      required:
+      - guardrail_name
+      - text
+      title: ApplyGuardrailRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ApplyGuardrailResponse:
+      properties:
+        response_text:
+          type: string
+          title: Response Text
+      type: object
+      required:
+      - response_text
+      title: ApplyGuardrailResponse
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -203,6 +203,126 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    MemoryUpdateRequest:
+      properties:
+        value:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Value
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+      type: object
+      title: MemoryUpdateRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    MemoryListResponse:
+      properties:
+        memories:
+          items:
+            $ref: '#/components/schemas/LiteLLM_MemoryRow'
+          type: array
+          title: Memories
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - memories
+      - total
+      title: MemoryListResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    MemoryDeleteResponse:
+      properties:
+        key:
+          type: string
+          title: Key
+        deleted:
+          type: boolean
+          title: Deleted
+      type: object
+      required:
+      - key
+      - deleted
+      title: MemoryDeleteResponse
+    MemoryCreateRequest:
+      properties:
+        key:
+          type: string
+          title: Key
+          description: Memory key (acts as the namespace in the URL).
+        value:
+          type: string
+          title: Value
+          description: Memory content. Typically markdown/text for LLM context.
+        metadata:
+          anyOf:
+          - {}
+          - type: 'null'
+          title: Metadata
+          description: Optional JSON metadata (tags, structured fields).
+        user_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Id
+          description: Scope to this user. Defaults to the caller's user_id.
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+          description: Scope to this team. Defaults to the caller's team_id.
+      type: object
+      required:
+      - key
+      - value
+      title: MemoryCreateRequest
     LiteLLM_MemoryRow:
       properties:
         memory_id:
@@ -257,126 +377,6 @@ components:
       - key
       - value
       title: LiteLLM_MemoryRow
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    MemoryListResponse:
-      properties:
-        memories:
-          items:
-            $ref: '#/components/schemas/LiteLLM_MemoryRow'
-          type: array
-          title: Memories
-        total:
-          type: integer
-          title: Total
-      type: object
-      required:
-      - memories
-      - total
-      title: MemoryListResponse
-    MemoryCreateRequest:
-      properties:
-        key:
-          type: string
-          title: Key
-          description: Memory key (acts as the namespace in the URL).
-        value:
-          type: string
-          title: Value
-          description: Memory content. Typically markdown/text for LLM context.
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-          description: Optional JSON metadata (tags, structured fields).
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-          description: Scope to this user. Defaults to the caller's user_id.
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-          description: Scope to this team. Defaults to the caller's team_id.
-      type: object
-      required:
-      - key
-      - value
-      title: MemoryCreateRequest
-    MemoryUpdateRequest:
-      properties:
-        value:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Value
-        metadata:
-          anyOf:
-          - {}
-          - type: 'null'
-          title: Metadata
-        user_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: User Id
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-      type: object
-      title: MemoryUpdateRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    MemoryDeleteResponse:
-      properties:
-        key:
-          type: string
-          title: Key
-        deleted:
-          type: boolean
-          title: Deleted
-      type: object
-      required:
-      - key
-      - deleted
-      title: MemoryDeleteResponse
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -53,72 +53,20 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    CallbackLogRecord:
+    CallbackLogFailure:
       properties:
-        status:
-          type: string
-          enum:
-          - success
-          - failure
-          title: Status
-        standard_logging_payload:
-          additionalProperties: true
-          type: object
-          title: Standard Logging Payload
+        index:
+          type: integer
+          title: Index
         error:
-          anyOf:
-          - type: string
-          - type: 'null'
+          type: string
           title: Error
       type: object
       required:
-      - status
-      - standard_logging_payload
-      title: CallbackLogRecord
-      description: A single finished logging event to replay through the callbacks.
-    CallbackLogsResponse:
-      properties:
-        processed:
-          type: integer
-          title: Processed
-        failed:
-          type: integer
-          title: Failed
-        failures:
-          items:
-            $ref: '#/components/schemas/CallbackLogFailure'
-          type: array
-          title: Failures
-      type: object
-      required:
-      - processed
-      - failed
-      title: CallbackLogsResponse
-      description: 'Per-batch result: counts plus per-record failure detail so the caller can
-
-        distinguish a transient callback error from a structurally bad payload.'
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CallbackLogsRequest:
-      properties:
-        records:
-          items:
-            $ref: '#/components/schemas/CallbackLogRecord'
-          type: array
-          maxItems: 1000
-          title: Records
-      type: object
-      required:
-      - records
-      title: CallbackLogsRequest
-      description: A batch of logging events posted by an external producer.
+      - index
+      - error
+      title: CallbackLogFailure
+      description: A record that failed to replay, identified by its index in the batch.
     ValidationError:
       properties:
         loc:
@@ -145,20 +93,72 @@ components:
       - msg
       - type
       title: ValidationError
-    CallbackLogFailure:
+    CallbackLogRecord:
       properties:
-        index:
-          type: integer
-          title: Index
-        error:
+        status:
           type: string
+          enum:
+          - success
+          - failure
+          title: Status
+        standard_logging_payload:
+          additionalProperties: true
+          type: object
+          title: Standard Logging Payload
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Error
       type: object
       required:
-      - index
-      - error
-      title: CallbackLogFailure
-      description: A record that failed to replay, identified by its index in the batch.
+      - status
+      - standard_logging_payload
+      title: CallbackLogRecord
+      description: A single finished logging event to replay through the callbacks.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    CallbackLogsRequest:
+      properties:
+        records:
+          items:
+            $ref: '#/components/schemas/CallbackLogRecord'
+          type: array
+          maxItems: 1000
+          title: Records
+      type: object
+      required:
+      - records
+      title: CallbackLogsRequest
+      description: A batch of logging events posted by an external producer.
+    CallbackLogsResponse:
+      properties:
+        processed:
+          type: integer
+          title: Processed
+        failed:
+          type: integer
+          title: Failed
+        failures:
+          items:
+            $ref: '#/components/schemas/CallbackLogFailure'
+          type: array
+          title: Failures
+      type: object
+      required:
+      - processed
+      - failed
+      title: CallbackLogsResponse
+      description: 'Per-batch result: counts plus per-record failure detail so the caller can
+
+        distinguish a transient callback error from a structurally bad payload.'
   securitySchemes:
     APIKeyHeader:
       type: apiKey

@@ -708,39 +708,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    Body_test_model_connection_health_test_connection_post:
-      properties:
-        mode:
-          anyOf:
-          - type: string
-            enum:
-            - chat
-            - completion
-            - embedding
-            - audio_speech
-            - audio_transcription
-            - image_generation
-            - video_generation
-            - batch
-            - rerank
-            - realtime
-            - responses
-            - ocr
-          - type: 'null'
-          title: Mode
-          description: The mode to test the model with. If not provided, auto-detected from model capabilities.
-        litellm_params:
-          additionalProperties: true
-          type: object
-          title: Litellm Params
-          description: Parameters for litellm.completion, litellm.embedding for the health check
-        model_info:
-          additionalProperties: true
-          type: object
-          title: Model Info
-          description: Model info for the health check
-      type: object
-      title: Body_test_model_connection_health_test_connection_post
     ValidationError:
       properties:
         loc:
@@ -776,6 +743,39 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Body_test_model_connection_health_test_connection_post:
+      properties:
+        mode:
+          anyOf:
+          - type: string
+            enum:
+            - chat
+            - completion
+            - embedding
+            - audio_speech
+            - audio_transcription
+            - image_generation
+            - video_generation
+            - batch
+            - rerank
+            - realtime
+            - responses
+            - ocr
+          - type: 'null'
+          title: Mode
+          description: The mode to test the model with. If not provided, auto-detected from model capabilities.
+        litellm_params:
+          additionalProperties: true
+          type: object
+          title: Litellm Params
+          description: Parameters for litellm.completion, litellm.embedding for the health check
+        model_info:
+          additionalProperties: true
+          type: object
+          title: Model Info
+          description: Model info for the health check
+      type: object
+      title: Body_test_model_connection_health_test_connection_post
   securitySchemes:
     APIKeyHeader:
       type: apiKey

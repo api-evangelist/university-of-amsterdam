@@ -358,6 +358,45 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    ToolSpendDailyEntry:
+      properties:
+        date:
+          type: string
+          title: Date
+        tool_name:
+          type: string
+          title: Tool Name
+        spend:
+          type: number
+          title: Spend
+          default: 0.0
+        call_count:
+          type: integer
+          title: Call Count
+          default: 0
+      type: object
+      required:
+      - date
+      - tool_name
+      title: ToolSpendDailyEntry
+      description: Spend attributed to one tool on one UTC day.
+    ToolPolicyOption:
+      properties:
+        value:
+          type: string
+          title: Value
+        label:
+          type: string
+          title: Label
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - value
+      - label
+      - description
+      title: ToolPolicyOption
     ToolPolicyOverrideRow:
       properties:
         override_id:
@@ -406,103 +445,6 @@ components:
       - override_id
       - tool_name
       title: ToolPolicyOverrideRow
-    ToolUsageLogEntry:
-      properties:
-        id:
-          type: string
-          title: Id
-        timestamp:
-          type: string
-          title: Timestamp
-        model:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Model
-        spend:
-          anyOf:
-          - type: number
-          - type: 'null'
-          title: Spend
-        total_tokens:
-          anyOf:
-          - type: integer
-          - type: 'null'
-          title: Total Tokens
-        input_snippet:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Input Snippet
-      type: object
-      required:
-      - id
-      - timestamp
-      title: ToolUsageLogEntry
-      description: One spend log row for a tool call (for UI "recent logs" table).
-    ToolPolicyUpdateResponse:
-      properties:
-        tool_name:
-          type: string
-          title: Tool Name
-        input_policy:
-          anyOf:
-          - type: string
-            enum:
-            - trusted
-            - untrusted
-            - blocked
-          - type: 'null'
-          title: Input Policy
-        output_policy:
-          anyOf:
-          - type: string
-            enum:
-            - trusted
-            - untrusted
-          - type: 'null'
-          title: Output Policy
-        updated:
-          type: boolean
-          title: Updated
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        key_hash:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Hash
-      type: object
-      required:
-      - tool_name
-      - updated
-      title: ToolPolicyUpdateResponse
-    ToolUsageLogsResponse:
-      properties:
-        logs:
-          items:
-            $ref: '#/components/schemas/ToolUsageLogEntry'
-          type: array
-          title: Logs
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        page_size:
-          type: integer
-          title: Page Size
-      type: object
-      required:
-      - logs
-      - total
-      - page
-      - page_size
-      title: ToolUsageLogsResponse
     ToolDetailResponse:
       properties:
         tool:
@@ -516,15 +458,47 @@ components:
       required:
       - tool
       title: ToolDetailResponse
-    HTTPValidationError:
+    ValidationError:
       properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: HTTPValidationError
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ToolListResponse:
+      properties:
+        tools:
+          items:
+            $ref: '#/components/schemas/LiteLLM_ToolTableRow'
+          type: array
+          title: Tools
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - tools
+      - total
+      title: ToolListResponse
     LiteLLM_ToolTableRow:
       properties:
         tool_id:
@@ -616,28 +590,170 @@ components:
       - tool_id
       - tool_name
       title: LiteLLM_ToolTableRow
-    ToolSpendDailyEntry:
+    ToolPolicyUpdateRequest:
       properties:
-        date:
-          type: string
-          title: Date
         tool_name:
           type: string
           title: Tool Name
-        spend:
-          type: number
-          title: Spend
-          default: 0.0
-        call_count:
-          type: integer
-          title: Call Count
-          default: 0
+        input_policy:
+          anyOf:
+          - type: string
+            enum:
+            - trusted
+            - untrusted
+            - blocked
+          - type: 'null'
+          title: Input Policy
+        output_policy:
+          anyOf:
+          - type: string
+            enum:
+            - trusted
+            - untrusted
+          - type: 'null'
+          title: Output Policy
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        key_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Hash
+        key_alias:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Alias
       type: object
       required:
-      - date
       - tool_name
-      title: ToolSpendDailyEntry
-      description: Spend attributed to one tool on one UTC day.
+      title: ToolPolicyUpdateRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ToolUsageLogsResponse:
+      properties:
+        logs:
+          items:
+            $ref: '#/components/schemas/ToolUsageLogEntry'
+          type: array
+          title: Logs
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        page_size:
+          type: integer
+          title: Page Size
+      type: object
+      required:
+      - logs
+      - total
+      - page
+      - page_size
+      title: ToolUsageLogsResponse
+    ToolPolicyOptionsResponse:
+      properties:
+        input_policies:
+          items:
+            $ref: '#/components/schemas/ToolPolicyOption'
+          type: array
+          title: Input Policies
+        output_policies:
+          items:
+            $ref: '#/components/schemas/ToolPolicyOption'
+          type: array
+          title: Output Policies
+      type: object
+      required:
+      - input_policies
+      - output_policies
+      title: ToolPolicyOptionsResponse
+    ToolPolicyUpdateResponse:
+      properties:
+        tool_name:
+          type: string
+          title: Tool Name
+        input_policy:
+          anyOf:
+          - type: string
+            enum:
+            - trusted
+            - untrusted
+            - blocked
+          - type: 'null'
+          title: Input Policy
+        output_policy:
+          anyOf:
+          - type: string
+            enum:
+            - trusted
+            - untrusted
+          - type: 'null'
+          title: Output Policy
+        updated:
+          type: boolean
+          title: Updated
+        team_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Team Id
+        key_hash:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Key Hash
+      type: object
+      required:
+      - tool_name
+      - updated
+      title: ToolPolicyUpdateResponse
+    ToolUsageLogEntry:
+      properties:
+        id:
+          type: string
+          title: Id
+        timestamp:
+          type: string
+          title: Timestamp
+        model:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Model
+        spend:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Spend
+        total_tokens:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Total Tokens
+        input_snippet:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Input Snippet
+      type: object
+      required:
+      - id
+      - timestamp
+      title: ToolUsageLogEntry
+      description: One spend log row for a tool call (for UI "recent logs" table).
     ToolSpendEntry:
       properties:
         tool_name:
@@ -685,122 +801,6 @@ components:
           title: End Date
       type: object
       title: ToolSpendResponse
-    ToolListResponse:
-      properties:
-        tools:
-          items:
-            $ref: '#/components/schemas/LiteLLM_ToolTableRow'
-          type: array
-          title: Tools
-        total:
-          type: integer
-          title: Total
-      type: object
-      required:
-      - tools
-      - total
-      title: ToolListResponse
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    ToolPolicyOption:
-      properties:
-        value:
-          type: string
-          title: Value
-        label:
-          type: string
-          title: Label
-        description:
-          type: string
-          title: Description
-      type: object
-      required:
-      - value
-      - label
-      - description
-      title: ToolPolicyOption
-    ToolPolicyOptionsResponse:
-      properties:
-        input_policies:
-          items:
-            $ref: '#/components/schemas/ToolPolicyOption'
-          type: array
-          title: Input Policies
-        output_policies:
-          items:
-            $ref: '#/components/schemas/ToolPolicyOption'
-          type: array
-          title: Output Policies
-      type: object
-      required:
-      - input_policies
-      - output_policies
-      title: ToolPolicyOptionsResponse
-    ToolPolicyUpdateRequest:
-      properties:
-        tool_name:
-          type: string
-          title: Tool Name
-        input_policy:
-          anyOf:
-          - type: string
-            enum:
-            - trusted
-            - untrusted
-            - blocked
-          - type: 'null'
-          title: Input Policy
-        output_policy:
-          anyOf:
-          - type: string
-            enum:
-            - trusted
-            - untrusted
-          - type: 'null'
-          title: Output Policy
-        team_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Team Id
-        key_hash:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Hash
-        key_alias:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Key Alias
-      type: object
-      required:
-      - tool_name
-      title: ToolPolicyUpdateRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

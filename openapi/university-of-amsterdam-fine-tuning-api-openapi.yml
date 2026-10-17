@@ -436,29 +436,32 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
-    Hyperparameters:
+    ValidationError:
       properties:
-        batch_size:
-          anyOf:
-          - type: string
-          - type: integer
-          - type: 'null'
-          title: Batch Size
-        learning_rate_multiplier:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-          title: Learning Rate Multiplier
-        n_epochs:
-          anyOf:
-          - type: string
-          - type: integer
-          - type: 'null'
-          title: N Epochs
-      additionalProperties: true
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
       type: object
-      title: Hyperparameters
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     LiteLLMFineTuningJobCreate:
       properties:
         model:
@@ -508,32 +511,6 @@ components:
       - model
       - training_file
       title: LiteLLMFineTuningJobCreate
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     HTTPValidationError:
       properties:
         detail:
@@ -543,6 +520,29 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    Hyperparameters:
+      properties:
+        batch_size:
+          anyOf:
+          - type: string
+          - type: integer
+          - type: 'null'
+          title: Batch Size
+        learning_rate_multiplier:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+          title: Learning Rate Multiplier
+        n_epochs:
+          anyOf:
+          - type: string
+          - type: integer
+          - type: 'null'
+          title: N Epochs
+      additionalProperties: true
+      type: object
+      title: Hyperparameters
   securitySchemes:
     APIKeyHeader:
       type: apiKey

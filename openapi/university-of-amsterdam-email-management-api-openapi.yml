@@ -77,49 +77,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    EmailEventSettingsResponse:
-      properties:
-        settings:
-          items:
-            $ref: '#/components/schemas/EmailEventSettings'
-          type: array
-          title: Settings
-      type: object
-      required:
-      - settings
-      title: EmailEventSettingsResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    EmailEventSettings:
-      properties:
-        event:
-          $ref: '#/components/schemas/EmailEvent'
-        enabled:
-          type: boolean
-          title: Enabled
-      type: object
-      required:
-      - event
-      - enabled
-      title: EmailEventSettings
-    EmailEventSettingsUpdateRequest:
-      properties:
-        settings:
-          items:
-            $ref: '#/components/schemas/EmailEventSettings'
-          type: array
-          title: Settings
-      type: object
-      required:
-      - settings
-      title: EmailEventSettingsUpdateRequest
     ValidationError:
       properties:
         loc:
@@ -146,6 +103,49 @@ components:
       - msg
       - type
       title: ValidationError
+    EmailEventSettings:
+      properties:
+        event:
+          $ref: '#/components/schemas/EmailEvent'
+        enabled:
+          type: boolean
+          title: Enabled
+      type: object
+      required:
+      - event
+      - enabled
+      title: EmailEventSettings
+    EmailEventSettingsResponse:
+      properties:
+        settings:
+          items:
+            $ref: '#/components/schemas/EmailEventSettings'
+          type: array
+          title: Settings
+      type: object
+      required:
+      - settings
+      title: EmailEventSettingsResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EmailEventSettingsUpdateRequest:
+      properties:
+        settings:
+          items:
+            $ref: '#/components/schemas/EmailEventSettings'
+          type: array
+          title: Settings
+      type: object
+      required:
+      - settings
+      title: EmailEventSettingsUpdateRequest
     EmailEvent:
       type: string
       enum:

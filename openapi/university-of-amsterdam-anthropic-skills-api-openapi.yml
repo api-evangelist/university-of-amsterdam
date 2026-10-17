@@ -310,55 +310,6 @@ paths:
       - anthropic_skills
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    DeleteSkillResponse:
-      description: Response from deleting a skill
-      properties:
-        id:
-          title: Id
-          type: string
-        type:
-          default: skill_deleted
-          title: Type
-          type: string
-      required:
-      - id
-      title: DeleteSkillResponse
-      type: object
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-        input:
-          title: Input
-        ctx:
-          type: object
-          title: Context
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     Skill:
       description: Represents a skill from the Anthropic Skills API
       properties:
@@ -395,6 +346,20 @@ components:
       - updated_at
       title: Skill
       type: object
+    DeleteSkillResponse:
+      description: Response from deleting a skill
+      properties:
+        id:
+          title: Id
+          type: string
+        type:
+          default: skill_deleted
+          title: Type
+          type: string
+      required:
+      - id
+      title: DeleteSkillResponse
+      type: object
     ListSkillsResponse:
       description: Response from listing skills
       properties:
@@ -416,6 +381,41 @@ components:
       - data
       title: ListSkillsResponse
       type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey
